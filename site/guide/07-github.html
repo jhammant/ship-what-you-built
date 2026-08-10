@@ -8,7 +8,7 @@
 <meta property="og:title" content="Get it on GitHub — Ship What You Built">
 <meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
 <meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
-<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/05-github.html">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/07-github.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -101,11 +101,11 @@ color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
-<body data-page="05-github">
+<body data-page="07-github">
 <div class="shell">
   <aside class="side">
     <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
-    <nav><ul class="nav"><li><a href="00-start-here.html" data-page="00-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="01-your-machine.html" data-page="01-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="02-accounts.html" data-page="02-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="03-keys-and-access.html" data-page="03-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="04-three-layers.html" data-page="04-three-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="05-github.html" aria-current="page" data-page="05-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="06-let-claude-drive.html" data-page="06-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <nav><ul class="nav"><li><a href="00-install-claude-code.html" data-page="00-install-claude-code"><span class="tick"></span>Stage 0 — Get an agent<small>Install Claude Code or Codex</small></a></li><li><a href="01-find-an-idea.html" data-page="01-find-an-idea"><span class="tick"></span>Stage 0.5 — Find an idea<small>What to actually build</small></a></li><li><a href="02-start-here.html" data-page="02-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="03-your-machine.html" data-page="03-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="04-accounts.html" data-page="04-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="05-keys-and-access.html" data-page="05-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="06-four-layers.html" data-page="06-four-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="07-github.html" aria-current="page" data-page="07-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="08-let-claude-drive.html" data-page="08-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
     <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#1-install-the-two-tools">1. Install the two tools</a></li><li><a class="lvl2" href="#2-write-gitignore-before-your-first-commit">2. Write .gitignore BEFORE your first commit</a></li><li><a class="lvl3" href="#where-secrets-go-instead">Where secrets go instead</a></li><li><a class="lvl2" href="#3-what-counts-as-a-secret">3. What counts as a secret</a></li><li><a class="lvl3" href="#scan-before-you-publish">Scan before you publish</a></li><li><a class="lvl2" href="#4-one-thing-to-decide-before-you-go-public">4. One thing to decide before you go public</a></li><li><a class="lvl2" href="#5-make-the-repository">5. Make the repository</a></li><li><a class="lvl3" href="#turn-on-the-safety-nets">Turn on the safety nets</a></li><li><a class="lvl3" href="#add-a-licence">Add a licence</a></li><li><a class="lvl2" href="#6-if-youve-already-leaked-something">6. If you&#x27;ve already leaked something</a></li><li><a class="lvl2" href="#7-let-claude-do-it">7. Let Claude do it</a></li></ul></div>
   </aside>
   <main>
@@ -393,7 +393,7 @@ still fetchable.</p>
 <h2 id="7-let-claude-do-it">7. Let Claude do it<a class="anchor" href="#7-let-claude-do-it" aria-label="Link to this section">#</a></h2>
 <p>All of the above, as one instruction — in the folder where your project lives:</p>
 <blockquote>
-<p>Read https://github.com/jhammant/ship-what-you-built/blob/main/guide/05-github.md. Set this project up as a public GitHub repository
+<p>Read https://github.com/jhammant/ship-what-you-built/blob/main/guide/07-github.md. Set this project up as a public GitHub repository
 following it exactly: write an appropriate <code>.gitignore</code> first, scan for
 secrets and personal details before anything is staged, show me <code>git status</code>
 and stop for my approval before the first commit, then create the repo with
@@ -402,10 +402,10 @@ secret scanning and push protection on and add an MIT licence.</p>
 <p>The stop-before-the-first-commit part is deliberate. It's the one step in this
 whole guide where a mistake is permanent, so it's worth your own eyes.</p>
 <hr />
-<p><strong>Next:</strong> pick your track —
+<p><strong>Next:</strong> <a href="08-let-claude-drive.html">Let Claude drive →</a>
 <a href="10-cloudflare.html">Track A: Cloudflare →</a> · <a href="20-aws.html">Track B: AWS →</a></p>
     <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
-    <nav class="pager"><a class="prev" href="04-three-layers.html"><span>Previous</span>The four layers</a><a class="next" href="06-let-claude-drive.html"><span>Next</span>Let Claude drive</a></nav>
+    <nav class="pager"><a class="prev" href="06-four-layers.html"><span>Previous</span>The four layers</a><a class="next" href="08-let-claude-drive.html"><span>Next</span>Let Claude drive</a></nav>
   </main>
 </div>
 <script>

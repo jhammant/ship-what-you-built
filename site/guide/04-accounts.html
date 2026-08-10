@@ -8,7 +8,7 @@
 <meta property="og:title" content="The accounts you need — Ship What You Built">
 <meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
 <meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
-<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/02-accounts.html">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/04-accounts.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -101,21 +101,22 @@ color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
-<body data-page="02-accounts">
+<body data-page="04-accounts">
 <div class="shell">
   <aside class="side">
     <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
-    <nav><ul class="nav"><li><a href="00-start-here.html" data-page="00-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="01-your-machine.html" data-page="01-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="02-accounts.html" aria-current="page" data-page="02-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="03-keys-and-access.html" data-page="03-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="04-three-layers.html" data-page="04-three-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="05-github.html" data-page="05-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="06-let-claude-drive.html" data-page="06-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <nav><ul class="nav"><li><a href="00-install-claude-code.html" data-page="00-install-claude-code"><span class="tick"></span>Stage 0 — Get an agent<small>Install Claude Code or Codex</small></a></li><li><a href="01-find-an-idea.html" data-page="01-find-an-idea"><span class="tick"></span>Stage 0.5 — Find an idea<small>What to actually build</small></a></li><li><a href="02-start-here.html" data-page="02-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="03-your-machine.html" data-page="03-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="04-accounts.html" aria-current="page" data-page="04-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="05-keys-and-access.html" data-page="05-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="06-four-layers.html" data-page="06-four-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="07-github.html" data-page="07-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="08-let-claude-drive.html" data-page="08-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
     <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#the-whole-list-at-a-glance">The whole list, at a glance</a></li><li><a class="lvl2" href="#first-a-password-manager">First: a password manager</a></li><li><a class="lvl2" href="#github--everyone-needs-this">GitHub — everyone needs this</a></li><li><a class="lvl3" href="#1-sign-up">1. Sign up</a></li><li><a class="lvl3" href="#2-verify-your-email">2. Verify your email</a></li><li><a class="lvl3" href="#3-turn-on-two-factor-authentication">3. Turn on two-factor authentication</a></li><li><a class="lvl3" href="#4-save-the-recovery-codes--properly">4. Save the recovery codes — properly</a></li><li><a class="lvl3" href="#5-personal-account-or-organisation">5. Personal account or organisation?</a></li><li><a class="lvl2" href="#cloudflare--track-a">Cloudflare — Track A</a></li><li><a class="lvl3" href="#signing-up">Signing up</a></li><li><a class="lvl3" href="#the-free-plan-is-a-product-not-a-trial">The free plan is a product, not a trial</a></li><li><a class="lvl3" href="#turn-on-2fa-before-you-buy-anything">Turn on 2FA before you buy anything</a></li><li><a class="lvl2" href="#aws--track-b-and-the-one-with-teeth">AWS — Track B, and the one with teeth</a></li><li><a class="lvl3" href="#signing-up-1">Signing up</a></li><li><a class="lvl3" href="#the-root-account-plainly">The root account, plainly</a></li><li><a class="lvl3" href="#1-turn-on-mfa-for-root--immediately">1. Turn on MFA for root — immediately</a></li><li><a class="lvl3" href="#2-set-a-budget-alarm--before-you-build-anything">2. Set a budget alarm — before you build anything</a></li><li><a class="lvl3" href="#3-never-create-an-access-key-for-the-root-user">3. Never create an access key for the root user</a></li><li><a class="lvl3" href="#what-an-iam-user-is-and-why-you-make-one">What an IAM user is, and why you make one</a></li><li><a class="lvl3" href="#the-honest-risk-stated-once">The honest risk, stated once</a></li><li><a class="lvl3" href="#the-aws-free-tier-honestly">The AWS free tier, honestly</a></li><li><a class="lvl2" href="#anthropic--only-if-your-app-calls-claude">Anthropic — only if your app calls Claude</a></li><li><a class="lvl3" href="#the-distinction-people-get-wrong">The distinction people get wrong</a></li><li><a class="lvl3" href="#what-to-do">What to do</a></li><li><a class="lvl2" href="#which-do-i-actually-need">Which do I actually need?</a></li><li><a class="lvl2" href="#what-each-of-these-costs">What each of these costs</a></li><li><a class="lvl2" href="#before-you-move-on">Before you move on</a></li></ul></div>
   </aside>
   <main>
 <h1>The accounts you need</h1>
-<p>By the end of this page you'll have every account your track needs, each one set
-up so it can't be taken from you and can't quietly bill you. Budget about 40
-minutes, most of which is waiting for verification emails and typing codes off
-your phone.</p>
+<p><strong>You'll end with:</strong> every account your track needs, each one set up so it can't
+be taken away from you and can't quietly bill you.</p>
+<p><strong>Time:</strong> ~40 minutes, most of it waiting for verification emails and typing
+codes off your phone.
+<strong>Cost:</strong> nothing on this page. You don't spend anything until you buy a domain.</p>
 <p>You don't need all of these. Which ones depend on your track, which you chose
-in <a href="00-start-here.html">Start here</a>. The table tells you; the sections tell you how.
+in <a href="02-start-here.html">Start here</a>. The table tells you; the sections tell you how.
 Any word below that you don't recognise is in
 <a href="99-glossary.html">the glossary</a>.</p>
 <hr />
@@ -219,7 +220,7 @@ the record of every change ever made to them. You <strong>commit</strong> (save 
 snapshot of your changes) and then <strong>push</strong> (send those commits up to GitHub).
 Both tracks watch your repository and rebuild your site whenever something is
 pushed to it, so nothing else on this list works without it.
-<a href="05-github.html">Get it on GitHub</a> does the actual doing; this page only gets you
+<a href="07-github.html">Get it on GitHub</a> does the actual doing; this page only gets you
 the account.</p>
 <h3 id="1-sign-up">1. Sign up<a class="anchor" href="#1-sign-up" aria-label="Link to this section">#</a></h3>
 <p>Go to <a href="https://github.com/signup">github.com/signup</a>. It asks for an email, a
@@ -378,7 +379,7 @@ built straight out of a repository.</p>
 <p>The limits are on <em>scale</em> — how many requests, how many builds, how big — not on
 time. At personal-project traffic you will not approach them, and if you somehow
 do, Cloudflare's usual behaviour is to stop serving rather than to bill you. That
-is precisely the bill-shock trade in <a href="00-start-here.html">the chooser</a>: Track A
+is precisely the bill-shock trade in <a href="02-start-here.html">the chooser</a>: Track A
 fails by stopping, Track B fails by charging.</p>
 <p>Check the current limits rather than trusting this paragraph:
 <a href="https://www.cloudflare.com/plans/">cloudflare.com/plans</a>.</p>
@@ -582,7 +583,7 @@ damage is capped, because that plan can't bill you at all. The moment you upgrad
 to the paid plan — which anything you intend to leave running eventually does —
 the cap is gone and the paragraph above applies in full.</p>
 <p>This is exactly why this guide puts MFA and the budget alarm before the first
-line of infrastructure, and why <a href="05-github.html">Get it on GitHub</a> makes you scan
+line of infrastructure, and why <a href="07-github.html">Get it on GitHub</a> makes you scan
 for credentials before anything goes public. Both of those are cheap. The
 alternative is not.</p>
 <p>If it happens anyway: <a href="90-troubleshooting.html">the troubleshooting page</a> has the
@@ -716,7 +717,7 @@ an empty API balance. Add credit in the console and it starts working.</p>
    number you pick. Same reasoning as the AWS alarm — the realistic risk here is
    a loop in your own code, not an attacker.</li>
 <li>Don't create the API key yet. Keys and where they're allowed to live are
-   <a href="03-keys-and-access.html">the next page</a>, and creating one before you know where
+   <a href="05-keys-and-access.html">the next page</a>, and creating one before you know where
    it's going is how it ends up pasted into a file that gets committed.</li>
 </ol>
 <p>Current API pricing, which is per-model and changes:
@@ -725,11 +726,11 @@ an empty API balance. Add credit in the console and it starts working.</p>
 <p>Building on OpenAI, Google or another provider instead? The shape is identical:
 a console account, a prepaid or metered balance separate from any consumer
 subscription, a spend limit, and a key you handle carefully. Everything on
-<a href="03-keys-and-access.html">03</a> applies unchanged.</p>
+<a href="05-keys-and-access.html">03</a> applies unchanged.</p>
 </blockquote>
 <hr />
 <h2 id="which-do-i-actually-need">Which do I actually need?<a class="anchor" href="#which-do-i-actually-need" aria-label="Link to this section">#</a></h2>
-<p>Keyed to the shapes in <a href="00-start-here.html">Start here</a>.</p>
+<p>Keyed to the shapes in <a href="02-start-here.html">Start here</a>.</p>
 <p><strong>Shape 1 — a static site</strong> (HTML/CSS/JS, or a framework that builds to a folder)</p>
 <ul>
 <li>GitHub — yes</li>
@@ -745,7 +746,7 @@ call you're hiding, a login)</p>
 <li>Anthropic — only if the backend bit calls Claude</li>
 <li>Plus, possibly, an account for whatever else the backend talks to: a database
   service like Supabase or Neon, a payments provider like Stripe. Those aren't
-  covered here, but the pattern on <a href="03-keys-and-access.html">03</a> applies to all of
+  covered here, but the pattern on <a href="05-keys-and-access.html">03</a> applies to all of
   them</li>
 </ul>
 <p><strong>Shape 3 — something that has to keep running</strong> (a Flask/FastAPI app, a bot, a
@@ -755,12 +756,12 @@ scheduled job)</p>
 <li>Cloudflare <em>or</em> AWS — yes, for the domain and DNS, even though the hosting
   lives elsewhere</li>
 <li>Plus an account with whichever host you picked from
-  <a href="00-start-here.html#the-honest-note-about-shape-3">the honest note</a> — Fly.io,
+  <a href="02-start-here.html#the-honest-note-about-shape-3">the honest note</a> — Fly.io,
   Railway, Render, Hugging Face. They all follow the pattern above: verify email,
   turn on 2FA, set a spend limit if they offer one</li>
 </ul>
 <p>Nobody needs both Cloudflare and AWS. If you later want to move, you move — that's
-the point of <a href="04-three-layers.html">the three layers</a>, and it doesn't require
+the point of <a href="06-four-layers.html">the three layers</a>, and it doesn't require
 starting again.</p>
 <hr />
 <h2 id="what-each-of-these-costs">What each of these costs<a class="anchor" href="#what-each-of-these-costs" aria-label="Link to this section">#</a></h2>
@@ -782,7 +783,7 @@ page that's actually current.</p>
 </tr>
 <tr>
 <td><strong>Cloudflare</strong></td>
-<td>Free plan covers DNS, HTTPS and Pages hosting indefinitely. You pay only for the domain, and as a <strong>registrar</strong> — the company you actually buy the name from, <a href="04-three-layers.html">layer 1</a> — Cloudflare sells at wholesale cost with no markup and no first-year-discount trap</td>
+<td>Free plan covers DNS, HTTPS and Pages hosting indefinitely. You pay only for the domain, and as a <strong>registrar</strong> — the company you actually buy the name from, <a href="06-four-layers.html#layer-1--the-registrar">layer 1</a> — Cloudflare sells at wholesale cost with no markup and no first-year-discount trap</td>
 <td><a href="https://www.cloudflare.com/plans/">Plans</a> · <a href="https://www.cloudflare.com/products/registrar/">Registrar</a></td>
 </tr>
 <tr>
@@ -824,9 +825,9 @@ bills you.</p>
 <p>If the AWS row has an unticked box, tick it before you go further. Everything
 after this page assumes those two protections exist.</p>
 <hr />
-<p><strong>Next:</strong> <a href="03-keys-and-access.html">Keys and access →</a></p>
+<p><strong>Next:</strong> <a href="05-keys-and-access.html">Keys and access →</a></p>
     <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
-    <nav class="pager"><a class="prev" href="01-your-machine.html"><span>Previous</span>Your machine</a><a class="next" href="03-keys-and-access.html"><span>Next</span>Keys and access</a></nav>
+    <nav class="pager"><a class="prev" href="03-your-machine.html"><span>Previous</span>Your machine</a><a class="next" href="05-keys-and-access.html"><span>Next</span>Keys and access</a></nav>
   </main>
 </div>
 <script>

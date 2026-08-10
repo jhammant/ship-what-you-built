@@ -7,7 +7,7 @@ its questions.
 **Time:** about 30 minutes, most of it waiting for DNS.
 **What you type:** roughly six commands and a paragraph of English.
 
-The rest of this guide — [the three layers](04-three-layers.md),
+The rest of this guide — [the three layers](06-four-layers.md),
 [Track A](10-cloudflare.md), [Track B](20-aws.md) — explains what is actually
 happening underneath. You do not have to read it first. Come back to it when
 something breaks, or when you want to understand what you just did, which is
@@ -34,7 +34,7 @@ You authorise the tools, and Claude uses the tools.
 
 > **If anything ever asks you to paste a secret into the chat, stop.** Something
 > is set up wrong. There is no step in this guide where that is the right
-> answer. See [Keys, and giving Claude access](03-keys-and-access.md).
+> answer. See [Keys, and giving Claude access](05-keys-and-access.md).
 
 ---
 
@@ -43,7 +43,7 @@ You authorise the tools, and Claude uses the tools.
 Do this in a browser. It is the one part that genuinely cannot be automated,
 because it involves your email, your card and your consent.
 
-Follow **[The accounts you need](02-accounts.md)** and come back. In short:
+Follow **[The accounts you need](04-accounts.md)** and come back. In short:
 
 | Account | Who needs it | Card required? |
 |---|---|---|
@@ -86,7 +86,7 @@ aws configure
 `aws configure` is the exception: AWS has no browser login for the CLI by
 default, so you paste the access key **into the terminal prompt**, not into the
 chat. It writes `~/.aws/credentials`, which is exactly where it belongs.
-[02-accounts.md](02-accounts.md) walks through creating that key as a limited
+[04-accounts.md](04-accounts.md) walks through creating that key as a limited
 IAM user rather than using your root account.
 
 ### Prove it worked
@@ -234,5 +234,5 @@ Both contain every command, with an explanation of what each one does.
 
 ---
 
-**Next:** [The three layers →](04-three-layers.md) — ten minutes that make
+**Next:** [The three layers →](06-four-layers.md) — ten minutes that make
 everything above make sense, whether or not you typed it yourself.

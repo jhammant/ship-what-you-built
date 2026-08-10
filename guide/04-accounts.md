@@ -8,7 +8,7 @@ codes off your phone.
 **Cost:** nothing on this page. You don't spend anything until you buy a domain.
 
 You don't need all of these. Which ones depend on your track, which you chose
-in [Start here](00-start-here.md). The table tells you; the sections tell you how.
+in [Start here](02-start-here.md). The table tells you; the sections tell you how.
 Any word below that you don't recognise is in
 [the glossary](99-glossary.md).
 
@@ -69,7 +69,7 @@ the record of every change ever made to them. You **commit** (save a labelled
 snapshot of your changes) and then **push** (send those commits up to GitHub).
 Both tracks watch your repository and rebuild your site whenever something is
 pushed to it, so nothing else on this list works without it.
-[Get it on GitHub](05-github.md) does the actual doing; this page only gets you
+[Get it on GitHub](07-github.md) does the actual doing; this page only gets you
 the account.
 
 ### 1. Sign up
@@ -209,7 +209,7 @@ built straight out of a repository.
 The limits are on *scale* — how many requests, how many builds, how big — not on
 time. At personal-project traffic you will not approach them, and if you somehow
 do, Cloudflare's usual behaviour is to stop serving rather than to bill you. That
-is precisely the bill-shock trade in [the chooser](00-start-here.md): Track A
+is precisely the bill-shock trade in [the chooser](02-start-here.md): Track A
 fails by stopping, Track B fails by charging.
 
 Check the current limits rather than trusting this paragraph:
@@ -402,7 +402,7 @@ to the paid plan — which anything you intend to leave running eventually does 
 the cap is gone and the paragraph above applies in full.
 
 This is exactly why this guide puts MFA and the budget alarm before the first
-line of infrastructure, and why [Get it on GitHub](05-github.md) makes you scan
+line of infrastructure, and why [Get it on GitHub](07-github.md) makes you scan
 for credentials before anything goes public. Both of those are cheap. The
 alternative is not.
 
@@ -499,7 +499,7 @@ when the live site is the thing that's broken.
    number you pick. Same reasoning as the AWS alarm — the realistic risk here is
    a loop in your own code, not an attacker.
 4. Don't create the API key yet. Keys and where they're allowed to live are
-   [the next page](03-keys-and-access.md), and creating one before you know where
+   [the next page](05-keys-and-access.md), and creating one before you know where
    it's going is how it ends up pasted into a file that gets committed.
 
 Current API pricing, which is per-model and changes:
@@ -508,13 +508,13 @@ Current API pricing, which is per-model and changes:
 > Building on OpenAI, Google or another provider instead? The shape is identical:
 > a console account, a prepaid or metered balance separate from any consumer
 > subscription, a spend limit, and a key you handle carefully. Everything on
-> [03](03-keys-and-access.md) applies unchanged.
+> [03](05-keys-and-access.md) applies unchanged.
 
 ---
 
 ## Which do I actually need?
 
-Keyed to the shapes in [Start here](00-start-here.md).
+Keyed to the shapes in [Start here](02-start-here.md).
 
 **Shape 1 — a static site** (HTML/CSS/JS, or a framework that builds to a folder)
 
@@ -531,7 +531,7 @@ call you're hiding, a login)
 - Anthropic — only if the backend bit calls Claude
 - Plus, possibly, an account for whatever else the backend talks to: a database
   service like Supabase or Neon, a payments provider like Stripe. Those aren't
-  covered here, but the pattern on [03](03-keys-and-access.md) applies to all of
+  covered here, but the pattern on [03](05-keys-and-access.md) applies to all of
   them
 
 **Shape 3 — something that has to keep running** (a Flask/FastAPI app, a bot, a
@@ -541,12 +541,12 @@ scheduled job)
 - Cloudflare *or* AWS — yes, for the domain and DNS, even though the hosting
   lives elsewhere
 - Plus an account with whichever host you picked from
-  [the honest note](00-start-here.md#the-honest-note-about-shape-3) — Fly.io,
+  [the honest note](02-start-here.md#the-honest-note-about-shape-3) — Fly.io,
   Railway, Render, Hugging Face. They all follow the pattern above: verify email,
   turn on 2FA, set a spend limit if they offer one
 
 Nobody needs both Cloudflare and AWS. If you later want to move, you move — that's
-the point of [the three layers](04-three-layers.md), and it doesn't require
+the point of [the three layers](06-four-layers.md), and it doesn't require
 starting again.
 
 ---
@@ -559,7 +559,7 @@ page that's actually current.
 | Account | Shape of the cost at personal-project scale | Live pricing |
 |---|---|---|
 | **GitHub** | Free. Unlimited public *and* private repositories; **GitHub Actions** — their automation runner, which is the thing that rebuilds your site when you push — free on public repositories and a monthly allowance on private ones; automatic scanning for leaked keys on public repositories. Paid plans buy team features you don't need yet | [github.com/pricing](https://github.com/pricing) |
-| **Cloudflare** | Free plan covers DNS, HTTPS and Pages hosting indefinitely. You pay only for the domain, and as a **registrar** — the company you actually buy the name from, [layer 1](04-three-layers.md#layer-1--the-registrar) — Cloudflare sells at wholesale cost with no markup and no first-year-discount trap | [Plans](https://www.cloudflare.com/plans/) · [Registrar](https://www.cloudflare.com/products/registrar/) |
+| **Cloudflare** | Free plan covers DNS, HTTPS and Pages hosting indefinitely. You pay only for the domain, and as a **registrar** — the company you actually buy the name from, [layer 1](06-four-layers.md#layer-1--the-registrar) — Cloudflare sells at wholesale cost with no markup and no first-year-discount trap | [Plans](https://www.cloudflare.com/plans/) · [Registrar](https://www.cloudflare.com/products/registrar/) |
 | **AWS** | A small fixed monthly charge for the DNS hosted zone, plus usage-based storage and traffic charges that round to pennies at low traffic. Call it "less than a coffee a month" — but it is not zero, and it is not capped | [Route 53](https://aws.amazon.com/route53/pricing/) · [S3](https://aws.amazon.com/s3/pricing/) · [CloudFront](https://aws.amazon.com/cloudfront/pricing/) · [Free tier](https://aws.amazon.com/free/) |
 | **The domain itself** | The one unavoidable cost, billed yearly. `.com` is stable and boring, which is a feature. Beware **TLDs** — top-level domains, the `.com`/`.io`/`.dev` ending — that are cheap for year one and several times that on renewal. Always check the *renewal* price | Your track's registrar page |
 | **Anthropic API** | Per request, by volume of text in and out. A personal site with a handful of users a day is small change; a bug that retries in a loop is not, which is what the spend limit is for | [claude.com/pricing](https://claude.com/pricing) |
@@ -591,4 +591,4 @@ after this page assumes those two protections exist.
 
 ---
 
-**Next:** [Keys and access →](03-keys-and-access.md)
+**Next:** [Keys and access →](05-keys-and-access.md)

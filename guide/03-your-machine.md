@@ -326,7 +326,7 @@ friends already in it.
 It's much lighter than WSL — a single installer, no reboot, no virtualisation —
 and it's the right answer if WSL is blocked or you want to get moving now.
 
-**What works:** everything in [Get it on GitHub](05-github.md), heredocs, single
+**What works:** everything in [Get it on GitHub](07-github.md), heredocs, single
 quotes, `$VAR`, backslash line continuations, and effectively all of
 [Track A](10-cloudflare.md).
 
@@ -338,7 +338,7 @@ quotes, `$VAR`, backslash line continuations, and effectively all of
   command, present on Windows 10 and 11), and then happen to be visible from Git
   Bash.
 - **No `dig`.** DNS lookups go through Windows, so you use `nslookup` instead.
-  [The three layers](04-three-layers.md) shows both.
+  [The three layers](06-four-layers.md) shows both.
 - **No `sudo`.** Commands in this guide that use it need an Administrator
   terminal instead.
 - **Path translation surprises.** Git Bash rewrites arguments that look like
@@ -530,7 +530,7 @@ project's folder of code as GitHub stores it), sets permissions, and — most
 usefully — logs you in properly, so you never have to generate or paste a
 **personal access token**: a long secret string GitHub can issue in place of a
 password, which is fiddly to make and easy to leak.
-[05 — Get it on GitHub](05-github.md) uses it throughout.
+[05 — Get it on GitHub](07-github.md) uses it throughout.
 
 ```bash
 # macOS
@@ -563,7 +563,7 @@ gh version 2.88.1 (2026-03-12)
 https://github.com/cli/cli/releases/tag/v2.88.1
 ```
 
-You'll log in with `gh auth login` in [05](05-github.md) — not yet.
+You'll log in with `gh auth login` in [05](07-github.md) — not yet.
 
 ### curl — fetches a URL
 
@@ -595,7 +595,7 @@ Protocols: dict file ftp ftps gopher gophers http https imap imaps ...
 DNS is the layer that turns `yourthing.com` into an address, and it's where most
 "my site isn't working" turns out to live. `dig` asks a DNS server a question
 and shows you the raw answer, which is the only way to see past your own
-computer's cache. [The three layers](04-three-layers.md) explains what to ask it.
+computer's cache. [The three layers](06-four-layers.md) explains what to ask it.
 
 ```bash
 # macOS — already installed
@@ -727,7 +727,7 @@ type a command name — the first match wins, which is exactly how an old copy
 keeps answering.
 
 You'll connect it to your account in [Track B](20-aws.md), after
-[keys and access](03-keys-and-access.md). Don't run `aws configure` yet.
+[keys and access](05-keys-and-access.md). Don't run `aws configure` yet.
 
 ### node and npm — only if your project builds
 
@@ -889,4 +889,4 @@ know the answer, and translating them is something an agent is very good at.
 
 ---
 
-**Next:** [Accounts you'll need →](02-accounts.md)
+**Next:** [The accounts you need →](04-accounts.md)

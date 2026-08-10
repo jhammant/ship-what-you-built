@@ -8,7 +8,7 @@
 <meta property="og:title" content="Start here — Ship What You Built">
 <meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
 <meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
-<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/00-start-here.html">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/02-start-here.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -101,11 +101,11 @@ color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
-<body data-page="00-start-here">
+<body data-page="02-start-here">
 <div class="shell">
   <aside class="side">
     <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
-    <nav><ul class="nav"><li><a href="00-start-here.html" aria-current="page" data-page="00-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="01-your-machine.html" data-page="01-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="02-accounts.html" data-page="02-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="03-keys-and-access.html" data-page="03-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="04-three-layers.html" data-page="04-three-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="05-github.html" data-page="05-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="06-let-claude-drive.html" data-page="06-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <nav><ul class="nav"><li><a href="00-install-claude-code.html" data-page="00-install-claude-code"><span class="tick"></span>Stage 0 — Get an agent<small>Install Claude Code or Codex</small></a></li><li><a href="01-find-an-idea.html" data-page="01-find-an-idea"><span class="tick"></span>Stage 0.5 — Find an idea<small>What to actually build</small></a></li><li><a href="02-start-here.html" aria-current="page" data-page="02-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="03-your-machine.html" data-page="03-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="04-accounts.html" data-page="04-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="05-keys-and-access.html" data-page="05-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="06-four-layers.html" data-page="06-four-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="07-github.html" data-page="07-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="08-let-claude-drive.html" data-page="08-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
     <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#question-1--what-did-you-build">Question 1 — What did you build?</a></li><li><a class="lvl3" href="#shape-1--a-static-site">Shape 1 — A static site</a></li><li><a class="lvl3" href="#shape-2--a-site-with-a-bit-of-backend">Shape 2 — A site with a bit of backend</a></li><li><a class="lvl3" href="#shape-3--something-that-has-to-keep-running">Shape 3 — Something that has to keep running</a></li><li><a class="lvl2" href="#question-2--which-track">Question 2 — Which track?</a></li><li><a class="lvl3" href="#take-track-a-cloudflare-if">Take Track A (Cloudflare) if…</a></li><li><a class="lvl3" href="#take-track-b-aws-if">Take Track B (AWS) if…</a></li><li><a class="lvl3" href="#genuinely-cant-decide">Genuinely can&#x27;t decide?</a></li><li><a class="lvl2" href="#what-you-need-on-your-machine">What you need on your machine</a></li><li><a class="lvl3" href="#if-youre-on-windows-read-this-first">If you&#x27;re on Windows, read this first</a></li><li><a class="lvl2" href="#before-either-track-two-shared-steps">Before either track: two shared steps</a></li><li><a class="lvl2" href="#the-honest-note-about-shape-3">The honest note about Shape 3</a></li></ul></div>
   </aside>
   <main>
@@ -170,7 +170,7 @@ technology.</p>
 <h3 id="genuinely-cant-decide">Genuinely can't decide?<a class="anchor" href="#genuinely-cant-decide" aria-label="Link to this section">#</a></h3>
 <p>Take Track A. You can move to AWS later without buying a new domain or changing
 a line of code — that's the whole point of
-<a href="04-three-layers.html">the three layers</a>, and it's the next page.</p>
+<a href="06-four-layers.html">the three layers</a>, and it's the next page.</p>
 <hr />
 <h2 id="what-you-need-on-your-machine">What you need on your machine<a class="anchor" href="#what-you-need-on-your-machine" aria-label="Link to this section">#</a></h2>
 <p>Install these once, now, rather than discovering each one missing halfway through
@@ -181,7 +181,7 @@ brew install git gh jq awscli
 
 # Debian / Ubuntu
 sudo apt update &amp;&amp; sudo apt install -y git jq curl zip dnsutils
-# gh and awscli have their own installers — see guide/05-github.md
+# gh and awscli have their own installers — see guide/07-github.md
 </code></pre></div>
 <div class="tablewrap"><table>
 <thead>
@@ -200,7 +200,7 @@ sudo apt update &amp;&amp; sudo apt install -y git jq curl zip dnsutils
 <tr>
 <td><code>gh</code></td>
 <td>GitHub from the command line</td>
-<td><a href="05-github.html">02</a></td>
+<td><a href="07-github.html">02</a></td>
 </tr>
 <tr>
 <td><code>curl</code></td>
@@ -210,7 +210,7 @@ sudo apt update &amp;&amp; sudo apt install -y git jq curl zip dnsutils
 <tr>
 <td><code>dig</code></td>
 <td>asking DNS questions directly</td>
-<td><a href="04-three-layers.html">01</a>, troubleshooting</td>
+<td><a href="06-four-layers.html">01</a>, troubleshooting</td>
 </tr>
 <tr>
 <td><code>jq</code></td>
@@ -240,7 +240,7 @@ sudo apt update &amp;&amp; sudo apt install -y git jq curl zip dnsutils
    <code>wsl --install</code>. Reboot. You now have a real Ubuntu terminal, and every
    command in this guide works exactly as written. This is worth twenty minutes.</li>
 <li><strong>Git Bash</strong> — comes with <a href="https://gitforwindows.org/">Git for Windows</a>.
-   Fine for Track A and for <a href="05-github.html">02</a>. Track B's heredocs mostly work,
+   Fine for Track A and for <a href="07-github.html">02</a>. Track B's heredocs mostly work,
    but path handling occasionally bites.</li>
 </ol>
 <p><strong>Track A works fine either way</strong> and needs far less terminal — most of it is
@@ -252,20 +252,20 @@ take Track A.</p>
 <p>Do these first regardless of track. They're short.</p>
 <ol>
 <li>
-<p><strong><a href="04-three-layers.html">Understand the three layers</a></strong> — ten minutes of
+<p><strong><a href="06-four-layers.html">Understand the three layers</a></strong> — ten minutes of
    reading that makes every subsequent step obvious instead of magic. Skip it
    and you will be copying commands you don't understand, which is exactly how
    people end up stuck.</p>
 </li>
 <li>
-<p><strong><a href="05-github.html">Get your code on GitHub</a></strong> — both tracks deploy <em>from</em> a
+<p><strong><a href="07-github.html">Get your code on GitHub</a></strong> — both tracks deploy <em>from</em> a
    GitHub repository. This is also where you find out whether you're about to
    publish an API key, so it comes before anything is public.</p>
 </li>
 </ol>
 <blockquote>
 <p><strong>Already have your project on GitHub with a <code>.gitignore</code> you trust?</strong> Skip
-straight to your track. Come back to <a href="05-github.html">02</a> at the "what counts as
+straight to your track. Come back to <a href="07-github.html">02</a> at the "what counts as
 a secret" section before you make the repo public.</p>
 </blockquote>
 <hr />
@@ -307,8 +307,8 @@ it</strong>, and a guide that pretended otherwise would waste your afternoon.</p
 </tr>
 </tbody>
 </table></div>
-<p><strong>You can still use this guide.</strong> Do <a href="04-three-layers.html">01</a> and
-<a href="05-github.html">02</a>, buy your domain via whichever track you prefer, and then use
+<p><strong>You can still use this guide.</strong> Do <a href="06-four-layers.html">01</a> and
+<a href="07-github.html">02</a>, buy your domain via whichever track you prefer, and then use
 that track's <em>DNS</em> section to point the domain at whatever host from the table
 above you chose. The domain and DNS parts transfer completely. Only the hosting
 chapter changes.</p>
@@ -322,9 +322,9 @@ plus one serverless function instead? Show me what would have to change, and be
 honest if the answer is no.</p>
 </blockquote>
 <hr />
-<p><strong>Next:</strong> <a href="04-three-layers.html">The three layers →</a></p>
+<p><strong>Next:</strong> <a href="03-your-machine.html">Your machine →</a></p>
     <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
-    <nav class="pager"><a class="next" href="01-your-machine.html"><span>Next</span>Your machine</a></nav>
+    <nav class="pager"><a class="prev" href="01-find-an-idea.html"><span>Previous</span>Stage 0.5 — Find an idea</a><a class="next" href="03-your-machine.html"><span>Next</span>Your machine</a></nav>
   </main>
 </div>
 <script>

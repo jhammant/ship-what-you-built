@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stage 0 — Get an agent — Ship What You Built</title>
+<meta name="description" content="Stage 0 — Get an agent — part of a free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:title" content="Stage 0 — Get an agent — Ship What You Built">
+<meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/00-install-claude-code.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#F6F7F5;--surface:#FFF;--sunken:#EEF0EC;--ink:#14181B;--ink-soft:#3D4642;
+--muted:#5B6560;--line:rgba(20,24,27,.13);--line-soft:rgba(20,24,27,.07);
+--live:#16794C;--live-ink:#FFF;--live-wash:rgba(22,121,76,.09);--stuck:#9A5B18;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+--sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;--ink-soft:#C3CCC6;
+--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}}
+:root[data-theme="dark"]{--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;
+--ink-soft:#C3CCC6;--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+line-height:1.68;font-size:1.02rem;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--live)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--live);outline-offset:3px;border-radius:5px}
+.shell{display:grid;grid-template-columns:17rem minmax(0,1fr);gap:2.5rem;
+max-width:78rem;margin-inline:auto;padding:0 clamp(1rem,4vw,2.5rem)}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr);gap:0}}
+.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;
+padding:2rem 0;border-right:1px solid var(--line-soft)}
+@media (max-width:900px){.side{position:static;max-height:none;border-right:0;
+border-bottom:1px solid var(--line-soft);padding-bottom:1rem}}
+.brand{font-weight:660;letter-spacing:-.02em;text-decoration:none;display:block;margin-bottom:.35rem}
+.brand small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;letter-spacing:0}
+.nav{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:.15rem}
+.nav a{display:block;padding:.42rem .6rem;border-radius:7px;text-decoration:none;
+font-size:.925rem;color:var(--ink-soft)}
+.nav a:hover{background:var(--sunken)}
+.nav a[aria-current="page"]{background:var(--live-wash);color:var(--ink);font-weight:600}
+.nav small{display:block;color:var(--muted);font-size:.76rem;line-height:1.35}
+.onpage{margin-top:1.5rem;border-top:1px solid var(--line-soft);padding-top:1rem}
+.onpage p{margin:0 0 .5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;
+text-transform:uppercase;color:var(--muted)}
+.onpage ul{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+.onpage a{display:block;padding:.2rem .35rem;font-size:.85rem;color:var(--muted);
+text-decoration:none;border-radius:5px}
+.onpage a:hover{color:var(--ink);background:var(--sunken)}
+.onpage .lvl3{padding-left:1rem;font-size:.8rem}
+main{padding:2.5rem 0 4rem;min-width:0;max-width:46rem}
+h1{font-size:clamp(1.9rem,1.4rem+2vw,2.7rem);line-height:1.1;letter-spacing:-.03em;
+margin:0 0 1.5rem;text-wrap:balance}
+h2{font-size:1.5rem;line-height:1.2;letter-spacing:-.022em;margin:2.8rem 0 .9rem;
+padding-top:1.4rem;border-top:1px solid var(--line-soft);text-wrap:balance}
+h3{font-size:1.13rem;letter-spacing:-.015em;margin:2rem 0 .6rem}
+h2 .anchor,h3 .anchor{opacity:0;margin-left:.4rem;color:var(--muted);text-decoration:none;font-weight:400}
+h2:hover .anchor,h3:hover .anchor,.anchor:focus-visible{opacity:1}
+p,ul,ol{margin:0 0 1.05rem}
+li{margin-bottom:.3rem}
+strong{font-weight:650}
+code{font-family:var(--mono);font-size:.875em;background:var(--sunken);
+padding:.12em .34em;border-radius:4px;overflow-wrap:break-word}
+.codewrap{position:relative;margin:0 0 1.2rem}
+pre{margin:0;overflow-x:auto;background:var(--sunken);border:1px solid var(--line-soft);
+border-radius:10px;padding:1rem 1.1rem;font-family:var(--mono);font-size:.845rem;line-height:1.62}
+pre code{background:none;padding:0;font-size:1em}
+.copy{position:absolute;top:.5rem;right:.5rem;font:inherit;font-size:.75rem;
+padding:.28rem .6rem;border-radius:6px;border:1px solid var(--line);
+background:var(--surface);color:var(--muted);cursor:pointer;opacity:0;transition:opacity .12s}
+.codewrap:hover .copy,.copy:focus-visible{opacity:1}
+.copy.done{color:var(--live);border-color:var(--live)}
+@media (hover:none){.copy{opacity:1}}
+blockquote{margin:0 0 1.2rem;padding:.9rem 1.1rem;border-left:3px solid var(--live);
+background:var(--live-wash);border-radius:0 9px 9px 0}
+blockquote > :last-child{margin-bottom:0}
+blockquote h3{margin-top:.2rem}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:0 0 1.2rem}
+table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+th,td{text-align:left;padding:.65rem .9rem;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+tbody tr:last-child td{border-bottom:0}
+hr{border:0;border-top:1px solid var(--line-soft);margin:2.5rem 0}
+img{max-width:100%;height:auto}
+.done-toggle{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);
+margin:.2rem 0 1.6rem;cursor:pointer;user-select:none}
+.done-toggle input{accent-color:var(--live);width:1rem;height:1rem}
+.pager{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:space-between;
+margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line-soft)}
+.pager a{flex:1 1 14rem;padding:.9rem 1.1rem;border:1px solid var(--line);border-radius:10px;
+text-decoration:none;background:var(--surface)}
+.pager a:hover{border-color:var(--live)}
+.pager span{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
+.pager .next{text-align:right}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-page="00-install-claude-code">
+<div class="shell">
+  <aside class="side">
+    <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
+    <nav><ul class="nav"><li><a href="00-install-claude-code.html" aria-current="page" data-page="00-install-claude-code"><span class="tick"></span>Stage 0 — Get an agent<small>Install Claude Code or Codex</small></a></li><li><a href="01-find-an-idea.html" data-page="01-find-an-idea"><span class="tick"></span>Stage 0.5 — Find an idea<small>What to actually build</small></a></li><li><a href="02-start-here.html" data-page="02-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="03-your-machine.html" data-page="03-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="04-accounts.html" data-page="04-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="05-keys-and-access.html" data-page="05-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="06-four-layers.html" data-page="06-four-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="07-github.html" data-page="07-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="08-let-claude-drive.html" data-page="08-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#what-an-ai-coding-agent-actually-is">What an AI coding agent actually is</a></li><li><a class="lvl3" href="#it-asks-first-and-you-should-read-what-it-asks">It asks first, and you should read what it asks</a></li><li><a class="lvl2" href="#which-agent">Which agent</a></li><li><a class="lvl2" href="#install-claude-code">Install Claude Code</a></li><li><a class="lvl3" href="#the-recommended-route-the-native-installer">The recommended route: the native installer</a></li><li><a class="lvl3" href="#if-youd-rather-use-a-package-manager">If you&#x27;d rather use a package manager</a></li><li><a class="lvl3" href="#on-windows-specifically">On Windows specifically</a></li><li><a class="lvl3" href="#prove-it-worked">Prove it worked</a></li><li><a class="lvl3" href="#not-keen-on-the-terminal">Not keen on the terminal?</a></li><li><a class="lvl2" href="#signing-in-and-the-money-question">Signing in, and the money question</a></li><li><a class="lvl3" href="#the-two-kinds-of-billing-which-are-not-the-same-thing">The two kinds of billing, which are not the same thing</a></li><li><a class="lvl2" href="#codex-if-youd-rather-use-that">Codex, if you&#x27;d rather use that</a></li><li><a class="lvl3" href="#the-honest-comparison">The honest comparison</a></li><li><a class="lvl2" href="#your-first-two-minutes-with-it">Your first two minutes with it</a></li><li><a class="lvl2" href="#how-to-talk-to-it-well">How to talk to it well</a></li><li><a class="lvl2" href="#when-it-doesnt-work">When it doesn&#x27;t work</a></li></ul></div>
+  </aside>
+  <main>
+<h1>Get an AI coding agent</h1>
+<p><strong>This page gets you a working AI coding agent on your own machine, signed in,
+with one small thing already built by it — about 20 minutes, most of which is a
+download bar and a browser login.</strong></p>
+<p>You don't need to have written code before. You do need a terminal window open;
+if that phrase means nothing to you, read <a href="03-your-machine.html">Your machine</a>
+first and come back — it takes you from zero to a prompt you can type into.</p>
+<hr />
+<h2 id="what-an-ai-coding-agent-actually-is">What an AI coding agent actually is<a class="anchor" href="#what-an-ai-coding-agent-actually-is" aria-label="Link to this section">#</a></h2>
+<p>You have probably used a chat window that can write code: you ask, it prints
+some code, you copy it somewhere. An <strong>agent</strong> is the same model with a
+different job. It runs as a program <strong>on your computer</strong>, inside a folder you
+point it at. Within that folder it can <em>read</em> your files, <em>write</em> new ones, and
+<em>run commands</em> — the same commands you could type yourself.</p>
+<p>That last part is the whole difference. A chat window can describe how to buy a
+domain and deploy a site. An agent can create the files, run the deploy command,
+read the error that comes back, work out what's wrong, and try again. It's the
+difference between someone reading you a recipe down the phone and someone
+standing in your kitchen. Everything the rest of this guide asks for — a
+repository, a domain, a certificate, a live URL — is something an agent can
+actually do, which is why this guide starts here.</p>
+<h3 id="it-asks-first-and-you-should-read-what-it-asks">It asks first, and you should read what it asks<a class="anchor" href="#it-asks-first-and-you-should-read-what-it-asks" aria-label="Link to this section">#</a></h3>
+<p>By default the agent <strong>stops and asks you before it changes a file or runs a
+command</strong>. You'll see the proposed change — the actual file contents, the actual
+command — and a prompt with options along the lines of "yes" / "yes, and don't
+ask again for this" / "no, tell it what to do differently".</p>
+<p>Read those. Not because the agent is malicious, but because it is confident, and
+confidence and correctness are different things. It can delete the wrong file,
+<code>git push</code> something you meant to keep private, or spend money on a cloud
+service, and every one of those arrives as a permission prompt you could have
+declined. The habit worth building on day one: <strong>if you don't recognise what it's
+proposing, type "no" and ask it to explain first.</strong> That is always allowed and it
+never costs you anything.</p>
+<p>There is a mode that auto-approves edits (press <code>Shift+Tab</code> inside a session to
+cycle modes) and a "plan" mode where it proposes without touching anything.
+Leave it on the default until you have a feel for it.</p>
+<hr />
+<h2 id="which-agent">Which agent<a class="anchor" href="#which-agent" aria-label="Link to this section">#</a></h2>
+<p>Two good options, and this guide works with either:</p>
+<ul>
+<li><strong>Claude Code</strong> — Anthropic's agent. <strong>The examples, prompts and the skill in
+  this guide are written for it</strong>, so it is the path of least friction here.</li>
+<li><strong>Codex</strong> — OpenAI's agent. Same shape, same idea, different company.
+  <a href="#codex-if-youd-rather-use-that">Covered below</a>.</li>
+</ul>
+<p>If you already pay for one of Claude or ChatGPT, use the one you already pay for.
+If you pay for neither, either will need a subscription or billing set up — see
+<a href="#signing-in-and-the-money-question">the money question</a>.</p>
+<hr />
+<h2 id="install-claude-code">Install Claude Code<a class="anchor" href="#install-claude-code" aria-label="Link to this section">#</a></h2>
+<blockquote>
+<p>The commands below were checked against Anthropic's official install
+documentation in August 2026:
+<strong><a href="https://code.claude.com/docs/en/setup">https://code.claude.com/docs/en/setup</a></strong>. Install commands do change. If one
+of these doesn't behave as described, that page is the authority, not this one.</p>
+</blockquote>
+<p>Claude Code needs macOS 13 or later, Windows 10 (build 1809) or later, or a
+mainstream Linux — Ubuntu 20.04+, Debian 10+, Alpine 3.19+ — with 4 GB of RAM and
+an internet connection.</p>
+<h3 id="the-recommended-route-the-native-installer">The recommended route: the native installer<a class="anchor" href="#the-recommended-route-the-native-installer" aria-label="Link to this section">#</a></h3>
+<p>"Native" here means it installs a self-contained program, with no other software
+required first. This is the route to take unless you have a reason not to.</p>
+<p><strong>macOS, Linux, or WSL</strong> (WSL being Windows Subsystem for Linux — a real Linux
+running inside Windows; see <a href="03-your-machine.html">Your machine</a>):</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">curl -fsSL https://claude.ai/install.sh | bash
+</code></pre></div>
+<p><strong>Windows, in PowerShell:</strong></p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-powershell">irm https://claude.ai/install.ps1 | iex
+</code></pre></div>
+<p><strong>Windows, in Command Prompt (<code>cmd</code>):</strong></p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">curl -fsSL https://claude.ai/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd
+</code></pre></div>
+<p>Those last two are not interchangeable, and mixing them up is the single most
+common Windows stumble. Your prompt tells you which one you're in: PowerShell
+shows <code>PS C:\Users\You&gt;</code>, Command Prompt shows <code>C:\Users\You&gt;</code> with no <code>PS</code>. Run
+the PowerShell line in <code>cmd</code> and you get <code>'irm' is not recognized as an internal
+or external command</code>. Run the <code>cmd</code> line in PowerShell and you get <code>The token
+'&amp;&amp;' is not a valid statement separator</code>. Neither is a broken install — it's the
+wrong window.</p>
+<p>Native installs update themselves quietly in the background.</p>
+<h3 id="if-youd-rather-use-a-package-manager">If you'd rather use a package manager<a class="anchor" href="#if-youd-rather-use-a-package-manager" aria-label="Link to this section">#</a></h3>
+<p>These do the same job; the trade-off is that <strong>none of them auto-update</strong>, so
+you have to run the upgrade yourself occasionally.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># macOS or Linux, with Homebrew
+brew install --cask claude-code
+# upgrade later with: brew upgrade claude-code
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-powershell"># Windows, with WinGet
+winget install Anthropic.ClaudeCode
+# upgrade later with: winget upgrade Anthropic.ClaudeCode
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># Any platform, with npm — needs Node.js 22 or later
+npm install -g @anthropic-ai/claude-code
+</code></pre></div>
+<p><strong>Do not put <code>sudo</code> in front of the npm command.</strong> <code>sudo</code> runs it as the
+computer's administrator, and it leaves you with files your normal account can't
+write to — which surfaces later as update failures you can't explain. If the npm
+install fails on permissions, use the native installer instead; it doesn't need
+elevated rights.</p>
+<p>Anthropic also publishes signed <code>apt</code>, <code>dnf</code> and <code>apk</code> repositories for Debian,
+Ubuntu, Fedora, RHEL and Alpine. Those are on the
+<a href="https://code.claude.com/docs/en/setup">setup page</a> — worth using if you manage
+a Linux machine and want updates to arrive with everything else.</p>
+<h3 id="on-windows-specifically">On Windows specifically<a class="anchor" href="#on-windows-specifically" aria-label="Link to this section">#</a></h3>
+<p>You have two routes, and this matters for the rest of the guide:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Route</th>
+<th>What you get</th>
+<th>The catch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Native Windows</strong></td>
+<td>Install from PowerShell or <code>cmd</code>, run <code>claude</code> from any terminal</td>
+<td>Later chapters of this guide are written in bash. Installing <a href="https://git-scm.com/downloads/win">Git for Windows</a> gives Claude Code a bash to run commands in, which helps a great deal</td>
+</tr>
+<tr>
+<td><strong>WSL</strong></td>
+<td>A real Ubuntu inside Windows. Open the WSL terminal and run the macOS/Linux installer <em>there</em></td>
+<td>Twenty minutes of setup first</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><a href="03-your-machine.html">Your machine</a> walks through WSL properly</strong>, including what
+to do when corporate IT has virtualisation switched off. If you're on Windows and
+have any choice in the matter, WSL is the route that makes the rest of this guide
+work exactly as written.</p>
+<h3 id="prove-it-worked">Prove it worked<a class="anchor" href="#prove-it-worked" aria-label="Link to this section">#</a></h3>
+<p>Close your terminal, open a fresh one — installers change your PATH (the list of
+folders your terminal searches for programs), and a terminal that was already
+open doesn't know that yet. Then:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">claude --version
+</code></pre></div>
+<p>A healthy answer is a version number followed by <code>(Claude Code)</code>, like this:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">2.1.226 (Claude Code)
+</code></pre></div>
+<p>Your number will be different and higher. What matters is that you get a number
+rather than an error. If you get <code>command not found</code>, that is a PATH problem and
+<a href="#when-it-doesnt-work">the table at the bottom</a> has the fix.</p>
+<p>For a fuller check — install health, configuration errors, whether the last
+update worked — there's a built-in diagnostic that prints a report without
+starting a session:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">claude doctor
+</code></pre></div>
+<h3 id="not-keen-on-the-terminal">Not keen on the terminal?<a class="anchor" href="#not-keen-on-the-terminal" aria-label="Link to this section">#</a></h3>
+<p>The terminal is not the only door in. There is a <strong>desktop app</strong> for macOS,
+Windows and Linux, and extensions for <strong>VS Code</strong> and <strong>JetBrains IDEs</strong> (an IDE
+being a code editor with tooling built in). They run the same agent with a
+graphical interface around it.</p>
+<p>They're genuinely good, and if the terminal puts you off, start there:
+<a href="https://code.claude.com/docs/en/desktop-quickstart">desktop</a>,
+<a href="https://code.claude.com/docs/en/vs-code">VS Code</a>,
+<a href="https://code.claude.com/docs/en/jetbrains">JetBrains</a>.</p>
+<p>One caveat, because it catches people: <strong>the VS Code extension does not give you
+a <code>claude</code> command in your terminal.</strong> It keeps its own private copy. The rest of
+this guide assumes you can type <code>claude</code> at a prompt, so if you go the extension
+route, also run the standalone install above.</p>
+<hr />
+<h2 id="signing-in-and-the-money-question">Signing in, and the money question<a class="anchor" href="#signing-in-and-the-money-question" aria-label="Link to this section">#</a></h2>
+<p>Run <code>claude</code> for the first time and it walks you through logging in. It opens
+your browser, you sign in to your Anthropic account and approve access, and the
+browser hands control back to the terminal. Your credentials are then stored on
+your machine and you don't do this again. To switch accounts later, type
+<code>/login</code> inside a running session.</p>
+<p>The exact wording of those first-run screens changes between versions — expect a
+couple of setup questions (colour theme, that sort of thing) before the login
+step. What you're looking for is a browser tab opening and a "you're logged in"
+message back in the terminal.</p>
+<h3 id="the-two-kinds-of-billing-which-are-not-the-same-thing">The two kinds of billing, which are not the same thing<a class="anchor" href="#the-two-kinds-of-billing-which-are-not-the-same-thing" aria-label="Link to this section">#</a></h3>
+<p>This confuses almost everyone, so here it is plainly. Anthropic sells two
+different things, and you may need one, or both, for different reasons:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th></th>
+<th><strong>A Claude subscription</strong></th>
+<th><strong>API credit</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What it is</td>
+<td>A monthly plan — Pro, Max, Team, Enterprise</td>
+<td>Pay-as-you-go credit on an Anthropic Console account</td>
+</tr>
+<tr>
+<td>How you pay</td>
+<td>Fixed monthly fee</td>
+<td>Per unit of text processed, drawn down from a balance you top up</td>
+</tr>
+<tr>
+<td>What it covers here</td>
+<td><strong>You</strong> using Claude Code to build and deploy</td>
+<td><strong>Your deployed app</strong> calling Claude on behalf of its users</td>
+</tr>
+<tr>
+<td>Where you set it up</td>
+<td><a href="https://claude.com/pricing">claude.com/pricing</a></td>
+<td><a href="https://platform.claude.com">platform.claude.com</a></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Claude Code needs a Pro, Max, Team or Enterprise subscription, or a Console
+account with credit.</strong> The free Claude.ai plan does not include Claude Code. A
+subscription is the usual choice, because it's a predictable monthly number
+rather than a meter running while you work.</p>
+<p><strong>API credit is a separate question, and only if your project calls Claude.</strong> If
+you're building a "summarise this with AI" button, that button will make API
+calls from your server, and those are billed per use against a key you create.
+That key is your app's, not yours — it lives in a secret store, never in your
+code, and <a href="05-keys-and-access.html">Keys and access</a> covers exactly how to handle
+it and how to avoid publishing it by accident.</p>
+<p>So: <strong>subscription to build, API credit only if the thing you built talks to
+Claude.</strong> Many projects in this guide never need the second one.</p>
+<p>Prices and plan names change, so check
+<strong><a href="https://claude.com/pricing">claude.com/pricing</a></strong> rather than trusting any
+number written down elsewhere, including here.</p>
+<blockquote>
+<p><strong>A note if you already have an <code>ANTHROPIC_API_KEY</code> set</strong> as an environment
+variable on your machine: Claude Code notices it and offers to use that key
+instead of opening a browser. That's fine, but be aware it means your agent
+session is billed to your API balance, not your subscription.</p>
+</blockquote>
+<hr />
+<h2 id="codex-if-youd-rather-use-that">Codex, if you'd rather use that<a class="anchor" href="#codex-if-youd-rather-use-that" aria-label="Link to this section">#</a></h2>
+<p><strong>Codex</strong> is OpenAI's terminal coding agent. Same idea: it runs on your machine,
+reads and writes files in a folder, runs commands, and asks before it acts.</p>
+<blockquote>
+<p>Checked against OpenAI's documentation in August 2026:
+<strong><a href="https://developers.openai.com/codex/cli">https://developers.openai.com/codex/cli</a></strong>. As above — if a command
+misbehaves, that page wins.</p>
+</blockquote>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># macOS or Linux — the standalone installer
+curl -fsSL https://chatgpt.com/codex/install.sh | sh
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-powershell"># Windows
+powershell -ExecutionPolicy ByPass -c &quot;irm https://chatgpt.com/codex/install.ps1 | iex&quot;
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># Or via npm, or Homebrew on macOS
+npm install -g @openai/codex
+brew install --cask codex
+</code></pre></div>
+<p>Check it landed:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">codex --version
+</code></pre></div>
+<p>A healthy answer looks like <code>codex-cli 0.146.0</code> — again, your number will differ.</p>
+<p>Then run <code>codex</code> in a project folder and choose <strong>Sign in with ChatGPT</strong>. That
+uses a paid ChatGPT plan (Plus, Pro, Business, Edu or Enterprise); the browser
+opens, you approve, and you're in. You can sign in with an OpenAI API key
+instead, which is pay-as-you-go and needs
+<a href="https://developers.openai.com/codex/auth">a bit more setup</a>. Plan details and
+prices live at <a href="https://openai.com/chatgpt/pricing/">openai.com/chatgpt/pricing</a>.</p>
+<h3 id="the-honest-comparison">The honest comparison<a class="anchor" href="#the-honest-comparison" aria-label="Link to this section">#</a></h3>
+<p>Both agents will get you through this guide. They read files, write files, run
+commands, and ask permission, and the day-to-day feel of using them is more
+similar than different. The difference for <em>you</em>, right now, is fit: this guide's
+example prompts, its hand-over page, and its
+<a href="08-let-claude-drive.html">skill</a> — a packaged set of instructions that teaches the
+agent this specific deployment workflow — are all written for Claude Code, so
+that path has fewer edges. With Codex you'll be pasting the same instructions in
+plain English instead, which works, and is a couple of extra steps.</p>
+<p>Pick on what you already pay for. You are not making a permanent decision; both
+install in a few minutes and they can coexist on the same machine.</p>
+<hr />
+<h2 id="your-first-two-minutes-with-it">Your first two minutes with it<a class="anchor" href="#your-first-two-minutes-with-it" aria-label="Link to this section">#</a></h2>
+<p>Do this now, before you need it for anything real. The point is to see the loop
+once — propose, approve, done — so it isn't unfamiliar when the stakes are your
+actual project.</p>
+<p>Make an empty folder and move into it. <code>mkdir</code> makes a directory, <code>cd</code> changes
+into it:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">mkdir ~/agent-test
+cd ~/agent-test
+</code></pre></div>
+<p>Start the agent:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">claude
+</code></pre></div>
+<p>You'll get a prompt with the version, the model it's using, and the folder it's
+working in shown above it. That folder line matters — it's the boundary of what
+the agent will touch.</p>
+<p>Now type this and press Enter:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">Make a single HTML file that shows the current time in a big font, and open it.
+</code></pre></div>
+<p>Here's what happens, and it's worth watching rather than skimming:</p>
+<ol>
+<li>It thinks for a few seconds, then tells you what it intends to do — usually
+   one sentence, something like "I'll create an <code>index.html</code> with a clock that
+   updates every second."</li>
+<li>It shows you the <strong>actual file it wants to write</strong>, with the HTML, CSS and
+   JavaScript in it, and asks whether to create it. Options along the lines of
+   <strong>Yes</strong> / <strong>Yes, and don't ask again</strong> / <strong>No, tell Claude what to do
+   differently</strong>. Read the file. It's short. Choose <strong>Yes</strong>.</li>
+<li>It writes the file. You'll see a confirmation with the path.</li>
+<li>Because you said "and open it", it asks a <em>second</em> time — this time to run a
+   command that opens the file in your browser (<code>open index.html</code> on macOS,
+   <code>xdg-open</code> on Linux, <code>start</code> on Windows). This is a separate permission
+   because running a command is a different kind of act from writing a file.
+   Approve it.</li>
+<li>Your browser opens. There's a clock on the screen. You made that by typing an
+   English sentence.</li>
+</ol>
+<p>That's the entire loop, and everything later in this guide is that loop repeated
+with higher stakes. Try one follow-up before you leave, because <em>changing</em> things
+is most of the real work:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">Make the background dark and the text a soft green, and add today's date underneath.
+</code></pre></div>
+<p>It'll edit the file and show you what changed. Refresh the browser tab.</p>
+<p>When you're done, type <code>/exit</code> (or press <code>Ctrl+D</code> twice) to leave. Nothing about
+that folder is special — delete <code>~/agent-test</code> whenever you like.</p>
+<hr />
+<h2 id="how-to-talk-to-it-well">How to talk to it well<a class="anchor" href="#how-to-talk-to-it-well" aria-label="Link to this section">#</a></h2>
+<p>The gap between a frustrating session and a good one is mostly these five
+habits.</p>
+<ul>
+<li><strong>Say the goal, not the commands.</strong> "I want this online at yourthing.com over
+  HTTPS" gets a better result than "run <code>aws s3 sync</code>". You're describing the
+  destination; working out the route is its job, and it knows more routes than
+  you do.</li>
+<li><strong>Say up front what it must stop and ask about.</strong> "Stop before anything that
+  spends money, and before the first commit" is a sentence that has saved people
+  real money. Constraints stated at the start are respected far more reliably
+  than ones you shout mid-flight.</li>
+<li><strong>Paste whole errors, never summaries.</strong> Every line, including the ugly ones
+  you'd assume are noise. The detail that identifies the real cause is almost
+  always in the part people trim — deploy failures in particular routinely
+  <em>look</em> like permission problems and <em>are</em> configuration problems, and the
+  difference is a single line near the bottom.</li>
+<li><strong>Ask it to explain before you approve something you don't recognise.</strong> "What
+  does this command actually do, and what happens if it's wrong?" gets a real
+  answer, costs you fifteen seconds, and is how you end up understanding your
+  own setup rather than owning a black box.</li>
+<li><strong>Tell it when it's wrong.</strong> "That's not the domain I asked for" or "you've
+  changed a file I didn't want touched" — say it immediately and plainly. It
+  will correct course. Being polite about a mistake for three more turns is how
+  small errors become tangled ones.</li>
+</ul>
+<hr />
+<h2 id="when-it-doesnt-work">When it doesn't work<a class="anchor" href="#when-it-doesnt-work" aria-label="Link to this section">#</a></h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>What you see</th>
+<th>What's happening</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>zsh: command not found: claude</code>, <code>bash: claude: command not found</code>, or <code>'claude' is not recognized as an internal or external command</code></td>
+<td>The program installed, but your terminal doesn't know where to look for it. Your <strong>PATH</strong> is the list of folders it searches, and the install folder isn't on it — often because this terminal window was already open when you installed</td>
+<td>First, close the terminal and open a new one; that fixes it most of the time. If not, add the install folder to your PATH: <code>echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.zshrc</code> then <code>source ~/.zshrc</code> (use <code>~/.bashrc</code> on most Linux). On Windows the installer puts it in <code>%USERPROFILE%\.local\bin</code></td>
+</tr>
+<tr>
+<td><code>The token '&amp;&amp;' is not a valid statement separator</code></td>
+<td>You ran the Command Prompt install line inside PowerShell</td>
+<td>Run the PowerShell version (<code>irm https://claude.ai/install.ps1 \| iex</code>) instead</td>
+</tr>
+<tr>
+<td><code>'irm' is not recognized as an internal or external command</code></td>
+<td>The opposite — the PowerShell line inside Command Prompt</td>
+<td>Run the <code>cmd</code> version, or open PowerShell</td>
+</tr>
+<tr>
+<td>Permission errors during install, or <code>EACCES</code> from npm</td>
+<td>The target folder isn't writable by your account, usually a side-effect of an earlier <code>sudo npm install -g</code></td>
+<td>Don't retry with <code>sudo</code> — that deepens the hole. Use the native installer instead: <code>curl -fsSL https://claude.ai/install.sh \| bash</code></td>
+</tr>
+<tr>
+<td>Login starts but no browser opens</td>
+<td>Common over SSH, inside WSL, or in a container — the agent asks the machine to open a browser and there isn't one, or it opens on the wrong computer</td>
+<td>At the login prompt press <code>c</code> to copy the sign-in URL, open it in a browser yourself, then paste the code it gives you back into the terminal. In WSL you can also point it at your Windows browser: <code>export BROWSER="/mnt/c/Program Files/Google/Chrome/Application/chrome.exe"</code></td>
+</tr>
+<tr>
+<td><code>OAuth error: Invalid code. Please make sure the full code was copied</code></td>
+<td>The login code expired, or got cut short when you copied it</td>
+<td>Retry the login and move through it briskly; make sure you've selected the whole code, which can wrap onto a second line in a narrow terminal</td>
+</tr>
+<tr>
+<td>Install fails with <code>403</code>, <code>Failed to fetch version</code>, or curl errors</td>
+<td>Something between you and the download server — a corporate proxy, a firewall, or a region where Claude Code isn't available</td>
+<td>If you're behind a proxy, set it before installing: <code>export HTTPS_PROXY=http://proxy.example.com:8080</code> (ask IT for the address). On PowerShell: <code>$env:HTTPS_PROXY = 'http://proxy.example.com:8080'</code>. Try a different network to confirm the proxy is the cause</td>
+</tr>
+<tr>
+<td><code>unable to get local issuer certificate</code> or <code>SELF_SIGNED_CERT_IN_CHAIN</code></td>
+<td>A corporate proxy is inspecting encrypted traffic by re-signing it with the company's own certificate, which your machine doesn't yet trust</td>
+<td>Point Claude Code at your organisation's certificate file: <code>export NODE_EXTRA_CA_CERTS=/path/to/ca-cert.pem</code>. Your IT team can give you that file. Details on <a href="https://code.claude.com/docs/en/network-config">network configuration</a></td>
+</tr>
+<tr>
+<td>A VPN makes it hang or fail</td>
+<td>Some corporate VPNs route or block traffic to <code>api.anthropic.com</code>, <code>claude.ai</code> and <code>downloads.claude.ai</code></td>
+<td>Test with the VPN off. If it works, that's your answer, and the fix is an allowlist request to IT rather than anything you can change locally</td>
+</tr>
+<tr>
+<td>It installed but behaves oddly</td>
+<td>Could be a stale version, a broken settings file, or two installs fighting</td>
+<td>Run <code>claude doctor</code> — it prints a diagnostic report covering install health and configuration errors without starting a session</td>
+</tr>
+</tbody>
+</table></div>
+<p>If none of that matches, Anthropic's
+<a href="https://code.claude.com/docs/en/troubleshoot-install">installation troubleshooting page</a>
+is organised as error-message-to-fix and is more thorough than this table.</p>
+<hr />
+<p>You now have an agent that can read files, write files, and run commands in a
+folder you choose — which is everything the rest of this guide needs. The next
+question is what to point it at.</p>
+<p><strong>Next:</strong> <a href="01-find-an-idea.html">Come up with something to build →</a></p>
+    <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
+    <nav class="pager"><a class="next" href="01-find-an-idea.html"><span>Next</span>Stage 0.5 — Find an idea</a></nav>
+  </main>
+</div>
+<script>
+// Copy the whole block — several are heredocs that break if pasted line by line.
+document.querySelectorAll('.codewrap').forEach(function (w) {
+  var btn = w.querySelector('.copy'), pre = w.querySelector('pre');
+  if (!btn || !pre) return;
+  btn.addEventListener('click', function () {
+    navigator.clipboard.writeText(pre.innerText).then(function () {
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+    }).catch(function () { btn.textContent = 'Press Ctrl+C'; });
+  });
+});
+
+// Remember which pages are finished — the AWS track spans more than one sitting.
+(function () {
+  var KEY = 'swyb-done', box = document.getElementById('page-done');
+  if (!box) return;
+  var page = document.body.dataset.page;
+  var read = function () { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
+  var done = read();
+  box.checked = !!done[page];
+  box.addEventListener('change', function () {
+    var d = read();
+    if (box.checked) { d[page] = true; } else { delete d[page]; }
+    localStorage.setItem(KEY, JSON.stringify(d));
+    paint();
+  });
+  function paint() {
+    var d = read();
+    document.querySelectorAll('.nav a[data-page]').forEach(function (a) {
+      a.textContent.indexOf('✓') === 0 && (a.textContent = a.textContent.slice(1));
+      var t = a.querySelector('.tick');
+      if (t) t.textContent = d[a.dataset.page] ? '✓ ' : '';
+    });
+  }
+  paint();
+})();
+</script>
+</body>
+</html>

@@ -26,7 +26,7 @@ OPTIONS
 
 WHAT IT REPORTS
   SHAPE          static | backend | longrunning | unknown
-                 Matches the three shapes in guide/00-start-here.md
+                 Matches the three shapes in guide/02-start-here.md
   FRAMEWORK      vite, next, astro, cra, sveltekit, nuxt, gatsby, eleventy,
                  hugo, jekyll, plain, python, none
   BUILD_CMD      what to run to build, or empty if there's no build step
@@ -135,7 +135,7 @@ if [ -f requirements.txt ] || [ -f pyproject.toml ] || [ -f Pipfile ]; then
     note "Streamlit/Gradio — Streamlit Community Cloud or Hugging Face Spaces fit this better than either track"
   elif grep -rqiE '^(flask|fastapi|django|uvicorn|gunicorn)' requirements.txt pyproject.toml 2>/dev/null; then
     FRAMEWORK="python"; SHAPE="longrunning"
-    note "Python web server — see the honest note in guide/00-start-here.md; it may be convertible to Shape 2"
+    note "Python web server — see the honest note in guide/02-start-here.md; it may be convertible to Shape 2"
   elif [ "$FRAMEWORK" = "none" ]; then
     FRAMEWORK="python"; SHAPE="longrunning"
   fi
@@ -217,7 +217,7 @@ head1 "$(pwd)"
 case "$SHAPE" in
   static)      ok   "Shape 1 — static site. Both tracks work, ~20 minutes." ;;
   backend)     ok   "Shape 2 — site with a backend. Both tracks work, ~45 minutes." ;;
-  longrunning) warn "Shape 3 — needs something running. Read the honest note in guide/00-start-here.md first." ;;
+  longrunning) warn "Shape 3 — needs something running. Read the honest note in guide/02-start-here.md first." ;;
   *)           warn "Couldn't tell what this is. Say what you built and I'll work it out." ;;
 esac
 
@@ -253,6 +253,6 @@ fi
 
 say ""
 case "$SHAPE" in
-  longrunning) dim "Next: guide/00-start-here.md#the-honest-note-about-shape-3" ;;
+  longrunning) dim "Next: guide/02-start-here.md#the-honest-note-about-shape-3" ;;
   *)           dim "Next: preflight.sh, then pick a track (guide/10-cloudflare.md or guide/20-aws.md)" ;;
 esac

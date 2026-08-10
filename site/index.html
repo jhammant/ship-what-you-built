@@ -252,10 +252,15 @@
       </div>
 
       <div class="actions">
-        <a class="btn btn-primary" href="/guide/00-start-here.html">Read the guide</a>
+        <a class="btn btn-primary" href="/guide/02-start-here.html">Read the guide</a>
         <a class="btn btn-ghost" href="#start">Start in three steps</a>
         <a class="btn btn-ghost" href="https://github.com/jhammant/ship-what-you-built/blob/main/SHOWCASE.md">See what people shipped</a>
       </div>
+      <p style="color:var(--muted);font-size:.95rem">
+        Haven't built anything yet? Start at
+        <a href="/guide/00-install-claude-code.html">Stage&nbsp;0 — get an AI coding agent</a>,
+        then <a href="/guide/01-find-an-idea.html">work out what to build</a>.
+      </p>
     </div>
   </section>
 
@@ -346,19 +351,19 @@
         <p class="lede">The guide starts by working out which of these you have, because it changes everything after it.</p>
       </div>
       <div class="cards">
-        <a class="card" href="/guide/00-start-here.html#shape-1--a-static-site">
+        <a class="card" href="/guide/02-start-here.html#shape-1--a-static-site">
           <span class="tag">Shape 1 · ~20 min</span>
           <h3>A static site</h3>
           <p>HTML, CSS and JS — or anything with a build step that spits out a folder. Nothing has to stay running.</p>
           <span class="more">Read this bit &rarr;</span>
         </a>
-        <a class="card" href="/guide/00-start-here.html#shape-2--a-site-with-a-bit-of-backend">
+        <a class="card" href="/guide/02-start-here.html#shape-2--a-site-with-a-bit-of-backend">
           <span class="tag">Shape 2 · ~45 min</span>
           <h3>Plus a bit of backend</h3>
           <p>A form that saves something, or an API key you can't put in the browser. A function runs per request, then stops.</p>
           <span class="more">Read this bit &rarr;</span>
         </a>
-        <a class="card flag" href="/guide/00-start-here.html#the-honest-note-about-shape-3">
+        <a class="card flag" href="/guide/02-start-here.html#the-honest-note-about-shape-3">
           <span class="tag">Shape 3 · be honest</span>
           <h3>Something that keeps running</h3>
           <p>A Python server, a bot, a database you manage. Neither track's free tier fits — so the guide says so, and points you somewhere that does.</p>
@@ -418,7 +423,7 @@ brew install git gh jq awscli
 
 # Windows: open PowerShell as Administrator, then reboot
 wsl --install</code></pre>
-          <p class="meta"><a href="/guide/01-your-machine.html">Full setup, per platform &rarr;</a></p>
+          <p class="meta"><a href="/guide/03-your-machine.html">Full setup, per platform &rarr;</a></p>
         </div>
 
         <div class="step">
@@ -429,7 +434,7 @@ wsl --install</code></pre>
             on two-factor while you're there, and on AWS set the budget alarm
             <strong>before</strong> you build anything.
           </p>
-          <p class="meta"><a href="/guide/02-accounts.html">Which accounts, and what they cost &rarr;</a></p>
+          <p class="meta"><a href="/guide/04-accounts.html">Which accounts, and what they cost &rarr;</a></p>
         </div>
 
         <div class="step">
@@ -445,7 +450,7 @@ npx --yes wrangler@latest login    # Track A (Cloudflare)</code></pre>
           <div class="says">
             <span>I've built something in this folder and I want it online at a domain I own. Read shipwhatyoubuilt.com/guide and follow it. Use Track B (AWS). Tell me what shape my project is first, and stop before anything that spends money.</span>
           </div>
-          <p class="meta"><a href="/guide/06-let-claude-drive.html">The full handover, and where it stops to ask you &rarr;</a></p>
+          <p class="meta"><a href="/guide/08-let-claude-drive.html">The full handover, and where it stops to ask you &rarr;</a></p>
         </div>
       </div>
 
@@ -476,6 +481,23 @@ cp -r ship-what-you-built/skill ~/.claude/skills/first-site</code></pre>
         <span>It's still showing the old version</span>
         <span>Open source this and set up automatic deploys</span>
       </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap stack">
+      <p class="eyebrow">Thirty-five seconds</p>
+      <h2>What this actually looks like</h2>
+      <p class="lede">
+        Made with Remotion — written as code, so it can be regenerated whenever
+        the thing changes. <a href="/guide/40-launch-video.html">The guide shows you how</a>.
+      </p>
+      <video controls muted playsinline preload="metadata"
+             poster="/preview.png"
+             style="width:100%;border-radius:13px;border:1px solid var(--line);background:var(--sunken)">
+        <source src="/launch.mp4" type="video/mp4">
+        Your browser can't play this video — <a href="/launch.mp4">download it instead</a>.
+      </video>
     </div>
   </section>
 

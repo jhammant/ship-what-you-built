@@ -13,8 +13,8 @@ elsewhere — in exchange for registration and DNS being wired together for you.
 > newly-registered domain, and the guide was corrected wherever reality
 > disagreed with it. The site you're reading this on is hosted exactly this way.
 
-**Before you start:** [the three layers](04-three-layers.md) and
-[your code on GitHub](05-github.md).
+**Before you start:** [the three layers](06-four-layers.md) and
+[your code on GitHub](07-github.md).
 
 > **This track has a real failure mode that Track A doesn't: money.** A leaked
 > AWS key gets used for crypto mining, and the bills reach five figures within
@@ -306,7 +306,7 @@ aws s3 sync . s3://$BUCKET/ --delete \
 > `.git/` and possibly `.env` in it. **`aws s3 sync` does not read
 > `.gitignore`.** Without those excludes you would publish your entire commit
 > history and your API keys to a bucket that CloudFront then serves to the
-> world, having spent all of [page 02](05-github.md) learning not to.
+> world, having spent all of [page 02](07-github.md) learning not to.
 
 `--delete` removes files from the bucket that no longer exist locally. Powerful
 and unforgiving — **always check you're in the right folder first**, which is
@@ -362,7 +362,7 @@ aws acm describe-certificate --certificate-arn $CERT_ARN --region us-east-1 \
   --query 'Certificate.Status' --output text
 ```
 
-That's [layer 4 waiting on layer 2](04-three-layers.md#layer-4--the-certificate),
+That's [layer 4 waiting on layer 2](06-four-layers.md#layer-4--the-certificate),
 made visible. Usually 2–5 minutes. **Always check the status afterwards** — the
 waiter gives up after a fixed number of attempts and, depending on your CLI
 version, may not fail loudly when it does.
@@ -544,7 +544,7 @@ done
 meaning "CloudFront" to Route 53. Every CloudFront alias record on earth uses it.
 
 An **alias record** is a Route 53 speciality: behaves like a CNAME, works at the
-apex — [the problem from layer 2](04-three-layers.md#the-apex-problem--the-one-gotcha-worth-knowing-in-advance),
+apex — [the problem from layer 2](06-four-layers.md#the-apex-problem--the-one-gotcha-worth-knowing-in-advance),
 solved.
 
 ```bash

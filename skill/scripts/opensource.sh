@@ -99,7 +99,7 @@ write_file() {
 # ============================================================ PHASE 2: publish
 if [ "$PUBLISH" = "1" ]; then
   [ -n "$REPO" ] || die "--publish needs --repo OWNER/NAME"
-  have gh || die "GitHub CLI not installed. See guide/05-github.md step 1."
+  have gh || die "GitHub CLI not installed. See guide/07-github.md step 1."
   gh auth status >/dev/null 2>&1 || die "Not logged in. Run: gh auth login"
   git rev-parse --is-inside-work-tree >/dev/null 2>&1 || die "Not a git repository. Run phase 1 first."
   git rev-parse HEAD >/dev/null 2>&1 || die "No commits yet. Commit first — that step is deliberately yours."

@@ -74,7 +74,7 @@ broken. Don't re-explain DNS; just deploy.
 "$FIRST_SITE/scripts/detect.sh"
 ```
 
-It reports one of three shapes, matching `https://github.com/jhammant/ship-what-you-built/blob/main/guide/00-start-here.md`:
+It reports one of three shapes, matching `https://github.com/jhammant/ship-what-you-built/blob/main/guide/02-start-here.md`:
 
 - **static** — files only. Easy. ~20 minutes.
 - **backend** — needs a function to run per request. ~45 minutes.
@@ -83,7 +83,7 @@ It reports one of three shapes, matching `https://github.com/jhammant/ship-what-
 **If it says `longrunning`, stop and say so before doing anything else.** A
 Flask app or a Discord bot does not fit either track's free tier, and letting
 someone spend an hour discovering that is a bad outcome. Read them the table in
-`https://github.com/jhammant/ship-what-you-built/blob/main/guide/00-start-here.md#the-honest-note-about-shape-3` and offer the honest
+`https://github.com/jhammant/ship-what-you-built/blob/main/guide/02-start-here.md#the-honest-note-about-shape-3` and offer the honest
 question: does it *have* to keep running, or did it just end up that way? A
 surprising number of Flask apps are one form and one API call, and convert to
 `backend` shape in twenty minutes.

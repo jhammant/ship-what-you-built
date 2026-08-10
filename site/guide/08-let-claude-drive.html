@@ -8,7 +8,7 @@
 <meta property="og:title" content="Let Claude drive — Ship What You Built">
 <meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
 <meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
-<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/06-let-claude-drive.html">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/08-let-claude-drive.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -101,11 +101,11 @@ color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
-<body data-page="06-let-claude-drive">
+<body data-page="08-let-claude-drive">
 <div class="shell">
   <aside class="side">
     <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
-    <nav><ul class="nav"><li><a href="00-start-here.html" data-page="00-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="01-your-machine.html" data-page="01-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="02-accounts.html" data-page="02-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="03-keys-and-access.html" data-page="03-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="04-three-layers.html" data-page="04-three-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="05-github.html" data-page="05-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="06-let-claude-drive.html" aria-current="page" data-page="06-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <nav><ul class="nav"><li><a href="00-install-claude-code.html" data-page="00-install-claude-code"><span class="tick"></span>Stage 0 — Get an agent<small>Install Claude Code or Codex</small></a></li><li><a href="01-find-an-idea.html" data-page="01-find-an-idea"><span class="tick"></span>Stage 0.5 — Find an idea<small>What to actually build</small></a></li><li><a href="02-start-here.html" data-page="02-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="03-your-machine.html" data-page="03-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="04-accounts.html" data-page="04-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="05-keys-and-access.html" data-page="05-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="06-four-layers.html" data-page="06-four-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="07-github.html" data-page="07-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="08-let-claude-drive.html" aria-current="page" data-page="08-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
     <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#why-this-order">Why this order</a></li><li><a class="lvl2" href="#step-1--create-the-accounts">Step 1 — Create the accounts</a></li><li><a class="lvl2" href="#step-2--authorise-the-tools-on-your-machine">Step 2 — Authorise the tools on your machine</a></li><li><a class="lvl3" href="#prove-it-worked">Prove it worked</a></li><li><a class="lvl2" href="#step-3--hand-it-over">Step 3 — Hand it over</a></li><li><a class="lvl3" href="#if-you-installed-the-skill">If you installed the skill</a></li><li><a class="lvl2" href="#what-claude-will-do-and-where-it-stops">What Claude will do, and where it stops</a></li><li><a class="lvl2" href="#how-to-be-a-good-driver">How to be a good driver</a></li><li><a class="lvl2" href="#when-it-goes-wrong">When it goes wrong</a></li><li><a class="lvl2" href="#doing-it-by-hand-instead">Doing it by hand instead</a></li></ul></div>
   </aside>
   <main>
@@ -115,7 +115,7 @@ tools on your own machine, and then you hand the work to Claude Code and answer
 its questions.</p>
 <p><strong>Time:</strong> about 30 minutes, most of it waiting for DNS.
 <strong>What you type:</strong> roughly six commands and a paragraph of English.</p>
-<p>The rest of this guide — <a href="04-three-layers.html">the three layers</a>,
+<p>The rest of this guide — <a href="06-four-layers.html">the three layers</a>,
 <a href="10-cloudflare.html">Track A</a>, <a href="20-aws.html">Track B</a> — explains what is actually
 happening underneath. You do not have to read it first. Come back to it when
 something breaks, or when you want to understand what you just did, which is
@@ -136,13 +136,13 @@ You authorise the tools, and Claude uses the tools.</p>
 <blockquote>
 <p><strong>If anything ever asks you to paste a secret into the chat, stop.</strong> Something
 is set up wrong. There is no step in this guide where that is the right
-answer. See <a href="03-keys-and-access.html">Keys, and giving Claude access</a>.</p>
+answer. See <a href="05-keys-and-access.html">Keys, and giving Claude access</a>.</p>
 </blockquote>
 <hr />
 <h2 id="step-1--create-the-accounts">Step 1 — Create the accounts<a class="anchor" href="#step-1--create-the-accounts" aria-label="Link to this section">#</a></h2>
 <p>Do this in a browser. It is the one part that genuinely cannot be automated,
 because it involves your email, your card and your consent.</p>
-<p>Follow <strong><a href="02-accounts.html">The accounts you need</a></strong> and come back. In short:</p>
+<p>Follow <strong><a href="04-accounts.html">The accounts you need</a></strong> and come back. In short:</p>
 <div class="tablewrap"><table>
 <thead>
 <tr>
@@ -196,7 +196,7 @@ aws configure
 <p><code>aws configure</code> is the exception: AWS has no browser login for the CLI by
 default, so you paste the access key <strong>into the terminal prompt</strong>, not into the
 chat. It writes <code>~/.aws/credentials</code>, which is exactly where it belongs.
-<a href="02-accounts.html">02-accounts.md</a> walks through creating that key as a limited
+<a href="04-accounts.html">04-accounts.md</a> walks through creating that key as a limited
 IAM user rather than using your root account.</p>
 <h3 id="prove-it-worked">Prove it worked<a class="anchor" href="#prove-it-worked" aria-label="Link to this section">#</a></h3>
 <p>Run these. Each should print something about <em>you</em>:</p>
@@ -310,10 +310,10 @@ genuinely good way to learn, and you end up able to debug it later.</p>
 </ul>
 <p>Both contain every command, with an explanation of what each one does.</p>
 <hr />
-<p><strong>Next:</strong> <a href="04-three-layers.html">The three layers →</a> — ten minutes that make
+<p><strong>Next:</strong> <a href="06-four-layers.html">The three layers →</a> — ten minutes that make
 everything above make sense, whether or not you typed it yourself.</p>
     <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
-    <nav class="pager"><a class="prev" href="05-github.html"><span>Previous</span>Get it on GitHub</a><a class="next" href="10-cloudflare.html"><span>Next</span>Track A — Cloudflare</a></nav>
+    <nav class="pager"><a class="prev" href="07-github.html"><span>Previous</span>Get it on GitHub</a><a class="next" href="10-cloudflare.html"><span>Next</span>Track A — Cloudflare</a></nav>
   </main>
 </div>
 <script>

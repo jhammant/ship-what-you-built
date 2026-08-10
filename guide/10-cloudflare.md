@@ -7,8 +7,8 @@ itself every time you push to GitHub.
 **Cost:** the domain. Everything else here is free at personal-project scale, and
 Cloudflare's free tiers *stop serving* rather than silently billing you.
 
-**Before you start:** [the three layers](04-three-layers.md) and
-[your code on GitHub](05-github.md).
+**Before you start:** [the three layers](06-four-layers.md) and
+[your code on GitHub](07-github.md).
 
 > **UI wording moves.** Cloudflare renames menu items a few times a year. If a
 > label below doesn't match what you see, search the dashboard for the nearest
@@ -55,7 +55,7 @@ Registration is instant, and the domain appears in your dashboard already set up
 
 ### 2b. You already own a domain elsewhere
 
-You're keeping the registrar and moving only DNS — [layer 2](04-three-layers.md#layer-2--dns).
+You're keeping the registrar and moving only DNS — [layer 2](06-four-layers.md#layer-2--dns).
 Nothing is transferred, nothing costs money, and it takes about ten minutes.
 
 1. Dashboard → **Add a domain** → type it → choose the **Free** plan.
@@ -124,7 +124,7 @@ Pages project → **Custom domains** → **Set up a custom domain** → type
 
 Because the domain is already in this Cloudflare account, that's the whole job.
 Cloudflare creates the DNS record itself, handles [the apex CNAME
-problem](04-three-layers.md#the-apex-problem--the-one-gotcha-worth-knowing-in-advance)
+problem](06-four-layers.md#the-apex-problem--the-one-gotcha-worth-knowing-in-advance)
 with CNAME flattening, and issues the certificate. Two to five minutes.
 
 **Add `www.yourthing.com` as well.** People type it. Cloudflare will redirect

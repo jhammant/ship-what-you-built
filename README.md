@@ -19,7 +19,7 @@ It comes in two halves. A **guide** you read (or hand to Claude Code and let it
 drive), and a **skill** that turns the fiddly parts into one-liners you don't
 have to memorise.
 
-**[Start here →](guide/00-start-here.md)** · **[See what people have shipped →](SHOWCASE.md)**
+**[Read it on the web →](https://shipwhatyoubuilt.com/guide/)** · **[Start here →](guide/02-start-here.md)** · **[See what people have shipped →](SHOWCASE.md)**
 
 ---
 
@@ -47,24 +47,32 @@ at the top and follow it end to end — you never have to mix them.
 | Teaches you | The modern default | The stack most companies actually run |
 
 Both tracks reach the same place: a domain, HTTPS, and pushes that deploy
-themselves. **[The chooser walks you through it →](guide/00-start-here.md)**
+themselves. **[The chooser walks you through it →](guide/02-start-here.md)**
 
 ## The guide
 
 | Page | What it covers |
 |---|---|
-| [00 — Start here](guide/00-start-here.md) | What did you build, and which track fits it |
-| [01 — The three layers](guide/04-three-layers.md) | Registrar vs DNS vs hosting — the model that makes everything else obvious |
-| [02 — GitHub](guide/05-github.md) | Your code in a repo, safely, without leaking a key |
+| [00 — Get an AI coding agent](guide/00-install-claude-code.md) | Install Claude Code (or Codex), and do one small thing with it |
+| [01 — Find an idea](guide/01-find-an-idea.md) | What to actually build, and how to cut it down to finishable |
+| [02 — Start here](guide/02-start-here.md) | What did you build, and which track fits it |
+| [03 — Your machine](guide/03-your-machine.md) | Terminal and tools, with a proper Windows/WSL walkthrough |
+| [04 — The accounts you need](guide/04-accounts.md) | GitHub, Cloudflare, AWS, Anthropic — and what each costs |
+| [05 — Keys and access](guide/05-keys-and-access.md) | API keys, and how to give Claude access without pasting secrets |
+| [06 — The four layers](guide/06-four-layers.md) | Registrar vs DNS vs hosting vs certificate — the model that makes everything obvious |
+| [07 — Get it on GitHub](guide/07-github.md) | Your code in a repo, safely, without leaking a key |
+| [08 — Let Claude drive](guide/08-let-claude-drive.md) | **The recommended path** — accounts, authorise the tools, hand over |
 | [10 — Track A: Cloudflare](guide/10-cloudflare.md) | Domain, Pages, Workers, custom domain, auto-deploy |
 | [20 — Track B: AWS](guide/20-aws.md) | Account safety, S3, CloudFront, Route 53, Lambda, OIDC deploys |
-| [30 — Share it](guide/30-share-it.md) | A README worth reading, and adding yourself to the showcase |
+| [30 — Share it](guide/30-share-it.md) | Link previews, a README worth reading, and the showcase |
+| [40 — Make a launch video](guide/40-launch-video.md) | Remotion, rendered from code, regenerable |
 | [90 — When it breaks](guide/90-troubleshooting.md) | Symptom → cause, for both tracks |
+| [99 — Glossary](guide/99-glossary.md) | Every term the guide uses, explained |
 
 Every page is written to be read **by you or by Claude Code**. Drop into the
 folder where your project lives, open Claude Code, and say:
 
-> Read `guide/00-start-here.md` and walk me through it.
+> Read `guide/02-start-here.md` and walk me through it.
 
 It will run the commands, explain what it's doing, and stop when it needs a
 decision from you.

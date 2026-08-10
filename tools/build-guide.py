@@ -32,25 +32,26 @@ REPO = "https://github.com/jhammant/ship-what-you-built"
 
 # Order matters: it drives the sidebar and the prev/next links.
 PAGES = [
-    ("00-start-here.md",      "Start here",           "What did you build?"),
-    ("01-your-machine.md",    "Your machine",         "Terminal and tools, incl. Windows"),
-    ("02-accounts.md",        "The accounts you need", "GitHub, Cloudflare, AWS, Anthropic"),
-    ("03-keys-and-access.md", "Keys and access",      "API keys, and giving Claude access"),
-    ("04-three-layers.md",    "The four layers",      "The model everything rests on"),
-    ("05-github.md",          "Get it on GitHub",     "Safely, without leaking a key"),
-    ("06-let-claude-drive.md", "Let Claude drive",    "The recommended path"),
-    ("10-cloudflare.md",      "Track A — Cloudflare", "Domain, Pages, auto-deploy"),
-    ("20-aws.md",             "Track B — AWS",        "S3, CloudFront, Route 53, OIDC"),
-    ("30-share-it.md",        "Share it",             "Previews, README, showcase"),
-    ("40-launch-video.md",    "Make a launch video",  "Remotion, rendered from code"),
-    ("90-troubleshooting.md", "When it breaks",       "Symptom → cause"),
-    ("99-glossary.md",        "Glossary",             "Every term, explained"),
+    ("00-install-claude-code.md", "Stage 0 — Get an agent",  "Install Claude Code or Codex"),
+    ("01-find-an-idea.md",     "Stage 0.5 — Find an idea", "What to actually build"),
+    ("02-start-here.md",       "Start here",            "What did you build?"),
+    ("03-your-machine.md",     "Your machine",          "Terminal and tools, incl. Windows"),
+    ("04-accounts.md",         "The accounts you need", "GitHub, Cloudflare, AWS, Anthropic"),
+    ("05-keys-and-access.md",  "Keys and access",       "API keys, and giving Claude access"),
+    ("06-four-layers.md",      "The four layers",       "The model everything rests on"),
+    ("07-github.md",           "Get it on GitHub",      "Safely, without leaking a key"),
+    ("08-let-claude-drive.md", "Let Claude drive",      "The recommended path"),
+    ("10-cloudflare.md",       "Track A — Cloudflare",  "Domain, Pages, auto-deploy"),
+    ("20-aws.md",              "Track B — AWS",         "S3, CloudFront, Route 53, OIDC"),
+    ("30-share-it.md",         "Share it",              "Previews, README, showcase"),
+    ("40-launch-video.md",     "Make a launch video",   "Remotion, rendered from code"),
+    ("90-troubleshooting.md",  "When it breaks",        "Symptom → cause"),
+    ("99-glossary.md",         "Glossary",              "Every term, explained"),
 ]
 
 # Pages still being written are skipped rather than fatal, so the site can be
 # rebuilt at any point mid-edit.
-OPTIONAL = {"01-your-machine.md", "02-accounts.md", "03-keys-and-access.md",
-            "40-launch-video.md", "99-glossary.md"}
+OPTIONAL: set[str] = set()
 
 
 def gh_slug(text: str, seen: dict[str, int]) -> str:
@@ -331,6 +332,15 @@ def build(out_dir: pathlib.Path) -> int:
             shell(title=title, page_id=page_id, nav=nav, onpage=onpage,
                   body=body, pager="".join(parts))
         )
+
+    # Prune output from pages that have since been renamed or removed.
+    # Without this, a renumber leaves the old HTML live on the site, still
+    # linking to files that no longer exist.
+    keep = {f"{p[0][:-3]}.html" for p in present} | {"index.html"}
+    for stale in sorted(out_dir.glob("*.html")):
+        if stale.name not in keep:
+            stale.unlink()
+            print(f"  removed stale page: {stale.name}")
 
     (out_dir / "index.html").write_text(
         f'<!doctype html><meta charset="utf-8">'

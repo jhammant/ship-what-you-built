@@ -64,7 +64,7 @@ following it.
 (A **repository**, or "repo", is the folder of your project as Git tracks it —
 including every past version. That "every past version" part matters later, in
 [part 6](#6-when-a-key-leaks). If none of that is familiar yet,
-[05 — GitHub](05-github.md) covers it properly.)
+[05 — GitHub](07-github.md) covers it properly.)
 
 The alternative is always the same idea: the key lives *outside* the code, and
 the code asks for it by name at the moment it runs.
@@ -105,7 +105,7 @@ $env:ANTHROPIC_API_KEY = "sk-ant-api03-your-real-key"
 
 Use the PowerShell version only if you're on Windows and *not* using WSL (Windows
 Subsystem for Linux, which gives you a real Linux terminal inside Windows). If
-you followed [01 — Your machine](01-your-machine.md), you're in WSL and the
+you followed [01 — Your machine](03-your-machine.md), you're in WSL and the
 `export` version above is the one you want.
 
 > **The failure mode nobody warns you about:** environment variables are handed
@@ -139,7 +139,7 @@ Something has to read it — the `dotenv` package in Node, `python-dotenv` in
 Python, or a framework like Next.js or Vite that loads it automatically. It is
 **not encrypted**. The only thing protecting it is that `.gitignore` keeps it out
 of your repository, which is why
-[05 — GitHub](05-github.md) makes you write `.gitignore` *before* your first
+[05 — GitHub](07-github.md) makes you write `.gitignore` *before* your first
 commit rather than after.
 
 Commit a `.env.example` alongside it with the *names* and fake values, so anyone
@@ -147,7 +147,7 @@ cloning your repo knows what to fill in. That file is safe and useful.
 
 For the full list of what is and isn't a secret — publishable keys, bucket names,
 account IDs, the awkward Supabase case — see
-[what counts as a secret](05-github.md#3-what-counts-as-a-secret) on the GitHub
+[what counts as a secret](07-github.md#3-what-counts-as-a-secret) on the GitHub
 page. It isn't repeated here.
 
 ---
@@ -175,7 +175,7 @@ covered in [part 5](#5-giving-claude-code-access-to-your-accounts).)
 1. Go to **[platform.claude.com](https://platform.claude.com)** and sign in. This
    is the Claude Console — the developer site, not the chat app. (The old address
    `console.anthropic.com` still works; it redirects here.) If you created the
-   account in [02 — Accounts](02-accounts.md), use that login.
+   account in [02 — Accounts](04-accounts.md), use that login.
 2. **Settings → API keys → Create Key.**
 3. **Name it after the project** — `shipwhatyoubuilt-prod`, not `key1`. In six
    months you will have several, and the only way to know which one you can
@@ -512,7 +512,7 @@ them first.
 
 And turn on GitHub's push protection so the next one is caught before it leaves
 your machine — one command, in
-[05 — GitHub](05-github.md#turn-on-the-safety-nets).
+[05 — GitHub](07-github.md#turn-on-the-safety-nets).
 
 ---
 
@@ -547,4 +547,4 @@ And one prompt worth running in your project folder before anything goes public:
 
 ---
 
-**Next:** [The three layers →](04-three-layers.md)
+**Next:** [The four layers →](06-four-layers.md)

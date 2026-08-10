@@ -77,7 +77,7 @@ technology.
 
 Take Track A. You can move to AWS later without buying a new domain or changing
 a line of code — that's the whole point of
-[the three layers](04-three-layers.md), and it's the next page.
+[the three layers](06-four-layers.md), and it's the next page.
 
 ---
 
@@ -93,15 +93,15 @@ brew install git gh jq awscli
 
 # Debian / Ubuntu
 sudo apt update && sudo apt install -y git jq curl zip dnsutils
-# gh and awscli have their own installers — see guide/05-github.md
+# gh and awscli have their own installers — see guide/07-github.md
 ```
 
 | Tool | What it's for | Used in |
 |---|---|---|
 | `git` | tracks your changes | everywhere |
-| `gh` | GitHub from the command line | [02](05-github.md) |
+| `gh` | GitHub from the command line | [02](07-github.md) |
 | `curl` | fetching a URL to check it works | everywhere |
-| `dig` | asking DNS questions directly | [01](04-three-layers.md), troubleshooting |
+| `dig` | asking DNS questions directly | [01](06-four-layers.md), troubleshooting |
 | `jq` | reading JSON that AWS commands return | Track B |
 | `zip` | packaging a Lambda | Track B, backend only |
 | `aws` | the AWS command line | Track B |
@@ -118,7 +118,7 @@ sudo apt update && sudo apt install -y git jq curl zip dnsutils
 >    `wsl --install`. Reboot. You now have a real Ubuntu terminal, and every
 >    command in this guide works exactly as written. This is worth twenty minutes.
 > 2. **Git Bash** — comes with [Git for Windows](https://gitforwindows.org/).
->    Fine for Track A and for [02](05-github.md). Track B's heredocs mostly work,
+>    Fine for Track A and for [02](07-github.md). Track B's heredocs mostly work,
 >    but path handling occasionally bites.
 >
 > **Track A works fine either way** and needs far less terminal — most of it is
@@ -131,17 +131,17 @@ sudo apt update && sudo apt install -y git jq curl zip dnsutils
 
 Do these first regardless of track. They're short.
 
-1. **[Understand the three layers](04-three-layers.md)** — ten minutes of
+1. **[Understand the three layers](06-four-layers.md)** — ten minutes of
    reading that makes every subsequent step obvious instead of magic. Skip it
    and you will be copying commands you don't understand, which is exactly how
    people end up stuck.
 
-2. **[Get your code on GitHub](05-github.md)** — both tracks deploy *from* a
+2. **[Get your code on GitHub](07-github.md)** — both tracks deploy *from* a
    GitHub repository. This is also where you find out whether you're about to
    publish an API key, so it comes before anything is public.
 
 > **Already have your project on GitHub with a `.gitignore` you trust?** Skip
-> straight to your track. Come back to [02](05-github.md) at the "what counts as
+> straight to your track. Come back to [02](07-github.md) at the "what counts as
 > a secret" section before you make the repo public.
 
 ---
@@ -162,8 +162,8 @@ Here's the real picture:
 | Websockets / game server | Cloudflare Durable Objects (Track A, advanced) or a VM |
 | Postgres you manage | Don't. Use Supabase or Neon — the free tiers are generous and backups are somebody else's problem |
 
-**You can still use this guide.** Do [01](04-three-layers.md) and
-[02](05-github.md), buy your domain via whichever track you prefer, and then use
+**You can still use this guide.** Do [01](06-four-layers.md) and
+[02](07-github.md), buy your domain via whichever track you prefer, and then use
 that track's *DNS* section to point the domain at whatever host from the table
 above you chose. The domain and DNS parts transfer completely. Only the hosting
 chapter changes.
@@ -179,4 +179,4 @@ about twenty minutes of help from Claude. It's worth asking:
 
 ---
 
-**Next:** [The three layers →](04-three-layers.md)
+**Next:** [Your machine →](03-your-machine.md)

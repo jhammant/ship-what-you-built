@@ -284,7 +284,7 @@ still fetchable.
 
 All of the above, as one instruction — in the folder where your project lives:
 
-> Read https://github.com/jhammant/ship-what-you-built/blob/main/guide/05-github.md. Set this project up as a public GitHub repository
+> Read https://github.com/jhammant/ship-what-you-built/blob/main/guide/07-github.md. Set this project up as a public GitHub repository
 > following it exactly: write an appropriate `.gitignore` first, scan for
 > secrets and personal details before anything is staged, show me `git status`
 > and stop for my approval before the first commit, then create the repo with
@@ -295,5 +295,5 @@ whole guide where a mistake is permanent, so it's worth your own eyes.
 
 ---
 
-**Next:** pick your track —
+**Next:** [Let Claude drive →](08-let-claude-drive.md)
 [Track A: Cloudflare →](10-cloudflare.md) · [Track B: AWS →](20-aws.md)

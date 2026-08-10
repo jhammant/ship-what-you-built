@@ -1,0 +1,21 @@
+{
+  "name": "shipwhatyoubuilt-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LinkedIn launch video for shipwhatyoubuilt.com — localhost:3000 becomes a real address",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render LaunchVideo out/shipwhatyoubuilt-launch.mp4",
+    "card": "remotion still Card out/shipwhatyoubuilt-card.png"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "typescript": "^5.5.0"
+  }
+}

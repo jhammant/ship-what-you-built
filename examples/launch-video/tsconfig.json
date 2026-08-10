@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "lib": ["ES2018", "DOM", "DOM.Iterable"]
+  },
+  "include": ["src", "remotion.config.ts"]
+}

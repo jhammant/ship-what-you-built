@@ -168,13 +168,13 @@ you exactly which layer stops cooperating.
 
 Where your actual files or code live, and what sends them to the browser.
 
-Three broad shapes, matching the three in [the chooser](00-start-here.md):
+Three broad shapes, matching the three in [the chooser](02-start-here.md):
 
 | Shape | What "hosting" means | Track A | Track B |
 |---|---|---|---|
 | Static files | A CDN serving files from storage | Cloudflare Pages | S3 + CloudFront |
 | Plus a backend | A function that runs per request, then stops | Cloudflare Workers | Lambda |
-| Always running | A machine that stays on | (see [the honest note](00-start-here.md#the-honest-note-about-shape-3)) | |
+| Always running | A machine that stays on | (see [the honest note](02-start-here.md#the-honest-note-about-shape-3)) | |
 
 The first two only cost money when someone visits, and at personal-project
 traffic that rounds to zero. The third costs money whether or not anyone visits,
@@ -237,4 +237,4 @@ things is the single biggest time-saver in this entire guide.
 
 ---
 
-**Next:** [Get it on GitHub →](05-github.md)
+**Next:** [Get it on GitHub →](07-github.md)

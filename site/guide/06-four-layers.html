@@ -8,7 +8,7 @@
 <meta property="og:title" content="The four layers — Ship What You Built">
 <meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
 <meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
-<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/04-three-layers.html">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/06-four-layers.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -101,11 +101,11 @@ color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
-<body data-page="04-three-layers">
+<body data-page="06-four-layers">
 <div class="shell">
   <aside class="side">
     <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
-    <nav><ul class="nav"><li><a href="00-start-here.html" data-page="00-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="01-your-machine.html" data-page="01-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="02-accounts.html" data-page="02-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="03-keys-and-access.html" data-page="03-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="04-three-layers.html" aria-current="page" data-page="04-three-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="05-github.html" data-page="05-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="06-let-claude-drive.html" data-page="06-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <nav><ul class="nav"><li><a href="00-install-claude-code.html" data-page="00-install-claude-code"><span class="tick"></span>Stage 0 — Get an agent<small>Install Claude Code or Codex</small></a></li><li><a href="01-find-an-idea.html" data-page="01-find-an-idea"><span class="tick"></span>Stage 0.5 — Find an idea<small>What to actually build</small></a></li><li><a href="02-start-here.html" data-page="02-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="03-your-machine.html" data-page="03-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="04-accounts.html" data-page="04-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="05-keys-and-access.html" data-page="05-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="06-four-layers.html" aria-current="page" data-page="06-four-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="07-github.html" data-page="07-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="08-let-claude-drive.html" data-page="08-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
     <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#what-actually-happens-when-someone-visits-your-site">What actually happens when someone visits your site</a></li><li><a class="lvl2" href="#layer-1--the-registrar">Layer 1 — The registrar</a></li><li><a class="lvl2" href="#layer-2--dns">Layer 2 — DNS</a></li><li><a class="lvl3" href="#nameservers-who-holds-the-phone-book">Nameservers: who holds the phone book</a></li><li><a class="lvl3" href="#records-whats-in-the-phone-book">Records: what&#x27;s in the phone book</a></li><li><a class="lvl3" href="#the-apex-problem--the-one-gotcha-worth-knowing-in-advance">The apex problem — the one gotcha worth knowing in advance</a></li><li><a class="lvl3" href="#dns-propagation--mostly-a-myth">&quot;DNS propagation&quot; — mostly a myth</a></li><li><a class="lvl3" href="#see-it-for-yourself">See it for yourself</a></li><li><a class="lvl2" href="#layer-3--hosting">Layer 3 — Hosting</a></li><li><a class="lvl2" href="#layer-4--the-certificate">Layer 4 — The certificate</a></li><li><a class="lvl2" href="#the-mix-and-match-table">The mix-and-match table</a></li><li><a class="lvl2" href="#when-it-breaks-which-layer-is-it">When it breaks, which layer is it?</a></li></ul></div>
   </aside>
   <main>
@@ -264,7 +264,7 @@ you exactly which layer stops cooperating.</p>
 <hr />
 <h2 id="layer-3--hosting">Layer 3 — Hosting<a class="anchor" href="#layer-3--hosting" aria-label="Link to this section">#</a></h2>
 <p>Where your actual files or code live, and what sends them to the browser.</p>
-<p>Three broad shapes, matching the three in <a href="00-start-here.html">the chooser</a>:</p>
+<p>Three broad shapes, matching the three in <a href="02-start-here.html">the chooser</a>:</p>
 <div class="tablewrap"><table>
 <thead>
 <tr>
@@ -290,7 +290,7 @@ you exactly which layer stops cooperating.</p>
 <tr>
 <td>Always running</td>
 <td>A machine that stays on</td>
-<td>(see <a href="00-start-here.html#the-honest-note-about-shape-3">the honest note</a>)</td>
+<td>(see <a href="02-start-here.html#the-honest-note-about-shape-3">the honest note</a>)</td>
 <td></td>
 </tr>
 </tbody>
@@ -407,9 +407,9 @@ log into.</p>
 <p>Getting into the habit of asking <em>"which layer?"</em> before you start changing
 things is the single biggest time-saver in this entire guide.</p>
 <hr />
-<p><strong>Next:</strong> <a href="05-github.html">Get it on GitHub →</a></p>
+<p><strong>Next:</strong> <a href="07-github.html">Get it on GitHub →</a></p>
     <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
-    <nav class="pager"><a class="prev" href="03-keys-and-access.html"><span>Previous</span>Keys and access</a><a class="next" href="05-github.html"><span>Next</span>Get it on GitHub</a></nav>
+    <nav class="pager"><a class="prev" href="05-keys-and-access.html"><span>Previous</span>Keys and access</a><a class="next" href="07-github.html"><span>Next</span>Get it on GitHub</a></nav>
   </main>
 </div>
 <script>

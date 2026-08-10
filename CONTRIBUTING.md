@@ -68,7 +68,7 @@ and I'd rather know.
   are the most valuable contributions here — every one saves somebody else that
   hour.
 - **A third track.** Fly.io, Vercel, Railway and Netlify are all reasonable
-  answers for [Shape 3](guide/00-start-here.md#the-honest-note-about-shape-3).
+  answers for [Shape 3](guide/02-start-here.md#the-honest-note-about-shape-3).
   If you want to write one, open an issue first so we can agree the shape before
   you spend an evening on it.
 

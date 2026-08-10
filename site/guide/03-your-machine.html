@@ -8,7 +8,7 @@
 <meta property="og:title" content="Your machine — Ship What You Built">
 <meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
 <meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
-<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/01-your-machine.html">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/03-your-machine.html">
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <style>
@@ -101,11 +101,11 @@ color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
-<body data-page="01-your-machine">
+<body data-page="03-your-machine">
 <div class="shell">
   <aside class="side">
     <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
-    <nav><ul class="nav"><li><a href="00-start-here.html" data-page="00-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="01-your-machine.html" aria-current="page" data-page="01-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="02-accounts.html" data-page="02-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="03-keys-and-access.html" data-page="03-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="04-three-layers.html" data-page="04-three-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="05-github.html" data-page="05-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="06-let-claude-drive.html" data-page="06-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <nav><ul class="nav"><li><a href="00-install-claude-code.html" data-page="00-install-claude-code"><span class="tick"></span>Stage 0 — Get an agent<small>Install Claude Code or Codex</small></a></li><li><a href="01-find-an-idea.html" data-page="01-find-an-idea"><span class="tick"></span>Stage 0.5 — Find an idea<small>What to actually build</small></a></li><li><a href="02-start-here.html" data-page="02-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="03-your-machine.html" aria-current="page" data-page="03-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="04-accounts.html" data-page="04-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="05-keys-and-access.html" data-page="05-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="06-four-layers.html" data-page="06-four-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="07-github.html" data-page="07-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="08-let-claude-drive.html" data-page="08-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
     <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#what-a-terminal-actually-is">What a terminal actually is</a></li><li><a class="lvl3" href="#five-things-that-catch-people-out">Five things that catch people out</a></li><li><a class="lvl2" href="#windows">Windows</a></li><li><a class="lvl3" href="#powershell-and-command-prompt-are-not-bash">PowerShell and Command Prompt are not bash</a></li><li><a class="lvl3" href="#route-1--wsl-recommended">Route 1 — WSL (recommended)</a></li><li><a class="lvl3" href="#route-2--git-bash">Route 2 — Git Bash</a></li><li><a class="lvl3" href="#what-works-where">What works where</a></li><li><a class="lvl2" href="#macos">macOS</a></li><li><a class="lvl3" href="#homebrew">Homebrew</a></li><li><a class="lvl3" href="#the-bit-people-skip-and-then-brew-isnt-found">The bit people skip, and then brew isn&#x27;t found</a></li><li><a class="lvl2" href="#linux">Linux</a></li><li><a class="lvl2" href="#the-tools">The tools</a></li><li><a class="lvl3" href="#git--tracks-your-changes">git — tracks your changes</a></li><li><a class="lvl3" href="#gh--github-from-the-command-line">gh — GitHub from the command line</a></li><li><a class="lvl3" href="#curl--fetches-a-url">curl — fetches a URL</a></li><li><a class="lvl3" href="#dig--asks-dns-a-question-directly">dig — asks DNS a question directly</a></li><li><a class="lvl3" href="#jq--reads-json">jq — reads JSON</a></li><li><a class="lvl3" href="#zip--packages-files-into-one-archive">zip — packages files into one archive</a></li><li><a class="lvl3" href="#aws--the-aws-command-line">aws — the AWS command line</a></li><li><a class="lvl3" href="#node-and-npm--only-if-your-project-builds">node and npm — only if your project builds</a></li><li><a class="lvl3" href="#claude-code--the-agent-that-reads-this-guide-with-you">Claude Code — the agent that reads this guide with you</a></li><li><a class="lvl2" href="#check-everything-at-once">Check everything at once</a></li><li><a class="lvl2" href="#when-it-doesnt-work">When it doesn&#x27;t work</a></li></ul></div>
   </aside>
   <main>
@@ -447,7 +447,7 @@ genuine bash prompt with <code>git</code>, <code>ls</code>, <code>cat</code>, <c
 friends already in it.</p>
 <p>It's much lighter than WSL — a single installer, no reboot, no virtualisation —
 and it's the right answer if WSL is blocked or you want to get moving now.</p>
-<p><strong>What works:</strong> everything in <a href="05-github.html">Get it on GitHub</a>, heredocs, single
+<p><strong>What works:</strong> everything in <a href="07-github.html">Get it on GitHub</a>, heredocs, single
 quotes, <code>$VAR</code>, backslash line continuations, and effectively all of
 <a href="10-cloudflare.html">Track A</a>.</p>
 <p><strong>What doesn't:</strong></p>
@@ -458,7 +458,7 @@ quotes, <code>$VAR</code>, backslash line continuations, and effectively all of
   command, present on Windows 10 and 11), and then happen to be visible from Git
   Bash.</li>
 <li><strong>No <code>dig</code>.</strong> DNS lookups go through Windows, so you use <code>nslookup</code> instead.
-  <a href="04-three-layers.html">The three layers</a> shows both.</li>
+  <a href="06-four-layers.html">The three layers</a> shows both.</li>
 <li><strong>No <code>sudo</code>.</strong> Commands in this guide that use it need an Administrator
   terminal instead.</li>
 <li><strong>Path translation surprises.</strong> Git Bash rewrites arguments that look like
@@ -716,7 +716,7 @@ project's folder of code as GitHub stores it), sets permissions, and — most
 usefully — logs you in properly, so you never have to generate or paste a
 <strong>personal access token</strong>: a long secret string GitHub can issue in place of a
 password, which is fiddly to make and easy to leak.
-<a href="05-github.html">05 — Get it on GitHub</a> uses it throughout.</p>
+<a href="07-github.html">05 — Get it on GitHub</a> uses it throughout.</p>
 <div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># macOS
 brew install gh
 
@@ -741,7 +741,7 @@ package.</p>
 <div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">gh version 2.88.1 (2026-03-12)
 https://github.com/cli/cli/releases/tag/v2.88.1
 </code></pre></div>
-<p>You'll log in with <code>gh auth login</code> in <a href="05-github.html">05</a> — not yet.</p>
+<p>You'll log in with <code>gh auth login</code> in <a href="07-github.html">05</a> — not yet.</p>
 <h3 id="curl--fetches-a-url">curl — fetches a URL<a class="anchor" href="#curl--fetches-a-url" aria-label="Link to this section">#</a></h3>
 <p><code>curl</code> asks a web address for its contents and prints them. In this guide it's
 how you check a site is actually live, and what <strong>headers</strong> it's returning — the
@@ -765,7 +765,7 @@ Bash, where <code>curl</code> is the real thing.</p>
 <p>DNS is the layer that turns <code>yourthing.com</code> into an address, and it's where most
 "my site isn't working" turns out to live. <code>dig</code> asks a DNS server a question
 and shows you the raw answer, which is the only way to see past your own
-computer's cache. <a href="04-three-layers.html">The three layers</a> explains what to ask it.</p>
+computer's cache. <a href="06-four-layers.html">The three layers</a> explains what to ask it.</p>
 <div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># macOS — already installed
 
 # Debian / Ubuntu / WSL
@@ -858,7 +858,7 @@ comes first. <code>PATH</code> is the ordered list of folders your shell searche
 type a command name — the first match wins, which is exactly how an old copy
 keeps answering.</p>
 <p>You'll connect it to your account in <a href="20-aws.html">Track B</a>, after
-<a href="03-keys-and-access.html">keys and access</a>. Don't run <code>aws configure</code> yet.</p>
+<a href="05-keys-and-access.html">keys and access</a>. Don't run <code>aws configure</code> yet.</p>
 <h3 id="node-and-npm--only-if-your-project-builds">node and npm — only if your project builds<a class="anchor" href="#node-and-npm--only-if-your-project-builds" aria-label="Link to this section">#</a></h3>
 <p><strong>Node.js</strong> runs JavaScript outside a browser, and <strong>npm</strong> is its package
 manager, installed alongside it. You need these <strong>only if your project has a
@@ -1064,9 +1064,9 @@ ran</strong> and <strong>the entire error message</strong>, paste both into Clau
 what you were trying to do. Error messages are written for people who already
 know the answer, and translating them is something an agent is very good at.</p>
 <hr />
-<p><strong>Next:</strong> <a href="02-accounts.html">Accounts you'll need →</a></p>
+<p><strong>Next:</strong> <a href="04-accounts.html">The accounts you need →</a></p>
     <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
-    <nav class="pager"><a class="prev" href="00-start-here.html"><span>Previous</span>Start here</a><a class="next" href="02-accounts.html"><span>Next</span>The accounts you need</a></nav>
+    <nav class="pager"><a class="prev" href="02-start-here.html"><span>Previous</span>Start here</a><a class="next" href="04-accounts.html"><span>Next</span>The accounts you need</a></nav>
   </main>
 </div>
 <script>

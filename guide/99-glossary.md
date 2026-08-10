@@ -59,7 +59,7 @@ host adds them alongside the A record if it supports IPv6.
 A non-standard record type that behaves like a [CNAME](#cname) but is allowed at
 the [apex](#apex-domain), where a real CNAME is forbidden.
 [Route 53](#route-53) calls it an ALIAS; other providers call it ANAME. See
-[the apex problem](04-three-layers.md#the-apex-problem--the-one-gotcha-worth-knowing-in-advance).
+[the apex problem](06-four-layers.md#the-apex-problem--the-one-gotcha-worth-knowing-in-advance).
 
 ### Apex domain
 
@@ -81,7 +81,7 @@ throughout, because the [nameservers](#nameserver) don't change.
 A DNS record meaning "don't ask me, go and look up this *other* name instead" —
 `www.yourthing.com` → `your-project.pages.dev`. It is what modern hosts hand you
 instead of an IP address, so that when their addresses change your site doesn't
-notice. See [layer 2](04-three-layers.md#layer-2--dns).
+notice. See [layer 2](06-four-layers.md#layer-2--dns).
 
 ### CNAME flattening
 
@@ -109,13 +109,13 @@ trusting your browser. `dig NS yourthing.com +short` shows the nameservers;
 install `dnsutils` (called `bind9-dnsutils` on newer releases); Windows without
 [WSL](#wsl) has no `dig` — use
 `nslookup -type=NS yourthing.com` or [dnschecker.org](https://dnschecker.org).
-See [seeing it for yourself](04-three-layers.md#see-it-for-yourself).
+See [seeing it for yourself](06-four-layers.md#see-it-for-yourself).
 
 ### DNS
 
 The Domain Name System — the global phone book that turns a name people can
 remember into an address machines can use. It is
-[layer 2](04-three-layers.md#layer-2--dns) of the four, and it is far and away
+[layer 2](06-four-layers.md#layer-2--dns) of the four, and it is far and away
 the layer people get stuck on.
 
 ### Domain
@@ -124,7 +124,7 @@ The name you rent, like `yourthing.com`. **A domain is not a website and not
 hosting** — this is the single most common confusion in the whole subject. The
 domain is only a name plus the right to say who answers questions about it; the
 files live somewhere else entirely, which is why you can change host without
-changing domain. See [the three layers](04-three-layers.md).
+changing domain. See [the three layers](06-four-layers.md).
 
 ### Hostname
 
@@ -168,7 +168,7 @@ the one whose dashboard you've been editing.
 
 DNS's way of saying "that name doesn't exist". In a browser it shows up as
 "Server not found". It means the failure is at
-[layer 1 or 2](04-three-layers.md#when-it-breaks-which-layer-is-it) — the name
+[layer 1 or 2](06-four-layers.md#when-it-breaks-which-layer-is-it) — the name
 never resolved, so nothing has even tried to reach your host yet.
 
 ### Premium domain
@@ -184,14 +184,14 @@ normal price, it isn't premium.
 The folklore that DNS changes take 24–48 hours. Mostly untrue — a record with a
 short [TTL](#ttl) is visible worldwide in minutes. What is genuinely slow is a
 [nameserver](#nameserver) change, and what fools you is your own machine's
-cache. See ["propagation" — mostly a myth](04-three-layers.md#dns-propagation--mostly-a-myth).
+cache. See ["propagation" — mostly a myth](06-four-layers.md#dns-propagation--mostly-a-myth).
 
 ### Registrar
 
 The company you buy the domain from — Cloudflare, Namecheap, Route 53 Domains,
 GoDaddy, Gandi. You're buying a lease, usually annual, plus the right to set the
 [nameservers](#nameserver). This is
-[layer 1](04-three-layers.md#layer-1--the-registrar) and the least sticky thing
+[layer 1](06-four-layers.md#layer-1--the-registrar) and the least sticky thing
 you own.
 
 ### Registry
@@ -204,8 +204,9 @@ price.
 
 ### Resolver
 
-The DNS server your computer actually asks — usually your router's or your ISP's,
-sometimes a public one like Cloudflare's `1.1.1.1` or Google's `8.8.8.8`.
+The DNS server your computer actually asks — usually your router's or your
+internet provider's, sometimes a public one like Cloudflare's `1.1.1.1` or
+Google's `8.8.8.8`.
 Resolvers cache answers, which is why `dig @1.1.1.1 yourthing.com` is the fastest
 way to prove ["it works for everyone but me"](90-troubleshooting.md#it-works-for-everyone-but-me)
 is your own machine's fault.
@@ -253,7 +254,7 @@ it entirely.
 Time-to-live, in seconds — a note attached to every DNS record saying "you may
 cache this answer for this long". A 300-second TTL means the world sees your
 change within five minutes. **Lower the TTL before a change you know is coming**,
-not after ([layer 2](04-three-layers.md#dns-propagation--mostly-a-myth)).
+not after ([layer 2](06-four-layers.md#dns-propagation--mostly-a-myth)).
 
 ### TXT record
 
@@ -300,7 +301,7 @@ region**, whatever region you or your users are in
 
 A file proving that whoever is serving `yourthing.com` really controls
 `yourthing.com`, so the browser shows a padlock rather than a red warning. It is
-[layer 4](04-three-layers.md#layer-4--the-certificate), it is free, and in both
+[layer 4](06-four-layers.md#layer-4--the-certificate), it is free, and in both
 tracks it is issued and renewed for you.
 
 ### Certificate authority
@@ -338,15 +339,16 @@ it.
 The non-profit [certificate authority](#certificate-authority) that made
 certificates free in 2015, after which everyone else followed. You probably
 won't use it directly here — Cloudflare and AWS issue their own — but it's the
-reason [layer 4](04-three-layers.md#layer-4--the-certificate) costs nothing.
+reason [layer 4](06-four-layers.md#layer-4--the-certificate) costs nothing.
 
 ### Row Level Security
 
-A database setting (Supabase and Postgres) controlling which rows each user may
-read or write. It is the *only* thing standing between a public
+A setting in Postgres — the open-source database [Supabase](#supabase) is built
+on — controlling which rows each user may read or write. It is the *only* thing
+standing between a public
 [anon key](#anon-key) and your entire database. If you built on
 [Supabase](#supabase), confirm RLS is on and the policies are right
-[before the repo goes public](05-github.md#3-what-counts-as-a-secret).
+[before the repo goes public](07-github.md#3-what-counts-as-a-secret).
 
 ### SNI
 
@@ -396,7 +398,7 @@ An AWS setting that emails you when spending crosses a threshold. It is the
 seatbelt for [Track B](20-aws.md#13-a-budget-alarm--also-now), because this
 guide's whole setup should cost under a pound a month — so a $5 alarm means
 *something is wrong*, not *you're being frugal*. Set it before you build
-anything ([accounts](02-accounts.md#2-set-a-budget-alarm--before-you-build-anything)).
+anything ([accounts](04-accounts.md#2-set-a-budget-alarm--before-you-build-anything)).
 
 ### Build command
 
@@ -411,7 +413,7 @@ and a blank site, which is much more confusing.
 The stage where source code becomes plain files a browser can read — React, Vue,
 Svelte, Vite and Astro projects all have one; a folder of hand-written HTML does
 not. Whether you have one decides several answers in
-[the chooser](00-start-here.md#shape-1--a-static-site).
+[the chooser](02-start-here.md#shape-1--a-static-site).
 
 ### Cache
 
@@ -446,9 +448,10 @@ included. It's the whole of [Track A](10-cloudflare.md#3-deploy-the-site).
 ### CloudFront
 
 AWS's [CDN](#cdn). On [Track B](20-aws.md#43-cloudfront-with-a-private-bucket)
-it does three jobs at once: holds your domain name, terminates
-[HTTPS](#https) with the [ACM](#acm) certificate, and reads files from a private
-[S3](#s3) bucket that nobody else can touch.
+it does three jobs at once: holds your domain name, handles the encrypted
+[HTTPS](#https) connection using the [ACM](#acm) certificate (the jargon for
+that is "terminating TLS"), and reads files from a private [S3](#s3) bucket that
+nobody else can touch.
 
 ### Cold start
 
@@ -466,8 +469,9 @@ don't recognise, group by service there first — it's usually the
 
 ### D1
 
-Cloudflare's managed SQL database (SQLite underneath), attached to your code as
-a [binding](#binding). The right choice on [Track A](10-cloudflare.md#if-you-need-to-store-data)
+Cloudflare's managed SQL database — SQLite, the small single-file database
+engine, run for you — attached to your code as a [binding](#binding). The right
+choice on [Track A](10-cloudflare.md#if-you-need-to-store-data)
 when you need real tables and queries rather than simple key-value storage.
 
 ### Deploy
@@ -482,14 +486,15 @@ CloudFront's word for one CDN configuration — which [origin](#origin-hosting) 
 read from, which domain names to answer for, which
 [certificate](#certificate) to present. Its ID (`E1ABCDEF…`) is what you pass to
 [invalidation](#cache-invalidation) commands, and it's
-[safe to publish](05-github.md#3-what-counts-as-a-secret).
+[safe to publish](07-github.md#3-what-counts-as-a-secret).
 
 ### Durable Objects
 
-Cloudflare's answer for things that must hold state and stay connected —
-websockets, multiplayer, a live game. Mentioned once in this guide as the
-advanced escape hatch for
-[Shape 3](00-start-here.md#the-honest-note-about-shape-3); it's a step beyond a
+Cloudflare's answer for things that must remember where they got to and keep a
+connection open rather than answering one request and forgetting — a chat room,
+multiplayer, a live game. (The open-connection technique is called a
+*websocket*.) Mentioned once in this guide as the advanced escape hatch for
+[Shape 3](02-start-here.md#the-honest-note-about-shape-3); it's a step beyond a
 first deploy.
 
 ### Edge
@@ -511,21 +516,24 @@ can't see it yet, and the error blames the role rather than the timing.
 The amount of a paid service you can use for nothing. Two shapes worth telling
 apart: Cloudflare's free tiers generally **stop serving** when exhausted, while
 AWS's generally **start charging** — which is the real reason
-[the chooser](00-start-here.md#question-2--which-track) treats bill-shock risk as
+[the chooser](02-start-here.md#question-2--which-track) treats bill-shock risk as
 a temperament question. Always check the live pricing page; published limits
 change.
 
 ### Function URL
 
-An HTTPS address AWS gives a [Lambda](#lambda) so it can be called directly,
-without an API Gateway in front. Creating one is two commands, not one — the URL
-alone returns [403](#http-status-code) until you also
+An HTTPS address AWS gives a [Lambda](#lambda) so it can be called directly.
+The older way needed API Gateway — a separate, more configurable AWS service
+that sits in front of a function and routes requests to it — which a first
+project can happily skip. Creating a function URL is two commands, not one: the
+URL alone returns [403](#http-status-code) until you also
 [add the permission](20-aws.md#53-deploy-it-and-give-it-a-url).
 
 ### Infrastructure as code
 
-Describing your cloud setup in files you commit, instead of clicking in a
-console — AWS SAM, CDK, Terraform. Worth looking at *after* you've done this
+Describing your cloud setup in files you commit, instead of clicking around a
+provider's web dashboard (AWS calls its dashboard **the console**) — AWS SAM,
+CDK and Terraform are the usual tools. Worth looking at *after* you've done this
 guide by hand twice, because then you'll understand what the tool generates
 instead of copying a template you can't debug.
 
@@ -541,7 +549,7 @@ equivalent on Track A is a [Pages Function](#pages-functions).
 A host that runs a whole always-on process for you — Fly.io, Railway, Render,
 Streamlit Community Cloud, Hugging Face Spaces. (Supabase and Neon are the same
 idea for a database rather than for your code.) Neither track's free tier suits
-[Shape 3](00-start-here.md#the-honest-note-about-shape-3), so this is where a
+[Shape 3](02-start-here.md#the-honest-note-about-shape-3), so this is where a
 Flask app or a Discord bot should go; the domain and DNS parts of this guide
 still apply unchanged.
 
@@ -654,7 +662,7 @@ there's no `about.html`, until you configure 403 and 404 to serve
 A site made only of files — HTML, CSS, JavaScript, images — with nothing running
 on the server. It's the cheapest and most robust thing to host, and it includes
 anything with a [build step](#build-step) that outputs a folder. See
-[Shape 1](00-start-here.md#shape-1--a-static-site).
+[Shape 1](02-start-here.md#shape-1--a-static-site).
 
 ### Static site generator
 
@@ -665,16 +673,17 @@ its [build command](#build-command) and [output directory](#output-directory).
 
 ### Supabase
 
-A hosted Postgres platform with authentication and realtime built in, commonly
+A hosted Postgres (open-source database) platform with logins and live updates
+built in, commonly
 paired with either track. Its **anon key** is designed to be public — but only
 safely so if [Row Level Security](#row-level-security) is on and your policies
-are correct ([05-github](05-github.md#3-what-counts-as-a-secret)).
+are correct ([05-github](07-github.md#3-what-counts-as-a-secret)).
 
 ### Virtual machine
 
 A whole computer you rent, that stays on and that you're responsible for
 patching. Sometimes the honest answer for
-[Shape 3](00-start-here.md#the-honest-note-about-shape-3) — a Discord bot or a
+[Shape 3](02-start-here.md#the-honest-note-about-shape-3) — a Discord bot or a
 game server — and unlike everything else in this guide it costs money whether or
 not anyone visits.
 
@@ -683,13 +692,14 @@ not anyone visits.
 Cloudflare's [serverless](#serverless) platform, running your code at the
 [edge](#edge). [Pages Functions](#pages-functions) are Workers with the
 configuration hidden; Cloudflare is gradually merging the two products, which is
-why documentation may push you toward Workers when Pages is
+why documentation may push you towards Workers when Pages is
 [simpler for a first deploy](10-cloudflare.md#3-deploy-the-site).
 
 ### Workers KV
 
-Cloudflare's key-value store — good for settings, sessions and counters, not for
-anything needing queries or joins. Attached to your code as a
+Cloudflare's key-value store: you save a value under a name and fetch it back by
+that name. Good for settings, sessions and counters; no good for anything where
+you need to search or combine records. Attached to your code as a
 [binding](#binding); for real tables use [D1](#d1).
 
 ### `wrangler`
@@ -728,7 +738,7 @@ which makes a copy *on GitHub* under your own account.
 A saved snapshot of your project, with a message describing it. **Commits are
 effectively permanent**: a secret committed and deleted in the next commit is
 still in the history and still fetchable, which is why
-[`.gitignore` comes first](05-github.md#2-write-gitignore-before-your-first-commit).
+[`.gitignore` comes first](07-github.md#2-write-gitignore-before-your-first-commit).
 
 ### Fork
 
@@ -751,7 +761,7 @@ GitHub's official command-line tool. It creates repos, sets
 [secrets](#github-secret) and watches [workflow](#workflow) runs without you
 opening a browser, and `gh auth login` handles authentication properly so you
 never deal with a [personal access token](#personal-access-token)
-([05-github](05-github.md#1-install-the-two-tools)).
+([05-github](07-github.md#1-install-the-two-tools)).
 
 ### `git`
 
@@ -765,14 +775,14 @@ git" moment starts with that conflation.
 A file listing patterns git should never track — `.env`, `node_modules/`,
 `dist/`, `*.pem`. It must exist **before your first commit**, because it only
 prevents things being added, and cannot remove what's already in the history
-([05-github](05-github.md#2-write-gitignore-before-your-first-commit)).
+([05-github](07-github.md#2-write-gitignore-before-your-first-commit)).
 
 ### GitHub
 
 The website that hosts git [repositories](#repository), plus everything built
 around them — [pull requests](#pull-request), [Actions](#github-actions),
 [issues](#issue), [secret scanning](#secret-scanning). Both tracks deploy *from*
-a GitHub repo, which is why [05-github](05-github.md) comes before either.
+a GitHub repo, which is why [05-github](07-github.md) comes before either.
 
 ### GitHub Actions
 
@@ -803,7 +813,7 @@ with [`git-filter-repo`](https://github.com/newren/git-filter-repo) or
 [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/). It requires a
 [force-push](#force-push), and it is always the *second* step: **rotate the key
 first**, because a public commit is scraped within seconds
-([05-github](05-github.md#6-if-youve-already-leaked-something)).
+([05-github](07-github.md#6-if-youve-already-leaked-something)).
 
 ### Issue
 
@@ -835,7 +845,7 @@ deploys, merging to `main` is what makes the change go live.
 The standard "do what you like, don't sue me" [licence](#licence), and what most
 personal projects use, including this one. It's three paragraphs long; you edit
 the year and your name and you're done
-([05-github](05-github.md#add-a-licence)).
+([05-github](07-github.md#add-a-licence)).
 
 ### Open source
 
@@ -879,12 +889,13 @@ A GitHub feature that **blocks a [push](#push)** containing something matching a
 known credential format, before it ever reaches the server. Free on public
 repos, enabled with one `gh repo edit` flag, and it has saved an enormous number
 of people from a very bad afternoon
-([05-github](05-github.md#turn-on-the-safety-nets)).
+([05-github](07-github.md#turn-on-the-safety-nets)).
 
 ### README
 
-The file GitHub shows on your repository's front page. People decide in about
-four seconds, so it leads with one sentence, a live link and a screenshot —
+The file GitHub shows on your repository's front page. People decide in seconds
+whether to keep reading, so it leads with one sentence, a live link and a
+screenshot —
 [30-share-it](30-share-it.md#2-write-a-readme-worth-reading) gives the running
 order.
 
@@ -919,7 +930,7 @@ first place.
 Marking changes to be included in the next [commit](#commit), with `git add`.
 The gap between staging and committing exists precisely so you can run
 `git status` and *actually look* before anything becomes permanent
-([05-github](05-github.md#5-make-the-repository)).
+([05-github](07-github.md#5-make-the-repository)).
 
 ### Topics
 
@@ -947,7 +958,7 @@ semi-public) and a **secret access key**, shown exactly once and never
 recoverable. Together they let the CLI act as you. Never create one for the
 [root account](#root-account), never commit one, and
 [rotate on suspicion](#rotate-a-key)
-([03-keys-and-access](03-keys-and-access.md#the-three-legitimate-homes-for-a-key)).
+([03-keys-and-access](05-keys-and-access.md#the-three-legitimate-homes-for-a-key)).
 
 ### Anon key
 
@@ -955,7 +966,7 @@ A key deliberately designed to sit in browser code — Supabase's anon key,
 Stripe's `pk_` publishable key. Safe to publish **only** if the service's access
 rules are correct behind it; for Supabase that means
 [Row Level Security](#row-level-security)
-([05-github](05-github.md#3-what-counts-as-a-secret)).
+([05-github](07-github.md#3-what-counts-as-a-secret)).
 
 ### API key
 
@@ -963,7 +974,7 @@ A string that identifies and authorises your app when it calls somebody else's
 service. It is a password with a bill attached: whoever holds it can spend your
 money. This is why it lives in an [environment variable](#environment-variable)
 on the server and never in browser code
-([03-keys-and-access](03-keys-and-access.md#1-what-an-api-key-actually-is)).
+([03-keys-and-access](05-keys-and-access.md#1-what-an-api-key-actually-is)).
 
 ### Audience claim
 
@@ -1013,7 +1024,7 @@ A plain text file of `NAME=value` lines holding your local secrets, read by your
 app at startup. It must be in [`.gitignore`](#gitignore) from the very
 beginning. Its committed sibling `.env.example` lists the *names* with fake
 values so anyone cloning your repo knows what to fill in
-([03-keys-and-access](03-keys-and-access.md#the-three-legitimate-homes-for-a-key)).
+([03-keys-and-access](05-keys-and-access.md#the-three-legitimate-homes-for-a-key)).
 
 ### Environment variable
 
@@ -1022,7 +1033,7 @@ inside it. It's how the same code runs with a real key in production and a test
 key locally. Two things catch people: variables are read at build or start time,
 so **a change needs a redeploy**, and setting one in a terminal lasts only for
 that terminal
-([03-keys-and-access](03-keys-and-access.md#what-an-environment-variable-actually-is)).
+([03-keys-and-access](05-keys-and-access.md#what-an-environment-variable-actually-is)).
 
 ### IAM
 
@@ -1043,7 +1054,7 @@ upgrade later.
 A named identity inside your AWS account, separate from the
 [root account](#root-account), with its own credentials. You create one for the
 CLI so that a leaked key can be deleted without losing the account itself
-([accounts](02-accounts.md#what-an-iam-user-is-and-why-you-make-one)).
+([accounts](04-accounts.md#what-an-iam-user-is-and-why-you-make-one)).
 
 ### Identity provider
 
@@ -1074,7 +1085,7 @@ Multi-factor authentication, also written 2FA — a code from an app on top of
 your password. Turn it on for GitHub, Cloudflare and especially the AWS
 [root account](#root-account) before anything else, because it removes an entire
 category of disaster for two minutes' work
-([accounts](02-accounts.md#3-turn-on-two-factor-authentication)).
+([accounts](04-accounts.md#3-turn-on-two-factor-authentication)).
 
 ### OIDC
 
@@ -1110,19 +1121,19 @@ The email and password you created an AWS account with. It can do anything,
 including close the account and spend without limit. Give it
 [MFA](#mfa) immediately, never create an [access key](#access-key) for it, and
 use an [IAM user](#iam-user) for daily work
-([accounts](02-accounts.md#the-root-account-plainly)).
+([accounts](04-accounts.md#the-root-account-plainly)).
 
 ### Rotate a key
 
 Delete a credential and issue a replacement. Do it **on suspicion, not proof** —
 it takes thirty seconds, and it's the first step when anything leaks, before any
 tidying of git history
-([03-keys-and-access](03-keys-and-access.md#6-when-a-key-leaks)).
+([03-keys-and-access](05-keys-and-access.md#6-when-a-key-leaks)).
 
 ### Secret
 
 Any value that would let someone act as you or spend your money. The line is
-drawn concretely in [05-github](05-github.md#3-what-counts-as-a-secret) — source
+drawn concretely in [05-github](07-github.md#3-what-counts-as-a-secret) — source
 code, domain names and bucket names are fine to publish; `.env` files, `AKIA…`
 keys, `sk_` keys and `.pem` files never are.
 
@@ -1170,8 +1181,9 @@ sts:AssumeRoleWithWebIdentity`.
 
 A relative URL (`/preview.png`) is interpreted against the page it appears on;
 an absolute one (`https://yourthing.com/preview.png`) works from anywhere. It
-matters most for [Open Graph](#open-graph) images: the scraper isn't on your
-site, so a relative path means nothing to it and the preview comes out blank
+matters most for [Open Graph](#open-graph) images: the machine fetching your
+page to build a link preview isn't on your site, so a relative path means
+nothing to it and the preview comes out blank
 ([30-share-it](30-share-it.md#1-make-the-link-look-like-something-when-its-shared)).
 
 ### API
@@ -1184,7 +1196,7 @@ else's — Anthropic's, say — with an [API key](#api-key) the browser never se
 
 The [package manager](#package-manager) on Debian and Ubuntu, and therefore
 inside [WSL](#wsl). `sudo apt install git jq curl zip dnsutils` installs most of
-what this guide needs ([00-start-here](00-start-here.md#what-you-need-on-your-machine)).
+what this guide needs ([00-start-here](02-start-here.md#what-you-need-on-your-machine)).
 
 ### `bash`
 
@@ -1192,7 +1204,7 @@ The shell language this guide's commands are written in — the default on Linux
 and inside [WSL](#wsl), and available on macOS. **Its syntax is not
 PowerShell's**, which is why Windows users are pointed at WSL or
 [Git Bash](#git-bash) before Track B in particular
-([00-start-here](00-start-here.md#what-you-need-on-your-machine)).
+([00-start-here](02-start-here.md#what-you-need-on-your-machine)).
 
 ### Browser cache and hard reload
 
@@ -1269,7 +1281,7 @@ start again.
 ### Homebrew
 
 The package manager most people use on macOS, installed with the one-line script
-in [00-start-here](00-start-here.md#what-you-need-on-your-machine). After it,
+in [00-start-here](02-start-here.md#what-you-need-on-your-machine). After it,
 `brew install git gh jq awscli` gets you everything both tracks need.
 
 ### HTML, CSS and JavaScript
@@ -1316,7 +1328,7 @@ without telling you.
 
 A command-line tool for reading and reshaping [JSON](#json). Track B uses it to
 pull IDs out of AWS responses and to build change files, which is why it's in
-the install list ([00-start-here](00-start-here.md#what-you-need-on-your-machine)).
+the install list ([00-start-here](02-start-here.md#what-you-need-on-your-machine)).
 
 ### JSON
 
@@ -1385,7 +1397,7 @@ thinking about ports, because the web uses 80 and 443 and the host handles both.
 Windows' own shell. **This guide's commands are [bash](#bash) and will not all
 work in it** — the [heredocs](#heredoc) and quoting in Track B especially. Use
 [WSL](#wsl), or [Git Bash](#git-bash), or take Track A, which needs far less
-terminal ([00-start-here](00-start-here.md#what-you-need-on-your-machine)).
+terminal ([00-start-here](02-start-here.md#what-you-need-on-your-machine)).
 
 ### Server
 
@@ -1417,7 +1429,7 @@ and `source` it.
 The window where you type commands. macOS has Terminal and iTerm; Windows has
 Windows Terminal; Linux has several. It is only a window — the thing
 interpreting your typing is the [shell](#shell)
-([01-your-machine](01-your-machine.md)).
+([01-your-machine](03-your-machine.md)).
 
 ### URL
 
@@ -1430,7 +1442,7 @@ this guide.
 
 Windows' built-in [package manager](#package-manager).
 `winget install Git.Git GitHub.cli` installs [git](#git) and [gh](#gh)
-([05-github](05-github.md#1-install-the-two-tools)).
+([05-github](07-github.md#1-install-the-two-tools)).
 
 ### WSL
 
@@ -1438,7 +1450,7 @@ Windows Subsystem for Linux — a real Ubuntu terminal inside Windows, installed
 with `wsl --install` from an administrator PowerShell. It's the recommended
 Windows setup here because every command in the guide then works exactly as
 written, [heredocs](#heredoc) included
-([00-start-here](00-start-here.md#what-you-need-on-your-machine)).
+([00-start-here](02-start-here.md#what-you-need-on-your-machine)).
 
 ### `zip`
 
@@ -1449,4 +1461,4 @@ The command that packages files into a `.zip`, used to bundle a
 ---
 
 **Next:** [When it breaks →](90-troubleshooting.md) if something is failing
-right now — otherwise back to [Start here](00-start-here.md).
+right now — otherwise back to [Start here](02-start-here.md).
