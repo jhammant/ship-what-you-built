@@ -1,0 +1,52 @@
+name: Deploy site
+
+# This repository dogfoods its own Track B (guide/20-aws.md, Part 6):
+# GitHub proves each run's identity to AWS over OIDC and receives credentials
+# that expire in minutes. There is no AWS access key stored in this repository.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
+
+permissions:
+  id-token: write # required for OIDC — without it, the auth step fails
+  contents: read
+
+concurrency:
+  group: deploy-site
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assume the deploy role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ vars.DEPLOY_ROLE }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Upload to S3
+        run: aws s3 sync site/ "s3://${{ vars.S3_BUCKET }}/" --delete
+
+      - name: Clear the CloudFront cache
+        run: |
+          INV_ID=$(aws cloudfront create-invalidation \
+            --distribution-id "${{ vars.CLOUDFRONT_DIST_ID }}" \
+            --paths "/*" --query 'Invalidation.Id' --output text)
+          echo "Invalidation $INV_ID created"
+          aws cloudfront wait invalidation-completed \
+            --distribution-id "${{ vars.CLOUDFRONT_DIST_ID }}" --id "$INV_ID"
+          echo "Cache cleared"
+
+      - name: Check it's actually live
+        run: |
+          CODE=$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 https://shipwhatyoubuilt.com)
+          echo "https://shipwhatyoubuilt.com -> $CODE"
+          [ "$CODE" = "200" ] || exit 1

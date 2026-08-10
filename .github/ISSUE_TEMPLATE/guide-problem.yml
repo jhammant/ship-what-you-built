@@ -1,0 +1,57 @@
+name: A step didn't work
+description: Something in the guide is wrong, out of date, or got you stuck.
+title: "Stuck: "
+labels: ["guide"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Cloud providers rename things constantly, so parts of this guide go
+        stale. Reporting it is a real contribution — thank you.
+
+        **Please don't paste API keys, access keys, or `.env` contents.** If your
+        error output contains one, redact it *and then go rotate that key*, because
+        it's been in your clipboard and your terminal scrollback.
+
+  - type: dropdown
+    id: track
+    attributes:
+      label: Which track?
+      options:
+        - Track A — Cloudflare
+        - Track B — AWS
+        - Shared pages (three layers / GitHub / share it)
+        - The skill
+    validations:
+      required: true
+
+  - type: input
+    id: step
+    attributes:
+      label: Which step?
+      placeholder: "Track B, Part 4.3 — creating the distribution"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did the guide say would happen, and what happened instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: error
+    attributes:
+      label: The complete error
+      description: >-
+        The whole thing, not a summary. These failures usually look like
+        permission problems and turn out to be configuration problems, and the
+        difference is always in the part people trim off.
+      render: text
+
+  - type: input
+    id: env
+    attributes:
+      label: OS and shell
+      placeholder: "macOS 15, zsh"

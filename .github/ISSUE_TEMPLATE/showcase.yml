@@ -1,0 +1,67 @@
+name: Add my project to the showcase
+description: You shipped something. Tell me about it and I'll add it.
+title: "Showcase: "
+labels: ["showcase"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A pull request against [SHOWCASE.md](../blob/main/SHOWCASE.md) is
+        slightly better — it takes two minutes in the browser and gives you a
+        merged PR on your profile. [How to do that.](../blob/main/CONTRIBUTING.md#add-your-project-to-the-showcase)
+
+        But if that feels like a hurdle, fill this in instead. Getting your
+        thing listed matters more than how it got listed.
+
+  - type: input
+    id: url
+    attributes:
+      label: The live URL
+      description: It has to load. That's the only hard rule.
+      placeholder: https://yourthing.com
+    validations:
+      required: true
+
+  - type: input
+    id: name
+    attributes:
+      label: What's it called?
+      placeholder: Tide Clock
+    validations:
+      required: true
+
+  - type: input
+    id: description
+    attributes:
+      label: One sentence
+      description: What it does and who it's for. Under about 60 characters.
+      placeholder: Today's tide times for your nearest beach
+    validations:
+      required: true
+
+  - type: dropdown
+    id: track
+    attributes:
+      label: Which track did you follow?
+      options:
+        - Track A — Cloudflare
+        - Track B — AWS
+        - A mixture
+        - Something else entirely
+    validations:
+      required: true
+
+  - type: input
+    id: repo
+    attributes:
+      label: Repository (optional)
+      description: Leave blank if it's private.
+      placeholder: https://github.com/you/project
+
+  - type: textarea
+    id: snag
+    attributes:
+      label: What was the worst bit? (optional)
+      description: >-
+        Genuinely the most useful thing you can tell me. If a step confused you
+        or cost you an hour, that's a guide bug and I'd like to fix it.

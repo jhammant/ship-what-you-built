@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ship What You Built — get the thing you made onto the internet</title>
+
+<meta name="description" content="A free, open-source guide and Claude Code skill for getting software you built onto a real domain: DNS, hosting, HTTPS and GitHub, start to finish.">
+<meta property="og:title" content="You built something. Now ship it.">
+<meta property="og:description" content="A free, open-source guide to getting the thing you made onto a real domain — DNS, hosting, HTTPS and GitHub, start to finish.">
+<meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
+<meta property="og:url" content="https://shipwhatyoubuilt.com">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+  /* ---- Light palette: the complete token set lives on bare :root ---- */
+  :root {
+    --bg:        #F6F7F5;
+    --surface:   #FFFFFF;
+    --sunken:    #EEF0EC;
+    --ink:       #14181B;
+    --ink-soft:  #3D4642;
+    --muted:     #5B6560;
+    --line:      rgba(20, 24, 27, 0.13);
+    --line-soft: rgba(20, 24, 27, 0.07);
+    --live:      #16794C;
+    --live-ink:  #FFFFFF;
+    --live-wash: rgba(22, 121, 76, 0.09);
+    --stuck:     #9A5B18;
+    --shadow:    0 1px 2px rgba(20,24,27,.05), 0 8px 24px -12px rgba(20,24,27,.16);
+
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    --measure: 68ch;
+    --gutter: clamp(1.25rem, 5vw, 3rem);
+  }
+  /* System-dark, unless the viewer explicitly chose light */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:        #0F1311;
+      --surface:   #171C19;
+      --sunken:    #121614;
+      --ink:       #ECF1ED;
+      --ink-soft:  #C3CCC6;
+      --muted:     #8A968F;
+      --line:      rgba(236, 241, 237, 0.15);
+      --line-soft: rgba(236, 241, 237, 0.08);
+      --live:      #35C285;
+      --live-ink:  #06140D;
+      --live-wash: rgba(53, 194, 133, 0.13);
+      --stuck:     #D08A3C;
+      --shadow:    0 1px 2px rgba(0,0,0,.4), 0 8px 28px -14px rgba(0,0,0,.7);
+    }
+  }
+  /* Explicit dark choice wins over a light OS */
+  :root[data-theme="dark"] {
+    --bg:        #0F1311;
+    --surface:   #171C19;
+    --sunken:    #121614;
+    --ink:       #ECF1ED;
+    --ink-soft:  #C3CCC6;
+    --muted:     #8A968F;
+    --line:      rgba(236, 241, 237, 0.15);
+    --line-soft: rgba(236, 241, 237, 0.08);
+    --live:      #35C285;
+    --live-ink:  #06140D;
+    --live-wash: rgba(53, 194, 133, 0.13);
+    --stuck:     #D08A3C;
+    --shadow:    0 1px 2px rgba(0,0,0,.4), 0 8px 28px -14px rgba(0,0,0,.7);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: clamp(1rem, 0.97rem + 0.16vw, 1.075rem);
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .wrap { max-width: var(--measure); margin-inline: auto; padding-inline: var(--gutter); }
+  .wide { max-width: 78rem; margin-inline: auto; padding-inline: var(--gutter); }
+
+  section { padding-block: clamp(3rem, 7vw, 5.5rem); }
+  section + section { border-top: 1px solid var(--line-soft); }
+
+  h1, h2, h3 { line-height: 1.08; letter-spacing: -0.028em; text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(2.4rem, 1.5rem + 4.4vw, 4.4rem); font-weight: 680; }
+  h2 { font-size: clamp(1.65rem, 1.25rem + 1.7vw, 2.35rem); font-weight: 660; }
+  h3 { font-size: 1.1rem; font-weight: 640; letter-spacing: -0.012em; }
+  p  { margin: 0; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.775rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--live);
+    margin: 0;
+  }
+  .lede { font-size: clamp(1.1rem, 1rem + 0.5vw, 1.3rem); color: var(--ink-soft); }
+
+  .stack   { display: flex; flex-direction: column; gap: 1.4rem; }
+  .stack-s { display: flex; flex-direction: column; gap: 0.7rem; }
+
+  /* ---------------- Hero: the transformation, stated literally --------------- */
+  .hero { padding-block: clamp(3.5rem, 9vw, 7rem); }
+
+  .transform {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 0.85rem;
+    font-family: var(--mono); font-size: clamp(0.9rem, 0.8rem + 0.45vw, 1.12rem);
+  }
+  .addr {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.6rem 0.95rem; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--surface);
+    white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis;
+  }
+  .addr.dead  { color: var(--muted); text-decoration: line-through; text-decoration-thickness: 1px; }
+  .addr.alive { color: var(--ink); border-color: var(--live); background: var(--live-wash); }
+  .pip { width: 0.52rem; height: 0.52rem; border-radius: 50%; flex: none; }
+  .pip.off { background: var(--stuck); }
+  .pip.on  { background: var(--live); box-shadow: 0 0 0 4px var(--live-wash); }
+  .becomes { color: var(--muted); }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.72rem 1.25rem; border-radius: 9px;
+    font-weight: 590; font-size: 0.98rem; text-decoration: none;
+    border: 1px solid transparent; transition: transform .12s ease, background-color .12s ease;
+  }
+  .btn-primary { background: var(--live); color: var(--live-ink); }
+  .btn-ghost   { background: transparent; color: var(--ink); border-color: var(--line); }
+  .btn:hover   { transform: translateY(-1px); }
+  .btn:focus-visible, a:focus-visible {
+    outline: 2px solid var(--live); outline-offset: 3px; border-radius: 6px;
+  }
+
+  /* ------------------------------- Outcomes -------------------------------- */
+  /* Deliberately NOT flex: flex would make every inline child (including each
+     <strong>) its own flex item and insert `gap` inside the sentence. */
+  .outcomes { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.55rem; }
+  .outcomes li { position: relative; padding-left: 1.2rem; }
+  .outcomes li::before {
+    content: ""; position: absolute; left: 0; top: 0.66em;
+    width: 0.42rem; height: 0.42rem; border-radius: 50%; background: var(--live);
+  }
+
+  /* -------------------------------- Diagram -------------------------------- */
+  .diagram { background: var(--sunken); border: 1px solid var(--line-soft); border-radius: 14px; padding: clamp(1rem, 3vw, 2rem); }
+  .diagram svg { display: block; width: 100%; height: auto; }
+  .layer-name { font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: 0.02em; }
+  .layer-desc { font-size: 13.5px; }
+
+  /* --------------------------------- Cards --------------------------------- */
+  .cards { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 13px; padding: 1.35rem; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 0.55rem;
+  }
+  .card .tag {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .card p { color: var(--ink-soft); font-size: 0.95rem; }
+  .card.flag { border-color: var(--stuck); }
+  .card.flag .tag { color: var(--stuck); }
+
+  /* --------------------------------- Table --------------------------------- */
+  .scroller { overflow-x: auto; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 33rem; font-size: 0.94rem; }
+  th, td { text-align: left; padding: 0.8rem 1.05rem; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  thead th { font-size: 0.78rem; letter-spacing: 0.11em; text-transform: uppercase; color: var(--muted); font-weight: 620; }
+  tbody tr:last-child td { border-bottom: 0; }
+  td:first-child { color: var(--muted); white-space: nowrap; }
+
+  /* ---------------------------------- Code --------------------------------- */
+  pre {
+    margin: 0; overflow-x: auto; background: var(--sunken);
+    border: 1px solid var(--line-soft); border-radius: 11px;
+    padding: 1rem 1.15rem; font-family: var(--mono); font-size: 0.86rem;
+    line-height: 1.65; color: var(--ink-soft);
+  }
+  code { font-family: var(--mono); font-size: 0.9em; }
+  .says { display: grid; gap: 0.5rem; }
+  .says span {
+    font-family: var(--mono); font-size: 0.88rem; color: var(--ink-soft);
+    padding: 0.6rem 0.9rem; border-left: 2px solid var(--live);
+    background: var(--live-wash); border-radius: 0 8px 8px 0;
+  }
+
+  a { color: var(--ink); text-decoration-color: var(--line); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: var(--live); }
+
+  footer { padding-block: 3rem; border-top: 1px solid var(--line-soft); color: var(--muted); font-size: 0.9rem; }
+  footer a { color: var(--muted); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="wrap stack">
+      <p class="eyebrow">A free, open-source guide</p>
+      <h1>You built something.<br>Now ship it.</h1>
+      <p class="lede">
+        It works. You're proud of it. And it has been sitting on your laptop for
+        three weeks, because the gap between <em>“it works”</em> and <em>“other
+        people can use it”</em> is full of words nobody explained.
+      </p>
+
+      <div class="transform" aria-label="localhost:3000 becomes https://yourthing.com">
+        <span class="addr dead"><span class="pip off" aria-hidden="true"></span>localhost:3000</span>
+        <span class="becomes" aria-hidden="true">→</span>
+        <span class="addr alive"><span class="pip on" aria-hidden="true"></span>https://yourthing.com</span>
+      </div>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="https://github.com/jhammant/ship-what-you-built/blob/main/guide/00-start-here.md">Read the guide</a>
+        <a class="btn btn-ghost" href="https://github.com/jhammant/ship-what-you-built/blob/main/SHOWCASE.md">See what people shipped</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap stack">
+      <h2>What you'll have at the end</h2>
+      <ul class="outcomes">
+        <li>A <strong>real domain</strong> you own, like <code>yourthing.com</code></li>
+        <li>Your project <strong>live on it</strong>, over HTTPS</li>
+        <li>The code <strong>on GitHub</strong>, public, with a licence and a README</li>
+        <li><strong>Automatic deploys</strong> — change a file, push, the live site updates</li>
+        <li>A bill of roughly <strong>£10–20 a year</strong>, almost all of it the domain</li>
+      </ul>
+      <p style="color:var(--muted)">
+        You don't need to be a developer. You need a laptop, a card for the
+        domain, and about an hour.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wide stack">
+      <div class="stack-s" style="max-width:var(--measure);margin-inline:auto;width:100%">
+        <p class="eyebrow">The idea worth ten minutes</p>
+        <h2>Four layers, four separate companies</h2>
+        <p class="lede">
+          Almost every “I'm stuck” moment is not knowing which of these is
+          broken. They're independent — so no choice you make today is a trap.
+        </p>
+      </div>
+
+      <div class="diagram">
+        <svg viewBox="0 0 720 340" role="img" aria-labelledby="dgt dgd">
+          <title id="dgt">The four layers a visitor passes through</title>
+          <desc id="dgd">A request travels from the registrar, to DNS, to hosting, to the certificate. Each layer is owned by a company you choose independently.</desc>
+          <defs>
+            <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+            </marker>
+          </defs>
+          <g color="var(--muted)">
+            <line x1="34" y1="52" x2="34" y2="300" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="3 5"/>
+          </g>
+          <!-- rows -->
+          <g>
+            <g transform="translate(0,26)">
+              <circle cx="34" cy="14" r="7" fill="var(--live)"/>
+              <text x="66" y="12" class="layer-name" fill="var(--ink)">1 · REGISTRAR</text>
+              <text x="66" y="32" class="layer-desc" fill="var(--muted)">Who you bought the name from. Sets who answers for it.</text>
+            </g>
+            <g transform="translate(0,104)">
+              <circle cx="34" cy="14" r="7" fill="var(--live)"/>
+              <text x="66" y="12" class="layer-name" fill="var(--ink)">2 · DNS</text>
+              <text x="66" y="32" class="layer-desc" fill="var(--muted)">Answers “where is yourthing.com?” with an address.</text>
+            </g>
+            <g transform="translate(0,182)">
+              <circle cx="34" cy="14" r="7" fill="var(--live)"/>
+              <text x="66" y="12" class="layer-name" fill="var(--ink)">3 · HOSTING</text>
+              <text x="66" y="32" class="layer-desc" fill="var(--muted)">Where your code lives, and what sends back the page.</text>
+            </g>
+            <g transform="translate(0,260)">
+              <circle cx="34" cy="14" r="7" fill="var(--live)"/>
+              <text x="66" y="12" class="layer-name" fill="var(--ink)">4 · CERTIFICATE</text>
+              <text x="66" y="32" class="layer-desc" fill="var(--muted)">Proves it's really you, so the browser shows a padlock.</text>
+            </g>
+          </g>
+          <!-- Stop 12px short of the next circle so the arrowhead sits in the
+               gap rather than on top of the dot. -->
+          <g color="var(--muted)" stroke="currentColor" stroke-width="1.5" marker-end="url(#ar)" fill="none">
+            <line x1="34" y1="52" x2="34" y2="104"/>
+            <line x1="34" y1="130" x2="34" y2="182"/>
+            <line x1="34" y1="208" x2="34" y2="260"/>
+          </g>
+        </svg>
+      </div>
+
+      <p style="max-width:var(--measure);margin-inline:auto;width:100%;color:var(--ink-soft)">
+        Buying your domain at one company does <strong>not</strong> tie your
+        hosting to it. Don't like your host? Change layer 3, keep the name.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wide stack">
+      <div class="stack-s" style="max-width:var(--measure);margin-inline:auto;width:100%">
+        <h2>What did you build?</h2>
+        <p class="lede">The guide starts by working out which of these you have, because it changes everything after it.</p>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <span class="tag">Shape 1 · ~20 min</span>
+          <h3>A static site</h3>
+          <p>HTML, CSS and JS — or anything with a build step that spits out a folder. Nothing has to stay running.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Shape 2 · ~45 min</span>
+          <h3>Plus a bit of backend</h3>
+          <p>A form that saves something, or an API key you can't put in the browser. A function runs per request, then stops.</p>
+        </div>
+        <div class="card flag">
+          <span class="tag">Shape 3 · be honest</span>
+          <h3>Something that keeps running</h3>
+          <p>A Python server, a bot, a database you manage. Neither track's free tier fits — so the guide says so, and points you somewhere that does.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap stack">
+      <h2>Two tracks. Pick one, follow it end to end.</h2>
+      <p class="lede">No single right answer, so you get two complete ones. You never have to mix them.</p>
+      <div class="scroller">
+        <table>
+          <thead>
+            <tr><th scope="col"></th><th scope="col">Track A — Cloudflare</th><th scope="col">Track B — AWS</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Best when</td><td>It's your first deploy</td><td>You already use AWS, or need it for work</td></tr>
+            <tr><td>Time</td><td>~20 min static, ~45 with a backend</td><td>~90 min</td></tr>
+            <tr><td>Standing cost</td><td>The domain</td><td>Domain + ~$0.50/mo for the DNS zone</td></tr>
+            <tr><td>Bill shock</td><td>Low — free tiers stop rather than bill</td><td>Real — set a budget alarm before you start</td></tr>
+            <tr><td>Teaches you</td><td>The modern default</td><td>The stack most companies actually run</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="color:var(--muted)">
+        This site is hosted by following Track B, start to finish. Three bugs in
+        the guide were found and fixed that way.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap stack">
+      <p class="eyebrow">The other half</p>
+      <h2>A skill, so you stop memorising commands</h2>
+      <p class="lede">
+        Install it once, and Claude Code knows how your deploy works.
+      </p>
+      <pre><code>git clone https://github.com/jhammant/ship-what-you-built.git
+mkdir -p ~/.claude/skills
+cp -r ship-what-you-built/skill ~/.claude/skills/first-site</code></pre>
+      <p>Then you just say what you want:</p>
+      <div class="says">
+        <span>Deploy it</span>
+        <span>What's live right now?</span>
+        <span>It's still showing the old version</span>
+        <span>Open source this and set up automatic deploys</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap stack">
+      <p class="eyebrow">The point of all this</p>
+      <h2>Then add yours to the showcase</h2>
+      <p class="lede">
+        When your thing is live, put it on the list. One row, two minutes, done
+        entirely in the browser — no terminal.
+      </p>
+      <p>
+        For a lot of people it's the first pull request they've ever made, which
+        means their first open-source contribution is to a project about making
+        your first open-source contribution. That's a pleasing shape, and it's
+        deliberate.
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://github.com/jhammant/ship-what-you-built/blob/main/SHOWCASE.md">Add your project</a>
+        <a class="btn btn-ghost" href="https://github.com/jhammant/ship-what-you-built">View the repo</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>
+      MIT licensed. Written by <a href="https://github.com/jhammant">Jon Hammant</a> ·
+      <a href="https://github.com/jhammant/ship-what-you-built">github.com/jhammant/ship-what-you-built</a>
+    </p>
+    <p style="margin-top:.5rem">
+      Corrections welcome — cloud providers rename things constantly, and a guide
+      like this is wrong somewhere within months.
+    </p>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,27 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+
+# Scratch output from following the guide — these get created by the AWS track
+cf-config.json
+cf-out.json
+change-batch.json
+validation.json
+bucket-policy.json
+trust-policy.json
+gh-trust.json
+gh-policy.json
+dns-*.json
+function.zip
+
+# Local noise
+.DS_Store
+Thumbs.db
+*.log
+node_modules/
+.vscode/
+.idea/
