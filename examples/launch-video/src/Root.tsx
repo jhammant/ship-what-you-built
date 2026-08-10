@@ -1,14 +1,14 @@
 import { Composition } from 'remotion';
 import { Card } from './Card';
-import { LaunchVideo } from './LaunchVideo';
+import { LaunchVideo, TOTAL } from './LaunchVideo';
 
 export const RemotionRoot: React.FC = () => (
   <>
-    {/* 1080x1350 vertical — LinkedIn video post. 1050 frames @ 30fps = 35s. */}
+    {/* 1080x1350 vertical — LinkedIn video post. Frame 0 is the thumbnail. */}
     <Composition
       id="LaunchVideo"
       component={LaunchVideo}
-      durationInFrames={1050}
+      durationInFrames={TOTAL}
       fps={30}
       width={1080}
       height={1350}

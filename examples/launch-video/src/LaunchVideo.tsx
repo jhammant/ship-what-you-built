@@ -1,640 +1,326 @@
+import React from 'react';
 import {
   AbsoluteFill,
-  Easing,
   Sequence,
   interpolate,
   spring,
   useCurrentFrame,
   useVideoConfig,
+  Easing,
 } from 'remotion';
+import { C, SANS, MONO } from "./theme";
+import { Stage, Rise, Eyebrow, H1, Body, Pill, LayerRow, Spine } from './parts';
 
-// ── palette · lifted straight from site/index.html (dark tokens) ──────────────
-const BG = '#0F1311'; // near-black with a green bias
-const SURFACE = '#171C19';
-const SUNKEN = '#121614';
-const INK = '#ECF1ED';
-const INK_SOFT = '#C3CCC6';
-const MUTED = '#8A968F';
-const LIVE = '#35C285'; // jade — means "live"
-const LIVE_WASH = 'rgba(53, 194, 133, 0.13)';
-const STUCK = '#D08A3C'; // amber — means "not live yet"
-const STUCK_WASH = 'rgba(208, 138, 60, 0.13)';
-const LINE = 'rgba(236, 241, 237, 0.15)';
-const LINE_SOFT = 'rgba(236, 241, 237, 0.08)';
-const GRID_LINE = 'rgba(236, 241, 237, 0.055)';
+// ---------------------------------------------------------------- timeline
+// Scenes overlap by OVERLAP frames and only ever fade IN, so there is never a
+// dip to the background between them.
+const OVERLAP = 14;
+const INTRO = { from: 0, dur: 130 };
+const LOCAL = { from: 130, dur: 200 };
+const LAYERS = { from: 320, dur: 330 };
+const FLIP = { from: 640, dur: 230 };
+const PITCH = { from: 860, dur: 160 };
+const END = { from: 1010, dur: 160 };
+export const TOTAL = END.from + END.dur; // 1170 frames @30fps = 39s
 
-// Mono means "the computer said this". Sans means "a human is talking to you".
-const MONO =
-  'ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace';
-const SANS =
-  'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
-
-const PAD = 84; // frame gutter
-const COL = 1080 - PAD * 2; // 912 — the one content width everything sits in
-
-// ── shared bits ───────────────────────────────────────────────────────────────
-
-// Faint routing grid: 48px squares under a radial mask. Subliminal, never read.
-const Grid: React.FC<{ opacity?: number }> = ({ opacity = 1 }) => {
-  const mask =
-    'radial-gradient(118% 74% at 50% 44%, rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 48%, rgba(0,0,0,0) 80%)';
-  return (
-    <AbsoluteFill
-      style={{
-        opacity,
-        backgroundImage: `repeating-linear-gradient(0deg, ${GRID_LINE} 0px, ${GRID_LINE} 1px, transparent 1px, transparent 48px), repeating-linear-gradient(90deg, ${GRID_LINE} 0px, ${GRID_LINE} 1px, transparent 1px, transparent 48px)`,
-        maskImage: mask,
-        WebkitMaskImage: mask,
-      }}
-    />
-  );
-};
-
-const Pip: React.FC<{ colour: string; size?: number; halo?: number; glow?: number }> = ({
-  colour,
-  size = 18,
-  halo = 0,
-  glow = 0,
-}) => (
-  <div
-    style={{
-      width: size,
-      height: size,
-      borderRadius: size,
-      background: colour,
-      flex: 'none',
-      boxShadow: halo ? `0 0 0 ${halo}px ${colour}22, 0 0 ${glow}px ${colour}` : undefined,
-    }}
-  />
-);
-
-const Lock: React.FC<{ size?: number; colour?: string; opacity?: number }> = ({
-  size = 32,
-  colour = LIVE,
-  opacity = 1,
-}) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ opacity, flex: 'none' }}>
-    <rect x="4.6" y="10.4" width="14.8" height="10.4" rx="2.6" stroke={colour} strokeWidth="1.9" />
-    <path
-      d="M8.1 10.4V7.7a3.9 3.9 0 0 1 7.8 0v2.7"
-      stroke={colour}
-      strokeWidth="1.9"
-      strokeLinecap="round"
-    />
-  </svg>
-);
-
-// Eased entrance. Everything in this film arrives this way except the flip.
-const Rise: React.FC<{ start: number; distance?: number; children: React.ReactNode }> = ({
-  start,
-  distance = 24,
-  children,
-}) => {
+// ------------------------------------------------------------------ scene 1
+// The intro doubles as the video's thumbnail, so frame 0 is fully composed —
+// nothing here fades in from nothing.
+const Intro: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const s = spring({ frame: frame - start, fps, config: { damping: 200 } });
+  const out = interpolate(frame, [INTRO.dur - OVERLAP, INTRO.dur], [1, 0], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
   return (
-    <div style={{ opacity: s, transform: `translateY(${interpolate(s, [0, 1], [distance, 0])}px)` }}>
-      {children}
-    </div>
-  );
-};
-
-// Scenes only fade IN — the outgoing one stays put underneath until it's covered,
-// so there is never a dip to black between beats.
-const useSceneIn = (frames = 16) =>
-  interpolate(useCurrentFrame(), [0, frames], [0, 1], {
-    extrapolateRight: 'clamp',
-    easing: Easing.out(Easing.quad),
-  });
-
-const Scene: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <AbsoluteFill style={{ background: BG, opacity: useSceneIn() }}>
-    <Grid />
-    {children}
-  </AbsoluteFill>
-);
-
-// ── beats 1 + 2 · the terminal, and the sentence underneath it ────────────────
-// One scene, because the localhost line has to survive the cut to be the hook.
-const Terminal: React.FC = () => {
-  const frame = useCurrentFrame();
-
-  const CMD = 'npm run dev';
-  const typedChars = Math.floor(interpolate(frame, [14, 52], [0, CMD.length], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-  }));
-  const typing = frame < 56;
-  const caretOn = Math.floor(frame / 14) % 2 === 0;
-
-  const readyIn = interpolate(frame, [64, 78], [0, 1], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-    easing: Easing.out(Easing.quad),
-  });
-  const localIn = interpolate(frame, [84, 100], [0, 1], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-    easing: Easing.out(Easing.quad),
-  });
-
-  // Beat 2: the chrome recedes, the localhost line greys but stays.
-  const ease = { extrapolateLeft: 'clamp' as const, extrapolateRight: 'clamp' as const, easing: Easing.inOut(Easing.cubic) };
-  const chrome = interpolate(frame, [118, 148], [1, 0.14], ease);
-  const localDim = interpolate(frame, [118, 148], [1, 0.52], ease);
-  const lift = interpolate(frame, [118, 156], [0, -150], ease);
-  const shrink = interpolate(frame, [118, 156], [1, 0.94], ease);
-
-  const row = { display: 'flex', alignItems: 'center' as const, gap: 14, minHeight: 58 };
-
-  return (
-    <Scene>
-      {/* the terminal */}
-      <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <div
-          style={{
-            width: COL,
-            transform: `translateY(${lift}px) scale(${shrink})`,
-            background: SURFACE,
-            border: `1px solid ${LINE}`,
-            borderRadius: 18,
-            overflow: 'hidden',
-            boxShadow: '0 1px 2px rgba(0,0,0,.4), 0 30px 70px -30px rgba(0,0,0,.85)',
-          }}
-        >
+    <AbsoluteFill style={{ opacity: out }}>
+      <Stage>
+        <Rise still>
+          <Eyebrow>A free, open-source guide</Eyebrow>
+        </Rise>
+        <Rise still>
+          <H1>
+            Ship What
+            <br />
+            You Built
+          </H1>
+        </Rise>
+        <Rise still>
+          <Body size={40}>
+            How to get the thing you made onto the internet — a real domain, HTTPS,
+            GitHub, and deploys that happen on their own.
+          </Body>
+        </Rise>
+        <Rise still>
           <div
             style={{
               display: 'flex',
-              gap: 10,
-              padding: '20px 26px',
-              borderBottom: `1px solid ${LINE_SOFT}`,
-              background: SUNKEN,
-              opacity: chrome,
+              alignItems: 'center',
+              gap: 18,
+              marginTop: 14,
+              paddingTop: 30,
+              borderTop: `1px solid ${C.lineSoft}`,
             }}
           >
-            <Pip colour={LINE} size={13} />
-            <Pip colour={LINE} size={13} />
-            <Pip colour={LINE} size={13} />
-          </div>
-
-          <div style={{ padding: '30px 34px 34px', fontFamily: MONO, fontSize: 34 }}>
-            <div style={{ ...row, opacity: chrome }}>
-              <span style={{ color: MUTED }}>$</span>
-              <span style={{ color: INK }}>{CMD.slice(0, typedChars)}</span>
-              {typing && caretOn ? (
-                <span
-                  style={{
-                    display: 'inline-block',
-                    width: 17,
-                    height: 36,
-                    background: INK,
-                    marginLeft: -6,
-                  }}
-                />
-              ) : null}
-            </div>
-
-            <div style={{ ...row, opacity: readyIn * chrome, color: MUTED }}>ready in 412 ms</div>
-
-            <div style={{ ...row, opacity: localIn * localDim, gap: 20 }}>
-              <span style={{ color: MUTED }}>Local:</span>
-              <Pip colour={STUCK} size={17} halo={5} glow={14} />
-              {/* it doesn't disappear — it just stops mattering */}
-              <span style={{ color: INK }}>http://localhost:3000</span>
-            </div>
-          </div>
-        </div>
-      </AbsoluteFill>
-
-      {/* the sentence */}
-      <AbsoluteFill>
-        <div style={{ position: 'absolute', left: PAD, top: 726, width: COL }}>
-          <Rise start={148} distance={26}>
-            <div
+            <span
               style={{
-                fontFamily: SANS,
-                fontSize: 84,
-                fontWeight: 620,
-                letterSpacing: -1.8,
-                wordSpacing: 5,
-                lineHeight: 1.12,
-                color: MUTED,
+                width: 16,
+                height: 16,
+                borderRadius: '50%',
+                background: C.live,
+                boxShadow: `0 0 0 7px ${C.liveWash}`,
               }}
-            >
-              It works.
-            </div>
-          </Rise>
-          <Rise start={182} distance={26}>
-            <div
-              style={{
-                fontFamily: SANS,
-                fontSize: 84,
-                fontWeight: 700,
-                letterSpacing: -1.8,
-                wordSpacing: 5,
-                lineHeight: 1.12,
-                color: INK,
-              }}
-            >
-              Nobody can see it.
-            </div>
-          </Rise>
-        </div>
-      </AbsoluteFill>
-    </Scene>
+            />
+            <span style={{ fontFamily: MONO, fontSize: 38, color: C.ink }}>
+              shipwhatyoubuilt.com
+            </span>
+          </div>
+        </Rise>
+      </Stage>
+    </AbsoluteFill>
   );
 };
 
-// ── beats 3 + 4 · the four layers, then the payoff ────────────────────────────
-// Also one scene: the stack has to physically collapse into the address bar.
-const LAYERS: [string, string][] = [
-  ['1 · REGISTRAR', 'Who you bought the name from.'],
-  ['2 · DNS', 'Where is it?'],
-  ['3 · HOSTING', 'The actual files.'],
-  ['4 · CERTIFICATE', "Proves it's you."],
-];
+// ------------------------------------------------------------------ scene 2
+const Local: React.FC = () => {
+  const frame = useCurrentFrame();
+  const out = interpolate(frame, [LOCAL.dur - OVERLAP, LOCAL.dur], [1, 0], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+  return (
+    <AbsoluteFill style={{ opacity: out }}>
+      <Stage>
+        <Rise at={4}>
+          <H1>You built something.</H1>
+        </Rise>
+        <Rise at={22}>
+          <Body size={40}>It works. You're proud of it.</Body>
+        </Rise>
+        <Rise at={54}>
+          <div style={{ marginTop: 20 }}>
+            <Pill text="localhost:3000" state="dead" />
+          </div>
+        </Rise>
+        <Rise at={104}>
+          <Body size={44} colour={C.ink}>
+            And nobody else can see it.
+          </Body>
+        </Rise>
+      </Stage>
+    </AbsoluteFill>
+  );
+};
 
-const ROW_H = 92;
-const ROW_GAP = 46;
-const FLIP = 268; // the frame the whole film is built around
+// ------------------------------------------------------------------ scene 3
+const ROWS = [
+  ['1', 'REGISTRAR', 'Who you bought the name from'],
+  ['2', 'DNS', 'Answers “where is yourthing.com?”'],
+  ['3', 'HOSTING', 'Where your code actually lives'],
+  ['4', 'CERTIFICATE', 'Proves it is really you'],
+] as const;
 
 const Layers: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-
-  const clamp = { extrapolateLeft: 'clamp' as const, extrapolateRight: 'clamp' as const };
-  const cubic = { ...clamp, easing: Easing.inOut(Easing.cubic) };
-
-  // the thin line drawing downward as the layers land
-  const trail = interpolate(frame, [16, 172], [0, 1], { ...clamp, easing: Easing.out(Easing.cubic) });
-
-  // the collapse
-  const fold = interpolate(frame, [200, 242], [0, 1], cubic);
-  // The stack must be GONE before the bar is legible, or the two read on top of
-  // each other. Front-loaded fade: mostly invisible by the time it has moved.
-  const stackOut = interpolate(frame, [200, 226], [1, 0], {
-    ...clamp,
-    easing: Easing.out(Easing.quad),
+  const out = interpolate(frame, [LAYERS.dur - OVERLAP, LAYERS.dur], [1, 0], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
   });
-
-  // the address bar — starts the frame the stack finishes vanishing
-  const arrive = spring({ frame: frame - 226, fps, config: { damping: 200 } });
-  const flipped = frame >= FLIP;
-  const punch = interpolate(frame, [FLIP, FLIP + 6, FLIP + 26], [1, 1.045, 1], {
-    ...clamp,
-    easing: Easing.out(Easing.quad),
-  });
-
-  const barColour = flipped ? LIVE : LINE;
-  const bloom = interpolate(frame, [FLIP - 2, FLIP + 4, FLIP + 70], [0, 0.5, 0.13], clamp);
-
-  // two jade pulses shoved outward from the bar's own edges
-  const pulse = (k: number) => {
-    const s = FLIP + k * 14;
-    const t = interpolate(frame, [s, s + 54], [0, 1], { ...clamp, easing: Easing.out(Easing.cubic) });
-    return { spread: t * 66, o: frame >= s ? (1 - t) * 0.5 : 0 };
-  };
-
-  const CHIPS = ['registrar', 'dns', 'hosting', 'certificate'];
-
   return (
-    <Scene>
-      {/* jade bloom — the frame itself exhales when the dot flips */}
-      <AbsoluteFill
-        style={{
-          opacity: bloom,
-          background:
-            'radial-gradient(58% 34% at 50% 50%, rgba(53,194,133,0.30) 0%, rgba(53,194,133,0.09) 45%, rgba(53,194,133,0) 72%)',
-        }}
-      />
-
-      {/* the stack */}
-      <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <div
-          style={{
-            width: COL,
-            opacity: stackOut,
-            transform: `scale(${interpolate(fold, [0, 1], [1, 0.9])})`,
-          }}
-        >
-          <Rise start={4} distance={14}>
-            <div
-              style={{
-                fontFamily: MONO,
-                fontSize: 26,
-                letterSpacing: 5,
-                textTransform: 'uppercase',
-                color: MUTED,
-                marginBottom: 56,
-                opacity: interpolate(frame, [190, 214], [1, 0], clamp),
-              }}
-            >
-              What's between you and live
-            </div>
-          </Rise>
-
-          <div style={{ position: 'relative' }}>
-            {/* the connecting line, drawn downward */}
-            <div
-              style={{
-                position: 'absolute',
-                left: 9,
-                top: 34,
-                width: 2,
-                height: ((ROW_H + ROW_GAP) * 3 - 42) * trail * (1 - fold),
-                backgroundImage: `repeating-linear-gradient(180deg, ${LINE} 0px, ${LINE} 6px, transparent 6px, transparent 16px)`,
-              }}
-            />
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: ROW_GAP }}>
-              {LAYERS.map(([name, job], i) => {
-                const s = spring({ frame: frame - (16 + i * 38), fps, config: { damping: 200 } });
-                return (
-                  <div
-                    key={name}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      gap: 30,
-                      minHeight: ROW_H,
-                      opacity: s,
-                      transform: `translateX(${interpolate(s, [0, 1], [40, 0])}px) translateY(${
-                        fold * (1.5 - i) * 62
-                      }px)`,
-                    }}
-                  >
-                    <div style={{ paddingTop: 9 }}>
-                      <Pip colour={INK_SOFT} size={20} />
-                    </div>
-                    <div>
-                      <div
-                        style={{
-                          fontFamily: MONO,
-                          fontSize: 34,
-                          fontWeight: 600,
-                          letterSpacing: 2,
-                          color: INK,
-                        }}
-                      >
-                        {name}
-                      </div>
-                      <div
-                        style={{
-                          fontFamily: SANS,
-                          fontSize: 34,
-                          color: MUTED,
-                          marginTop: 8,
-                          lineHeight: 1.3,
-                        }}
-                      >
-                        {job}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </AbsoluteFill>
-
-      {/* the address bar it collapses into */}
-      <AbsoluteFill style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <div
-          style={{
-            opacity: arrive,
-            transform: `translateY(${interpolate(arrive, [0, 1], [26, 0])}px) scale(${punch})`,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <div style={{ position: 'relative', width: COL }}>
-            {[0, 1].map((k) => {
-              const { spread, o } = pulse(k);
-              return (
-                <div
-                  key={k}
-                  style={{
-                    position: 'absolute',
-                    left: -spread,
-                    right: -spread,
-                    top: -spread,
-                    bottom: -spread,
-                    borderRadius: 18 + spread,
-                    border: `2px solid ${LIVE}`,
-                    opacity: o,
-                  }}
-                />
-              );
-            })}
-
-            <div
-              style={{
-                position: 'relative',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 22,
-                width: '100%',
-                boxSizing: 'border-box',
-                padding: '30px 36px',
-                borderRadius: 18,
-                border: `1.5px solid ${barColour}`,
-                background: flipped ? LIVE_WASH : SURFACE,
-                boxShadow: flipped
-                  ? `0 0 0 6px rgba(53,194,133,0.07), 0 26px 64px -28px rgba(53,194,133,0.55)`
-                  : '0 1px 2px rgba(0,0,0,.4), 0 26px 64px -30px rgba(0,0,0,.8)',
-              }}
-            >
-              <Pip colour={flipped ? LIVE : STUCK} size={20} halo={6} glow={flipped ? 26 : 14} />
-              {flipped ? <Lock size={34} colour={LIVE} /> : null}
-              <span
-                style={{
-                  fontFamily: MONO,
-                  fontSize: 38,
-                  color: flipped ? INK : MUTED,
-                  letterSpacing: -0.4,
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                {flipped ? 'https://shipwhatyoubuilt.com' : 'http://localhost:3000'}
-              </span>
-            </div>
-          </div>
-
-          {/* the four layers, resolved */}
-          <div style={{ display: 'flex', gap: 16, marginTop: 58 }}>
-            {CHIPS.map((c, i) => (
-              <Rise key={c} start={302 + i * 13} distance={12}>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 11,
-                    padding: '12px 18px',
-                    borderRadius: 10,
-                    border: `1px solid ${LINE_SOFT}`,
-                    background: SURFACE,
-                    fontFamily: MONO,
-                    fontSize: 30,
-                    color: MUTED,
-                  }}
-                >
-                  <Pip colour={LIVE} size={12} />
-                  {c}
-                </div>
-              </Rise>
+    <AbsoluteFill style={{ opacity: out }}>
+      <Stage>
+        <Rise at={2}>
+          <Eyebrow>Four layers, four companies</Eyebrow>
+        </Rise>
+        <Rise at={10}>
+          <H1 size={72}>Between you and a URL</H1>
+        </Rise>
+        <div style={{ position: 'relative', marginTop: 26 }}>
+          {/* 3 gaps between 4 dots; each row is ~88px tall plus the 52px gap. */}
+          <Spine at={44} height={(ROWS.length - 1) * 140} />
+          <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', gap: 52 }}>
+            {ROWS.map(([n, name, desc], i) => (
+              <LayerRow key={n} n={Number(n)} name={name} desc={desc} at={40 + i * 34} />
             ))}
           </div>
         </div>
-      </AbsoluteFill>
-    </Scene>
+        <Rise at={210}>
+          <Body size={34} colour={C.muted}>
+            Independent of each other — so no choice you make today is a trap.
+          </Body>
+        </Rise>
+      </Stage>
+    </AbsoluteFill>
   );
 };
 
-// ── beat 5 · what it actually is ──────────────────────────────────────────────
-const PITCH: [string, number][] = [
-  ['A free guide.', 10],
-  ['Two tracks: Cloudflare or AWS.', 54],
-  ["Written for people who've\nnever deployed anything.", 100],
+// ------------------------------------------------------------------ scene 4
+// The payoff. The amber dot from scene 2 becomes jade on a real address; that
+// colour change is the whole point of the film, so it is the only hard cut.
+const FLIP_AT = 96;
+
+const Flip: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const flipped = frame >= FLIP_AT;
+
+  const punch = spring({
+    frame: frame - FLIP_AT,
+    fps,
+    config: { damping: 9, stiffness: 190, mass: 0.5 },
+  });
+  const scale = flipped ? 1 + 0.05 * Math.max(0, 1 - punch) : 1;
+  const glow = flipped
+    ? interpolate(frame - FLIP_AT, [0, 34], [1, 0.25], {
+        extrapolateLeft: 'clamp',
+        extrapolateRight: 'clamp',
+      })
+    : 0;
+
+  const out = interpolate(frame, [FLIP.dur - OVERLAP, FLIP.dur], [1, 0], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+
+  return (
+    <AbsoluteFill style={{ opacity: out }}>
+      <Stage>
+        <Rise at={4}>
+          <Eyebrow colour={flipped ? C.live : C.muted}>
+            {flipped ? 'Live' : 'About twenty minutes later'}
+          </Eyebrow>
+        </Rise>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 30, marginTop: 12 }}>
+          <Rise at={10}>
+            <Pill text="localhost:3000" state="dead" size={34} />
+          </Rise>
+          <Rise at={28}>
+            <div style={{ fontFamily: SANS, fontSize: 46, color: C.muted, paddingLeft: 10 }}>↓</div>
+          </Rise>
+          <Rise at={40}>
+            <Pill
+              text="https://shipwhatyoubuilt.com"
+              state={flipped ? 'alive' : 'dead'}
+              lock={flipped}
+              glow={glow}
+              scale={scale}
+              size={38}
+            />
+          </Rise>
+        </div>
+        <Rise at={FLIP_AT + 20}>
+          <Body size={36} colour={C.inkSoft}>
+            A domain you own, over HTTPS, deploying itself when you push.
+          </Body>
+        </Rise>
+      </Stage>
+    </AbsoluteFill>
+  );
+};
+
+// ------------------------------------------------------------------ scene 5
+const LINES = [
+  'Two tracks: Cloudflare or AWS.',
+  'Written for people who have never deployed anything.',
+  'Free, open source, and it was run start to finish.',
 ];
 
 const Pitch: React.FC = () => {
   const frame = useCurrentFrame();
-  return (
-    <Scene>
-      <AbsoluteFill
-        style={{
-          padding: `0 ${PAD}px`,
-          justifyContent: 'center',
-          alignItems: 'flex-start',
-        }}
-      >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 42, width: COL }}>
-          {PITCH.map(([text, at], i) => {
-            const next = PITCH[i + 1];
-            // once the next line lands, this one settles back
-            const settle = next
-              ? interpolate(frame, [next[1], next[1] + 22], [1, 0.42], {
-                  extrapolateLeft: 'clamp',
-                  extrapolateRight: 'clamp',
-                  easing: Easing.inOut(Easing.quad),
-                })
-              : 1;
-            return (
-              <Rise key={text} start={at} distance={22}>
-                <div
-                  style={{
-                    fontFamily: SANS,
-                    fontSize: 54,
-                    fontWeight: 640,
-                    letterSpacing: -1,
-                    wordSpacing: 3,
-                    lineHeight: 1.26,
-                    color: INK,
-                    opacity: settle,
-                    whiteSpace: 'pre-wrap',
-                  }}
-                >
-                  {text}
-                </div>
-              </Rise>
-            );
-          })}
-        </div>
-      </AbsoluteFill>
-    </Scene>
-  );
-};
-
-// ── beat 6 · end card ─────────────────────────────────────────────────────────
-const End: React.FC = () => {
-  const frame = useCurrentFrame();
-  const rule = interpolate(frame, [46, 84], [0, 380], {
+  const out = interpolate(frame, [PITCH.dur - OVERLAP, PITCH.dur], [1, 0], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
-    easing: Easing.out(Easing.cubic),
   });
-
   return (
-    <Scene>
-      <AbsoluteFill
-        style={{
-          opacity: 0.13,
-          background:
-            'radial-gradient(56% 30% at 50% 56%, rgba(53,194,133,0.22) 0%, rgba(53,194,133,0) 72%)',
-        }}
-      />
-      <AbsoluteFill style={{ padding: `0 ${PAD}px`, justifyContent: 'center' }}>
-        <div style={{ width: COL }}>
-          <Rise start={6} distance={26}>
-            <div
-              style={{
-                fontFamily: SANS,
-                fontSize: 84,
-                fontWeight: 680,
-                letterSpacing: -2,
-                wordSpacing: 5,
-                lineHeight: 1.08,
-                color: INK,
-              }}
-            >
-              You built something.
-            </div>
-          </Rise>
-          <Rise start={26} distance={26}>
-            <div
-              style={{
-                fontFamily: SANS,
-                fontSize: 84,
-                fontWeight: 680,
-                letterSpacing: -2,
-                wordSpacing: 5,
-                lineHeight: 1.08,
-                color: LIVE,
-              }}
-            >
-              Now ship it.
-            </div>
-          </Rise>
-
-          <div style={{ height: 1, width: rule, background: LINE, margin: '52px 0 44px' }} />
-
-          <Rise start={60} distance={18}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-              <Pip colour={LIVE} size={16} halo={5} glow={18} />
-              <span style={{ fontFamily: MONO, fontSize: 44, color: INK, letterSpacing: -0.5 }}>
-                shipwhatyoubuilt.com
+    <AbsoluteFill style={{ opacity: out }}>
+      <Stage>
+        {LINES.map((l, i) => (
+          <Rise key={l} at={6 + i * 30}>
+            <div style={{ display: 'flex', gap: 22, alignItems: 'baseline' }}>
+              <span
+                style={{
+                  width: 13,
+                  height: 13,
+                  borderRadius: '50%',
+                  background: C.live,
+                  flex: 'none',
+                }}
+              />
+              <span style={{ fontFamily: SANS, fontSize: 46, color: C.ink, lineHeight: 1.3 }}>
+                {l}
               </span>
             </div>
           </Rise>
-
-          <Rise start={84} distance={16}>
-            <div style={{ fontFamily: SANS, fontSize: 34, color: MUTED, marginTop: 26 }}>
-              Free · open source · about an hour
-            </div>
-          </Rise>
-        </div>
-      </AbsoluteFill>
-    </Scene>
+        ))}
+      </Stage>
+    </AbsoluteFill>
   );
 };
 
-// ── the film ──────────────────────────────────────────────────────────────────
-// 1050 frames @ 30fps = 35s. Sequences overlap by 14 so nothing ever dips.
+// ------------------------------------------------------------------ scene 6
+const End: React.FC = () => (
+  <AbsoluteFill>
+    <Stage>
+      <Rise at={2}>
+        <H1>
+          You built something.
+          <br />
+          <span style={{ color: C.live }}>Now ship it.</span>
+        </H1>
+      </Rise>
+      <Rise at={26}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 18,
+            marginTop: 18,
+            paddingTop: 32,
+            borderTop: `1px solid ${C.lineSoft}`,
+          }}
+        >
+          <span
+            style={{
+              width: 16,
+              height: 16,
+              borderRadius: '50%',
+              background: C.live,
+              boxShadow: `0 0 0 7px ${C.liveWash}`,
+            }}
+          />
+          <span style={{ fontFamily: MONO, fontSize: 40, color: C.ink }}>
+            shipwhatyoubuilt.com
+          </span>
+        </div>
+      </Rise>
+      <Rise at={44}>
+        <Body size={32} colour={C.muted}>
+          Free · open source · about an hour
+        </Body>
+      </Rise>
+    </Stage>
+  </AbsoluteFill>
+);
+
+// -------------------------------------------------------------------- film
 export const LaunchVideo: React.FC = () => (
-  <AbsoluteFill style={{ background: BG }}>
-    <Sequence from={0} durationInFrames={284}>
-      <Terminal />
+  <AbsoluteFill style={{ background: C.bg }}>
+    <Sequence from={INTRO.from} durationInFrames={INTRO.dur + OVERLAP}>
+      <Intro />
     </Sequence>
-    <Sequence from={270} durationInFrames={464}>
+    <Sequence from={LOCAL.from} durationInFrames={LOCAL.dur + OVERLAP}>
+      <Local />
+    </Sequence>
+    <Sequence from={LAYERS.from} durationInFrames={LAYERS.dur + OVERLAP}>
       <Layers />
     </Sequence>
-    <Sequence from={720} durationInFrames={194}>
+    <Sequence from={FLIP.from} durationInFrames={FLIP.dur + OVERLAP}>
+      <Flip />
+    </Sequence>
+    <Sequence from={PITCH.from} durationInFrames={PITCH.dur + OVERLAP}>
       <Pitch />
     </Sequence>
-    <Sequence from={900} durationInFrames={150}>
+    <Sequence from={END.from} durationInFrames={END.dur}>
       <End />
     </Sequence>
   </AbsoluteFill>
