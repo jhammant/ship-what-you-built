@@ -142,9 +142,10 @@ service, and every one of those arrives as a permission prompt you could have
 declined. The habit worth building on day one: <strong>if you don't recognise what it's
 proposing, type "no" and ask it to explain first.</strong> That is always allowed and it
 never costs you anything.</p>
-<p>There is a mode that auto-approves edits (press <code>Shift+Tab</code> inside a session to
-cycle modes) and a "plan" mode where it proposes without touching anything.
-Leave it on the default until you have a feel for it.</p>
+<p>Pressing <code>Shift+Tab</code> inside a session cycles between those modes: the default
+(shown as <strong>Manual</strong>), one that auto-approves file edits, and a <strong>plan</strong> mode
+where it proposes without touching anything. Leave it on the default until you
+have a feel for it.</p>
 <hr />
 <h2 id="which-agent">Which agent<a class="anchor" href="#which-agent" aria-label="Link to this section">#</a></h2>
 <p>Two good options, and this guide works with either:</p>
@@ -165,9 +166,10 @@ documentation in August 2026:
 <strong><a href="https://code.claude.com/docs/en/setup">https://code.claude.com/docs/en/setup</a></strong>. Install commands do change. If one
 of these doesn't behave as described, that page is the authority, not this one.</p>
 </blockquote>
-<p>Claude Code needs macOS 13 or later, Windows 10 (build 1809) or later, or a
-mainstream Linux — Ubuntu 20.04+, Debian 10+, Alpine 3.19+ — with 4 GB of RAM and
-an internet connection.</p>
+<p>Claude Code needs macOS 13 or later, Windows 10 version 1809 or later (or
+Windows Server 2019+), or a mainstream Linux — Ubuntu 20.04+, Debian 10+, Alpine
+3.19+ — on a 64-bit processor (x64 or ARM64), with 4 GB of RAM and an internet
+connection.</p>
 <h3 id="the-recommended-route-the-native-installer">The recommended route: the native installer<a class="anchor" href="#the-recommended-route-the-native-installer" aria-label="Link to this section">#</a></h3>
 <p>"Native" here means it installs a self-contained program, with no other software
 required first. This is the route to take unless you have a reason not to.</p>
@@ -190,19 +192,28 @@ or external command</code>. Run the <code>cmd</code> line in PowerShell and you 
 wrong window.</p>
 <p>Native installs update themselves quietly in the background.</p>
 <h3 id="if-youd-rather-use-a-package-manager">If you'd rather use a package manager<a class="anchor" href="#if-youd-rather-use-a-package-manager" aria-label="Link to this section">#</a></h3>
-<p>These do the same job; the trade-off is that <strong>none of them auto-update</strong>, so
-you have to run the upgrade yourself occasionally.</p>
+<p>These do the same job; the trade-off is that <strong>none of them auto-update by
+default</strong>, so you have to run the upgrade yourself occasionally.</p>
 <div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># macOS or Linux, with Homebrew
 brew install --cask claude-code
 # upgrade later with: brew upgrade claude-code
 </code></pre></div>
+<p>There are two Homebrew casks: <code>claude-code</code> follows the stable channel, which
+runs roughly a week behind and skips releases with known major regressions, and
+<code>claude-code@latest</code> takes every release as it ships. Stable is the quieter
+choice; upgrade whichever one you installed.</p>
 <div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-powershell"># Windows, with WinGet
 winget install Anthropic.ClaudeCode
 # upgrade later with: winget upgrade Anthropic.ClaudeCode
 </code></pre></div>
-<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># Any platform, with npm — needs Node.js 22 or later
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># Any platform, with npm — Node.js 22 or later
 npm install -g @anthropic-ai/claude-code
+# upgrade later with: npm install -g @anthropic-ai/claude-code@latest
 </code></pre></div>
+<p>The npm package downloads the same self-contained program the native installer
+does, so <code>claude</code> doesn't actually run on Node once it's installed — Node is only
+needed to fetch it. Upgrade with the <code>@latest</code> line above rather than
+<code>npm update -g</code>, which can leave you on an older release.</p>
 <p><strong>Do not put <code>sudo</code> in front of the npm command.</strong> <code>sudo</code> runs it as the
 computer's administrator, and it leaves you with files your normal account can't
 write to — which surfaces later as update failures you can't explain. If the npm
@@ -274,8 +285,8 @@ route, also run the standalone install above.</p>
 <p>Run <code>claude</code> for the first time and it walks you through logging in. It opens
 your browser, you sign in to your Anthropic account and approve access, and the
 browser hands control back to the terminal. Your credentials are then stored on
-your machine and you don't do this again. To switch accounts later, type
-<code>/login</code> inside a running session.</p>
+your machine and you don't do this again. To sign in again or switch accounts
+later, type <code>/login</code> inside a running session; <code>/logout</code> signs you out.</p>
 <p>The exact wording of those first-run screens changes between versions — expect a
 couple of setup questions (colour theme, that sort of thing) before the login
 step. What you're looking for is a browser tab opening and a "you're logged in"
@@ -314,10 +325,10 @@ different things, and you may need one, or both, for different reasons:</p>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Claude Code needs a Pro, Max, Team or Enterprise subscription, or a Console
-account with credit.</strong> The free Claude.ai plan does not include Claude Code. A
-subscription is the usual choice, because it's a predictable monthly number
-rather than a meter running while you work.</p>
+<p><strong>At the time of writing, Claude Code needs a Pro, Max, Team or Enterprise
+subscription, or a Console account with credit</strong> — the free Claude.ai plan does
+not include it. A subscription is the usual choice, because it's a predictable
+monthly number rather than a meter running while you work.</p>
 <p><strong>API credit is a separate question, and only if your project calls Claude.</strong> If
 you're building a "summarise this with AI" button, that button will make API
 calls from your server, and those are billed per use against a key you create.
@@ -341,8 +352,8 @@ session is billed to your API balance, not your subscription.</p>
 reads and writes files in a folder, runs commands, and asks before it acts.</p>
 <blockquote>
 <p>Checked against OpenAI's documentation in August 2026:
-<strong><a href="https://developers.openai.com/codex/cli">https://developers.openai.com/codex/cli</a></strong>. As above — if a command
-misbehaves, that page wins.</p>
+<strong><a href="https://learn.chatgpt.com/docs/codex/cli">https://learn.chatgpt.com/docs/codex/cli</a></strong> (older <code>developers.openai.com</code>
+links now redirect there). As above — if a command misbehaves, that page wins.</p>
 </blockquote>
 <div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># macOS or Linux — the standalone installer
 curl -fsSL https://chatgpt.com/codex/install.sh | sh
@@ -358,12 +369,16 @@ brew install --cask codex
 <div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">codex --version
 </code></pre></div>
 <p>A healthy answer looks like <code>codex-cli 0.146.0</code> — again, your number will differ.</p>
-<p>Then run <code>codex</code> in a project folder and choose <strong>Sign in with ChatGPT</strong>. That
-uses a paid ChatGPT plan (Plus, Pro, Business, Edu or Enterprise); the browser
-opens, you approve, and you're in. You can sign in with an OpenAI API key
-instead, which is pay-as-you-go and needs
-<a href="https://developers.openai.com/codex/auth">a bit more setup</a>. Plan details and
-prices live at <a href="https://openai.com/chatgpt/pricing/">openai.com/chatgpt/pricing</a>.</p>
+<p>Then run <code>codex</code> in a project folder and choose <strong>Sign in with ChatGPT</strong>. The
+browser opens, you approve, and you're in. OpenAI currently includes Codex across
+its ChatGPT plans — Free, Go, Plus, Pro, Business, Edu and Enterprise — with the
+usage limits varying a lot by plan, so a free account will run out of road faster
+than a paid one. You can sign in with an OpenAI API key instead, which is
+pay-as-you-go, needs
+<a href="https://learn.chatgpt.com/docs/auth">a bit more setup</a>, and leaves some
+cloud-side features unavailable. Check current plans and limits at
+<a href="https://openai.com/chatgpt/pricing/">openai.com/chatgpt/pricing</a> rather than
+trusting anything written here.</p>
 <h3 id="the-honest-comparison">The honest comparison<a class="anchor" href="#the-honest-comparison" aria-label="Link to this section">#</a></h3>
 <p>Both agents will get you through this guide. They read files, write files, run
 commands, and ask permission, and the day-to-day feel of using them is more
@@ -500,8 +515,8 @@ habits.</p>
 </tr>
 <tr>
 <td>A VPN makes it hang or fail</td>
-<td>Some corporate VPNs route or block traffic to <code>api.anthropic.com</code>, <code>claude.ai</code> and <code>downloads.claude.ai</code></td>
-<td>Test with the VPN off. If it works, that's your answer, and the fix is an allowlist request to IT rather than anything you can change locally</td>
+<td>Some corporate VPNs route or block traffic to <code>api.anthropic.com</code>, <code>claude.ai</code>, <code>platform.claude.com</code> and <code>downloads.claude.ai</code></td>
+<td>Test with the VPN off. If it works, that's your answer, and the fix is an allowlist request to IT rather than anything you can change locally. The <a href="https://code.claude.com/docs/en/network-config">network configuration page</a> lists every host to ask for</td>
 </tr>
 <tr>
 <td>It installed but behaves oddly</td>

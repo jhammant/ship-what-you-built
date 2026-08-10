@@ -41,9 +41,10 @@ declined. The habit worth building on day one: **if you don't recognise what it'
 proposing, type "no" and ask it to explain first.** That is always allowed and it
 never costs you anything.
 
-There is a mode that auto-approves edits (press `Shift+Tab` inside a session to
-cycle modes) and a "plan" mode where it proposes without touching anything.
-Leave it on the default until you have a feel for it.
+Pressing `Shift+Tab` inside a session cycles between those modes: the default
+(shown as **Manual**), one that auto-approves file edits, and a **plan** mode
+where it proposes without touching anything. Leave it on the default until you
+have a feel for it.
 
 ---
 
@@ -69,9 +70,10 @@ If you pay for neither, either will need a subscription or billing set up — se
 > **<https://code.claude.com/docs/en/setup>**. Install commands do change. If one
 > of these doesn't behave as described, that page is the authority, not this one.
 
-Claude Code needs macOS 13 or later, Windows 10 (build 1809) or later, or a
-mainstream Linux — Ubuntu 20.04+, Debian 10+, Alpine 3.19+ — with 4 GB of RAM and
-an internet connection.
+Claude Code needs macOS 13 or later, Windows 10 version 1809 or later (or
+Windows Server 2019+), or a mainstream Linux — Ubuntu 20.04+, Debian 10+, Alpine
+3.19+ — on a 64-bit processor (x64 or ARM64), with 4 GB of RAM and an internet
+connection.
 
 ### The recommended route: the native installer
 
@@ -109,14 +111,19 @@ Native installs update themselves quietly in the background.
 
 ### If you'd rather use a package manager
 
-These do the same job; the trade-off is that **none of them auto-update**, so
-you have to run the upgrade yourself occasionally.
+These do the same job; the trade-off is that **none of them auto-update by
+default**, so you have to run the upgrade yourself occasionally.
 
 ```bash
 # macOS or Linux, with Homebrew
 brew install --cask claude-code
 # upgrade later with: brew upgrade claude-code
 ```
+
+There are two Homebrew casks: `claude-code` follows the stable channel, which
+runs roughly a week behind and skips releases with known major regressions, and
+`claude-code@latest` takes every release as it ships. Stable is the quieter
+choice; upgrade whichever one you installed.
 
 ```powershell
 # Windows, with WinGet
@@ -125,9 +132,15 @@ winget install Anthropic.ClaudeCode
 ```
 
 ```bash
-# Any platform, with npm — needs Node.js 22 or later
+# Any platform, with npm — Node.js 22 or later
 npm install -g @anthropic-ai/claude-code
+# upgrade later with: npm install -g @anthropic-ai/claude-code@latest
 ```
+
+The npm package downloads the same self-contained program the native installer
+does, so `claude` doesn't actually run on Node once it's installed — Node is only
+needed to fetch it. Upgrade with the `@latest` line above rather than
+`npm update -g`, which can leave you on an older release.
 
 **Do not put `sudo` in front of the npm command.** `sudo` runs it as the
 computer's administrator, and it leaves you with files your normal account can't
@@ -206,8 +219,8 @@ route, also run the standalone install above.
 Run `claude` for the first time and it walks you through logging in. It opens
 your browser, you sign in to your Anthropic account and approve access, and the
 browser hands control back to the terminal. Your credentials are then stored on
-your machine and you don't do this again. To switch accounts later, type
-`/login` inside a running session.
+your machine and you don't do this again. To sign in again or switch accounts
+later, type `/login` inside a running session; `/logout` signs you out.
 
 The exact wording of those first-run screens changes between versions — expect a
 couple of setup questions (colour theme, that sort of thing) before the login
@@ -226,10 +239,10 @@ different things, and you may need one, or both, for different reasons:
 | What it covers here | **You** using Claude Code to build and deploy | **Your deployed app** calling Claude on behalf of its users |
 | Where you set it up | [claude.com/pricing](https://claude.com/pricing) | [platform.claude.com](https://platform.claude.com) |
 
-**Claude Code needs a Pro, Max, Team or Enterprise subscription, or a Console
-account with credit.** The free Claude.ai plan does not include Claude Code. A
-subscription is the usual choice, because it's a predictable monthly number
-rather than a meter running while you work.
+**At the time of writing, Claude Code needs a Pro, Max, Team or Enterprise
+subscription, or a Console account with credit** — the free Claude.ai plan does
+not include it. A subscription is the usual choice, because it's a predictable
+monthly number rather than a meter running while you work.
 
 **API credit is a separate question, and only if your project calls Claude.** If
 you're building a "summarise this with AI" button, that button will make API
@@ -258,8 +271,8 @@ number written down elsewhere, including here.
 reads and writes files in a folder, runs commands, and asks before it acts.
 
 > Checked against OpenAI's documentation in August 2026:
-> **<https://developers.openai.com/codex/cli>**. As above — if a command
-> misbehaves, that page wins.
+> **<https://learn.chatgpt.com/docs/codex/cli>** (older `developers.openai.com`
+> links now redirect there). As above — if a command misbehaves, that page wins.
 
 ```bash
 # macOS or Linux — the standalone installer
@@ -285,12 +298,16 @@ codex --version
 
 A healthy answer looks like `codex-cli 0.146.0` — again, your number will differ.
 
-Then run `codex` in a project folder and choose **Sign in with ChatGPT**. That
-uses a paid ChatGPT plan (Plus, Pro, Business, Edu or Enterprise); the browser
-opens, you approve, and you're in. You can sign in with an OpenAI API key
-instead, which is pay-as-you-go and needs
-[a bit more setup](https://developers.openai.com/codex/auth). Plan details and
-prices live at [openai.com/chatgpt/pricing](https://openai.com/chatgpt/pricing/).
+Then run `codex` in a project folder and choose **Sign in with ChatGPT**. The
+browser opens, you approve, and you're in. OpenAI currently includes Codex across
+its ChatGPT plans — Free, Go, Plus, Pro, Business, Edu and Enterprise — with the
+usage limits varying a lot by plan, so a free account will run out of road faster
+than a paid one. You can sign in with an OpenAI API key instead, which is
+pay-as-you-go, needs
+[a bit more setup](https://learn.chatgpt.com/docs/auth), and leaves some
+cloud-side features unavailable. Check current plans and limits at
+[openai.com/chatgpt/pricing](https://openai.com/chatgpt/pricing/) rather than
+trusting anything written here.
 
 ### The honest comparison
 
@@ -412,7 +429,7 @@ habits.
 | `OAuth error: Invalid code. Please make sure the full code was copied` | The login code expired, or got cut short when you copied it | Retry the login and move through it briskly; make sure you've selected the whole code, which can wrap onto a second line in a narrow terminal |
 | Install fails with `403`, `Failed to fetch version`, or curl errors | Something between you and the download server — a corporate proxy, a firewall, or a region where Claude Code isn't available | If you're behind a proxy, set it before installing: `export HTTPS_PROXY=http://proxy.example.com:8080` (ask IT for the address). On PowerShell: `$env:HTTPS_PROXY = 'http://proxy.example.com:8080'`. Try a different network to confirm the proxy is the cause |
 | `unable to get local issuer certificate` or `SELF_SIGNED_CERT_IN_CHAIN` | A corporate proxy is inspecting encrypted traffic by re-signing it with the company's own certificate, which your machine doesn't yet trust | Point Claude Code at your organisation's certificate file: `export NODE_EXTRA_CA_CERTS=/path/to/ca-cert.pem`. Your IT team can give you that file. Details on [network configuration](https://code.claude.com/docs/en/network-config) |
-| A VPN makes it hang or fail | Some corporate VPNs route or block traffic to `api.anthropic.com`, `claude.ai` and `downloads.claude.ai` | Test with the VPN off. If it works, that's your answer, and the fix is an allowlist request to IT rather than anything you can change locally |
+| A VPN makes it hang or fail | Some corporate VPNs route or block traffic to `api.anthropic.com`, `claude.ai`, `platform.claude.com` and `downloads.claude.ai` | Test with the VPN off. If it works, that's your answer, and the fix is an allowlist request to IT rather than anything you can change locally. The [network configuration page](https://code.claude.com/docs/en/network-config) lists every host to ask for |
 | It installed but behaves oddly | Could be a stale version, a broken settings file, or two installs fighting | Run `claude doctor` — it prints a diagnostic report covering install health and configuration errors without starting a session |
 
 If none of that matches, Anthropic's
