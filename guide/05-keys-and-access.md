@@ -31,7 +31,7 @@ They look like this:
 ```text
 sk-ant-api03-XbK9....................................................
 AKIAIOSFODNN7EXAMPLE
-ghp_16C7e42F292c6912E7710c838347Ae178B4a
+ghp_EXAMPLEEXAMPLEEXAMPLEEXAMPLEEXAMPLE
 ```
 
 Three things worth knowing about that shape:

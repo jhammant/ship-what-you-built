@@ -127,6 +127,12 @@ done <<< "$PATTERNS"
 # The scanner's own pattern list is not a finding.
 HITS="$(printf '%s' "$HITS" | grep -v 'skill/scripts/preflight.sh' || true)"
 
+# Nor are documentation placeholders. AWS's own docs use AKIAIOSFODNN7EXAMPLE,
+# and the convention of spelling EXAMPLE inside a sample key is widespread — a
+# real key never contains it. Anything that cries wolf on a page ABOUT keys
+# gets ignored wholesale, which is a worse outcome than this narrow exemption.
+HITS="$(printf '%s' "$HITS" | grep -v 'EXAMPLE' || true)"
+
 if [ -n "$HITS" ]; then
   bad "Something matches a known key format:"
   # REDACT before printing. This output lands in the terminal, the shell
