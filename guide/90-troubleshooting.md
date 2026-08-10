@@ -141,7 +141,7 @@ In descending order of likelihood:
 | `InvalidLocationConstraint` on bucket create | You're in `us-east-1` — omit `--create-bucket-configuration` |
 | 403 from a Lambda URL | The `add-permission` step after creating the URL was skipped |
 | Deep links 404 on a single-page app | Add custom error responses: 403 and 404 → `/index.html`, status 200 |
-| `sts:AssumeRoleWithWebIdentity` denied | The role's trust policy `sub` doesn't match `owner/repo` exactly |
+| `sts:AssumeRoleWithWebIdentity` denied | The trust policy `sub` doesn't match the claim GitHub actually sends. Don't guess it — print it ([Track B, Part 6.2](20-aws.md#62-a-role-only-your-repo-can-assume)) |
 | `Credentials could not be loaded` in Actions | Workflow missing `permissions: id-token: write` |
 | `InvalidClientTokenId` | Access key wrong or deleted. `aws configure` again |
 | Domain suspended after two weeks | ICANN verification email never clicked |

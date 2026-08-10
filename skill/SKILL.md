@@ -244,7 +244,8 @@ barely better than a broken one.
 | CloudFront rejects the certificate | It isn't in `us-east-1`. It must be, always |
 | `AccessDenied` from CloudFront | Bucket policy `AWS:SourceArn` doesn't match the distribution |
 | Deploy wiped the site | `s3 sync --delete` from the wrong directory. `deploy.sh` refuses an empty dir for this reason |
-| Certificate stuck pending | Layer 4 waiting on layer 2 — the validation record isn't resolving |
+| Certificate stuck pending | Layer 4 waiting on layer 2 — the validation record isn't resolving, or the domain isn't delegated yet |
+| OIDC `Not authorized to perform sts:AssumeRoleWithWebIdentity` | The trust policy `sub` doesn't match. GitHub often sends an ID-qualified subject (`repo:you@123/repo@456:…`). Print the claim, don't guess — `guide/20-aws.md` Part 6.2. Never "fix" it with `repo:you*/repo*:*` |
 | Env var change did nothing | They apply at build time. Redeploy |
 | Link preview is blank | `og:image` is a relative path, or the image 404s |
 | Everyone can see it but them | Their own DNS cache. `dig @1.1.1.1` |

@@ -655,6 +655,59 @@ aws iam create-role --role-name github-deploy \
 That `sub` condition is the security boundary: **only workflows in that one
 repository** can assume this role. Get it wrong and any repo on GitHub can.
 
+> ### If this fails with "Not authorized", read this before changing anything
+>
+> Some accounts — increasingly, all of them — issue **ID-qualified subjects**,
+> where GitHub appends the numeric owner and repo IDs to the claim:
+>
+> ```text
+> what most guides tell you to expect
+>   repo:you/your-repo:ref:refs/heads/main
+>
+> what you may actually get
+>   repo:you@8456990/your-repo@1329892525:ref:refs/heads/main
+> ```
+>
+> The pattern above then matches nothing, and the only error you get is
+> `Not authorized to perform sts:AssumeRoleWithWebIdentity` — which names no
+> cause and sends people off rewriting a trust policy that was nearly right.
+>
+> **Don't guess. Print the claim.** Add this workflow, run it once, and read
+> the real `sub`:
+>
+> ```yaml
+> name: OIDC debug
+> on: workflow_dispatch
+> permissions: { id-token: write, contents: read }
+> jobs:
+>   claims:
+>     runs-on: ubuntu-latest
+>     steps:
+>       - run: |
+>           TOKEN=$(curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+>             "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" | jq -r '.value')
+>           P=$(echo "$TOKEN" | cut -d. -f2)
+>           P="${P}$(printf '=%.0s' $(seq 1 $(( (4 - ${#P} % 4) % 4 ))))"
+>           echo "$P" | tr '_-' '/+' | base64 -d | jq '{sub, aud, repository}'
+> ```
+>
+> The `sub`, `aud` and `repository` claims are not secrets — but never print the
+> whole token, which is a credential. Delete the workflow once you have the answer.
+>
+> Then put the exact subject you saw into the trust policy, keeping `:*` on the
+> end so any branch or tag in that repo still matches:
+>
+> ```text
+> "token.actions.githubusercontent.com:sub": "repo:you@8456990/your-repo@1329892525:*"
+> ```
+>
+> Pinning the IDs is *better* than the name-based form, not a workaround: numeric
+> IDs never change, so the trust survives a rename and can't be inherited by
+> someone who later registers a username you gave up.
+>
+> Resist the temptation to "fix" it with `repo:you*/your-repo*:*`. That wildcard
+> also matches `you-evil/your-repo-evil`, and hands your AWS role to a stranger.
+
 Scope its permissions to your one bucket and your one distribution:
 
 ```bash
@@ -835,7 +888,7 @@ auto-renew in the Route 53 console if you don't want it.
 | 403 from the Lambda URL | `add-permission` skipped after creating the URL |
 | Deep links 404 on an SPA | Add the 403/404 → `/index.html` custom error responses |
 | Code changes don't appear | CloudFront cache. Invalidate, then hard-reload the browser |
-| `Not authorized to perform sts:AssumeRoleWithWebIdentity` | The role's trust policy `sub` doesn't match `owner/repo` |
+| `Not authorized to perform sts:AssumeRoleWithWebIdentity` | The trust policy `sub` doesn't match. Very often GitHub sends an **ID-qualified** subject (`repo:you@123/repo@456:…`) — print the real claim, see Part 6.2 |
 | `Credentials could not be loaded` in Actions | Workflow is missing `permissions: id-token: write` |
 | Workflow green, site unchanged | The invalidation step didn't run, or synced the wrong folder |
 | Deploy wiped the site | `aws s3 sync --delete` ran from the wrong directory |
