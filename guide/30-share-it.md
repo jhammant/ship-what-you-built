@@ -203,4 +203,15 @@ it's how anyone else finds their way here.
 
 ---
 
+## Optional: go one better than a screenshot
+
+A video outperforms an image on every platform in that list, and you can write
+one as **code** — React components rendered to an `.mp4` from the terminal, no
+editing software, regenerable in one command every time your project changes.
+It also gives you the still and the preview image for free.
+
+**[Make a launch video →](40-launch-video.md)** · ~45 minutes, costs nothing.
+
+---
+
 **Something broken?** [When it breaks →](90-troubleshooting.md)

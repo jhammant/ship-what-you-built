@@ -7,7 +7,7 @@ trick is narrowing down *where* before you start changing settings.
 
 ## First: which layer?
 
-Before anything else, ask which of [the four layers](01-three-layers.md) is
+Before anything else, ask which of [the four layers](04-three-layers.md) is
 failing. Two commands tell you almost every time:
 
 ```bash

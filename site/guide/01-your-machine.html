@@ -1,0 +1,1111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your machine — Ship What You Built</title>
+<meta name="description" content="Your machine — part of a free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:title" content="Your machine — Ship What You Built">
+<meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/01-your-machine.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#F6F7F5;--surface:#FFF;--sunken:#EEF0EC;--ink:#14181B;--ink-soft:#3D4642;
+--muted:#5B6560;--line:rgba(20,24,27,.13);--line-soft:rgba(20,24,27,.07);
+--live:#16794C;--live-ink:#FFF;--live-wash:rgba(22,121,76,.09);--stuck:#9A5B18;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+--sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;--ink-soft:#C3CCC6;
+--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}}
+:root[data-theme="dark"]{--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;
+--ink-soft:#C3CCC6;--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+line-height:1.68;font-size:1.02rem;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--live)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--live);outline-offset:3px;border-radius:5px}
+.shell{display:grid;grid-template-columns:17rem minmax(0,1fr);gap:2.5rem;
+max-width:78rem;margin-inline:auto;padding:0 clamp(1rem,4vw,2.5rem)}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr);gap:0}}
+.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;
+padding:2rem 0;border-right:1px solid var(--line-soft)}
+@media (max-width:900px){.side{position:static;max-height:none;border-right:0;
+border-bottom:1px solid var(--line-soft);padding-bottom:1rem}}
+.brand{font-weight:660;letter-spacing:-.02em;text-decoration:none;display:block;margin-bottom:.35rem}
+.brand small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;letter-spacing:0}
+.nav{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:.15rem}
+.nav a{display:block;padding:.42rem .6rem;border-radius:7px;text-decoration:none;
+font-size:.925rem;color:var(--ink-soft)}
+.nav a:hover{background:var(--sunken)}
+.nav a[aria-current="page"]{background:var(--live-wash);color:var(--ink);font-weight:600}
+.nav small{display:block;color:var(--muted);font-size:.76rem;line-height:1.35}
+.onpage{margin-top:1.5rem;border-top:1px solid var(--line-soft);padding-top:1rem}
+.onpage p{margin:0 0 .5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;
+text-transform:uppercase;color:var(--muted)}
+.onpage ul{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+.onpage a{display:block;padding:.2rem .35rem;font-size:.85rem;color:var(--muted);
+text-decoration:none;border-radius:5px}
+.onpage a:hover{color:var(--ink);background:var(--sunken)}
+.onpage .lvl3{padding-left:1rem;font-size:.8rem}
+main{padding:2.5rem 0 4rem;min-width:0;max-width:46rem}
+h1{font-size:clamp(1.9rem,1.4rem+2vw,2.7rem);line-height:1.1;letter-spacing:-.03em;
+margin:0 0 1.5rem;text-wrap:balance}
+h2{font-size:1.5rem;line-height:1.2;letter-spacing:-.022em;margin:2.8rem 0 .9rem;
+padding-top:1.4rem;border-top:1px solid var(--line-soft);text-wrap:balance}
+h3{font-size:1.13rem;letter-spacing:-.015em;margin:2rem 0 .6rem}
+h2 .anchor,h3 .anchor{opacity:0;margin-left:.4rem;color:var(--muted);text-decoration:none;font-weight:400}
+h2:hover .anchor,h3:hover .anchor,.anchor:focus-visible{opacity:1}
+p,ul,ol{margin:0 0 1.05rem}
+li{margin-bottom:.3rem}
+strong{font-weight:650}
+code{font-family:var(--mono);font-size:.875em;background:var(--sunken);
+padding:.12em .34em;border-radius:4px;overflow-wrap:break-word}
+.codewrap{position:relative;margin:0 0 1.2rem}
+pre{margin:0;overflow-x:auto;background:var(--sunken);border:1px solid var(--line-soft);
+border-radius:10px;padding:1rem 1.1rem;font-family:var(--mono);font-size:.845rem;line-height:1.62}
+pre code{background:none;padding:0;font-size:1em}
+.copy{position:absolute;top:.5rem;right:.5rem;font:inherit;font-size:.75rem;
+padding:.28rem .6rem;border-radius:6px;border:1px solid var(--line);
+background:var(--surface);color:var(--muted);cursor:pointer;opacity:0;transition:opacity .12s}
+.codewrap:hover .copy,.copy:focus-visible{opacity:1}
+.copy.done{color:var(--live);border-color:var(--live)}
+@media (hover:none){.copy{opacity:1}}
+blockquote{margin:0 0 1.2rem;padding:.9rem 1.1rem;border-left:3px solid var(--live);
+background:var(--live-wash);border-radius:0 9px 9px 0}
+blockquote > :last-child{margin-bottom:0}
+blockquote h3{margin-top:.2rem}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:0 0 1.2rem}
+table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+th,td{text-align:left;padding:.65rem .9rem;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+tbody tr:last-child td{border-bottom:0}
+hr{border:0;border-top:1px solid var(--line-soft);margin:2.5rem 0}
+img{max-width:100%;height:auto}
+.done-toggle{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);
+margin:.2rem 0 1.6rem;cursor:pointer;user-select:none}
+.done-toggle input{accent-color:var(--live);width:1rem;height:1rem}
+.pager{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:space-between;
+margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line-soft)}
+.pager a{flex:1 1 14rem;padding:.9rem 1.1rem;border:1px solid var(--line);border-radius:10px;
+text-decoration:none;background:var(--surface)}
+.pager a:hover{border-color:var(--live)}
+.pager span{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
+.pager .next{text-align:right}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-page="01-your-machine">
+<div class="shell">
+  <aside class="side">
+    <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
+    <nav><ul class="nav"><li><a href="00-start-here.html" data-page="00-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="01-your-machine.html" aria-current="page" data-page="01-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="02-accounts.html" data-page="02-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="03-keys-and-access.html" data-page="03-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="04-three-layers.html" data-page="04-three-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="05-github.html" data-page="05-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="06-let-claude-drive.html" data-page="06-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#what-a-terminal-actually-is">What a terminal actually is</a></li><li><a class="lvl3" href="#five-things-that-catch-people-out">Five things that catch people out</a></li><li><a class="lvl2" href="#windows">Windows</a></li><li><a class="lvl3" href="#powershell-and-command-prompt-are-not-bash">PowerShell and Command Prompt are not bash</a></li><li><a class="lvl3" href="#route-1--wsl-recommended">Route 1 — WSL (recommended)</a></li><li><a class="lvl3" href="#route-2--git-bash">Route 2 — Git Bash</a></li><li><a class="lvl3" href="#what-works-where">What works where</a></li><li><a class="lvl2" href="#macos">macOS</a></li><li><a class="lvl3" href="#homebrew">Homebrew</a></li><li><a class="lvl3" href="#the-bit-people-skip-and-then-brew-isnt-found">The bit people skip, and then brew isn&#x27;t found</a></li><li><a class="lvl2" href="#linux">Linux</a></li><li><a class="lvl2" href="#the-tools">The tools</a></li><li><a class="lvl3" href="#git--tracks-your-changes">git — tracks your changes</a></li><li><a class="lvl3" href="#gh--github-from-the-command-line">gh — GitHub from the command line</a></li><li><a class="lvl3" href="#curl--fetches-a-url">curl — fetches a URL</a></li><li><a class="lvl3" href="#dig--asks-dns-a-question-directly">dig — asks DNS a question directly</a></li><li><a class="lvl3" href="#jq--reads-json">jq — reads JSON</a></li><li><a class="lvl3" href="#zip--packages-files-into-one-archive">zip — packages files into one archive</a></li><li><a class="lvl3" href="#aws--the-aws-command-line">aws — the AWS command line</a></li><li><a class="lvl3" href="#node-and-npm--only-if-your-project-builds">node and npm — only if your project builds</a></li><li><a class="lvl3" href="#claude-code--the-agent-that-reads-this-guide-with-you">Claude Code — the agent that reads this guide with you</a></li><li><a class="lvl2" href="#check-everything-at-once">Check everything at once</a></li><li><a class="lvl2" href="#when-it-doesnt-work">When it doesn&#x27;t work</a></li></ul></div>
+  </aside>
+  <main>
+<h1>Your machine</h1>
+<p><strong>This page gets you a working terminal with the right tools in it — about 20
+minutes on macOS or Linux, 30–45 on Windows.</strong></p>
+<p>Nothing here touches your project or costs money — it's groundwork, and once
+it's done you never do it again. Most of the Windows time is a reboot and a
+download bar.</p>
+<p>If you already have a terminal you're comfortable in, skip to
+<a href="#the-tools">the tools</a> and run <a href="#check-everything-at-once">the check-everything script</a>.</p>
+<hr />
+<h2 id="what-a-terminal-actually-is">What a terminal actually is<a class="anchor" href="#what-a-terminal-actually-is" aria-label="Link to this section">#</a></h2>
+<p>A terminal is a window where you type the name of a program and it runs. That's
+the whole idea. Your desktop shows you programs as icons you click; the terminal
+shows you programs as words you type. The same computer, the same files, a
+different door in.</p>
+<p>Inside that window is a <strong>prompt</strong> — a bit of text sitting at the left waiting
+for you, usually ending in <code>$</code> or <code>%</code> or <code>&gt;</code>. It often tells you who you are and
+which folder you're in, like <code>you@laptop ~/projects $</code>. You type a command after
+it, press <strong>Enter</strong>, and the computer does the thing. When it's finished, the
+prompt comes back, which is how you know it's done.</p>
+<p>This guide uses a terminal for a reason that isn't stubbornness: the things you
+are about to do — buying a domain, pushing code, deploying a site — all have
+web dashboards, and those dashboards get redesigned every few months. A command
+is stable, copy-pasteable, and repeatable. It also means that when something
+breaks at 11pm, you can paste the exact command and the exact error into Claude
+Code and get a real answer, instead of describing a button you clicked.</p>
+<h3 id="five-things-that-catch-people-out">Five things that catch people out<a class="anchor" href="#five-things-that-catch-people-out" aria-label="Link to this section">#</a></h3>
+<ul>
+<li><strong>No output usually means it worked.</strong> Unix tools — Unix being the decades-old
+  family of systems that macOS and Linux both descend from — are silent on
+  success and noisy on failure. If you run a command and get nothing back but a
+  fresh prompt, that is the good outcome, not a hang.</li>
+<li><strong>Pasting is not always Ctrl+V.</strong> Use <strong>Cmd+V</strong> on macOS and
+  <strong>Ctrl+Shift+V</strong> on Linux. In Git Bash it's <strong>right-click</strong> or
+  <strong>Shift+Insert</strong>. Windows Terminal is the friendly one: Ctrl+V,
+  Ctrl+Shift+V and right-click all paste.</li>
+<li><strong>Ctrl+C usually means "stop", not "copy".</strong> In most terminals it interrupts
+  the thing that's currently running, and the safe way to copy is
+  <strong>Ctrl+Shift+C</strong> (Cmd+C on macOS). Windows Terminal is the exception — there,
+  Ctrl+C copies when you have text selected and interrupts when you don't.
+  Learning Ctrl+C as "stop" is genuinely useful: it's how you get out of a
+  command that's sitting there doing nothing.</li>
+<li><strong>The up arrow brings back your last command.</strong> Press it repeatedly to walk
+  back through your history. This saves an enormous amount of retyping.</li>
+<li><strong>Tab completes.</strong> Type the first few letters of a folder or file name and
+  press Tab; the terminal fills in the rest. It also means you can't typo a
+  filename that doesn't exist.</li>
+</ul>
+<p>Two commands worth knowing before anything else: <code>pwd</code> prints the folder you're
+currently in ("print working directory"), and <code>cd some-folder</code> moves you into
+one. <code>cd ..</code> goes back up one level. If you're ever lost, <code>pwd</code> tells you where
+you are.</p>
+<hr />
+<h2 id="windows">Windows<a class="anchor" href="#windows" aria-label="Link to this section">#</a></h2>
+<p>This section is long, and deliberately so. A <strong>shell</strong> is the program running
+inside the terminal window that reads what you type and decides what it means —
+different shells understand slightly different languages. <strong>This guide is
+written in bash</strong>, the shell macOS and Linux use, and Windows does not have bash
+out of the box. That gap is where most Windows readers give up, so here is the
+whole thing.</p>
+<h3 id="powershell-and-command-prompt-are-not-bash">PowerShell and Command Prompt are not bash<a class="anchor" href="#powershell-and-command-prompt-are-not-bash" aria-label="Link to this section">#</a></h3>
+<p>Windows gives you two terminals already: <strong>Command Prompt</strong> (<code>cmd</code>, the older
+one) and <strong>PowerShell</strong> (the modern one). Both are real, capable shells. Neither
+of them speaks bash, and the difference is not cosmetic — commands from this
+guide will fail in them, sometimes loudly and sometimes silently, which is
+worse.</p>
+<p>Four concrete examples, because "it's different" isn't useful:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Thing this guide does</th>
+<th>bash</th>
+<th>PowerShell</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Write a file inline: <br><code>cat &gt; f.json &lt;&lt;EOF</code> … <code>EOF</code></td>
+<td>Creates the file</td>
+<td><code>The '&lt;' operator is reserved for future use</code> — heredocs don't exist</td>
+</tr>
+<tr>
+<td>Literal text: <code>'{"Name":"a"}'</code></td>
+<td>Passed through exactly</td>
+<td>Single quotes are literal in PowerShell too, but PowerShell then re-parses the argument when handing it to a native <code>.exe</code>, and JSON comes out mangled</td>
+</tr>
+<tr>
+<td>A variable: <code>$BUCKET</code> and <code>export BUCKET=x</code></td>
+<td>Sets and reads a variable</td>
+<td><code>$BUCKET</code> is a PowerShell variable with different rules; <code>export</code> doesn't exist (it's <code>$env:BUCKET = "x"</code>)</td>
+</tr>
+<tr>
+<td>Continue a long command on the next line with a trailing <code>\</code></td>
+<td>Joins the lines</td>
+<td>The <code>\</code> is treated as text; PowerShell uses a backtick <code>`</code> instead. The command runs half-finished</td>
+</tr>
+</tbody>
+</table></div>
+<p>A <strong>heredoc</strong> — the <code>cat &gt; file &lt;&lt;EOF</code> pattern — is how this guide writes config
+files and AWS policy documents. <a href="20-aws.html">Track B</a> uses it repeatedly. If your
+shell can't do heredocs, large parts of Track B simply won't work as written.</p>
+<p>So you need a bash. There are two routes.</p>
+<h3 id="route-1--wsl-recommended">Route 1 — WSL (recommended)<a class="anchor" href="#route-1--wsl-recommended" aria-label="Link to this section">#</a></h3>
+<p><strong>WSL</strong> stands for Windows Subsystem for Linux: a real Ubuntu Linux running
+inside Windows, sharing your files and your network, with no dual-boot and no
+virtual machine to manage. You open it like any other app. Every command in this
+guide then works exactly as written, because you are genuinely on Linux.</p>
+<p>It works on Windows 11 and on Windows 10 version 2004 or later. <strong>Windows Home
+is fine</strong> — you do not need Pro, despite what older articles say.</p>
+<blockquote>
+<p><strong>On a work laptop?</strong> WSL needs hardware virtualisation, which some corporate
+IT policies switch off and lock. If the steps below fail with a policy error,
+don't fight it — use <a href="#route-2--git-bash">Git Bash</a> and
+<a href="10-cloudflare.html">Track A</a>, which between them need very little terminal.</p>
+</blockquote>
+<h4>Step 1 — Open PowerShell as Administrator</h4>
+<p>Installing WSL changes Windows features, so it needs administrator rights.</p>
+<ol>
+<li>Press the <strong>Windows key</strong>, or click <strong>Start</strong>.</li>
+<li>Type <code>powershell</code>.</li>
+<li>In the results, <strong>right-click</strong> "Windows PowerShell" and choose <strong>Run as
+   administrator</strong>. (On the newer Start menu, "Run as administrator" also
+   appears in the panel on the right.)</li>
+<li>A <strong>User Account Control</strong> box appears asking <em>"Do you want to allow this app
+   to make changes to your device?"</em> — click <strong>Yes</strong>.</li>
+</ol>
+<p>You'll know it worked because the window's title bar starts with
+<strong>Administrator:</strong>. If it doesn't, you're in a normal PowerShell and step 2 will
+fail with an access-denied error.</p>
+<blockquote>
+<p>On Windows 11 there's a shortcut: right-click the <strong>Start</strong> button itself and
+choose <strong>Terminal (Admin)</strong>.</p>
+</blockquote>
+<h4>Step 2 — Install it</h4>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-powershell">wsl --install
+</code></pre></div>
+<p>That single command turns on two Windows features, downloads the Linux kernel,
+and installs Ubuntu. It prints progress lines like <code>Installing: Virtual Machine
+Platform</code>, <code>Installing: Windows Subsystem for Linux</code>, <code>Downloading: Ubuntu</code>, and
+finishes with something close to:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">The requested operation is successful. Changes will not be effective until the system is rebooted.
+</code></pre></div>
+<p>The download is a few hundred megabytes, so on a slow connection this takes a
+while and the progress percentage can appear to stall. Let it.</p>
+<h4>Step 3 — Reboot</h4>
+<p>Actually reboot. Not "close the lid" — a real restart, from Start → Power →
+Restart. WSL will not work until you do, and the error you get if you skip it
+looks unrelated and will waste your evening.</p>
+<h4>Step 4 — Set your Linux username and password</h4>
+<p>After the reboot, an Ubuntu window usually opens by itself and says <code>Installing,
+this may take a few minutes...</code>. If it doesn't appear, open <strong>Start</strong> and click
+<strong>Ubuntu</strong>.</p>
+<p>Then it asks two things:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">Enter new UNIX username:
+</code></pre></div>
+<p>Type a short, lowercase name with no spaces. It does <strong>not</strong> have to match your
+Windows username and it isn't shown to anyone. <code>jon</code> is fine.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">New password:
+</code></pre></div>
+<blockquote>
+<p><strong>The password shows nothing as you type. Not even asterisks.</strong> The cursor
+does not move. This is not a broken keyboard and the window has not frozen —
+Unix has hidden password input since the 1970s and it panics everyone the
+first time. Type your password, press Enter, type it again when it asks to
+confirm, press Enter.</p>
+</blockquote>
+<p><strong>Write this password down.</strong> It is not your Windows password, it is not your
+Microsoft account, and there's no "forgot password" link. You'll need it every
+time you run a command starting with <code>sudo</code> — which means "run this one command
+with administrator rights".</p>
+<p>When it's done you get a prompt that looks like this, and you are on Linux:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">jon@DESKTOP-4F2K1:~$
+</code></pre></div>
+<h4>Step 5 — Confirm it's healthy</h4>
+<p>Back in PowerShell (a normal one is fine now):</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-powershell">wsl -l -v
+</code></pre></div>
+<p>Expected shape — the important column is <code>VERSION</code>, which should say <code>2</code>:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">  NAME      STATE           VERSION
+* Ubuntu    Running         2
+</code></pre></div>
+<p>If it says <code>1</code>, run <code>wsl --set-version Ubuntu 2</code>. Version 1 is the older
+implementation and some things behave differently.</p>
+<h4>Opening Ubuntu from now on</h4>
+<p>Three ways, all equivalent:</p>
+<ul>
+<li><strong>Start menu → Ubuntu.</strong> The simplest.</li>
+<li><strong>Windows Terminal</strong> — the modern tabbed terminal app, already installed on
+  Windows 11 and free from the Microsoft Store on Windows 10. Click the small
+  <strong>v</strong> chevron next to the <code>+</code> on the tab bar and choose <strong>Ubuntu</strong>. This is
+  the nicest option: proper copy-paste, tabs, and it remembers your settings.</li>
+<li>Type <code>wsl</code> in any PowerShell window.</li>
+</ul>
+<h4>Where your files are</h4>
+<p>This is the bit that confuses everyone, so here it is plainly. You now
+effectively have two filesystems that can see each other.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Where</th>
+<th>Path inside Ubuntu</th>
+<th>Path in Windows Explorer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Your Linux home folder</td>
+<td><code>~</code> (which is <code>/home/jon</code>)</td>
+<td><code>\\wsl.localhost\Ubuntu\home\jon</code> (older builds: <code>\\wsl$\Ubuntu\home\jon</code>)</td>
+</tr>
+<tr>
+<td>Your Windows C: drive</td>
+<td><code>/mnt/c</code></td>
+<td><code>C:\</code></td>
+</tr>
+<tr>
+<td>Your Windows Desktop</td>
+<td><code>/mnt/c/Users/YourName/Desktop</code></td>
+<td>the Desktop</td>
+</tr>
+</tbody>
+</table></div>
+<p>So if your project is currently sitting on your Windows desktop, you can reach
+it from Ubuntu:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">cd &quot;/mnt/c/Users/Your Name/Desktop/my-project&quot;
+</code></pre></div>
+<p>Note the quotes — Windows usernames often contain a space, and without quotes
+bash reads that as two separate arguments and reports <code>No such file or
+directory</code>.</p>
+<blockquote>
+<p><strong>Strong advice: move your project into the Linux home folder.</strong></p>
+<p><code>bash
+cp -r "/mnt/c/Users/Your Name/Desktop/my-project" ~/
+cd ~/my-project</code></p>
+<p>Reading and writing files across the <code>/mnt/c</code> boundary goes through a
+translation layer, and it is <strong>slow</strong> — not "a bit slow", but ten times slower
+in a way you will feel. <code>git status</code> on a large repo takes seconds instead of
+being instant, and <code>npm install</code> can take minutes instead of moments. Keep the
+files on the Linux side and everything is fast. This is the single biggest
+quality-of-life difference in WSL.</p>
+</blockquote>
+<p>To open your Linux folder in Windows Explorer, run this from inside Ubuntu:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">explorer.exe .
+</code></pre></div>
+<p>The <code>.</code> means "this folder". You can drag files in and out of that window
+normally. If you use <strong>VS Code</strong>, install its <em>WSL</em> extension and then <code>code .</code>
+from the Ubuntu prompt opens the editor properly attached to Linux.</p>
+<h4>When <code>wsl --install</code> goes wrong</h4>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>What you see</th>
+<th>What it means</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>wsl : The term 'wsl' is not recognized...</code></td>
+<td>Windows is too old (pre-2004)</td>
+<td>Press Windows+R, type <code>winver</code>, press Enter. You need version 2004 / build 19041 or later. Run Windows Update, possibly twice</td>
+</tr>
+<tr>
+<td><code>Invalid command line option: --install</code></td>
+<td>Windows 10, old enough to have <code>wsl</code> but not <code>--install</code></td>
+<td>Update Windows. If you genuinely can't, use <a href="https://learn.microsoft.com/windows/wsl/install-manual">Microsoft's manual steps</a></td>
+</tr>
+<tr>
+<td><code>Please enable the Virtual Machine Platform Windows feature and ensure virtualization is enabled in the BIOS</code>, or error <code>0x80370102</code></td>
+<td>Hardware virtualisation is switched off in your firmware</td>
+<td>See <a href="#virtualisation-disabled-in-the-bios">virtualisation</a> below</td>
+</tr>
+<tr>
+<td><code>WslRegisterDistribution failed with error: 0x800701bc</code></td>
+<td>The WSL2 Linux kernel is missing or out of date</td>
+<td>In admin PowerShell: <code>wsl --update</code>, then <code>wsl --shutdown</code>, then reopen Ubuntu</td>
+</tr>
+<tr>
+<td><code>WslRegisterDistribution failed with error: 0x8007019e</code></td>
+<td>The WSL Windows feature never got enabled</td>
+<td>See <a href="#enabling-the-features-by-hand">enabling the features by hand</a> below</td>
+</tr>
+<tr>
+<td><code>WslRegisterDistribution failed with error: 0x80370114</code></td>
+<td>Virtual Machine Platform is enabled but blocked — often Core Isolation / Memory Integrity, or another virtualisation product (VirtualBox, VMware) holding the hardware</td>
+<td>Turn off Memory Integrity in Windows Security → Device security → Core isolation, reboot, try again</td>
+</tr>
+<tr>
+<td>It installs, then Ubuntu closes instantly with no message</td>
+<td>Almost always a failed first-run setup</td>
+<td>Run <code>wsl --unregister Ubuntu</code> then <code>wsl --install -d Ubuntu</code> to start clean. This deletes the Linux filesystem, which is empty at this point anyway</td>
+</tr>
+<tr>
+<td>Everything fails and you're on a managed work laptop</td>
+<td>Group policy — rules your IT department pushes to the machine, which you can't override</td>
+<td>Stop here. Use <a href="#route-2--git-bash">Git Bash</a></td>
+</tr>
+</tbody>
+</table></div>
+<h5>Virtualisation disabled in the BIOS</h5>
+<p>WSL2 uses your CPU's virtualisation feature, and a surprising number of laptops
+ship with it switched off. First check whether it's actually off: open <strong>Task
+Manager</strong> (Ctrl+Shift+Esc) → <strong>Performance</strong> → <strong>CPU</strong>, and look for
+<strong>Virtualization</strong>. If it says <code>Disabled</code>, that's your problem.</p>
+<p>To turn it on you need your computer's firmware settings (the "BIOS" or "UEFI"),
+which is a menu that appears before Windows starts. The reliable way in:</p>
+<ol>
+<li><strong>Settings</strong> → <strong>System</strong> → <strong>Recovery</strong> → <strong>Advanced startup</strong> → <strong>Restart
+   now</strong>.</li>
+<li><strong>Troubleshoot</strong> → <strong>Advanced options</strong> → <strong>UEFI Firmware Settings</strong> →
+   <strong>Restart</strong>.</li>
+<li>In the firmware menu, find the setting. It's called <strong>Intel VT-x</strong>,
+   <strong>Intel Virtualization Technology</strong>, <strong>AMD-V</strong>, or <strong>SVM Mode</strong>, usually
+   under Advanced, CPU Configuration, or Security. Set it to <strong>Enabled</strong>.</li>
+<li>Save and exit — usually <strong>F10</strong>.</li>
+</ol>
+<blockquote>
+<p>Firmware menus differ per manufacturer and none of them are pretty. Searching
+for "enable virtualization" plus your laptop's exact model is genuinely the
+fastest route, and it is a normal, safe, reversible setting.</p>
+</blockquote>
+<h5>Enabling the features by hand</h5>
+<p>If the automatic install left the Windows features off, turn them on explicitly.
+In <strong>PowerShell as Administrator</strong>:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-powershell">dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+</code></pre></div>
+<p>Reboot, then:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-powershell">wsl --update
+wsl --install -d Ubuntu
+</code></pre></div>
+<h3 id="route-2--git-bash">Route 2 — Git Bash<a class="anchor" href="#route-2--git-bash" aria-label="Link to this section">#</a></h3>
+<p><strong>Git Bash</strong> is a small bash shell that comes bundled with
+<a href="https://gitforwindows.org/">Git for Windows</a>. Install Git for Windows, accept
+the defaults, and you get a "Git Bash" entry in your Start menu that opens a
+genuine bash prompt with <code>git</code>, <code>ls</code>, <code>cat</code>, <code>grep</code>, <code>curl</code>, <code>ssh</code>, <code>sed</code> and
+friends already in it.</p>
+<p>It's much lighter than WSL — a single installer, no reboot, no virtualisation —
+and it's the right answer if WSL is blocked or you want to get moving now.</p>
+<p><strong>What works:</strong> everything in <a href="05-github.html">Get it on GitHub</a>, heredocs, single
+quotes, <code>$VAR</code>, backslash line continuations, and effectively all of
+<a href="10-cloudflare.html">Track A</a>.</p>
+<p><strong>What doesn't:</strong></p>
+<ul>
+<li><strong>No Linux package manager.</strong> There's no <code>apt</code> — the command Ubuntu users type
+  to install things. Tools like <code>jq</code> and the AWS CLI get installed as normal
+  Windows programs instead, using <code>winget</code> (Windows' own built-in installer
+  command, present on Windows 10 and 11), and then happen to be visible from Git
+  Bash.</li>
+<li><strong>No <code>dig</code>.</strong> DNS lookups go through Windows, so you use <code>nslookup</code> instead.
+  <a href="04-three-layers.html">The three layers</a> shows both.</li>
+<li><strong>No <code>sudo</code>.</strong> Commands in this guide that use it need an Administrator
+  terminal instead.</li>
+<li><strong>Path translation surprises.</strong> Git Bash rewrites arguments that look like
+  Unix paths into Windows paths, which is helpful right up until it isn't — an
+  AWS command with an argument like <code>/aws/lambda/my-function</code> can arrive at the
+  far end as <code>C:/Program Files/Git/aws/lambda/my-function</code>. The fix is to prefix
+  the command with <code>MSYS_NO_PATHCONV=1</code>, but you have to know to do it, and
+  that's the sort of thing that costs an hour.</li>
+</ul>
+<p>That last point is why Track B is listed as "risky" below rather than "fine".</p>
+<h3 id="what-works-where">What works where<a class="anchor" href="#what-works-where" aria-label="Link to this section">#</a></h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Task</th>
+<th>PowerShell</th>
+<th>Git Bash</th>
+<th>WSL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Paste a <code>bash</code> command from this guide and have it run</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Heredocs (<code>cat &gt; file &lt;&lt;EOF</code>)</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>$VAR</code> / <code>export VAR=value</code></td>
+<td>No — different syntax</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Backslash <code>\</code> at end of line to continue</td>
+<td>No — uses a backtick</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>git</code>, <code>gh</code></td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>curl</code></td>
+<td><code>curl.exe</code> yes; bare <code>curl</code> is an alias for a different tool in Windows PowerShell 5</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>dig</code></td>
+<td>No — use <code>nslookup</code></td>
+<td>No — use <code>nslookup</code></td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>jq</code>, <code>zip</code></td>
+<td>Install separately</td>
+<td>Install separately</td>
+<td><code>sudo apt install</code></td>
+</tr>
+<tr>
+<td><code>aws</code> (AWS CLI)</td>
+<td>Yes</td>
+<td>Yes, with path-translation quirks</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>sudo</code></td>
+<td>No — "Run as administrator" instead</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><a href="10-cloudflare.html">Track A — Cloudflare</a> end to end</td>
+<td>Mostly; it's dashboard-heavy</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><a href="20-aws.html">Track B — AWS</a> end to end</td>
+<td>No</td>
+<td>Risky</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The recommendation, plainly:</strong> install WSL. It's twenty minutes and a reboot,
+and afterwards every instruction in this guide and in most of the internet's
+tutorials applies to you unchanged. Take Git Bash if WSL is blocked, or if you
+know you're doing Track A and want to start in the next five minutes.</p>
+<blockquote>
+<p>Everything you install in Windows and everything you install in WSL are
+<strong>separate</strong>. Installing the AWS CLI in Windows does not put <code>aws</code> inside
+Ubuntu, and vice versa. If you take the WSL route, do all the installs in the
+next section from the <strong>Ubuntu</strong> prompt using the Linux instructions — not the
+Windows ones.</p>
+</blockquote>
+<hr />
+<h2 id="macos">macOS<a class="anchor" href="#macos" aria-label="Link to this section">#</a></h2>
+<p>macOS already has a terminal: <strong>Terminal.app</strong>, in Applications → Utilities.
+Press <strong>Cmd+Space</strong>, type <code>terminal</code>, press Enter. It opens on a shell called
+<strong>zsh</strong>, which is close enough to bash that everything in this guide works
+unchanged.</p>
+<p>What it doesn't have is a way to install things. That's Homebrew.</p>
+<h3 id="homebrew">Homebrew<a class="anchor" href="#homebrew" aria-label="Link to this section">#</a></h3>
+<p>A <strong>package manager</strong> is a program whose job is installing other programs: it
+knows where each tool lives, downloads the right version for your machine, puts
+it somewhere your terminal can find it, and updates it later with one command.
+Without one you're hunting for download pages, and nothing knows what you've
+already got. <strong>Homebrew</strong> is the one macOS uses.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;
+</code></pre></div>
+<p>Two things will happen that surprise people:</p>
+<ol>
+<li>
+<p><strong>It asks for your Mac login password.</strong> Homebrew needs to create folders
+   your normal user can't write to. Same rule as before — <strong>nothing appears as
+   you type</strong>. Type it, press Enter.</p>
+</li>
+<li>
+<p><strong>A dialog box appears offering to install the Xcode Command Line Tools.</strong>
+   Click <strong>Install</strong> and accept the licence. This is Apple's set of developer
+   tools — the compiler, plus <code>git</code> itself — and Homebrew needs it. It's a
+   download of a gigabyte or two and takes several minutes on a good connection.
+   If the dialog doesn't appear, run <code>xcode-select --install</code> yourself.</p>
+</li>
+</ol>
+<h3 id="the-bit-people-skip-and-then-brew-isnt-found">The bit people skip, and then <code>brew</code> isn't found<a class="anchor" href="#the-bit-people-skip-and-then-brew-isnt-found" aria-label="Link to this section">#</a></h3>
+<p>When Homebrew finishes it prints a block headed <code>==&gt; Next steps:</code> with two or
+three commands in it. <strong>Run them.</strong> On Apple Silicon Macs, Homebrew installs to
+<code>/opt/homebrew</code>, which your shell does not look in by default, so if you skip
+this you'll open a fresh terminal tomorrow and get <code>brew: command not found</code>
+despite having installed it.</p>
+<p>The commands look like this:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">echo &gt;&gt; ~/.zprofile
+echo 'eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;' &gt;&gt; ~/.zprofile
+eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;
+</code></pre></div>
+<p>That appends one line to your shell's startup file so every future terminal
+knows where Homebrew lives, then applies it to the current one.</p>
+<p>On <strong>Intel</strong> Macs, Homebrew installs to <code>/usr/local</code>, which is already on the
+path, and there's nothing to do. Not sure which you have? Apple menu → <strong>About
+This Mac</strong>: "Chip: Apple M…" is Apple Silicon, "Processor: Intel…" is Intel. Or
+in the terminal, <code>uname -m</code> prints <code>arm64</code> or <code>x86_64</code>.</p>
+<p>Then install everything at once:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">brew install git gh jq awscli
+</code></pre></div>
+<p><code>curl</code>, <code>dig</code> and <code>zip</code> ship with macOS already.</p>
+<hr />
+<h2 id="linux">Linux<a class="anchor" href="#linux" aria-label="Link to this section">#</a></h2>
+<p>You already have a terminal and a package manager. The only question is which
+one, and that depends on your <strong>distribution</strong> — the particular flavour of Linux
+you installed, such as Ubuntu or Fedora:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Distribution</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ubuntu, Debian, Linux Mint, Pop!_OS, <strong>WSL's default Ubuntu</strong></td>
+<td><code>sudo apt install …</code></td>
+</tr>
+<tr>
+<td>Fedora, RHEL, CentOS, Rocky</td>
+<td><code>sudo dnf install …</code></td>
+</tr>
+<tr>
+<td>Arch, Manjaro</td>
+<td><code>sudo pacman -S …</code></td>
+</tr>
+<tr>
+<td>openSUSE</td>
+<td><code>sudo zypper install …</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><code>sudo</code> means "run this one command as the administrator". It asks for your own
+login password the first time you use it in a session, and — you know this by
+now — <strong>shows nothing as you type</strong>.</p>
+<p>On Debian, Ubuntu or WSL, get most of the way in one line:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">sudo apt update
+sudo apt install -y git curl jq zip unzip dnsutils
+</code></pre></div>
+<p><code>sudo apt update</code> refreshes the catalogue of what's available; without it you
+can get "package not found" for something that plainly exists. <code>-y</code> answers yes
+to the "do you want to continue?" prompt.</p>
+<p>Package names differ slightly per distribution:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Debian / Ubuntu / WSL</th>
+<th>Fedora</th>
+<th>Arch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dig</code></td>
+<td><code>dnsutils</code> (or <code>bind9-dnsutils</code> on newer releases)</td>
+<td><code>bind-utils</code></td>
+<td><code>bind</code></td>
+</tr>
+<tr>
+<td>everything else</td>
+<td>the obvious name</td>
+<td>the obvious name</td>
+<td>the obvious name</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>gh</code> and <code>aws</code> aren't in the default repositories in a usable version — they get
+their own instructions below.</p>
+<hr />
+<h2 id="the-tools">The tools<a class="anchor" href="#the-tools" aria-label="Link to this section">#</a></h2>
+<p>Nine things. Install them now rather than discovering each one missing halfway
+through a step at a point where you've lost your thread.</p>
+<p>For each one: what it is, how to install it, and <strong>the command that proves it
+worked</strong>. Version numbers below are illustrative — yours will be higher and
+that's fine. What you're checking is that the command runs at all and prints
+something of roughly the right shape, rather than <code>command not found</code>. Any word
+here you don't recognise is in <a href="99-glossary.html">the glossary</a>.</p>
+<h3 id="git--tracks-your-changes">git — tracks your changes<a class="anchor" href="#git--tracks-your-changes" aria-label="Link to this section">#</a></h3>
+<p>Git records every version of your project and is how your code gets to GitHub.
+Both tracks deploy <em>from</em> a GitHub repository, so nothing else in this guide
+happens without it.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># macOS — comes with the Xcode Command Line Tools; this gets a newer one
+brew install git
+
+# Debian / Ubuntu / WSL
+sudo apt install -y git
+
+# Windows without WSL — Git for Windows, which is also where Git Bash comes from
+winget install Git.Git
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">git --version
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">git version 2.43.0
+</code></pre></div>
+<h3 id="gh--github-from-the-command-line">gh — GitHub from the command line<a class="anchor" href="#gh--github-from-the-command-line" aria-label="Link to this section">#</a></h3>
+<p>GitHub's own tool. It creates repositories (a <strong>repository</strong>, or "repo", is one
+project's folder of code as GitHub stores it), sets permissions, and — most
+usefully — logs you in properly, so you never have to generate or paste a
+<strong>personal access token</strong>: a long secret string GitHub can issue in place of a
+password, which is fiddly to make and easy to leak.
+<a href="05-github.html">05 — Get it on GitHub</a> uses it throughout.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># macOS
+brew install gh
+
+# Windows without WSL
+winget install GitHub.cli
+
+# Debian / Ubuntu / WSL — GitHub's own repository, because the built-in one lags
+(type -p curl &gt;/dev/null || sudo apt install -y curl) \
+  &amp;&amp; curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+    | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+  &amp;&amp; sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+  &amp;&amp; echo &quot;deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main&quot; \
+    | sudo tee /etc/apt/sources.list.d/github-cli.list &gt; /dev/null \
+  &amp;&amp; sudo apt update &amp;&amp; sudo apt install -y gh
+</code></pre></div>
+<p>That last block looks alarming. It is four steps: fetch GitHub's signing key,
+save it, tell <code>apt</code> about GitHub's package repository and that this key vouches
+for it, then install. The signing key is what stops someone substituting a fake
+package.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">gh --version
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">gh version 2.88.1 (2026-03-12)
+https://github.com/cli/cli/releases/tag/v2.88.1
+</code></pre></div>
+<p>You'll log in with <code>gh auth login</code> in <a href="05-github.html">05</a> — not yet.</p>
+<h3 id="curl--fetches-a-url">curl — fetches a URL<a class="anchor" href="#curl--fetches-a-url" aria-label="Link to this section">#</a></h3>
+<p><code>curl</code> asks a web address for its contents and prints them. In this guide it's
+how you check a site is actually live, and what <strong>headers</strong> it's returning — the
+handful of labels a server sends alongside the page saying what it is, how long
+it may be cached and whether the request succeeded. <code>curl</code> shows you the real
+answer, without your browser's cache lying to you about it.</p>
+<p>Already present on macOS, on every Linux, in Git Bash, and in modern Windows.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">curl --version
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">curl 8.7.1 (x86_64-apple-darwin23.0) libcurl/8.7.1 (SecureTransport) LibreSSL/3.3.6
+Protocols: dict file ftp ftps gopher gophers http https imap imaps ...
+</code></pre></div>
+<blockquote>
+<p><strong>PowerShell warning.</strong> In Windows PowerShell 5.1 — the version most Windows
+10 and 11 machines open by default — <code>curl</code> is an <em>alias</em> for a completely
+different PowerShell tool that takes different flags. <code>curl -I https://…</code> will
+not do what this guide expects. Write <code>curl.exe</code> explicitly, or use WSL or Git
+Bash, where <code>curl</code> is the real thing.</p>
+</blockquote>
+<h3 id="dig--asks-dns-a-question-directly">dig — asks DNS a question directly<a class="anchor" href="#dig--asks-dns-a-question-directly" aria-label="Link to this section">#</a></h3>
+<p>DNS is the layer that turns <code>yourthing.com</code> into an address, and it's where most
+"my site isn't working" turns out to live. <code>dig</code> asks a DNS server a question
+and shows you the raw answer, which is the only way to see past your own
+computer's cache. <a href="04-three-layers.html">The three layers</a> explains what to ask it.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># macOS — already installed
+
+# Debian / Ubuntu / WSL
+sudo apt install -y dnsutils          # newer releases: bind9-dnsutils
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">dig +short example.com
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">104.20.23.154
+172.66.147.243
+</code></pre></div>
+<p>One or more IP addresses means it works. The exact addresses change over time
+and some names answer with several, so don't compare yours against the ones
+above — what matters is that you get addresses at all. No output means the
+lookup failed, usually a network problem rather than a <code>dig</code> problem.</p>
+<blockquote>
+<p><strong>No <code>dig</code> on Windows outside WSL.</strong> Use <code>nslookup example.com</code> instead, which
+is built in and answers the same basic question with a different layout. For
+anything more involved, <a href="https://dnschecker.org">dnschecker.org</a> shows you
+what the rest of the world sees, which is often more useful than what your own
+machine sees.</p>
+</blockquote>
+<h3 id="jq--reads-json">jq — reads JSON<a class="anchor" href="#jq--reads-json" aria-label="Link to this section">#</a></h3>
+<p>AWS commands answer in <strong>JSON</strong> — a structured text format full of braces that
+is precise and unreadable in bulk. <code>jq</code> pulls single values out of it and
+pretty-prints the rest. <a href="20-aws.html">Track B</a> uses it constantly; Track A barely
+needs it.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># macOS
+brew install jq
+
+# Debian / Ubuntu / WSL
+sudo apt install -y jq
+
+# Windows without WSL
+winget install jqlang.jq
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">jq --version
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">jq-1.7.1
+</code></pre></div>
+<p>A better proof, because it shows it actually parses:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">echo '{&quot;live&quot;:true,&quot;visits&quot;:3}' | jq .visits
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">3
+</code></pre></div>
+<h3 id="zip--packages-files-into-one-archive">zip — packages files into one archive<a class="anchor" href="#zip--packages-files-into-one-archive" aria-label="Link to this section">#</a></h3>
+<p><strong>AWS Lambda</strong> — Amazon's service for running a small piece of your code on
+demand, with no server for you to look after — takes that code as a <code>.zip</code> file.
+So <a href="20-aws.html">Track B</a> needs <code>zip</code> if, and only if, your project has a
+<strong>backend</strong>: code that runs on a server rather than in the visitor's browser.
+Track A never uses it.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># macOS — already installed
+
+# Debian / Ubuntu / WSL
+sudo apt install -y zip unzip
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">zip --version
+</code></pre></div>
+<p>The output is a wall of copyright text starting with <code>Copyright (c) 1990-2008
+Info-ZIP</code>. That's a healthy answer — it's an old tool with old manners.</p>
+<h3 id="aws--the-aws-command-line">aws — the AWS command line<a class="anchor" href="#aws--the-aws-command-line" aria-label="Link to this section">#</a></h3>
+<p>The tool that drives your AWS account from the terminal: creating <strong>buckets</strong>
+(an S3 bucket is just a named folder in Amazon's storage that a website can be
+served out of), uploading files, and clearing the <strong>CDN</strong> cache — a CDN, or
+content delivery network, being the layer of copies of your site kept near your
+visitors so pages load fast. <strong><a href="20-aws.html">Track B</a> only</strong> — skip this entirely
+if you're taking <a href="10-cloudflare.html">Track A</a>.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># macOS
+brew install awscli
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># Linux and WSL — AWS's own install script, because distribution packages are old.
+# It picks the right build for Intel or ARM machines by itself.
+curl -fsSL https://awscli.amazonaws.com/v2/install.sh | bash
+</code></pre></div>
+<blockquote>
+<p>That script installs into your own home folder (<code>~/.local/bin</code>) and needs no
+<code>sudo</code>. If <code>aws</code> isn't found afterwards, close the terminal and open a new one
+— see <a href="#when-it-doesnt-work">when it doesn't work</a> below.</p>
+</blockquote>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-powershell"># Windows without WSL
+winget install Amazon.AWSCLI
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">aws --version
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">aws-cli/2.34.15 Python/3.13.12 Darwin/25.5.0 source/arm64
+</code></pre></div>
+<p>The <code>aws-cli/2.</code> at the start matters — this guide assumes version 2. If you see
+<code>aws-cli/1.…</code> you have an old install (often from <code>pip</code>, Python's package
+installer) shadowing the new one; remove it, or fix your <strong><code>PATH</code></strong> so version 2
+comes first. <code>PATH</code> is the ordered list of folders your shell searches when you
+type a command name — the first match wins, which is exactly how an old copy
+keeps answering.</p>
+<p>You'll connect it to your account in <a href="20-aws.html">Track B</a>, after
+<a href="03-keys-and-access.html">keys and access</a>. Don't run <code>aws configure</code> yet.</p>
+<h3 id="node-and-npm--only-if-your-project-builds">node and npm — only if your project builds<a class="anchor" href="#node-and-npm--only-if-your-project-builds" aria-label="Link to this section">#</a></h3>
+<p><strong>Node.js</strong> runs JavaScript outside a browser, and <strong>npm</strong> is its package
+manager, installed alongside it. You need these <strong>only if your project has a
+build step</strong> — if you run something like <code>npm run build</code> and get a <code>dist/</code> or
+<code>build/</code> folder out of it. React, Vue, Svelte, Vite, Astro and Next all work
+this way. A hand-written HTML page does not.</p>
+<p>Not sure? Look in your project folder for a file called <code>package.json</code>. If it's
+there, you need Node.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># macOS
+brew install node
+
+# Debian / Ubuntu / WSL — the distribution version is usually too old.
+# nvm lets you install and switch Node versions per project.
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.6/install.sh | bash
+# then close and reopen your terminal, and:
+nvm install --lts
+
+# Windows without WSL
+winget install OpenJS.NodeJS.LTS
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">node --version
+npm --version
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">v22.14.0
+10.9.2
+</code></pre></div>
+<blockquote>
+<p>The <code>nvm</code> install prints instructions and then <strong>does nothing until you open a
+new terminal</strong>. If <code>nvm: command not found</code> immediately after installing, that
+is why — close the window, open a new one, try again.</p>
+</blockquote>
+<h3 id="claude-code--the-agent-that-reads-this-guide-with-you">Claude Code — the agent that reads this guide with you<a class="anchor" href="#claude-code--the-agent-that-reads-this-guide-with-you" aria-label="Link to this section">#</a></h3>
+<p>Every page in this guide is written to be handed to Claude Code, which can run
+the commands and explain what it's doing. You don't have to use it — the guide
+stands alone — but the prompts scattered through it assume you might.</p>
+<p>The current install instructions live at
+<a href="https://code.claude.com/docs/en/setup">code.claude.com/docs/en/setup</a>, and they
+change more often than anything else on this page, so check there rather than
+trusting a command in a Markdown file. As of writing:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># macOS, Linux, WSL
+curl -fsSL https://claude.ai/install.sh | bash
+
+# macOS, via Homebrew
+brew install --cask claude-code
+
+# or, if you already have Node
+npm install -g @anthropic-ai/claude-code
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">claude --version
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">2.1.226 (Claude Code)
+</code></pre></div>
+<p>Then run <code>claude</code> in your project folder to start it. It'll walk you through
+signing in the first time. There's also <code>claude doctor</code>, which checks its own
+install and tells you what's wrong.</p>
+<blockquote>
+<p><strong>On Windows, prefer installing Claude Code inside WSL</strong>, from the Ubuntu
+prompt. It does run natively on Windows from PowerShell — there's an official
+installer for it — but this guide's commands are bash, and Claude Code is a
+great deal happier when the shell underneath it is bash too.</p>
+<p>Claude Code needs a paid Claude plan (Pro, Max, Team or Enterprise) or a
+Console account with API credit; the free Claude.ai plan doesn't include it.
+Prices and plan limits change, so check
+<a href="https://www.claude.com/pricing">claude.com/pricing</a> rather than any number
+you read in a guide.</p>
+</blockquote>
+<hr />
+<h2 id="check-everything-at-once">Check everything at once<a class="anchor" href="#check-everything-at-once" aria-label="Link to this section">#</a></h2>
+<p>Paste this whole block into your terminal and press Enter. It prints one line
+per tool with a tick or a cross, and it changes nothing.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">for tool in git gh curl dig jq zip aws node npm claude; do
+  if command -v &quot;$tool&quot; &gt;/dev/null 2&gt;&amp;1; then
+    printf '  ✓  %-6s  %s\n' &quot;$tool&quot; &quot;$(command -v &quot;$tool&quot;)&quot;
+  else
+    printf '  ✗  %-6s  not installed\n' &quot;$tool&quot;
+  fi
+done
+</code></pre></div>
+<p>A healthy result looks roughly like this:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">  ✓  git     /opt/homebrew/bin/git
+  ✓  gh      /opt/homebrew/bin/gh
+  ✓  curl    /usr/bin/curl
+  ✓  dig     /usr/bin/dig
+  ✓  jq      /opt/homebrew/bin/jq
+  ✓  zip     /usr/bin/zip
+  ✓  aws     /opt/homebrew/bin/aws
+  ✓  node    /opt/homebrew/bin/node
+  ✓  npm     /opt/homebrew/bin/npm
+  ✓  claude  /Users/you/.local/bin/claude
+</code></pre></div>
+<p><strong>Crosses are not automatically a problem.</strong> Read them against what you're
+actually doing:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Needed for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git</code>, <code>gh</code>, <code>curl</code></td>
+<td>Everything. A cross here is a real problem</td>
+</tr>
+<tr>
+<td><code>dig</code></td>
+<td>Useful everywhere; essential when DNS misbehaves. On Windows outside WSL, use <code>nslookup</code> and ignore the cross</td>
+</tr>
+<tr>
+<td><code>jq</code>, <code>zip</code>, <code>aws</code></td>
+<td><a href="20-aws.html">Track B — AWS</a>. Ignore entirely on <a href="10-cloudflare.html">Track A</a></td>
+</tr>
+<tr>
+<td><code>node</code>, <code>npm</code></td>
+<td>Only if your project has a <code>package.json</code></td>
+</tr>
+<tr>
+<td><code>claude</code></td>
+<td>Only if you want Claude Code to drive</td>
+</tr>
+</tbody>
+</table></div>
+<p>The second column of the output — the path — is worth a glance too. If a tool
+shows up somewhere you don't expect (an <code>aws</code> under <code>/usr/local/bin</code> when you
+installed via Homebrew, say), you have two copies and the wrong one is winning.</p>
+<hr />
+<h2 id="when-it-doesnt-work">When it doesn't work<a class="anchor" href="#when-it-doesnt-work" aria-label="Link to this section">#</a></h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>What you see</th>
+<th>What's actually going on</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>command not found</code> for something you just installed</td>
+<td>Your terminal built its list of programs when it opened and hasn't noticed the new one</td>
+<td><strong>Close the terminal window and open a new one.</strong> This fixes it perhaps four times out of five. If it doesn't, the tool went somewhere your <code>PATH</code> doesn't cover — see the next two rows</td>
+</tr>
+<tr>
+<td><code>brew: command not found</code> on a Mac, even though Homebrew installed fine</td>
+<td>Apple Silicon puts Homebrew in <code>/opt/homebrew</code>, which isn't searched by default, and you skipped the "Next steps" block</td>
+<td>Run <code>eval "$(/opt/homebrew/bin/brew shellenv)"</code> now, and add it to <code>~/.zprofile</code> so it sticks — see <a href="#the-bit-people-skip-and-then-brew-isnt-found">Homebrew above</a></td>
+</tr>
+<tr>
+<td><code>command not found</code> and reopening didn't help</td>
+<td><code>PATH</code> — the list of folders your shell searches — doesn't include where the tool landed</td>
+<td>Find it with <code>ls /usr/local/bin</code>, <code>ls ~/.local/bin</code> or the installer's own output, then add that folder: <code>echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.zshrc</code> (use <code>~/.bashrc</code> on Linux and WSL). Reopen the terminal</td>
+</tr>
+<tr>
+<td><code>Permission denied</code></td>
+<td>You're writing somewhere your user doesn't own, usually a system folder</td>
+<td>Prefix with <code>sudo</code> — but only for install commands. If you're getting this inside your <em>own</em> project folder, <code>sudo</code> is the wrong answer and something else owns your files: <code>sudo chown -R $(whoami) .</code> fixes that</td>
+</tr>
+<tr>
+<td><code>Permission denied</code> running a script you downloaded</td>
+<td>The file isn't marked executable</td>
+<td><code>chmod +x thescript.sh</code>, then <code>./thescript.sh</code></td>
+</tr>
+<tr>
+<td><code>running scripts is disabled on this system</code> in PowerShell</td>
+<td>Windows blocks unsigned scripts by default</td>
+<td>In PowerShell: <code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned</code>, answer <code>Y</code>. This allows scripts you wrote locally and signed ones from elsewhere, which is the sensible middle setting. It only affects your own user</td>
+</tr>
+<tr>
+<td><code>sudo: command not found</code></td>
+<td>You're in Git Bash or PowerShell, which have no <code>sudo</code></td>
+<td>Close it and open an <strong>Administrator</strong> terminal (right-click → Run as administrator) — or use WSL, where <code>sudo</code> works normally</td>
+</tr>
+<tr>
+<td><code>apt: command not found</code> on a Mac</td>
+<td>You ran the Linux instructions</td>
+<td>Use the macOS ones — <code>brew install …</code></td>
+</tr>
+<tr>
+<td><code>brew: command not found</code> on Linux or WSL</td>
+<td>You ran the macOS instructions</td>
+<td>Use <code>sudo apt install …</code></td>
+</tr>
+<tr>
+<td>You installed something in Windows and WSL can't see it</td>
+<td>They're separate systems that happen to share a screen</td>
+<td>Install it again, inside Ubuntu, using the Linux instructions</td>
+</tr>
+<tr>
+<td><code>aws-cli/1.x</code> when you installed version 2</td>
+<td>An old copy from <code>pip</code> is earlier in your <code>PATH</code></td>
+<td><code>pip uninstall awscli</code>, reopen the terminal, check again</td>
+</tr>
+<tr>
+<td>Everything is fine but the terminal feels hostile</td>
+<td>Entirely normal on day one</td>
+<td>You need about six commands total for this guide, and every one of them is written out for you. Paste, read the output, move on</td>
+</tr>
+</tbody>
+</table></div>
+<p>Anything not covered here goes in <a href="90-troubleshooting.html">90 — When it breaks</a>,
+and any word you don't recognise is in <a href="99-glossary.html">the glossary</a>.</p>
+<p>And the genuinely fastest route when a command fails: copy <strong>the command you
+ran</strong> and <strong>the entire error message</strong>, paste both into Claude Code, and add
+what you were trying to do. Error messages are written for people who already
+know the answer, and translating them is something an agent is very good at.</p>
+<hr />
+<p><strong>Next:</strong> <a href="02-accounts.html">Accounts you'll need →</a></p>
+    <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
+    <nav class="pager"><a class="prev" href="00-start-here.html"><span>Previous</span>Start here</a><a class="next" href="02-accounts.html"><span>Next</span>The accounts you need</a></nav>
+  </main>
+</div>
+<script>
+// Copy the whole block — several are heredocs that break if pasted line by line.
+document.querySelectorAll('.codewrap').forEach(function (w) {
+  var btn = w.querySelector('.copy'), pre = w.querySelector('pre');
+  if (!btn || !pre) return;
+  btn.addEventListener('click', function () {
+    navigator.clipboard.writeText(pre.innerText).then(function () {
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+    }).catch(function () { btn.textContent = 'Press Ctrl+C'; });
+  });
+});
+
+// Remember which pages are finished — the AWS track spans more than one sitting.
+(function () {
+  var KEY = 'swyb-done', box = document.getElementById('page-done');
+  if (!box) return;
+  var page = document.body.dataset.page;
+  var read = function () { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
+  var done = read();
+  box.checked = !!done[page];
+  box.addEventListener('change', function () {
+    var d = read();
+    if (box.checked) { d[page] = true; } else { delete d[page]; }
+    localStorage.setItem(KEY, JSON.stringify(d));
+    paint();
+  });
+  function paint() {
+    var d = read();
+    document.querySelectorAll('.nav a[data-page]').forEach(function (a) {
+      a.textContent.indexOf('✓') === 0 && (a.textContent = a.textContent.slice(1));
+      var t = a.querySelector('.tick');
+      if (t) t.textContent = d[a.dataset.page] ? '✓ ' : '';
+    });
+  }
+  paint();
+})();
+</script>
+</body>
+</html>

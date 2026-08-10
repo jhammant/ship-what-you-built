@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The accounts you need — Ship What You Built</title>
+<meta name="description" content="The accounts you need — part of a free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:title" content="The accounts you need — Ship What You Built">
+<meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/02-accounts.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#F6F7F5;--surface:#FFF;--sunken:#EEF0EC;--ink:#14181B;--ink-soft:#3D4642;
+--muted:#5B6560;--line:rgba(20,24,27,.13);--line-soft:rgba(20,24,27,.07);
+--live:#16794C;--live-ink:#FFF;--live-wash:rgba(22,121,76,.09);--stuck:#9A5B18;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+--sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;--ink-soft:#C3CCC6;
+--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}}
+:root[data-theme="dark"]{--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;
+--ink-soft:#C3CCC6;--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+line-height:1.68;font-size:1.02rem;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--live)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--live);outline-offset:3px;border-radius:5px}
+.shell{display:grid;grid-template-columns:17rem minmax(0,1fr);gap:2.5rem;
+max-width:78rem;margin-inline:auto;padding:0 clamp(1rem,4vw,2.5rem)}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr);gap:0}}
+.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;
+padding:2rem 0;border-right:1px solid var(--line-soft)}
+@media (max-width:900px){.side{position:static;max-height:none;border-right:0;
+border-bottom:1px solid var(--line-soft);padding-bottom:1rem}}
+.brand{font-weight:660;letter-spacing:-.02em;text-decoration:none;display:block;margin-bottom:.35rem}
+.brand small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;letter-spacing:0}
+.nav{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:.15rem}
+.nav a{display:block;padding:.42rem .6rem;border-radius:7px;text-decoration:none;
+font-size:.925rem;color:var(--ink-soft)}
+.nav a:hover{background:var(--sunken)}
+.nav a[aria-current="page"]{background:var(--live-wash);color:var(--ink);font-weight:600}
+.nav small{display:block;color:var(--muted);font-size:.76rem;line-height:1.35}
+.onpage{margin-top:1.5rem;border-top:1px solid var(--line-soft);padding-top:1rem}
+.onpage p{margin:0 0 .5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;
+text-transform:uppercase;color:var(--muted)}
+.onpage ul{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+.onpage a{display:block;padding:.2rem .35rem;font-size:.85rem;color:var(--muted);
+text-decoration:none;border-radius:5px}
+.onpage a:hover{color:var(--ink);background:var(--sunken)}
+.onpage .lvl3{padding-left:1rem;font-size:.8rem}
+main{padding:2.5rem 0 4rem;min-width:0;max-width:46rem}
+h1{font-size:clamp(1.9rem,1.4rem+2vw,2.7rem);line-height:1.1;letter-spacing:-.03em;
+margin:0 0 1.5rem;text-wrap:balance}
+h2{font-size:1.5rem;line-height:1.2;letter-spacing:-.022em;margin:2.8rem 0 .9rem;
+padding-top:1.4rem;border-top:1px solid var(--line-soft);text-wrap:balance}
+h3{font-size:1.13rem;letter-spacing:-.015em;margin:2rem 0 .6rem}
+h2 .anchor,h3 .anchor{opacity:0;margin-left:.4rem;color:var(--muted);text-decoration:none;font-weight:400}
+h2:hover .anchor,h3:hover .anchor,.anchor:focus-visible{opacity:1}
+p,ul,ol{margin:0 0 1.05rem}
+li{margin-bottom:.3rem}
+strong{font-weight:650}
+code{font-family:var(--mono);font-size:.875em;background:var(--sunken);
+padding:.12em .34em;border-radius:4px;overflow-wrap:break-word}
+.codewrap{position:relative;margin:0 0 1.2rem}
+pre{margin:0;overflow-x:auto;background:var(--sunken);border:1px solid var(--line-soft);
+border-radius:10px;padding:1rem 1.1rem;font-family:var(--mono);font-size:.845rem;line-height:1.62}
+pre code{background:none;padding:0;font-size:1em}
+.copy{position:absolute;top:.5rem;right:.5rem;font:inherit;font-size:.75rem;
+padding:.28rem .6rem;border-radius:6px;border:1px solid var(--line);
+background:var(--surface);color:var(--muted);cursor:pointer;opacity:0;transition:opacity .12s}
+.codewrap:hover .copy,.copy:focus-visible{opacity:1}
+.copy.done{color:var(--live);border-color:var(--live)}
+@media (hover:none){.copy{opacity:1}}
+blockquote{margin:0 0 1.2rem;padding:.9rem 1.1rem;border-left:3px solid var(--live);
+background:var(--live-wash);border-radius:0 9px 9px 0}
+blockquote > :last-child{margin-bottom:0}
+blockquote h3{margin-top:.2rem}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:0 0 1.2rem}
+table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+th,td{text-align:left;padding:.65rem .9rem;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+tbody tr:last-child td{border-bottom:0}
+hr{border:0;border-top:1px solid var(--line-soft);margin:2.5rem 0}
+img{max-width:100%;height:auto}
+.done-toggle{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);
+margin:.2rem 0 1.6rem;cursor:pointer;user-select:none}
+.done-toggle input{accent-color:var(--live);width:1rem;height:1rem}
+.pager{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:space-between;
+margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line-soft)}
+.pager a{flex:1 1 14rem;padding:.9rem 1.1rem;border:1px solid var(--line);border-radius:10px;
+text-decoration:none;background:var(--surface)}
+.pager a:hover{border-color:var(--live)}
+.pager span{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
+.pager .next{text-align:right}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-page="02-accounts">
+<div class="shell">
+  <aside class="side">
+    <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
+    <nav><ul class="nav"><li><a href="00-start-here.html" data-page="00-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="01-your-machine.html" data-page="01-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="02-accounts.html" aria-current="page" data-page="02-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="03-keys-and-access.html" data-page="03-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="04-three-layers.html" data-page="04-three-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="05-github.html" data-page="05-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="06-let-claude-drive.html" data-page="06-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#the-whole-list-at-a-glance">The whole list, at a glance</a></li><li><a class="lvl2" href="#first-a-password-manager">First: a password manager</a></li><li><a class="lvl2" href="#github--everyone-needs-this">GitHub — everyone needs this</a></li><li><a class="lvl3" href="#1-sign-up">1. Sign up</a></li><li><a class="lvl3" href="#2-verify-your-email">2. Verify your email</a></li><li><a class="lvl3" href="#3-turn-on-two-factor-authentication">3. Turn on two-factor authentication</a></li><li><a class="lvl3" href="#4-save-the-recovery-codes--properly">4. Save the recovery codes — properly</a></li><li><a class="lvl3" href="#5-personal-account-or-organisation">5. Personal account or organisation?</a></li><li><a class="lvl2" href="#cloudflare--track-a">Cloudflare — Track A</a></li><li><a class="lvl3" href="#signing-up">Signing up</a></li><li><a class="lvl3" href="#the-free-plan-is-a-product-not-a-trial">The free plan is a product, not a trial</a></li><li><a class="lvl3" href="#turn-on-2fa-before-you-buy-anything">Turn on 2FA before you buy anything</a></li><li><a class="lvl2" href="#aws--track-b-and-the-one-with-teeth">AWS — Track B, and the one with teeth</a></li><li><a class="lvl3" href="#signing-up-1">Signing up</a></li><li><a class="lvl3" href="#the-root-account-plainly">The root account, plainly</a></li><li><a class="lvl3" href="#1-turn-on-mfa-for-root--immediately">1. Turn on MFA for root — immediately</a></li><li><a class="lvl3" href="#2-set-a-budget-alarm--before-you-build-anything">2. Set a budget alarm — before you build anything</a></li><li><a class="lvl3" href="#3-never-create-an-access-key-for-the-root-user">3. Never create an access key for the root user</a></li><li><a class="lvl3" href="#what-an-iam-user-is-and-why-you-make-one">What an IAM user is, and why you make one</a></li><li><a class="lvl3" href="#the-honest-risk-stated-once">The honest risk, stated once</a></li><li><a class="lvl3" href="#the-aws-free-tier-honestly">The AWS free tier, honestly</a></li><li><a class="lvl2" href="#anthropic--only-if-your-app-calls-claude">Anthropic — only if your app calls Claude</a></li><li><a class="lvl3" href="#the-distinction-people-get-wrong">The distinction people get wrong</a></li><li><a class="lvl3" href="#what-to-do">What to do</a></li><li><a class="lvl2" href="#which-do-i-actually-need">Which do I actually need?</a></li><li><a class="lvl2" href="#what-each-of-these-costs">What each of these costs</a></li><li><a class="lvl2" href="#before-you-move-on">Before you move on</a></li></ul></div>
+  </aside>
+  <main>
+<h1>The accounts you need</h1>
+<p>By the end of this page you'll have every account your track needs, each one set
+up so it can't be taken from you and can't quietly bill you. Budget about 40
+minutes, most of which is waiting for verification emails and typing codes off
+your phone.</p>
+<p>You don't need all of these. Which ones depend on your track, which you chose
+in <a href="00-start-here.html">Start here</a>. The table tells you; the sections tell you how.
+Any word below that you don't recognise is in
+<a href="99-glossary.html">the glossary</a>.</p>
+<hr />
+<h2 id="the-whole-list-at-a-glance">The whole list, at a glance<a class="anchor" href="#the-whole-list-at-a-glance" aria-label="Link to this section">#</a></h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Account</th>
+<th>What it's for</th>
+<th>Needed for</th>
+<th>Card to sign up?</th>
+<th>Cost at personal scale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GitHub</strong></td>
+<td>Stores your code in a <em>repository</em> — one project's files plus their whole history; both tracks deploy <em>from</em> it</td>
+<td>Everyone, both tracks</td>
+<td>No</td>
+<td>Free for public and private repositories</td>
+</tr>
+<tr>
+<td><strong>Cloudflare</strong></td>
+<td>Buys your domain, runs its <strong>DNS</strong> — the lookup that turns <code>yourthing.com</code> into the address of the machine serving it — and hosts your site</td>
+<td>Track A</td>
+<td>No — only when you buy a domain</td>
+<td>Free plan, plus the domain at cost</td>
+</tr>
+<tr>
+<td><strong>AWS</strong></td>
+<td>The same three jobs, on AWS</td>
+<td>Track B</td>
+<td><strong>Yes</strong></td>
+<td>Sign-up credit first, then a small monthly amount, plus the domain</td>
+</tr>
+<tr>
+<td><strong>Anthropic</strong></td>
+<td><strong>API</strong> access — an API is how one program asks another program to do something, so this is what lets your <em>deployed app</em> send requests to Claude</td>
+<td>Only if your app calls Claude</td>
+<td>Yes, to add credit</td>
+<td>Prepaid credit, drawn down per request</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Do them in this order:</strong> password manager → GitHub → your track's account
+(Cloudflare or AWS) → Anthropic if you need it. GitHub first because both tracks
+need it and it's the one with no financial risk, so it's a gentle place to learn
+what "verify your email, turn on 2FA" feels like.</p>
+<blockquote>
+<p><strong>Which email address?</strong> Use one you will still control in five years. Not a
+work address — you lose it when you leave, and with it your domain, your
+hosting and your repo. Not an address on a domain you're about to buy, either:
+if the domain lapses you lose the email that would let you renew it. A personal
+Gmail/Fastmail/iCloud address is the right answer here.</p>
+</blockquote>
+<hr />
+<h2 id="first-a-password-manager">First: a password manager<a class="anchor" href="#first-a-password-manager" aria-label="Link to this section">#</a></h2>
+<p>A password manager is an app that generates and stores a different random
+password for every site, so you only remember one. If you already use one, skip
+this section.</p>
+<p>The reason it belongs on this page rather than in a lecture about hygiene: the
+four accounts below can, between them, take your domain, delete your code and
+spend your money. They are exactly the accounts where reusing <code>Summer2024!</code>
+matters, because password reuse means one leaked site hands an attacker all four.</p>
+<p>Any of these is fine. Pick in under five minutes:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Where it lives</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1Password</strong>, <strong>Bitwarden</strong></td>
+<td>Their servers, synced to your devices</td>
+<td>Bitwarden has a free tier that covers this comfortably</td>
+</tr>
+<tr>
+<td><strong>iCloud Keychain</strong> (Apple) / <strong>Google Password Manager</strong></td>
+<td>Built into your OS or browser</td>
+<td>Free, already on your machine, fine for this</td>
+</tr>
+<tr>
+<td>A notebook in a drawer</td>
+<td>Your drawer</td>
+<td>Genuinely fine, as long as you actually write in it</td>
+</tr>
+</tbody>
+</table></div>
+<p>The one rule: the <strong>recovery codes</strong> you're about to generate for GitHub and
+Cloudflare must go somewhere that is <em>not</em> your phone, because the failure you're
+protecting against is losing your phone. A password manager entry synced to your
+laptop, or a printout, both work. Both is better.</p>
+<hr />
+<h2 id="github--everyone-needs-this">GitHub — everyone needs this<a class="anchor" href="#github--everyone-needs-this" aria-label="Link to this section">#</a></h2>
+<p>GitHub hosts your code. A <strong>repository</strong> — "repo" — is one project's files plus
+the record of every change ever made to them. You <strong>commit</strong> (save a labelled
+snapshot of your changes) and then <strong>push</strong> (send those commits up to GitHub).
+Both tracks watch your repository and rebuild your site whenever something is
+pushed to it, so nothing else on this list works without it.
+<a href="05-github.html">Get it on GitHub</a> does the actual doing; this page only gets you
+the account.</p>
+<h3 id="1-sign-up">1. Sign up<a class="anchor" href="#1-sign-up" aria-label="Link to this section">#</a></h3>
+<p>Go to <a href="https://github.com/signup">github.com/signup</a>. It asks for an email, a
+password and a username.</p>
+<p><strong>Take a moment on the username.</strong> It's not cosmetic. It becomes part of the
+address of everything you ever put on GitHub:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">https://github.com/YOUR-USERNAME/your-project
+https://YOUR-USERNAME.github.io/your-project
+</code></pre></div>
+<p>You can rename yourself later, but the clean-up is worse than it sounds. GitHub
+does redirect links to your <em>repositories</em> to the new name. It does <strong>not</strong>
+redirect your profile page — <code>github.com/old-name</code> starts returning "404 not
+found" straight away — and the same goes for any gists (single-file snippets)
+you'd shared. Worse, those repository redirects stop working the moment somebody
+else claims your old username and creates a repository with the same name, which
+they are free to do from the day you release it. Your GitHub Pages address is
+built from your username too, so that moves with it. Which is to say: pick
+something you'd be comfortable putting on a CV, lowercase, hyphens rather than
+underscores if you need a separator, no birth year.</p>
+<blockquote>
+<p><strong>What going wrong looks like:</strong> <em>"Username is not available."</em> Someone has it.
+GitHub has been around since 2008 and the short names went early. Add a word
+rather than a number — <code>jane-builds</code> reads better than <code>jane1987</code> and doesn't
+tell strangers your age.</p>
+</blockquote>
+<h3 id="2-verify-your-email">2. Verify your email<a class="anchor" href="#2-verify-your-email" aria-label="Link to this section">#</a></h3>
+<p>GitHub sends a code to the address you gave. Type it in.</p>
+<blockquote>
+<p><strong>What going wrong looks like:</strong> you can log in, but creating a repository or
+pushing code fails and a yellow banner says <em>"Please verify your email
+address."</em> Check spam, then use <strong>Settings → Emails → Resend verification
+email</strong>. An unverified account is a half-account.</p>
+</blockquote>
+<h3 id="3-turn-on-two-factor-authentication">3. Turn on two-factor authentication<a class="anchor" href="#3-turn-on-two-factor-authentication" aria-label="Link to this section">#</a></h3>
+<p><strong>2FA (two-factor authentication)</strong> means logging in needs two things: your
+password, and a six-digit code that changes every thirty seconds. Knowing the
+password is no longer enough, so a leaked or guessed password on its own can't
+get anyone in.</p>
+<p>GitHub will make you do this sooner or later anyway. It <strong>requires 2FA</strong> from
+accounts that have done anything the wider ecosystem leans on — published a
+package or an app, created a release, own an organisation, or contributed to a
+repository a lot of other software depends on. If you land in one of those
+groups, GitHub emails you, gives you 45 days to enrol plus a short grace period,
+and then stops you using github.com until you do. Ninety seconds now beats
+finding out mid-deploy.</p>
+<p>Go to <strong>Settings → Password and authentication → Two-factor authentication</strong> and
+choose the <strong>authenticator app</strong> option, not SMS. An authenticator app is a small
+app that generates those six-digit codes offline — 1Password and Bitwarden both
+do it, as do Google Authenticator, Authy and your iPhone's built-in Passwords
+app. SMS is weaker: phone numbers can be stolen by someone talking your mobile
+provider into moving your number to their SIM.</p>
+<p>GitHub shows a QR code. Scan it with the app, type the six digits it shows back,
+and you're enrolled.</p>
+<h3 id="4-save-the-recovery-codes--properly">4. Save the recovery codes — properly<a class="anchor" href="#4-save-the-recovery-codes--properly" aria-label="Link to this section">#</a></h3>
+<p>Immediately after enrolling, GitHub shows you about sixteen <strong>recovery codes</strong>:
+one-time strings that get you in when you don't have your phone. It will offer to
+download them as a text file. Do that, and <em>also</em> paste them into your password
+manager.</p>
+<p>This is the sentence to take seriously: <strong>if you lose your phone and you don't
+have your recovery codes, you have lost the account.</strong> GitHub's account recovery
+for a 2FA lockout is deliberately hard, because an easy recovery route is just a
+second, weaker front door. There is a good chance you will not get back in.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Where to keep them</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Password manager entry</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Printed and in a drawer</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>A note on the same phone that has the authenticator</td>
+<td>No — that's one thing, not two</td>
+</tr>
+<tr>
+<td>Screenshot in your camera roll</td>
+<td>No — it syncs to everything and lives forever</td>
+</tr>
+<tr>
+<td>Email to yourself</td>
+<td>Only if that email account itself has 2FA on</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="5-personal-account-or-organisation">5. Personal account or organisation?<a class="anchor" href="#5-personal-account-or-organisation" aria-label="Link to this section">#</a></h3>
+<p>GitHub offers two kinds of account and the sign-up flow may nudge you at the
+second one.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Personal account</strong></th>
+<th><strong>Organisation</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Owned by</td>
+<td>You</td>
+<td>A group; you're an owner of it</td>
+</tr>
+<tr>
+<td>Repos live at</td>
+<td><code>github.com/you/project</code></td>
+<td><code>github.com/org-name/project</code></td>
+</tr>
+<tr>
+<td>Members</td>
+<td>Just you</td>
+<td>Several people with roles and permissions</td>
+</tr>
+<tr>
+<td>Extra setup</td>
+<td>None</td>
+<td>Billing, membership, permission policies</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>You want a personal account.</strong> An organisation is for when several people need
+different levels of access to the same code — it's a permissions system, and
+right now you have nobody to permit. You can create an organisation later and
+<em>move</em> a repository into it in a few clicks, with GitHub redirecting the old
+address. Nothing is lost by starting personal.</p>
+<hr />
+<h2 id="cloudflare--track-a">Cloudflare — Track A<a class="anchor" href="#cloudflare--track-a" aria-label="Link to this section">#</a></h2>
+<p>Cloudflare is where <a href="10-cloudflare.html">Track A</a> buys your domain, runs your DNS
+and hosts your site. One account covers all three layers, which is most of why
+Track A is shorter.</p>
+<h3 id="signing-up">Signing up<a class="anchor" href="#signing-up" aria-label="Link to this section">#</a></h3>
+<p>Go to <a href="https://dash.cloudflare.com/sign-up">dash.cloudflare.com/sign-up</a>. Email
+and password, then verify the email. <strong>No card is asked for, and none is needed</strong>
+until the moment you buy a domain.</p>
+<p>The <strong>dashboard</strong> is the web page you land on after logging in — Cloudflare's
+control panel, where your domains, DNS records and sites are listed and edited.
+"Console" and "dashboard" mean the same kind of thing across these providers;
+Cloudflare says dashboard, AWS says console.</p>
+<p>Right now the dashboard will be empty and will invite you to "Add a site". Don't.
+Track A tells you when, and adding a site before you own the domain just creates
+a half-configured <strong>zone</strong> — Cloudflare's word for one domain and all the
+settings attached to it — that you'll have to delete again.</p>
+<h3 id="the-free-plan-is-a-product-not-a-trial">The free plan is a product, not a trial<a class="anchor" href="#the-free-plan-is-a-product-not-a-trial" aria-label="Link to this section">#</a></h3>
+<p>This trips people up, because most free things online are a countdown. Cloudflare's
+free plan has no end date, no card on file and no "your trial expires in 14 days"
+email coming. It is how the overwhelming majority of Cloudflare's users use
+Cloudflare, and it includes DNS, the HTTPS certificate that puts the padlock in
+the browser's address bar, and <strong>Cloudflare Pages</strong> — their hosting for sites
+built straight out of a repository.</p>
+<p>The limits are on <em>scale</em> — how many requests, how many builds, how big — not on
+time. At personal-project traffic you will not approach them, and if you somehow
+do, Cloudflare's usual behaviour is to stop serving rather than to bill you. That
+is precisely the bill-shock trade in <a href="00-start-here.html">the chooser</a>: Track A
+fails by stopping, Track B fails by charging.</p>
+<p>Check the current limits rather than trusting this paragraph:
+<a href="https://www.cloudflare.com/plans/">cloudflare.com/plans</a>.</p>
+<h3 id="turn-on-2fa-before-you-buy-anything">Turn on 2FA before you buy anything<a class="anchor" href="#turn-on-2fa-before-you-buy-anything" aria-label="Link to this section">#</a></h3>
+<p>Click your profile icon, top right → <strong>My Profile</strong> → the <strong>Authentication</strong>
+tab → <strong>Two-Factor Authentication</strong>. Same as GitHub: use an authenticator app,
+and save the codes it gives you — Cloudflare calls them <strong>backup codes</strong> rather
+than recovery codes — somewhere that isn't your phone.</p>
+<p>Do it <em>now</em>, before there's a domain in the account. Once you've bought a domain,
+this account controls a thing you own — someone with access to it can move your
+domain elsewhere or repoint your site. While you're here, make sure the
+verification email actually got clicked: Cloudflare requires a verified account
+email address before it will let you register or transfer a domain, and finding
+that out mid-purchase is annoying.</p>
+<blockquote>
+<p><strong>What going wrong looks like:</strong> you enrol, and the first code is rejected as
+invalid. Nine times in ten the clock on your phone has drifted. Turn on
+automatic time-setting in your phone's date-and-time settings and try again —
+these codes are derived from the current time, so a phone that's forty seconds
+out generates the wrong number.</p>
+</blockquote>
+<hr />
+<h2 id="aws--track-b-and-the-one-with-teeth">AWS — Track B, and the one with teeth<a class="anchor" href="#aws--track-b-and-the-one-with-teeth" aria-label="Link to this section">#</a></h2>
+<p><a href="20-aws.html">Track B</a> runs on AWS. It's the stack a very large share of the
+industry uses, and it's worth learning. It is also the only account on this page
+that can produce a bill large enough to matter, so this section is longer and
+front-loads the protections.</p>
+<p>None of what follows is meant to frighten you off AWS. It's meant to get three
+specific things switched on in the first twenty minutes, after which the account
+is about as dangerous as any other.</p>
+<h3 id="signing-up-1">Signing up<a class="anchor" href="#signing-up-1" aria-label="Link to this section">#</a></h3>
+<p>Go to <a href="https://portal.aws.amazon.com/billing/signup">portal.aws.amazon.com/billing/signup</a>.
+You'll need:</p>
+<ul>
+<li>An email address, which becomes the <strong>root user</strong> identity (see below).</li>
+<li>An account name — a label for your own reference. "Jane's projects" is fine.</li>
+<li><strong>A payment card.</strong> Not optional, and it's asked for even if you go on to pick
+  the plan that can't bill you — AWS uses it to verify you're a real person. AWS
+  places a small temporary authorisation charge on it, typically around a pound
+  or a dollar, which is reversed. Debit cards usually work; prepaid cards usually
+  don't.</li>
+<li><strong>A phone number for verification.</strong> AWS calls or texts you a code. You type it
+  in, or key it into the phone keypad when the automated call asks.</li>
+<li>A support plan. Choose <strong>Basic</strong>, the free one. The paid ones are for companies
+  with an outage budget.</li>
+<li><strong>A plan: free or paid.</strong> New accounts choose. The <strong>free plan</strong> hands you
+  sign-up credit to spend and <em>cannot bill you</em> — but it expires six months after
+  you open the account, or when the credit runs out, and then the account closes
+  unless you upgrade. The <strong>paid plan</strong> is ordinary pay-as-you-go, with your
+  credit spent first. Start on free;
+  <a href="#the-aws-free-tier-honestly">the free tier section below</a> explains what
+  happens next, and why a site you intend to keep online ends up on paid.</li>
+</ul>
+<blockquote>
+<p><strong>What going wrong looks like, and it's common:</strong></p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Card rejected at sign-up</td>
+<td>Prepaid/virtual card, or your bank blocked an unfamiliar foreign authorisation</td>
+<td>Use a normal debit or credit card; approve the charge in your banking app if it prompts</td>
+</tr>
+<tr>
+<td>Phone verification loops or never arrives</td>
+<td>Internet phone numbers — Google Voice, Skype and the like — are frequently rejected</td>
+<td>Use a real mobile number; try the automated-call option instead of SMS</td>
+</tr>
+<tr>
+<td>You sign in and everything says <em>"Your account is being activated"</em></td>
+<td>Normal — AWS verifies new accounts</td>
+<td>Usually minutes, occasionally a few hours. Wait. If it's still saying it the next day, contact AWS support, which is free for account issues</td>
+</tr>
+</tbody>
+</table></div>
+</blockquote>
+<h3 id="the-root-account-plainly">The root account, plainly<a class="anchor" href="#the-root-account-plainly" aria-label="Link to this section">#</a></h3>
+<p>The email address you signed up with is the <strong>root user</strong>. It is the master key
+to the account. It is not "the admin user" or "the first user" — it sits outside
+the normal permission system entirely, and:</p>
+<ul>
+<li>It can do <strong>anything</strong>, and no permission setting can restrict it.</li>
+<li>It can <strong>close the account</strong>.</li>
+<li>It can <strong>spend without limit</strong>. Once the account is on the paid plan there is
+  no built-in cap, no prepaid balance and no "you have used your allowance" wall.
+  AWS bills you afterwards for whatever got used.</li>
+</ul>
+<p>That last point is the one that produces the horror stories. So there are three
+things to do in order, before you build anything, and this is genuinely the order
+they should happen in.</p>
+<h3 id="1-turn-on-mfa-for-root--immediately">1. Turn on MFA for root — immediately<a class="anchor" href="#1-turn-on-mfa-for-root--immediately" aria-label="Link to this section">#</a></h3>
+<p><strong>MFA (multi-factor authentication)</strong> is AWS's name for the same thing GitHub
+calls 2FA: password plus a rotating six-digit code.</p>
+<p>Sign in as root → click your account name (top right) → <strong>Security credentials</strong>
+→ <strong>Multi-factor authentication (MFA)</strong> → <strong>Assign MFA device</strong> → <strong>Authenticator
+app</strong>. Scan the QR code, enter two consecutive codes, done. Save the recovery
+path: for AWS that means keeping access to the sign-up email and phone number,
+because that's how root recovery works.</p>
+<p>Do this first because everything else you're about to set up is worthless if
+someone can log in as root and switch it off.</p>
+<h3 id="2-set-a-budget-alarm--before-you-build-anything">2. Set a budget alarm — before you build anything<a class="anchor" href="#2-set-a-budget-alarm--before-you-build-anything" aria-label="Link to this section">#</a></h3>
+<p>A <strong>budget alarm</strong> emails you when your spend crosses a line you set. It doesn't
+stop the spending; it tells you. That warning is the difference between noticing
+on day one and noticing on the statement.</p>
+<p>In the AWS console, go to <strong>Billing and Cost Management → Budgets → Create
+budget</strong>. Two settings matter:</p>
+<ul>
+<li><strong>Zero-spend budget</strong> — AWS offers this as a template. It emails you the moment
+  your bill exceeds essentially nothing. On an account that's meant to be running
+  a personal site for pennies, that's the alarm you want.</li>
+<li><strong>A ceiling you'd actually notice</strong> — a second budget at a number that would
+  annoy you. Pick something real: if £20 in a month would make you sit up, set
+  £20.</li>
+</ul>
+<p>Then go to <strong>Billing and Cost Management → Billing preferences → Alert
+preferences → Edit</strong> and tick both <strong>Receive AWS Free Tier alerts</strong> and
+<strong>Receive CloudWatch billing alerts</strong>. Check the email address on it is one you
+read.</p>
+<blockquote>
+<p>An alarm you never see is not an alarm. Send it to your everyday inbox, not to
+an address you only check when something has already gone wrong.</p>
+</blockquote>
+<p>On a brand-new free-plan account this can feel premature — you can't be billed
+yet. Do it anyway. The day you upgrade to the paid plan is the day it starts
+mattering, and that is not a day you'll remember to come back here. (AWS has also
+been handing out sign-up credit for completing a few starter activities, one of
+which is creating a budget. Worth checking whether that still applies when you
+sign up.)</p>
+<p>Track B repeats this with exact clicks at the point you'd do it. It's here as
+well because it belongs to <em>account setup</em>, not to deploying, and because doing
+it later means doing it after the risk started.</p>
+<h3 id="3-never-create-an-access-key-for-the-root-user">3. Never create an access key for the root user<a class="anchor" href="#3-never-create-an-access-key-for-the-root-user" aria-label="Link to this section">#</a></h3>
+<p>An <strong>access key</strong> is a pair of strings — an ID beginning <code>AKIA…</code> and a secret —
+that lets a program act as you, without a password and without MFA. It's what
+your laptop — and the automation that publishes your site — use to talk to AWS.</p>
+<p>A root access key is a permanent, unrestricted, unrevocable-in-practice master
+credential in a text file. AWS's own console will warn you if you try to make
+one. Don't. If you already have one from an earlier experiment, go to <strong>Security
+credentials</strong> and delete it now.</p>
+<h3 id="what-an-iam-user-is-and-why-you-make-one">What an IAM user is, and why you make one<a class="anchor" href="#what-an-iam-user-is-and-why-you-make-one" aria-label="Link to this section">#</a></h3>
+<p><strong>IAM (Identity and Access Management)</strong> is AWS's permission system. An <strong>IAM
+user</strong> is an identity inside your account that you create, and that you can give
+exactly the permissions it needs — and no more.</p>
+<p>You make one because of what happens when something goes wrong:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Leaked root key</th>
+<th>Leaked IAM key with limited permissions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What the attacker can do</td>
+<td>Everything, in every AWS region — AWS runs data centres all over the world and one key works in all of them — forever</td>
+<td>Only what you granted</td>
+</tr>
+<tr>
+<td>How you stop it</td>
+<td>Effectively: close the account</td>
+<td>Delete the key. Thirty seconds</td>
+</tr>
+<tr>
+<td>Blast radius</td>
+<td>The whole account and the card behind it</td>
+<td>The one service you scoped it to</td>
+</tr>
+</tbody>
+</table></div>
+<p>So: root logs in once, creates an IAM user, and then you use the IAM user for
+day-to-day work. Root gets used for a handful of things only it can do — closing
+the account, changing the payment method — and otherwise stays logged out.</p>
+<p><a href="20-aws.html">Track B</a> walks through creating this and sets it up so that your
+deploys don't use a long-lived key at all, using a mechanism where GitHub proves
+its identity to AWS per run. Here you only need the concept.</p>
+<blockquote>
+<p>AWS also offers <strong>IAM Identity Center</strong> as its current recommendation for human
+sign-in. It's better and it's more setup. If Track B or your workplace points
+you at it, follow them; the reasoning on this page is unchanged.</p>
+</blockquote>
+<h3 id="the-honest-risk-stated-once">The honest risk, stated once<a class="anchor" href="#the-honest-risk-stated-once" aria-label="Link to this section">#</a></h3>
+<p>A leaked AWS key is not a theoretical problem with a slow fuse. Public GitHub
+commits are scraped continuously by automated systems, and a key pushed to a
+public repository is typically found and used <strong>within minutes</strong>. The standard
+use is spinning up large numbers of expensive machines — the sort rented by the
+hour for graphics and AI work — in every region, to mine cryptocurrency. The
+resulting bills routinely reach <strong>five figures</strong> before anyone notices, because
+nothing in AWS stops them.</p>
+<p>AWS often waives these bills for genuine first-time accidents, and there's a
+support process for it. Often is not always, and the days spent arguing are
+their own punishment.</p>
+<p>One softener, and only one: while your account is still on the <strong>free plan</strong> the
+damage is capped, because that plan can't bill you at all. The moment you upgrade
+to the paid plan — which anything you intend to leave running eventually does —
+the cap is gone and the paragraph above applies in full.</p>
+<p>This is exactly why this guide puts MFA and the budget alarm before the first
+line of infrastructure, and why <a href="05-github.html">Get it on GitHub</a> makes you scan
+for credentials before anything goes public. Both of those are cheap. The
+alternative is not.</p>
+<p>If it happens anyway: <a href="90-troubleshooting.html">the troubleshooting page</a> has the
+order of operations, and the short version is <em>delete the key first, ask
+questions second</em>.</p>
+<h3 id="the-aws-free-tier-honestly">The AWS free tier, honestly<a class="anchor" href="#the-aws-free-tier-honestly" aria-label="Link to this section">#</a></h3>
+<p>AWS advertises a free tier. It is real, and it was rebuilt in July 2025 — so most
+of the advice you'll find online, and quite possibly what a colleague remembers,
+describes a version that no longer applies to a new account. What a new account
+gets now:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>What it means</th>
+<th>Watch out for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>The free plan</strong></td>
+<td>Credit granted at sign-up, plus some more for completing starter activities. On this plan AWS does not bill you at all</td>
+<td>It ends six months after you open the account, or when the credit runs out, whichever comes first — and then the account <em>closes</em> unless you upgrade to the paid plan. AWS gives you a window, currently about 90 days, to reopen it by upgrading</td>
+</tr>
+<tr>
+<td><strong>The paid plan</strong></td>
+<td>Ordinary pay-as-you-go. Credit is spent first, then your card</td>
+<td>No cap, no wall, no confirmation dialog. This is the plan anything you intend to keep online ends up on</td>
+</tr>
+<tr>
+<td><strong>Always free</strong></td>
+<td>Thirty-odd services with a permanent monthly free allowance, on either plan</td>
+<td>The allowance is per month, and only for the exact configuration named</td>
+</tr>
+<tr>
+<td><strong>Short-term trials</strong></td>
+<td>One-off trials on particular services</td>
+<td>Expire on their own schedule</td>
+</tr>
+</tbody>
+</table></div>
+<p>The thing to diarise: if your site is live on a free-plan account when that
+window shuts, the account closing takes the site with it. If the project is meant
+to outlive the free plan, upgrade <em>before</em> the deadline rather than after — with
+the budget alarm from step 2 already in place, so the first paid month can't
+surprise you.</p>
+<p>If your account was created before 15 July 2025 you're on the older scheme
+instead — 12 months of free usage on some services from the day you signed up,
+plus always-free and trials. Month 13 arrives silently there; nothing warns you
+on the day it ends.</p>
+<p>And the part that matters most, on either scheme:</p>
+<p><strong>Once you're on the paid plan, nothing stops charges.</strong> Cross the line — by a
+lot or by a little, by accident or on purpose — and AWS bills you for the excess
+without asking. Not every service has a free allowance at all: the DNS <strong>hosted
+zone</strong> in Track B (AWS's per-domain DNS setting, billed monthly) is a small charge
+from day one.</p>
+<p>So the alarm is the real protection, not the free tier. The free tier decides
+what you pay; the alarm decides how fast you find out.</p>
+<p>AWS has restructured this before and will again, so don't take numbers or
+timescales from any guide, including this one. The live page:
+<a href="https://aws.amazon.com/free/">aws.amazon.com/free</a>.</p>
+<hr />
+<h2 id="anthropic--only-if-your-app-calls-claude">Anthropic — only if your app calls Claude<a class="anchor" href="#anthropic--only-if-your-app-calls-claude" aria-label="Link to this section">#</a></h2>
+<p>Skip this section unless your deployed project itself sends requests to Claude —
+a "generate with AI" button, a chat feature, a page that summarises whatever a
+visitor pastes into it. <strong>Using Claude Code to build the project doesn't count</strong>;
+that's you, on your machine.</p>
+<h3 id="the-distinction-people-get-wrong">The distinction people get wrong<a class="anchor" href="#the-distinction-people-get-wrong" aria-label="Link to this section">#</a></h3>
+<p>These are two separate products, with separate billing, and one does not include
+the other:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Claude.ai subscription</strong> (Free / Pro / Max)</th>
+<th><strong>API credit</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What it is</td>
+<td>A monthly subscription for a person</td>
+<td>Pay-as-you-go for a program</td>
+</tr>
+<tr>
+<td>What it buys</td>
+<td>The chat app at claude.ai, and Claude Code</td>
+<td>Requests from your code to the API</td>
+</tr>
+<tr>
+<td>How it's charged</td>
+<td>Flat monthly fee</td>
+<td>Per request, by amount of text in and out</td>
+</tr>
+<tr>
+<td>Where you manage it</td>
+<td>claude.ai</td>
+<td>The developer console at <a href="https://platform.claude.com">platform.claude.com</a> (the old <code>console.anthropic.com</code> address redirects there)</td>
+</tr>
+<tr>
+<td>Does your deployed app use it?</td>
+<td><strong>No</strong></td>
+<td><strong>Yes</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Your Pro subscription does not give your website any API access. Not a little,
+not a reduced rate — they're separate accounts on separate balances. This catches
+people constantly, and it catches them at the worst moment: after deploying,
+when the live site is the thing that's broken.</p>
+<blockquote>
+<p><strong>What going wrong looks like:</strong> your site loads fine, but the AI feature fails
+and the response from Anthropic says something close to <em>"Your credit balance
+is too low to access the Anthropic API."</em> That's not a bug in your code. That's
+an empty API balance. Add credit in the console and it starts working.</p>
+</blockquote>
+<h3 id="what-to-do">What to do<a class="anchor" href="#what-to-do" aria-label="Link to this section">#</a></h3>
+<ol>
+<li>Sign up at <a href="https://platform.claude.com">platform.claude.com</a>. Verify the
+   email. If you signed up with an email and password rather than a Google
+   account, turn on 2FA while you're in there.</li>
+<li>Under <strong>Settings → Billing</strong>, add a payment method and <strong>buy a small amount of
+   credit to start</strong>. Credit is prepaid — you top up a balance and requests draw
+   it down — which is a much friendlier failure mode than AWS's: when it runs out,
+   the API simply stops answering rather than billing you onwards. Two things to
+   know: credits expire a year after you buy them, and purchases are
+   non-refundable, so buy small.</li>
+<li>Leave <strong>auto-reload</strong> off to begin with, and set a <strong>spend limit</strong>: in the
+   Console that lives under <strong>Settings → Workspaces → your workspace → Limits</strong>,
+   where you can also <strong>Add notification</strong> to get an email when spend crosses a
+   number you pick. Same reasoning as the AWS alarm — the realistic risk here is
+   a loop in your own code, not an attacker.</li>
+<li>Don't create the API key yet. Keys and where they're allowed to live are
+   <a href="03-keys-and-access.html">the next page</a>, and creating one before you know where
+   it's going is how it ends up pasted into a file that gets committed.</li>
+</ol>
+<p>Current API pricing, which is per-model and changes:
+<a href="https://claude.com/pricing">claude.com/pricing</a>.</p>
+<blockquote>
+<p>Building on OpenAI, Google or another provider instead? The shape is identical:
+a console account, a prepaid or metered balance separate from any consumer
+subscription, a spend limit, and a key you handle carefully. Everything on
+<a href="03-keys-and-access.html">03</a> applies unchanged.</p>
+</blockquote>
+<hr />
+<h2 id="which-do-i-actually-need">Which do I actually need?<a class="anchor" href="#which-do-i-actually-need" aria-label="Link to this section">#</a></h2>
+<p>Keyed to the shapes in <a href="00-start-here.html">Start here</a>.</p>
+<p><strong>Shape 1 — a static site</strong> (HTML/CSS/JS, or a framework that builds to a folder)</p>
+<ul>
+<li>GitHub — yes</li>
+<li>Cloudflare (Track A) <em>or</em> AWS (Track B) — one of them, not both</li>
+<li>Anthropic — no</li>
+</ul>
+<p><strong>Shape 2 — a site with a bit of backend</strong> — backend meaning code that runs on a
+server somewhere rather than in the visitor's browser (a form that saves, an API
+call you're hiding, a login)</p>
+<ul>
+<li>GitHub — yes</li>
+<li>Cloudflare <em>or</em> AWS — one of them</li>
+<li>Anthropic — only if the backend bit calls Claude</li>
+<li>Plus, possibly, an account for whatever else the backend talks to: a database
+  service like Supabase or Neon, a payments provider like Stripe. Those aren't
+  covered here, but the pattern on <a href="03-keys-and-access.html">03</a> applies to all of
+  them</li>
+</ul>
+<p><strong>Shape 3 — something that has to keep running</strong> (a Flask/FastAPI app, a bot, a
+scheduled job)</p>
+<ul>
+<li>GitHub — yes</li>
+<li>Cloudflare <em>or</em> AWS — yes, for the domain and DNS, even though the hosting
+  lives elsewhere</li>
+<li>Plus an account with whichever host you picked from
+  <a href="00-start-here.html#the-honest-note-about-shape-3">the honest note</a> — Fly.io,
+  Railway, Render, Hugging Face. They all follow the pattern above: verify email,
+  turn on 2FA, set a spend limit if they offer one</li>
+</ul>
+<p>Nobody needs both Cloudflare and AWS. If you later want to move, you move — that's
+the point of <a href="04-three-layers.html">the three layers</a>, and it doesn't require
+starting again.</p>
+<hr />
+<h2 id="what-each-of-these-costs">What each of these costs<a class="anchor" href="#what-each-of-these-costs" aria-label="Link to this section">#</a></h2>
+<p>Shapes, not quotes. Every figure below moves, which is why each row links to the
+page that's actually current.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Account</th>
+<th>Shape of the cost at personal-project scale</th>
+<th>Live pricing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GitHub</strong></td>
+<td>Free. Unlimited public <em>and</em> private repositories; <strong>GitHub Actions</strong> — their automation runner, which is the thing that rebuilds your site when you push — free on public repositories and a monthly allowance on private ones; automatic scanning for leaked keys on public repositories. Paid plans buy team features you don't need yet</td>
+<td><a href="https://github.com/pricing">github.com/pricing</a></td>
+</tr>
+<tr>
+<td><strong>Cloudflare</strong></td>
+<td>Free plan covers DNS, HTTPS and Pages hosting indefinitely. You pay only for the domain, and as a <strong>registrar</strong> — the company you actually buy the name from, <a href="04-three-layers.html">layer 1</a> — Cloudflare sells at wholesale cost with no markup and no first-year-discount trap</td>
+<td><a href="https://www.cloudflare.com/plans/">Plans</a> · <a href="https://www.cloudflare.com/products/registrar/">Registrar</a></td>
+</tr>
+<tr>
+<td><strong>AWS</strong></td>
+<td>A small fixed monthly charge for the DNS hosted zone, plus usage-based storage and traffic charges that round to pennies at low traffic. Call it "less than a coffee a month" — but it is not zero, and it is not capped</td>
+<td><a href="https://aws.amazon.com/route53/pricing/">Route 53</a> · <a href="https://aws.amazon.com/s3/pricing/">S3</a> · <a href="https://aws.amazon.com/cloudfront/pricing/">CloudFront</a> · <a href="https://aws.amazon.com/free/">Free tier</a></td>
+</tr>
+<tr>
+<td><strong>The domain itself</strong></td>
+<td>The one unavoidable cost, billed yearly. <code>.com</code> is stable and boring, which is a feature. Beware <strong>TLDs</strong> — top-level domains, the <code>.com</code>/<code>.io</code>/<code>.dev</code> ending — that are cheap for year one and several times that on renewal. Always check the <em>renewal</em> price</td>
+<td>Your track's registrar page</td>
+</tr>
+<tr>
+<td><strong>Anthropic API</strong></td>
+<td>Per request, by volume of text in and out. A personal site with a handful of users a day is small change; a bug that retries in a loop is not, which is what the spend limit is for</td>
+<td><a href="https://claude.com/pricing">claude.com/pricing</a></td>
+</tr>
+</tbody>
+</table></div>
+<p>The realistic all-in total for a personal project on either track is <em>the domain,
+plus a rounding error</em> — which is the number in <a href="https://github.com/jhammant/ship-what-you-built/blob/main/README.md">the README</a>. The
+difference between the tracks isn't the amount. It's that Track A's free tier
+stops when you exceed it, while Track B — once its free plan is behind you —
+bills you.</p>
+<hr />
+<h2 id="before-you-move-on">Before you move on<a class="anchor" href="#before-you-move-on" aria-label="Link to this section">#</a></h2>
+<p>A quick check. You should now have:</p>
+<ul>
+<li>[ ] A password manager, or a deliberate decision about where passwords live</li>
+<li>[ ] GitHub: signed up, email verified, 2FA on, recovery codes saved somewhere
+      that is not your phone</li>
+<li>[ ] Track A only — Cloudflare: signed up, email verified, 2FA on</li>
+<li>[ ] Track B only — AWS: signed up, activated, <strong>MFA on root</strong>, <strong>a budget alarm
+      that emails an address you read</strong>, no root access key, and you know which
+      plan you're on and when the free one runs out</li>
+<li>[ ] Anthropic, if your app calls Claude: signed up, small credit balance, spend
+      limit set</li>
+</ul>
+<p>If the AWS row has an unticked box, tick it before you go further. Everything
+after this page assumes those two protections exist.</p>
+<hr />
+<p><strong>Next:</strong> <a href="03-keys-and-access.html">Keys and access →</a></p>
+    <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
+    <nav class="pager"><a class="prev" href="01-your-machine.html"><span>Previous</span>Your machine</a><a class="next" href="03-keys-and-access.html"><span>Next</span>Keys and access</a></nav>
+  </main>
+</div>
+<script>
+// Copy the whole block — several are heredocs that break if pasted line by line.
+document.querySelectorAll('.codewrap').forEach(function (w) {
+  var btn = w.querySelector('.copy'), pre = w.querySelector('pre');
+  if (!btn || !pre) return;
+  btn.addEventListener('click', function () {
+    navigator.clipboard.writeText(pre.innerText).then(function () {
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+    }).catch(function () { btn.textContent = 'Press Ctrl+C'; });
+  });
+});
+
+// Remember which pages are finished — the AWS track spans more than one sitting.
+(function () {
+  var KEY = 'swyb-done', box = document.getElementById('page-done');
+  if (!box) return;
+  var page = document.body.dataset.page;
+  var read = function () { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
+  var done = read();
+  box.checked = !!done[page];
+  box.addEventListener('change', function () {
+    var d = read();
+    if (box.checked) { d[page] = true; } else { delete d[page]; }
+    localStorage.setItem(KEY, JSON.stringify(d));
+    paint();
+  });
+  function paint() {
+    var d = read();
+    document.querySelectorAll('.nav a[data-page]').forEach(function (a) {
+      a.textContent.indexOf('✓') === 0 && (a.textContent = a.textContent.slice(1));
+      var t = a.querySelector('.tick');
+      if (t) t.textContent = d[a.dataset.page] ? '✓ ' : '';
+    });
+  }
+  paint();
+})();
+</script>
+</body>
+</html>

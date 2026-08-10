@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keys and access — Ship What You Built</title>
+<meta name="description" content="Keys and access — part of a free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:title" content="Keys and access — Ship What You Built">
+<meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/03-keys-and-access.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#F6F7F5;--surface:#FFF;--sunken:#EEF0EC;--ink:#14181B;--ink-soft:#3D4642;
+--muted:#5B6560;--line:rgba(20,24,27,.13);--line-soft:rgba(20,24,27,.07);
+--live:#16794C;--live-ink:#FFF;--live-wash:rgba(22,121,76,.09);--stuck:#9A5B18;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+--sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;--ink-soft:#C3CCC6;
+--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}}
+:root[data-theme="dark"]{--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;
+--ink-soft:#C3CCC6;--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+line-height:1.68;font-size:1.02rem;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--live)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--live);outline-offset:3px;border-radius:5px}
+.shell{display:grid;grid-template-columns:17rem minmax(0,1fr);gap:2.5rem;
+max-width:78rem;margin-inline:auto;padding:0 clamp(1rem,4vw,2.5rem)}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr);gap:0}}
+.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;
+padding:2rem 0;border-right:1px solid var(--line-soft)}
+@media (max-width:900px){.side{position:static;max-height:none;border-right:0;
+border-bottom:1px solid var(--line-soft);padding-bottom:1rem}}
+.brand{font-weight:660;letter-spacing:-.02em;text-decoration:none;display:block;margin-bottom:.35rem}
+.brand small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;letter-spacing:0}
+.nav{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:.15rem}
+.nav a{display:block;padding:.42rem .6rem;border-radius:7px;text-decoration:none;
+font-size:.925rem;color:var(--ink-soft)}
+.nav a:hover{background:var(--sunken)}
+.nav a[aria-current="page"]{background:var(--live-wash);color:var(--ink);font-weight:600}
+.nav small{display:block;color:var(--muted);font-size:.76rem;line-height:1.35}
+.onpage{margin-top:1.5rem;border-top:1px solid var(--line-soft);padding-top:1rem}
+.onpage p{margin:0 0 .5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;
+text-transform:uppercase;color:var(--muted)}
+.onpage ul{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+.onpage a{display:block;padding:.2rem .35rem;font-size:.85rem;color:var(--muted);
+text-decoration:none;border-radius:5px}
+.onpage a:hover{color:var(--ink);background:var(--sunken)}
+.onpage .lvl3{padding-left:1rem;font-size:.8rem}
+main{padding:2.5rem 0 4rem;min-width:0;max-width:46rem}
+h1{font-size:clamp(1.9rem,1.4rem+2vw,2.7rem);line-height:1.1;letter-spacing:-.03em;
+margin:0 0 1.5rem;text-wrap:balance}
+h2{font-size:1.5rem;line-height:1.2;letter-spacing:-.022em;margin:2.8rem 0 .9rem;
+padding-top:1.4rem;border-top:1px solid var(--line-soft);text-wrap:balance}
+h3{font-size:1.13rem;letter-spacing:-.015em;margin:2rem 0 .6rem}
+h2 .anchor,h3 .anchor{opacity:0;margin-left:.4rem;color:var(--muted);text-decoration:none;font-weight:400}
+h2:hover .anchor,h3:hover .anchor,.anchor:focus-visible{opacity:1}
+p,ul,ol{margin:0 0 1.05rem}
+li{margin-bottom:.3rem}
+strong{font-weight:650}
+code{font-family:var(--mono);font-size:.875em;background:var(--sunken);
+padding:.12em .34em;border-radius:4px;overflow-wrap:break-word}
+.codewrap{position:relative;margin:0 0 1.2rem}
+pre{margin:0;overflow-x:auto;background:var(--sunken);border:1px solid var(--line-soft);
+border-radius:10px;padding:1rem 1.1rem;font-family:var(--mono);font-size:.845rem;line-height:1.62}
+pre code{background:none;padding:0;font-size:1em}
+.copy{position:absolute;top:.5rem;right:.5rem;font:inherit;font-size:.75rem;
+padding:.28rem .6rem;border-radius:6px;border:1px solid var(--line);
+background:var(--surface);color:var(--muted);cursor:pointer;opacity:0;transition:opacity .12s}
+.codewrap:hover .copy,.copy:focus-visible{opacity:1}
+.copy.done{color:var(--live);border-color:var(--live)}
+@media (hover:none){.copy{opacity:1}}
+blockquote{margin:0 0 1.2rem;padding:.9rem 1.1rem;border-left:3px solid var(--live);
+background:var(--live-wash);border-radius:0 9px 9px 0}
+blockquote > :last-child{margin-bottom:0}
+blockquote h3{margin-top:.2rem}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:0 0 1.2rem}
+table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+th,td{text-align:left;padding:.65rem .9rem;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+tbody tr:last-child td{border-bottom:0}
+hr{border:0;border-top:1px solid var(--line-soft);margin:2.5rem 0}
+img{max-width:100%;height:auto}
+.done-toggle{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);
+margin:.2rem 0 1.6rem;cursor:pointer;user-select:none}
+.done-toggle input{accent-color:var(--live);width:1rem;height:1rem}
+.pager{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:space-between;
+margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line-soft)}
+.pager a{flex:1 1 14rem;padding:.9rem 1.1rem;border:1px solid var(--line);border-radius:10px;
+text-decoration:none;background:var(--surface)}
+.pager a:hover{border-color:var(--live)}
+.pager span{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
+.pager .next{text-align:right}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-page="03-keys-and-access">
+<div class="shell">
+  <aside class="side">
+    <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
+    <nav><ul class="nav"><li><a href="00-start-here.html" data-page="00-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="01-your-machine.html" data-page="01-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="02-accounts.html" data-page="02-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="03-keys-and-access.html" aria-current="page" data-page="03-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="04-three-layers.html" data-page="04-three-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="05-github.html" data-page="05-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="06-let-claude-drive.html" data-page="06-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#1-what-an-api-key-actually-is">1. What an API key actually is</a></li><li><a class="lvl2" href="#2-the-one-rule-and-where-keys-go-instead">2. The one rule, and where keys go instead</a></li><li><a class="lvl3" href="#what-an-environment-variable-actually-is">What an environment variable actually is</a></li><li><a class="lvl3" href="#the-three-legitimate-homes-for-a-key">The three legitimate homes for a key</a></li><li><a class="lvl2" href="#3-getting-an-anthropic-api-key">3. Getting an Anthropic API key</a></li><li><a class="lvl3" href="#billing-is-separate-from-your-claudeai-subscription">Billing is separate from your Claude.ai subscription</a></li><li><a class="lvl3" href="#step-by-step">Step by step</a></li><li><a class="lvl3" href="#set-a-spend-limit-before-you-set-anything-else-up">Set a spend limit before you set anything else up</a></li><li><a class="lvl3" href="#one-key-per-project">One key per project</a></li><li><a class="lvl3" href="#when-it-doesnt-work">When it doesn&#x27;t work</a></li><li><a class="lvl2" href="#4-using-the-key-in-a-deployed-app">4. Using the key in a deployed app</a></li><li><a class="lvl3" href="#why-it-cannot-go-in-the-browser">Why it cannot go in the browser</a></li><li><a class="lvl3" href="#track-a--cloudflare-pages-and-workers">Track A — Cloudflare Pages and Workers</a></li><li><a class="lvl3" href="#track-b--aws-lambda">Track B — AWS Lambda</a></li><li><a class="lvl3" href="#your-endpoint-is-now-a-public-money-spender">Your endpoint is now a public money-spender</a></li><li><a class="lvl2" href="#5-giving-claude-code-access-to-your-accounts">5. Giving Claude Code access to your accounts</a></li><li><a class="lvl3" href="#claude-code-uses-the-credentials-already-on-your-machine">Claude Code uses the credentials already on your machine</a></li><li><a class="lvl3" href="#therefore-never-paste-a-secret-into-the-chat">Therefore: never paste a secret into the chat</a></li><li><a class="lvl3" href="#what-claude-code-can-actually-see">What Claude Code can actually see</a></li><li><a class="lvl3" href="#permissions-read-before-you-approve">Permissions: read before you approve</a></li><li><a class="lvl2" href="#6-when-a-key-leaks">6. When a key leaks</a></li><li><a class="lvl3" href="#1-rotate--right-now-before-you-do-anything-else">1. Rotate — right now, before you do anything else</a></li><li><a class="lvl3" href="#2-then-clean-the-history">2. Then clean the history</a></li><li><a class="lvl2" href="#7-quick-reference">7. Quick reference</a></li></ul></div>
+  </aside>
+  <main>
+<h1>Keys, and giving Claude access</h1>
+<p><strong>You'll end with:</strong> a working API key stored somewhere it can't leak, a spend
+cap so it can't bankrupt you, and a clear rule about what Claude Code needs from
+you. <strong>Time:</strong> ~20 minutes, most of it in the Claude Console.</p>
+<p>This page covers the two things people mean when they say "keys": the credentials
+your <em>app</em> uses to call a paid service, and the credentials <em>Claude Code</em> uses to
+touch your cloud accounts. They're related, and they're both easy to get wrong
+exactly once.</p>
+<p>Every term is explained where it first appears; if you land mid-page and hit an
+unfamiliar one, the <a href="99-glossary.html">glossary</a> has it.</p>
+<p>If your project is a plain static site that calls nothing, you can skim parts 1
+to 4 and read <a href="#5-giving-claude-code-access-to-your-accounts">part 5</a>, which
+applies to everyone.</p>
+<hr />
+<h2 id="1-what-an-api-key-actually-is">1. What an API key actually is<a class="anchor" href="#1-what-an-api-key-actually-is" aria-label="Link to this section">#</a></h2>
+<p>An <strong>API key</strong> is a password for a program rather than a person. When your code
+calls someone else's service — Anthropic, OpenAI, Stripe, a weather API — that
+service needs to know whose account to charge and whose data to return. There's
+no login box in the middle of a program, so instead the request carries a long
+random string that says "it's me".</p>
+<p>They look like this:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">sk-ant-api03-XbK9....................................................
+AKIAIOSFODNN7EXAMPLE
+ghp_16C7e42F292c6912E7710c838347Ae178B4a
+</code></pre></div>
+<p>Three things worth knowing about that shape:</p>
+<ul>
+<li><strong>The prefix is deliberate.</strong> <code>sk-ant-</code> for an Anthropic secret key, <code>AKIA</code> for
+  an AWS access key ID, <code>ghp_</code> for a GitHub personal access token, <code>sk_live_</code> for
+  a live Stripe secret. Providers agreed to use recognisable prefixes so that
+  <em>scanners</em> can spot a leaked key in public code. GitHub's secret scanning, and
+  the bots crawling GitHub for other reasons, both work by pattern-matching those
+  prefixes. The prefix exists to save you.</li>
+<li><strong>The rest is random on purpose.</strong> Nobody guesses a key. Keys leak; they are
+  not cracked.</li>
+<li><strong>Anyone holding it is you.</strong> A key carries no notion of <em>who</em> is using it.
+  Someone who copies your Anthropic key can spend your credit; someone who copies
+  your AWS key can create servers you pay for. This is not theoretical — it's the
+  single most common way a hobby project turns into a bill.</li>
+</ul>
+<blockquote>
+<p>A key is not the same as a <em>username and password</em>. You can't put two-factor
+authentication in front of a key, because there's no human there to be
+prompted. That's exactly why the rest of this page exists.</p>
+</blockquote>
+<hr />
+<h2 id="2-the-one-rule-and-where-keys-go-instead">2. The one rule, and where keys go instead<a class="anchor" href="#2-the-one-rule-and-where-keys-go-instead" aria-label="Link to this section">#</a></h2>
+<p><strong>Keys never go in your code, never in a repository, and never pasted into a
+chat window.</strong> That's the whole rule. Everything below is just the mechanics of
+following it.</p>
+<p>(A <strong>repository</strong>, or "repo", is the folder of your project as Git tracks it —
+including every past version. That "every past version" part matters later, in
+<a href="#6-when-a-key-leaks">part 6</a>. If none of that is familiar yet,
+<a href="05-github.html">05 — GitHub</a> covers it properly.)</p>
+<p>The alternative is always the same idea: the key lives <em>outside</em> the code, and
+the code asks for it by name at the moment it runs.</p>
+<h3 id="what-an-environment-variable-actually-is">What an environment variable actually is<a class="anchor" href="#what-an-environment-variable-actually-is" aria-label="Link to this section">#</a></h3>
+<p>This guide uses the term constantly, so here it is properly.</p>
+<p>An <strong>environment variable</strong> is a named value that the operating system hands to a
+program at the moment that program starts. Think of it as a small label pinned to
+the program: <code>ANTHROPIC_API_KEY=sk-ant-…</code>. The program asks the operating system
+"what's the value of <code>ANTHROPIC_API_KEY</code>?" and gets the string back. The value is
+never written down inside the program itself.</p>
+<p>That's the entire trick, and it's why the whole industry does it this way: the
+<em>same</em> code runs on your laptop and on the server, and each place supplies its
+own value. Nothing secret ever ends up in a file that gets copied around.</p>
+<p>You already have dozens of them. Try this:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">echo $HOME
+echo $PATH
+</code></pre></div>
+<p><code>$HOME</code> and <code>$PATH</code> are environment variables your shell was handed when it
+started. Setting one of your own, for the current terminal window only:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">export ANTHROPIC_API_KEY=&quot;sk-ant-api03-your-real-key&quot;
+echo $ANTHROPIC_API_KEY
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-powershell"># PowerShell, on Windows
+$env:ANTHROPIC_API_KEY = &quot;sk-ant-api03-your-real-key&quot;
+</code></pre></div>
+<p>Use the PowerShell version only if you're on Windows and <em>not</em> using WSL (Windows
+Subsystem for Linux, which gives you a real Linux terminal inside Windows). If
+you followed <a href="01-your-machine.html">01 — Your machine</a>, you're in WSL and the
+<code>export</code> version above is the one you want.</p>
+<blockquote>
+<p><strong>The failure mode nobody warns you about:</strong> environment variables are handed
+out <em>when a program starts</em>. If your app was already running when you typed
+<code>export</code>, it did not get the new value, and it will keep saying the key is
+missing until you stop it and start it again. Same for a second terminal
+window — it never saw the <code>export</code> at all. If a variable "isn't working", stop
+the program, check <code>echo $THE_NAME</code> in the <em>same</em> window, and start it again.</p>
+</blockquote>
+<p>A second, quieter problem: typing <code>export MY_KEY=...</code> puts the key into your
+shell history file (<code>~/.zsh_history</code> or <code>~/.bash_history</code>) in plain text. That's
+not a disaster, but it's why the next option is usually better.</p>
+<h3 id="the-three-legitimate-homes-for-a-key">The three legitimate homes for a key<a class="anchor" href="#the-three-legitimate-homes-for-a-key" aria-label="Link to this section">#</a></h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Where</th>
+<th>Use it for</th>
+<th>Watch out for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A <code>.env</code> file in the project, listed in <code>.gitignore</code></td>
+<td>Local development</td>
+<td>It is a plain text file with no protection except never being committed</td>
+</tr>
+<tr>
+<td>An environment variable set in your shell</td>
+<td>One-off scripts, command-line tools</td>
+<td>Vanishes when you close the terminal; lands in shell history</td>
+</tr>
+<tr>
+<td>Your host's dashboard (Cloudflare, AWS, GitHub Actions secrets)</td>
+<td>Anything deployed</td>
+<td>Changing it usually needs a redeploy before the app sees it</td>
+</tr>
+</tbody>
+</table></div>
+<p>A <code>.env</code> file is nothing magical. It's a plain text file, one <code>NAME=value</code> per
+line, no spaces around the <code>=</code>:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">ANTHROPIC_API_KEY=sk-ant-api03-your-real-key
+DATABASE_URL=postgres://user:pass@localhost:5432/dev
+</code></pre></div>
+<p>Something has to read it — the <code>dotenv</code> package in Node, <code>python-dotenv</code> in
+Python, or a framework like Next.js or Vite that loads it automatically. It is
+<strong>not encrypted</strong>. The only thing protecting it is that <code>.gitignore</code> keeps it out
+of your repository, which is why
+<a href="05-github.html">05 — GitHub</a> makes you write <code>.gitignore</code> <em>before</em> your first
+commit rather than after.</p>
+<p>Commit a <code>.env.example</code> alongside it with the <em>names</em> and fake values, so anyone
+cloning your repo knows what to fill in. That file is safe and useful.</p>
+<p>For the full list of what is and isn't a secret — publishable keys, bucket names,
+account IDs, the awkward Supabase case — see
+<a href="05-github.html#3-what-counts-as-a-secret">what counts as a secret</a> on the GitHub
+page. It isn't repeated here.</p>
+<hr />
+<h2 id="3-getting-an-anthropic-api-key">3. Getting an Anthropic API key<a class="anchor" href="#3-getting-an-anthropic-api-key" aria-label="Link to this section">#</a></h2>
+<p>If your project calls Claude, this is where the key comes from. If it calls
+OpenAI or something else, the shape of the process is near enough identical —
+only the URLs change.</p>
+<h3 id="billing-is-separate-from-your-claudeai-subscription">Billing is separate from your Claude.ai subscription<a class="anchor" href="#billing-is-separate-from-your-claudeai-subscription" aria-label="Link to this section">#</a></h3>
+<p>This catches almost everyone. A Claude Pro or Max subscription pays for the
+<strong>chat app</strong> at claude.ai. The <strong>API</strong> — what your deployed code calls — is a
+different product with its own balance, billed by usage. Having Pro gives your
+app nothing. You can sign into both with the same email, and they're still
+separate wallets.</p>
+<p>(Claude Code itself is the odd one out: it can run on either your subscription or
+an API key. That's a separate question from the key your <em>app</em> needs, and it's
+covered in <a href="#5-giving-claude-code-access-to-your-accounts">part 5</a>.)</p>
+<h3 id="step-by-step">Step by step<a class="anchor" href="#step-by-step" aria-label="Link to this section">#</a></h3>
+<ol>
+<li>Go to <strong><a href="https://platform.claude.com">platform.claude.com</a></strong> and sign in. This
+   is the Claude Console — the developer site, not the chat app. (The old address
+   <code>console.anthropic.com</code> still works; it redirects here.) If you created the
+   account in <a href="02-accounts.html">02 — Accounts</a>, use that login.</li>
+<li><strong>Settings → API keys → Create Key.</strong></li>
+<li><strong>Name it after the project</strong> — <code>shipwhatyoubuilt-prod</code>, not <code>key1</code>. In six
+   months you will have several, and the only way to know which one you can
+   safely delete is the name. This is the reason to bother.</li>
+<li><strong>Choose an expiry.</strong> You'll be offered presets (a few hours, a day, 7 days,
+   30 days), a custom length, or <strong>Never</strong>. For a project you're about to deploy
+   and leave running, <strong>Never</strong> is the sane choice — an expired key means a site
+   that dies silently in a month. For a key you're only using to try something
+   out today, a short expiry is free insurance. You can't change this after the
+   key is made.</li>
+<li><strong>Copy it now.</strong> The key is shown exactly once. Close that box without copying
+   and there is no "show me again" — the value is genuinely not recoverable.
+   Delete the key and create another; it costs nothing but a minute.</li>
+<li>Paste it somewhere real immediately: your password manager, or straight into
+   the <code>.env</code> file or host dashboard where it's going to live. Not a text file on
+   your desktop called <code>key.txt</code>.</li>
+<li><strong>Add credit.</strong> Billing → add a payment method and buy credit. Until there's a
+   balance, every call fails.</li>
+</ol>
+<h3 id="set-a-spend-limit-before-you-set-anything-else-up">Set a spend limit before you set anything else up<a class="anchor" href="#set-a-spend-limit-before-you-set-anything-else-up" aria-label="Link to this section">#</a></h3>
+<p>The Console has spend controls in the <strong>Billing</strong> area — a monthly spend cap, and
+email alerts at thresholds you choose. (Anthropic reorganises these settings from
+time to time, so if they're not exactly where this says, look around Billing and
+Limits in Settings; the two controls themselves are what matter.) Set both now,
+at a number that would annoy you rather than hurt you.</p>
+<p>The reason is specific: your <strong>backend</strong> — the part of your app that runs on a
+server rather than in the visitor's browser — is a public URL that spends your
+money on behalf of whoever calls it. If someone finds it and hammers it, or if
+your own code gets stuck in a retry loop, which is far more common, the cap is
+what turns a horrible week into a mildly irritating morning.</p>
+<p>Prices and free-credit offers change; check
+<strong><a href="https://claude.com/pricing">claude.com/pricing</a></strong> for what things actually
+cost today rather than trusting a number written in a guide.</p>
+<h3 id="one-key-per-project">One key per project<a class="anchor" href="#one-key-per-project" aria-label="Link to this section">#</a></h3>
+<p>Create a separate key for each project, and a separate one for each environment
+if you have a staging site — a private copy of the site you try changes on before
+the real one. It costs nothing and buys you the ability to <strong>delete
+one key without breaking everything else you own</strong>. A shared key means that the
+day you have to rotate it, you have to redeploy every project at once, at speed,
+under stress. That's how mistakes happen.</p>
+<h3 id="when-it-doesnt-work">When it doesn't work<a class="anchor" href="#when-it-doesnt-work" aria-label="Link to this section">#</a></h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>What you see</th>
+<th>What it means</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>401</code> / <code>authentication_error</code> / "invalid x-api-key"</td>
+<td>The key is wrong, revoked, expired, or has a stray space or newline on the end</td>
+<td>Re-copy it. Check for whitespace — a trailing newline from a copy-paste is the classic. Check the key's expiry in the Console; expired keys can't be reactivated, so make a new one</td>
+</tr>
+<tr>
+<td><code>400</code> "Your credit balance is too low"</td>
+<td>The key is fine; the account has no money</td>
+<td>Billing → add credit</td>
+</tr>
+<tr>
+<td><code>429</code> / <code>rate_limit_error</code></td>
+<td>Too many requests too fast, or you've hit an account tier limit</td>
+<td>Slow down, add retries with a delay; check Limits in the Console</td>
+</tr>
+<tr>
+<td><code>undefined</code> where the key should be</td>
+<td>The app never received the environment variable</td>
+<td>It was set after the app started, set in a different terminal, or misspelt. Names are case-sensitive</td>
+</tr>
+<tr>
+<td>Works locally, <code>500</code> when deployed</td>
+<td>The variable exists on your laptop and not on the host</td>
+<td>Set it in the host dashboard, then <strong>redeploy</strong></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="4-using-the-key-in-a-deployed-app">4. Using the key in a deployed app<a class="anchor" href="#4-using-the-key-in-a-deployed-app" aria-label="Link to this section">#</a></h2>
+<h3 id="why-it-cannot-go-in-the-browser">Why it cannot go in the browser<a class="anchor" href="#why-it-cannot-go-in-the-browser" aria-label="Link to this section">#</a></h3>
+<p>Anything that reaches the browser is readable by whoever is looking at it. Press
+<strong>F12</strong> in any browser to open developer tools: the <strong>Sources</strong> tab lists every
+JavaScript file the page loaded, in full, and the <strong>Network</strong> tab shows every
+request including its headers. Finding <code>sk-ant-</code> in there takes about four
+seconds.</p>
+<p>So: <strong>a key in front-end code is a public key.</strong> ("Front-end" means the part of
+your app that runs inside the visitor's browser — the opposite of the backend.)
+Not "a bit risky" — public. It is being handed to every visitor along with the
+page.</p>
+<blockquote>
+<p><strong>A build step does not hide it.</strong> Bundlers like Vite, webpack and Next.js
+don't obscure values, they <em>inline</em> them into the output file. This is why Vite
+requires a <code>VITE_</code> prefix and Next.js a <code>NEXT_PUBLIC_</code> prefix before a variable
+is exposed to browser code — the prefix exists so that publishing a value is a
+deliberate thing you had to type. If a tutorial tells you to call your key
+<code>VITE_ANTHROPIC_API_KEY</code>, it is telling you to publish it.</p>
+</blockquote>
+<p>The shape that works puts a small piece of <em>your</em> code in the middle:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">  Browser                 Your function                Anthropic
+  (public)                (server-side, private)       (the API)
+
+  fetch(&quot;/api/ask&quot;)  ──&gt;  reads the key from     ──&gt;   x-api-key: sk-ant-…
+                          the environment
+                          and calls the API
+                     &lt;──  returns just the       &lt;──
+                          answer
+</code></pre></div>
+<p>The browser never sees the key. It only ever talks to your own URL.</p>
+<h3 id="track-a--cloudflare-pages-and-workers">Track A — Cloudflare Pages and Workers<a class="anchor" href="#track-a--cloudflare-pages-and-workers" aria-label="Link to this section">#</a></h3>
+<p>In your Pages project: <strong>Settings → Variables and Secrets → Add → Production</strong>.
+Add <code>ANTHROPIC_API_KEY</code>, paste the value, and tick <strong>Encrypt</strong>. Encrypted
+variables can't be read back afterwards, even by you — only overwritten. That's
+correct behaviour, not a bug.</p>
+<p>Read it in a Pages Function or Worker — Cloudflare's names for a small piece of
+your own code that runs on their servers instead of in the browser — from the
+request context:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-javascript">export async function onRequestPost(context) {
+  const key = context.env.ANTHROPIC_API_KEY;
+  // ...
+}
+</code></pre></div>
+<blockquote>
+<p><strong>Two things bite people here.</strong> First, Workers do not have Node's
+<code>process.env</code> unless you've turned on Node compatibility — <code>context.env</code> is the
+right thing to reach for, and <code>process.env.X is undefined</code> is the error you'll
+see if you forget. Second, <strong>Production and Preview are separate lists</strong>. Set
+the variable on Production only and every preview branch deploy returns a 500,
+which reads as "it broke for no reason" when in fact it never had the key.</p>
+</blockquote>
+<p>Variables apply to <em>new</em> builds. After adding one, trigger a redeploy — the
+deployment that's currently live was built without it.</p>
+<p>Full walkthrough: <a href="10-cloudflare.html">Track A: Cloudflare</a>.</p>
+<h3 id="track-b--aws-lambda">Track B — AWS Lambda<a class="anchor" href="#track-b--aws-lambda" aria-label="Link to this section">#</a></h3>
+<p>A <strong>Lambda function</strong> is AWS's equivalent of a Worker: a lump of your code that
+AWS runs on demand, with no server for you to manage. Each function carries its
+own environment variables, set on the function itself:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">aws lambda update-function-configuration \
+  --function-name your-function \
+  --environment &quot;Variables={ANTHROPIC_API_KEY=sk-ant-api03-...}&quot;
+</code></pre></div>
+<p>Read it in the handler the ordinary Node way:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-javascript">export const handler = async (event) =&gt; {
+  const key = process.env.ANTHROPIC_API_KEY;
+  // ...
+};
+</code></pre></div>
+<blockquote>
+<p><strong>That command replaces the entire variable set</strong>, it doesn't add to it. If the
+function already had three variables and you run the above with one, the other
+two are gone and the function starts failing in a way that looks unrelated.
+Pass all of them every time, or set them in the AWS console where you can see
+the existing list.</p>
+</blockquote>
+<p>Two honest caveats about Lambda environment variables:</p>
+<ul>
+<li><strong>They're visible to anyone with console read access to the function.</strong> They're
+  encrypted while stored, but anyone allowed to call
+  <code>lambda:GetFunctionConfiguration</code> can read the value back in plain text. (Those
+  permissions are handed out by <strong>IAM</strong>, Identity and Access Management — the AWS
+  service that decides who is allowed to do what.) On a personal project where
+  you're the only person with an account, that's fine. On anything shared, it
+  isn't.</li>
+<li><strong>The upgrade is AWS Secrets Manager</strong> — the secret lives in a separate service
+  with its own access controls and audit trail, and the function fetches it at
+  runtime. It charges a small amount per secret per month plus per call; see
+  <a href="https://aws.amazon.com/secrets-manager/pricing/">AWS Secrets Manager pricing</a>
+  for the current figures. Worth it when other people have access to the account,
+  or when the key controls money.</li>
+</ul>
+<p>Full walkthrough: <a href="20-aws.html">Track B: AWS</a>.</p>
+<h3 id="your-endpoint-is-now-a-public-money-spender">Your endpoint is now a public money-spender<a class="anchor" href="#your-endpoint-is-now-a-public-money-spender" aria-label="Link to this section">#</a></h3>
+<p>Your function's URL is an <strong>endpoint</strong> — a single address that accepts requests.
+Once it's live, anyone who finds it can call it, and each call costs you. Before
+you share the link widely, it's worth adding one of:</p>
+<ul>
+<li>a <strong>rate limit</strong> (a cap on how many requests one visitor can make per minute);</li>
+<li>a <a href="https://www.cloudflare.com/products/turnstile/">Cloudflare Turnstile</a> check
+  on the form — Cloudflare's free "prove you're not a bot" widget, the
+  less-annoying descendant of CAPTCHA;</li>
+<li>or simply a hard <code>max_tokens</code> value on every request. Tokens are the chunks of
+  text Claude is billed by — roughly three-quarters of a word each — so capping
+  them caps what any single call can cost.</li>
+</ul>
+<p>And keep the Console spend limit from part 3 in place regardless — it's the
+backstop that doesn't depend on you having thought of everything.</p>
+<blockquote>
+<p>Look at my backend function as if I'd just posted the URL publicly. What's the
+most expensive thing someone could make it do in an hour, and what's the
+smallest change that caps it?</p>
+</blockquote>
+<hr />
+<h2 id="5-giving-claude-code-access-to-your-accounts">5. Giving Claude Code access to your accounts<a class="anchor" href="#5-giving-claude-code-access-to-your-accounts" aria-label="Link to this section">#</a></h2>
+<p>This is the other thing people mean by "giving Claude access", and it works
+differently from what most people expect.</p>
+<h3 id="claude-code-uses-the-credentials-already-on-your-machine">Claude Code uses the credentials already on your machine<a class="anchor" href="#claude-code-uses-the-credentials-already-on-your-machine" aria-label="Link to this section">#</a></h3>
+<p>Claude Code runs on <strong>your</strong> computer, as <strong>you</strong>. When it runs <code>aws s3 ls</code>, that
+command runs exactly as it would if you'd typed it — same user, same permissions,
+same config files. So it doesn't need its own credentials for your cloud
+accounts. It needs the command-line tools on your machine to be logged in, which
+you do once, yourself:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Command</th>
+<th>Where the credential ends up</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AWS</td>
+<td><code>aws configure</code></td>
+<td><code>~/.aws/credentials</code></td>
+</tr>
+<tr>
+<td>GitHub</td>
+<td><code>gh auth login</code></td>
+<td>Your OS keychain, or <code>~/.config/gh/</code></td>
+</tr>
+<tr>
+<td>Cloudflare</td>
+<td><code>wrangler login</code></td>
+<td>A token in <code>~/.config/.wrangler/</code> (browser-based; no key to copy)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Each of those opens a browser or asks you for values <em>in the terminal</em>, not in
+the chat. After that, Claude Code can use the tool and never has to know the
+secret itself.</p>
+<h3 id="therefore-never-paste-a-secret-into-the-chat">Therefore: never paste a secret into the chat<a class="anchor" href="#therefore-never-paste-a-secret-into-the-chat" aria-label="Link to this section">#</a></h3>
+<p>Stated plainly, because it's the point of this section:</p>
+<p><strong>If something asks you to paste a secret into the conversation, something is set
+up wrong.</strong> The right response is to stop and fix the setup, not to paste it.</p>
+<p>The reasons are practical rather than dramatic. Your conversation is stored on
+disk, it goes to the model, it might end up in a screenshot you send someone or a
+transcript you share, and it is one careless <code>git add .</code> away from your
+repository. None of that is necessary, because the command-line tool already
+holds the credential and Claude reads it through the tool.</p>
+<p>The same applies to the <a href="#3-getting-an-anthropic-api-key">Anthropic key from part 3</a>:
+you put it in <code>.env</code> or the host dashboard yourself. Claude Code can <em>reference</em>
+<code>ANTHROPIC_API_KEY</code> in code it writes without ever seeing the value.</p>
+<blockquote>
+<p><strong>If you've already pasted a key into a chat</strong> — with Claude or anything else —
+don't spiral about it. Go to <a href="#6-when-a-key-leaks">part 6</a> and rotate it. It
+takes two minutes and then it doesn't matter.</p>
+</blockquote>
+<h3 id="what-claude-code-can-actually-see">What Claude Code can actually see<a class="anchor" href="#what-claude-code-can-actually-see" aria-label="Link to this section">#</a></h3>
+<p>Worth knowing precisely, in both directions:</p>
+<ul>
+<li><strong>The files in the folder you opened it in</strong>, and its subfolders. That includes
+  your <code>.env</code>, if it's there. That's normal and often useful — but it's the
+  reason to open Claude Code in your <em>project</em> folder and not in your home
+  directory, where it can see everything you own.</li>
+<li><strong>The output of commands it runs.</strong> If a command prints a secret, that secret
+  is now in the conversation. This is why <code>cat .env</code> is a bad habit and
+  <code>aws sts get-caller-identity</code> (which prints an account ID and no credentials)
+  is a fine one.</li>
+<li><strong>Not</strong> your browser, your email, or anything outside that folder, unless you
+  connect a tool that provides it.</li>
+</ul>
+<h3 id="permissions-read-before-you-approve">Permissions: read before you approve<a class="anchor" href="#permissions-read-before-you-approve" aria-label="Link to this section">#</a></h3>
+<p>By default, Claude Code asks before it edits a file or runs a command. You can
+approve one command, approve a kind of command for the rest of the session, or
+switch to a mode that stops asking. Faster modes are legitimate — plenty of
+people use them for a repetitive task in a repo they can throw away — but the
+default exists for a reason on a project you care about.</p>
+<p>The habit worth building is small: <strong>read the command before you approve it.</strong>
+You do not need to understand every flag. You need to notice the shapes that are
+hard to undo:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Shape</th>
+<th>Why to look twice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rm -rf …</code></td>
+<td>Deletes without confirmation and without a bin to recover from</td>
+</tr>
+<tr>
+<td><code>git push --force</code></td>
+<td>Overwrites history on the remote, including other people's</td>
+</tr>
+<tr>
+<td><code>curl … \| bash</code></td>
+<td>Runs code from the internet unread. Sometimes normal, always worth a glance at the URL</td>
+</tr>
+<tr>
+<td><code>aws … delete-…</code> / <code>terraform destroy</code></td>
+<td>Removes real infrastructure</td>
+</tr>
+<tr>
+<td>Anything writing to <code>~/.aws</code>, <code>~/.ssh</code>, <code>~/.gitconfig</code></td>
+<td>Touching credentials rather than your project</td>
+</tr>
+</tbody>
+</table></div>
+<p>"What does this command do, and what happens if it goes wrong?" is a fair
+question with a real answer, and asking it costs you ten seconds.</p>
+<hr />
+<h2 id="6-when-a-key-leaks">6. When a key leaks<a class="anchor" href="#6-when-a-key-leaks" aria-label="Link to this section">#</a></h2>
+<p>It happens to careful people. The order of operations matters more than anything
+else on this page, so here it is first:</p>
+<p><strong>Rotate first. Clean up git history second. Never the other way round.</strong></p>
+<h3 id="1-rotate--right-now-before-you-do-anything-else">1. Rotate — right now, before you do anything else<a class="anchor" href="#1-rotate--right-now-before-you-do-anything-else" aria-label="Link to this section">#</a></h3>
+<p>Go to the provider and <strong>delete the exposed key, then create a new one</strong>:</p>
+<ul>
+<li><strong>Anthropic:</strong> platform.claude.com → Settings → API keys → delete → Create Key</li>
+<li><strong>AWS:</strong> IAM → Users → your user → Security credentials → deactivate, then
+  delete the access key → create a new one → <code>aws configure</code> again</li>
+<li><strong>GitHub:</strong> Settings → Developer settings → Personal access tokens → revoke</li>
+<li><strong>Stripe:</strong> Developers → API keys → roll the secret key</li>
+<li><strong>Cloudflare:</strong> My Profile → API Tokens → roll</li>
+</ul>
+<p>Do this <strong>on suspicion, not on proof</strong>. Rotating a key you didn't need to rotate
+costs you five minutes. Not rotating one you did costs you considerably more.</p>
+<p>Why the order is non-negotiable: public commits are scraped by bots within
+<em>seconds</em> of the push — there are people running scanners against GitHub's public
+event firehose full time, and exposed AWS keys have been observed in use for
+crypto mining within minutes. Nothing you do to your git history is fast enough
+to beat that. But the moment the key is dead, the copy the bots have is worthless
+and <strong>the leak stops being an emergency and becomes a tidying job</strong>.</p>
+<p>Then check the damage: your Anthropic usage page, your AWS billing dashboard,
+your Stripe logs. Usually nothing happened. Look anyway.</p>
+<h3 id="2-then-clean-the-history">2. Then clean the history<a class="anchor" href="#2-then-clean-the-history" aria-label="Link to this section">#</a></h3>
+<p>Understand what you're up against: <strong>deleting the file in a later commit does
+nothing on its own.</strong> Git keeps every version of everything. The old commit still
+contains the key, it's still fetchable by anyone who clones the repo, and GitHub
+will still serve it to anyone who knows that commit's ID — the long string of
+letters and numbers Git gives every saved change. "I removed it in the next
+commit" is the single most common mistaken belief about this.</p>
+<p>Actually removing it means rewriting history, with one of:</p>
+<ul>
+<li><strong><a href="https://github.com/newren/git-filter-repo">git-filter-repo</a></strong> — the current
+  recommended tool, and what Git's own documentation now points to.</li>
+<li><strong><a href="https://rtyley.github.io/bfg-repo-cleaner/">BFG Repo-Cleaner</a></strong> — older,
+  simpler for the specific job of "remove this string everywhere". Needs Java.</li>
+</ul>
+<p>Both rewrite every affected commit, which means a <strong>force-push</strong> — overwriting
+GitHub's copy of your history with your rewritten one — and which means anyone
+who already cloned your repo has a copy that no longer matches. On a personal
+project nobody has forked, that's painless. On anything with collaborators, tell
+them first.</p>
+<blockquote>
+<p>If the commit was <strong>never pushed</strong>, you got away with it. Clean it up locally
+and rotate the key anyway — "I'm fairly sure it never left my laptop" is not a
+security posture.</p>
+</blockquote>
+<p>And turn on GitHub's push protection so the next one is caught before it leaves
+your machine — one command, in
+<a href="05-github.html#turn-on-the-safety-nets">05 — GitHub</a>.</p>
+<hr />
+<h2 id="7-quick-reference">7. Quick reference<a class="anchor" href="#7-quick-reference" aria-label="Link to this section">#</a></h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Key type</th>
+<th>What it looks like</th>
+<th>Where it belongs</th>
+<th>If it leaks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Anthropic API key</td>
+<td><code>sk-ant-api03-…</code></td>
+<td><code>.env</code> (gitignored) or host dashboard</td>
+<td>Console → Settings → API keys → delete, create new, check Usage</td>
+</tr>
+<tr>
+<td>OpenAI API key</td>
+<td><code>sk-proj-…</code> or <code>sk-…</code></td>
+<td>Same</td>
+<td>platform.openai.com → API keys → revoke, create new</td>
+</tr>
+<tr>
+<td>AWS access key</td>
+<td>ID <code>AKIA…</code> (20 characters) plus a separate 40-character secret</td>
+<td><code>~/.aws/credentials</code> only, via <code>aws configure</code></td>
+<td><strong>Immediately:</strong> IAM → deactivate → delete → new key. Then check Billing, and CloudTrail (the AWS log of every action taken on your account)</td>
+</tr>
+<tr>
+<td>GitHub token</td>
+<td><code>ghp_…</code> or <code>github_pat_…</code></td>
+<td>Ideally nowhere — use <code>gh auth login</code> instead</td>
+<td>Settings → Developer settings → revoke</td>
+</tr>
+<tr>
+<td>Cloudflare API token</td>
+<td><code>cfut_…</code> on newly created tokens; older ones are 40 characters with no prefix</td>
+<td>Ideally nowhere — use <code>wrangler login</code></td>
+<td>My Profile → API Tokens → roll</td>
+</tr>
+<tr>
+<td>Stripe secret key</td>
+<td><code>sk_live_…</code> / <code>sk_test_…</code></td>
+<td>Server-side environment variable only</td>
+<td>Dashboard → Developers → API keys → roll. Treat <code>sk_live_</code> as an emergency</td>
+</tr>
+<tr>
+<td>Stripe publishable key</td>
+<td><code>pk_live_…</code></td>
+<td>Browser code — it's designed for that</td>
+<td>Nothing. It is public by design</td>
+</tr>
+<tr>
+<td>Supabase publishable key</td>
+<td><code>sb_publishable_…</code>; older projects have a long <code>eyJ…</code> "anon" key instead</td>
+<td>Browser code — <strong>only</strong> with Row Level Security on</td>
+<td>Nothing, <em>if</em> RLS is right. If it isn't, fix the policies; that's the actual leak</td>
+</tr>
+<tr>
+<td>Database URL</td>
+<td><code>postgres://user:pass@host/db</code></td>
+<td>Environment variable</td>
+<td>Change the database password, then update the variable</td>
+</tr>
+<tr>
+<td>Private key file</td>
+<td><code>-----BEGIN … PRIVATE KEY-----</code>, <code>.pem</code>, <code>.key</code></td>
+<td><code>~/.ssh/</code> or a secrets manager, mode <code>600</code></td>
+<td>Generate a new pair; remove the old public key from everywhere it was authorised</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Row Level Security</strong> (RLS) is a database setting that decides, row by row, who
+is allowed to see what. It's what makes a Supabase key safe to publish: the key
+itself grants nothing, and your rules do the deciding. With RLS off, that same
+published key is a read-write handle on your whole database. This is the single
+most common way a Supabase project leaks, and it isn't really a key problem at
+all.</p>
+<p>And one prompt worth running in your project folder before anything goes public:</p>
+<blockquote>
+<p>Go through this project as if it were about to be a public repository. Find
+anything that looks like a credential — in the code, in config files, in the
+git history, in commit messages. For each one tell me what it is, where it
+should live instead, and whether it's already been committed.</p>
+</blockquote>
+<hr />
+<p><strong>Next:</strong> <a href="04-three-layers.html">The three layers →</a></p>
+    <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
+    <nav class="pager"><a class="prev" href="02-accounts.html"><span>Previous</span>The accounts you need</a><a class="next" href="04-three-layers.html"><span>Next</span>The four layers</a></nav>
+  </main>
+</div>
+<script>
+// Copy the whole block — several are heredocs that break if pasted line by line.
+document.querySelectorAll('.codewrap').forEach(function (w) {
+  var btn = w.querySelector('.copy'), pre = w.querySelector('pre');
+  if (!btn || !pre) return;
+  btn.addEventListener('click', function () {
+    navigator.clipboard.writeText(pre.innerText).then(function () {
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+    }).catch(function () { btn.textContent = 'Press Ctrl+C'; });
+  });
+});
+
+// Remember which pages are finished — the AWS track spans more than one sitting.
+(function () {
+  var KEY = 'swyb-done', box = document.getElementById('page-done');
+  if (!box) return;
+  var page = document.body.dataset.page;
+  var read = function () { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
+  var done = read();
+  box.checked = !!done[page];
+  box.addEventListener('change', function () {
+    var d = read();
+    if (box.checked) { d[page] = true; } else { delete d[page]; }
+    localStorage.setItem(KEY, JSON.stringify(d));
+    paint();
+  });
+  function paint() {
+    var d = read();
+    document.querySelectorAll('.nav a[data-page]').forEach(function (a) {
+      a.textContent.indexOf('✓') === 0 && (a.textContent = a.textContent.slice(1));
+      var t = a.querySelector('.tick');
+      if (t) t.textContent = d[a.dataset.page] ? '✓ ' : '';
+    });
+  }
+  paint();
+})();
+</script>
+</body>
+</html>

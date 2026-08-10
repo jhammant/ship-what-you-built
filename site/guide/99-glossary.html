@@ -1,0 +1,1236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glossary — Ship What You Built</title>
+<meta name="description" content="Glossary — part of a free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:title" content="Glossary — Ship What You Built">
+<meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/99-glossary.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#F6F7F5;--surface:#FFF;--sunken:#EEF0EC;--ink:#14181B;--ink-soft:#3D4642;
+--muted:#5B6560;--line:rgba(20,24,27,.13);--line-soft:rgba(20,24,27,.07);
+--live:#16794C;--live-ink:#FFF;--live-wash:rgba(22,121,76,.09);--stuck:#9A5B18;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+--sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;--ink-soft:#C3CCC6;
+--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}}
+:root[data-theme="dark"]{--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;
+--ink-soft:#C3CCC6;--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+line-height:1.68;font-size:1.02rem;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--live)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--live);outline-offset:3px;border-radius:5px}
+.shell{display:grid;grid-template-columns:17rem minmax(0,1fr);gap:2.5rem;
+max-width:78rem;margin-inline:auto;padding:0 clamp(1rem,4vw,2.5rem)}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr);gap:0}}
+.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;
+padding:2rem 0;border-right:1px solid var(--line-soft)}
+@media (max-width:900px){.side{position:static;max-height:none;border-right:0;
+border-bottom:1px solid var(--line-soft);padding-bottom:1rem}}
+.brand{font-weight:660;letter-spacing:-.02em;text-decoration:none;display:block;margin-bottom:.35rem}
+.brand small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;letter-spacing:0}
+.nav{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:.15rem}
+.nav a{display:block;padding:.42rem .6rem;border-radius:7px;text-decoration:none;
+font-size:.925rem;color:var(--ink-soft)}
+.nav a:hover{background:var(--sunken)}
+.nav a[aria-current="page"]{background:var(--live-wash);color:var(--ink);font-weight:600}
+.nav small{display:block;color:var(--muted);font-size:.76rem;line-height:1.35}
+.onpage{margin-top:1.5rem;border-top:1px solid var(--line-soft);padding-top:1rem}
+.onpage p{margin:0 0 .5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;
+text-transform:uppercase;color:var(--muted)}
+.onpage ul{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+.onpage a{display:block;padding:.2rem .35rem;font-size:.85rem;color:var(--muted);
+text-decoration:none;border-radius:5px}
+.onpage a:hover{color:var(--ink);background:var(--sunken)}
+.onpage .lvl3{padding-left:1rem;font-size:.8rem}
+main{padding:2.5rem 0 4rem;min-width:0;max-width:46rem}
+h1{font-size:clamp(1.9rem,1.4rem+2vw,2.7rem);line-height:1.1;letter-spacing:-.03em;
+margin:0 0 1.5rem;text-wrap:balance}
+h2{font-size:1.5rem;line-height:1.2;letter-spacing:-.022em;margin:2.8rem 0 .9rem;
+padding-top:1.4rem;border-top:1px solid var(--line-soft);text-wrap:balance}
+h3{font-size:1.13rem;letter-spacing:-.015em;margin:2rem 0 .6rem}
+h2 .anchor,h3 .anchor{opacity:0;margin-left:.4rem;color:var(--muted);text-decoration:none;font-weight:400}
+h2:hover .anchor,h3:hover .anchor,.anchor:focus-visible{opacity:1}
+p,ul,ol{margin:0 0 1.05rem}
+li{margin-bottom:.3rem}
+strong{font-weight:650}
+code{font-family:var(--mono);font-size:.875em;background:var(--sunken);
+padding:.12em .34em;border-radius:4px;overflow-wrap:break-word}
+.codewrap{position:relative;margin:0 0 1.2rem}
+pre{margin:0;overflow-x:auto;background:var(--sunken);border:1px solid var(--line-soft);
+border-radius:10px;padding:1rem 1.1rem;font-family:var(--mono);font-size:.845rem;line-height:1.62}
+pre code{background:none;padding:0;font-size:1em}
+.copy{position:absolute;top:.5rem;right:.5rem;font:inherit;font-size:.75rem;
+padding:.28rem .6rem;border-radius:6px;border:1px solid var(--line);
+background:var(--surface);color:var(--muted);cursor:pointer;opacity:0;transition:opacity .12s}
+.codewrap:hover .copy,.copy:focus-visible{opacity:1}
+.copy.done{color:var(--live);border-color:var(--live)}
+@media (hover:none){.copy{opacity:1}}
+blockquote{margin:0 0 1.2rem;padding:.9rem 1.1rem;border-left:3px solid var(--live);
+background:var(--live-wash);border-radius:0 9px 9px 0}
+blockquote > :last-child{margin-bottom:0}
+blockquote h3{margin-top:.2rem}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:0 0 1.2rem}
+table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+th,td{text-align:left;padding:.65rem .9rem;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+tbody tr:last-child td{border-bottom:0}
+hr{border:0;border-top:1px solid var(--line-soft);margin:2.5rem 0}
+img{max-width:100%;height:auto}
+.done-toggle{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);
+margin:.2rem 0 1.6rem;cursor:pointer;user-select:none}
+.done-toggle input{accent-color:var(--live);width:1rem;height:1rem}
+.pager{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:space-between;
+margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line-soft)}
+.pager a{flex:1 1 14rem;padding:.9rem 1.1rem;border:1px solid var(--line);border-radius:10px;
+text-decoration:none;background:var(--surface)}
+.pager a:hover{border-color:var(--live)}
+.pager span{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
+.pager .next{text-align:right}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-page="99-glossary">
+<div class="shell">
+  <aside class="side">
+    <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
+    <nav><ul class="nav"><li><a href="00-start-here.html" data-page="00-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="01-your-machine.html" data-page="01-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="02-accounts.html" data-page="02-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="03-keys-and-access.html" data-page="03-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="04-three-layers.html" data-page="04-three-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="05-github.html" data-page="05-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="06-let-claude-drive.html" data-page="06-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" aria-current="page" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#index">Index</a></li><li><a class="lvl2" href="#domains-and-dns">Domains and DNS</a></li><li><a class="lvl3" href="#a-record">A record</a></li><li><a class="lvl3" href="#aaaa-record">AAAA record</a></li><li><a class="lvl3" href="#alias-record">ALIAS record</a></li><li><a class="lvl3" href="#apex-domain">Apex domain</a></li><li><a class="lvl3" href="#auth-code">Auth code</a></li><li><a class="lvl3" href="#cname">CNAME</a></li><li><a class="lvl3" href="#cname-flattening">CNAME flattening</a></li><li><a class="lvl3" href="#delegation">Delegation</a></li><li><a class="lvl3" href="#dig">dig</a></li><li><a class="lvl3" href="#dns">DNS</a></li><li><a class="lvl3" href="#domain">Domain</a></li><li><a class="lvl3" href="#hostname">Hostname</a></li><li><a class="lvl3" href="#icann">ICANN</a></li><li><a class="lvl3" href="#mx-record">MX record</a></li><li><a class="lvl3" href="#nameserver">Nameserver</a></li><li><a class="lvl3" href="#ns-record">NS record</a></li><li><a class="lvl3" href="#nxdomain">NXDOMAIN</a></li><li><a class="lvl3" href="#premium-domain">Premium domain</a></li><li><a class="lvl3" href="#propagation">Propagation</a></li><li><a class="lvl3" href="#registrar">Registrar</a></li><li><a class="lvl3" href="#registry">Registry</a></li><li><a class="lvl3" href="#resolver">Resolver</a></li><li><a class="lvl3" href="#route-53">Route 53</a></li><li><a class="lvl3" href="#soa-record">SOA record</a></li><li><a class="lvl3" href="#spf-dkim-and-dmarc">SPF, DKIM and DMARC</a></li><li><a class="lvl3" href="#subdomain">Subdomain</a></li><li><a class="lvl3" href="#tld">TLD</a></li><li><a class="lvl3" href="#ttl">TTL</a></li><li><a class="lvl3" href="#txt-record">TXT record</a></li><li><a class="lvl3" href="#upsert">UPSERT</a></li><li><a class="lvl3" href="#whois">WHOIS</a></li><li><a class="lvl3" href="#zone">Zone</a></li><li><a class="lvl2" href="#security-and-certificates">Security and certificates</a></li><li><a class="lvl3" href="#acm">ACM</a></li><li><a class="lvl3" href="#certificate">Certificate</a></li><li><a class="lvl3" href="#certificate-authority">Certificate authority</a></li><li><a class="lvl3" href="#domain-validation">Domain validation</a></li><li><a class="lvl3" href="#hsts">HSTS</a></li><li><a class="lvl3" href="#https">HTTPS</a></li><li><a class="lvl3" href="#lets-encrypt">Let&#x27;s Encrypt</a></li><li><a class="lvl3" href="#row-level-security">Row Level Security</a></li><li><a class="lvl3" href="#sni">SNI</a></li><li><a class="lvl3" href="#tls-and-ssl">TLS and SSL</a></li><li><a class="lvl2" href="#hosting-and-the-cloud">Hosting and the cloud</a></li><li><a class="lvl3" href="#arn">ARN</a></li><li><a class="lvl3" href="#binding">Binding</a></li><li><a class="lvl3" href="#bucket">Bucket</a></li><li><a class="lvl3" href="#budget-alarm">Budget alarm</a></li><li><a class="lvl3" href="#build-command">Build command</a></li><li><a class="lvl3" href="#build-step">Build step</a></li><li><a class="lvl3" href="#cache">Cache</a></li><li><a class="lvl3" href="#cache-invalidation">Cache invalidation</a></li><li><a class="lvl3" href="#cdn">CDN</a></li><li><a class="lvl3" href="#cloudflare-pages">Cloudflare Pages</a></li><li><a class="lvl3" href="#cloudfront">CloudFront</a></li><li><a class="lvl3" href="#cold-start">Cold start</a></li><li><a class="lvl3" href="#cost-explorer">Cost Explorer</a></li><li><a class="lvl3" href="#d1">D1</a></li><li><a class="lvl3" href="#deploy">Deploy</a></li><li><a class="lvl3" href="#distribution">Distribution</a></li><li><a class="lvl3" href="#durable-objects">Durable Objects</a></li><li><a class="lvl3" href="#edge">Edge</a></li><li><a class="lvl3" href="#eventual-consistency">Eventual consistency</a></li><li><a class="lvl3" href="#free-tier">Free tier</a></li><li><a class="lvl3" href="#function-url">Function URL</a></li><li><a class="lvl3" href="#infrastructure-as-code">Infrastructure as code</a></li><li><a class="lvl3" href="#lambda">Lambda</a></li><li><a class="lvl3" href="#managed-platform">Managed platform</a></li><li><a class="lvl3" href="#nat-gateway">NAT gateway</a></li><li><a class="lvl3" href="#object">Object</a></li><li><a class="lvl3" href="#origin-hosting">Origin (hosting)</a></li><li><a class="lvl3" href="#origin-access-control">Origin Access Control</a></li><li><a class="lvl3" href="#output-directory">Output directory</a></li><li><a class="lvl3" href="#pages-functions">Pages Functions</a></li><li><a class="lvl3" href="#preview-deployment">Preview deployment</a></li><li><a class="lvl3" href="#r2">R2</a></li><li><a class="lvl3" href="#region">Region</a></li><li><a class="lvl3" href="#rollback">Rollback</a></li><li><a class="lvl3" href="#runtime">Runtime</a></li><li><a class="lvl3" href="#s3">S3</a></li><li><a class="lvl3" href="#serverless">Serverless</a></li><li><a class="lvl3" href="#spa">SPA</a></li><li><a class="lvl3" href="#static-site">Static site</a></li><li><a class="lvl3" href="#static-site-generator">Static site generator</a></li><li><a class="lvl3" href="#supabase">Supabase</a></li><li><a class="lvl3" href="#virtual-machine">Virtual machine</a></li><li><a class="lvl3" href="#workers">Workers</a></li><li><a class="lvl3" href="#workers-kv">Workers KV</a></li><li><a class="lvl3" href="#wrangler">wrangler</a></li><li><a class="lvl2" href="#git-and-github">Git and GitHub</a></li><li><a class="lvl3" href="#branch">Branch</a></li><li><a class="lvl3" href="#ci-and-cd">CI and CD</a></li><li><a class="lvl3" href="#clone">Clone</a></li><li><a class="lvl3" href="#commit">Commit</a></li><li><a class="lvl3" href="#fork">Fork</a></li><li><a class="lvl3" href="#force-push">Force-push</a></li><li><a class="lvl3" href="#gh">gh</a></li><li><a class="lvl3" href="#git">git</a></li><li><a class="lvl3" href="#gitignore">.gitignore</a></li><li><a class="lvl3" href="#github">GitHub</a></li><li><a class="lvl3" href="#github-actions">GitHub Actions</a></li><li><a class="lvl3" href="#github-secret">GitHub secret</a></li><li><a class="lvl3" href="#github-variable">GitHub variable</a></li><li><a class="lvl3" href="#history-rewriting">History rewriting</a></li><li><a class="lvl3" href="#issue">Issue</a></li><li><a class="lvl3" href="#licence">Licence</a></li><li><a class="lvl3" href="#main">main</a></li><li><a class="lvl3" href="#merge">Merge</a></li><li><a class="lvl3" href="#mit-licence">MIT licence</a></li><li><a class="lvl3" href="#open-source">Open source</a></li><li><a class="lvl3" href="#origin-git">Origin (git)</a></li><li><a class="lvl3" href="#personal-access-token">Personal access token</a></li><li><a class="lvl3" href="#pull-request">Pull request</a></li><li><a class="lvl3" href="#push">Push</a></li><li><a class="lvl3" href="#push-protection">Push protection</a></li><li><a class="lvl3" href="#readme">README</a></li><li><a class="lvl3" href="#remote">Remote</a></li><li><a class="lvl3" href="#repository">Repository</a></li><li><a class="lvl3" href="#runner">Runner</a></li><li><a class="lvl3" href="#secret-scanning">Secret scanning</a></li><li><a class="lvl3" href="#stage">Stage</a></li><li><a class="lvl3" href="#topics">Topics</a></li><li><a class="lvl3" href="#workflow">Workflow</a></li><li><a class="lvl2" href="#keys-and-identity">Keys and identity</a></li><li><a class="lvl3" href="#access-key">Access key</a></li><li><a class="lvl3" href="#anon-key">Anon key</a></li><li><a class="lvl3" href="#api-key">API key</a></li><li><a class="lvl3" href="#audience-claim">Audience claim</a></li><li><a class="lvl3" href="#authentication-and-authorisation">Authentication and authorisation</a></li><li><a class="lvl3" href="#aws-account-id">AWS account ID</a></li><li><a class="lvl3" href="#blast-radius">Blast radius</a></li><li><a class="lvl3" href="#claim">Claim</a></li><li><a class="lvl3" href="#credential">Credential</a></li><li><a class="lvl3" href="#env">.env</a></li><li><a class="lvl3" href="#environment-variable">Environment variable</a></li><li><a class="lvl3" href="#iam">IAM</a></li><li><a class="lvl3" href="#iam-identity-center">IAM Identity Center</a></li><li><a class="lvl3" href="#iam-user">IAM user</a></li><li><a class="lvl3" href="#identity-provider">Identity provider</a></li><li><a class="lvl3" href="#jwt">JWT</a></li><li><a class="lvl3" href="#least-privilege">Least privilege</a></li><li><a class="lvl3" href="#mfa">MFA</a></li><li><a class="lvl3" href="#oidc">OIDC</a></li><li><a class="lvl3" href="#policy">Policy</a></li><li><a class="lvl3" href="#principal">Principal</a></li><li><a class="lvl3" href="#role">Role</a></li><li><a class="lvl3" href="#root-account">Root account</a></li><li><a class="lvl3" href="#rotate-a-key">Rotate a key</a></li><li><a class="lvl3" href="#secret">Secret</a></li><li><a class="lvl3" href="#secrets-manager">Secrets Manager</a></li><li><a class="lvl3" href="#sts-and-assumerole">STS and AssumeRole</a></li><li><a class="lvl3" href="#subject-claim">Subject claim</a></li><li><a class="lvl3" href="#trust-policy">Trust policy</a></li><li><a class="lvl2" href="#web-and-general">Web and general</a></li><li><a class="lvl3" href="#absolute-and-relative-url">Absolute and relative URL</a></li><li><a class="lvl3" href="#api">API</a></li><li><a class="lvl3" href="#apt">apt</a></li><li><a class="lvl3" href="#bash">bash</a></li><li><a class="lvl3" href="#browser-cache-and-hard-reload">Browser cache and hard reload</a></li><li><a class="lvl3" href="#case-sensitivity">Case sensitivity</a></li><li><a class="lvl3" href="#cli">CLI</a></li><li><a class="lvl3" href="#curl">curl</a></li><li><a class="lvl3" href="#endpoint">Endpoint</a></li><li><a class="lvl3" href="#etag">ETag</a></li><li><a class="lvl3" href="#favicon">Favicon</a></li><li><a class="lvl3" href="#git-bash">Git Bash</a></li><li><a class="lvl3" href="#headless-browser">Headless browser</a></li><li><a class="lvl3" href="#heredoc">Heredoc</a></li><li><a class="lvl3" href="#homebrew">Homebrew</a></li><li><a class="lvl3" href="#html-css-and-javascript">HTML, CSS and JavaScript</a></li><li><a class="lvl3" href="#http">HTTP</a></li><li><a class="lvl3" href="#http-header">HTTP header</a></li><li><a class="lvl3" href="#http-status-code">HTTP status code</a></li><li><a class="lvl3" href="#ip-address">IP address</a></li><li><a class="lvl3" href="#jq">jq</a></li><li><a class="lvl3" href="#json">JSON</a></li><li><a class="lvl3" href="#localhost">localhost</a></li><li><a class="lvl3" href="#lockfile">Lockfile</a></li><li><a class="lvl3" href="#nodejs">Node.js</a></li><li><a class="lvl3" href="#node_modules">node_modules</a></li><li><a class="lvl3" href="#npm">npm</a></li><li><a class="lvl3" href="#open-graph">Open Graph</a></li><li><a class="lvl3" href="#package-manager">Package manager</a></li><li><a class="lvl3" href="#port">Port</a></li><li><a class="lvl3" href="#powershell">PowerShell</a></li><li><a class="lvl3" href="#server">Server</a></li><li><a class="lvl3" href="#shell">Shell</a></li><li><a class="lvl3" href="#shell-variable">Shell variable</a></li><li><a class="lvl3" href="#terminal">Terminal</a></li><li><a class="lvl3" href="#url">URL</a></li><li><a class="lvl3" href="#winget">winget</a></li><li><a class="lvl3" href="#wsl">WSL</a></li><li><a class="lvl3" href="#zip">zip</a></li></ul></div>
+  </aside>
+  <main>
+<h1>Every term, explained</h1>
+<p>Every piece of jargon this guide uses, defined in plain English, with a link to
+the page where it actually matters. Nothing here needs reading end to end — look
+up the word that stopped you, then go back. Most entries take fifteen seconds.</p>
+<p>If a term you hit isn't here, that's a bug in the guide.
+<a href="https://github.com/jhammant/ship-what-you-built/issues">Open an issue</a> and it gets added.</p>
+<hr />
+<h2 id="index">Index<a class="anchor" href="#index" aria-label="Link to this section">#</a></h2>
+<ul>
+<li><strong>A</strong> — <a href="#a-record">A record</a> · <a href="#aaaa-record">AAAA record</a> · <a href="#absolute-and-relative-url">Absolute and relative URL</a> · <a href="#access-key">Access key</a> · <a href="#acm">ACM</a> · <a href="#alias-record">ALIAS record</a> · <a href="#anon-key">Anon key</a> · <a href="#apex-domain">Apex domain</a> · <a href="#api">API</a> · <a href="#api-key">API key</a> · <a href="#apt">apt</a> · <a href="#arn">ARN</a> · <a href="#audience-claim">Audience claim</a> · <a href="#auth-code">Auth code</a> · <a href="#authentication-and-authorisation">Authentication and authorisation</a> · <a href="#aws-account-id">AWS account ID</a></li>
+<li><strong>B</strong> — <a href="#bash">bash</a> · <a href="#binding">Binding</a> · <a href="#blast-radius">Blast radius</a> · <a href="#branch">Branch</a> · <a href="#browser-cache-and-hard-reload">Browser cache and hard reload</a> · <a href="#bucket">Bucket</a> · <a href="#budget-alarm">Budget alarm</a> · <a href="#build-command">Build command</a> · <a href="#build-step">Build step</a></li>
+<li><strong>C</strong> — <a href="#cache">Cache</a> · <a href="#cache-invalidation">Cache invalidation</a> · <a href="#case-sensitivity">Case sensitivity</a> · <a href="#cdn">CDN</a> · <a href="#certificate">Certificate</a> · <a href="#certificate-authority">Certificate authority</a> · <a href="#ci-and-cd">CI and CD</a> · <a href="#claim">Claim</a> · <a href="#cli">CLI</a> · <a href="#clone">Clone</a> · <a href="#cloudflare-pages">Cloudflare Pages</a> · <a href="#cloudfront">CloudFront</a> · <a href="#cname">CNAME</a> · <a href="#cname-flattening">CNAME flattening</a> · <a href="#cold-start">Cold start</a> · <a href="#commit">Commit</a> · <a href="#cost-explorer">Cost Explorer</a> · <a href="#credential">Credential</a> · <a href="#curl">curl</a></li>
+<li><strong>D</strong> — <a href="#d1">D1</a> · <a href="#delegation">Delegation</a> · <a href="#deploy">Deploy</a> · <a href="#dig">dig</a> · <a href="#distribution">Distribution</a> · <a href="#dns">DNS</a> · <a href="#domain">Domain</a> · <a href="#domain-validation">Domain validation</a> · <a href="#durable-objects">Durable Objects</a></li>
+<li><strong>E</strong> — <a href="#edge">Edge</a> · <a href="#endpoint">Endpoint</a> · <a href="#env">.env</a> · <a href="#environment-variable">Environment variable</a> · <a href="#etag">ETag</a> · <a href="#eventual-consistency">Eventual consistency</a></li>
+<li><strong>F</strong> — <a href="#favicon">Favicon</a> · <a href="#force-push">Force-push</a> · <a href="#fork">Fork</a> · <a href="#free-tier">Free tier</a> · <a href="#function-url">Function URL</a></li>
+<li><strong>G</strong> — <a href="#gh">gh</a> · <a href="#git">git</a> · <a href="#git-bash">Git Bash</a> · <a href="#gitignore">.gitignore</a> · <a href="#github">GitHub</a> · <a href="#github-actions">GitHub Actions</a> · <a href="#github-secret">GitHub secret</a> · <a href="#github-variable">GitHub variable</a></li>
+<li><strong>H</strong> — <a href="#headless-browser">Headless browser</a> · <a href="#heredoc">Heredoc</a> · <a href="#history-rewriting">History rewriting</a> · <a href="#homebrew">Homebrew</a> · <a href="#hostname">Hostname</a> · <a href="#hsts">HSTS</a> · <a href="#html-css-and-javascript">HTML, CSS and JavaScript</a> · <a href="#http">HTTP</a> · <a href="#http-header">HTTP header</a> · <a href="#http-status-code">HTTP status code</a> · <a href="#https">HTTPS</a></li>
+<li><strong>I</strong> — <a href="#iam">IAM</a> · <a href="#iam-identity-center">IAM Identity Center</a> · <a href="#iam-user">IAM user</a> · <a href="#icann">ICANN</a> · <a href="#identity-provider">Identity provider</a> · <a href="#infrastructure-as-code">Infrastructure as code</a> · <a href="#ip-address">IP address</a> · <a href="#issue">Issue</a></li>
+<li><strong>J</strong> — <a href="#jq">jq</a> · <a href="#json">JSON</a> · <a href="#jwt">JWT</a></li>
+<li><strong>L</strong> — <a href="#lambda">Lambda</a> · <a href="#least-privilege">Least privilege</a> · <a href="#lets-encrypt">Let's Encrypt</a> · <a href="#licence">Licence</a> · <a href="#localhost">localhost</a> · <a href="#lockfile">Lockfile</a></li>
+<li><strong>M</strong> — <a href="#main">main</a> · <a href="#managed-platform">Managed platform</a> · <a href="#merge">Merge</a> · <a href="#mfa">MFA</a> · <a href="#mit-licence">MIT licence</a> · <a href="#mx-record">MX record</a></li>
+<li><strong>N</strong> — <a href="#nameserver">Nameserver</a> · <a href="#nat-gateway">NAT gateway</a> · <a href="#nodejs">Node.js</a> · <a href="#node_modules">node_modules</a> · <a href="#npm">npm</a> · <a href="#ns-record">NS record</a> · <a href="#nxdomain">NXDOMAIN</a></li>
+<li><strong>O</strong> — <a href="#object">Object</a> · <a href="#oidc">OIDC</a> · <a href="#open-graph">Open Graph</a> · <a href="#open-source">Open source</a> · <a href="#origin-git">Origin (git)</a> · <a href="#origin-hosting">Origin (hosting)</a> · <a href="#origin-access-control">Origin Access Control</a> · <a href="#output-directory">Output directory</a></li>
+<li><strong>P</strong> — <a href="#package-manager">Package manager</a> · <a href="#pages-functions">Pages Functions</a> · <a href="#personal-access-token">Personal access token</a> · <a href="#policy">Policy</a> · <a href="#port">Port</a> · <a href="#powershell">PowerShell</a> · <a href="#premium-domain">Premium domain</a> · <a href="#preview-deployment">Preview deployment</a> · <a href="#principal">Principal</a> · <a href="#propagation">Propagation</a> · <a href="#pull-request">Pull request</a> · <a href="#push">Push</a> · <a href="#push-protection">Push protection</a></li>
+<li><strong>R</strong> — <a href="#r2">R2</a> · <a href="#readme">README</a> · <a href="#region">Region</a> · <a href="#registrar">Registrar</a> · <a href="#registry">Registry</a> · <a href="#remote">Remote</a> · <a href="#repository">Repository</a> · <a href="#resolver">Resolver</a> · <a href="#role">Role</a> · <a href="#rollback">Rollback</a> · <a href="#root-account">Root account</a> · <a href="#rotate-a-key">Rotate a key</a> · <a href="#route-53">Route 53</a> · <a href="#row-level-security">Row Level Security</a> · <a href="#runner">Runner</a> · <a href="#runtime">Runtime</a></li>
+<li><strong>S</strong> — <a href="#s3">S3</a> · <a href="#secret">Secret</a> · <a href="#secret-scanning">Secret scanning</a> · <a href="#secrets-manager">Secrets Manager</a> · <a href="#server">Server</a> · <a href="#serverless">Serverless</a> · <a href="#shell">Shell</a> · <a href="#shell-variable">Shell variable</a> · <a href="#sni">SNI</a> · <a href="#soa-record">SOA record</a> · <a href="#spa">SPA</a> · <a href="#spf-dkim-and-dmarc">SPF, DKIM and DMARC</a> · <a href="#stage">Stage</a> · <a href="#static-site">Static site</a> · <a href="#static-site-generator">Static site generator</a> · <a href="#sts-and-assumerole">STS and AssumeRole</a> · <a href="#subdomain">Subdomain</a> · <a href="#subject-claim">Subject claim</a> · <a href="#supabase">Supabase</a></li>
+<li><strong>T</strong> — <a href="#terminal">Terminal</a> · <a href="#tld">TLD</a> · <a href="#tls-and-ssl">TLS and SSL</a> · <a href="#topics">Topics</a> · <a href="#trust-policy">Trust policy</a> · <a href="#ttl">TTL</a> · <a href="#txt-record">TXT record</a></li>
+<li><strong>U</strong> — <a href="#upsert">UPSERT</a> · <a href="#url">URL</a></li>
+<li><strong>V</strong> — <a href="#virtual-machine">Virtual machine</a></li>
+<li><strong>W</strong> — <a href="#whois">WHOIS</a> · <a href="#winget">winget</a> · <a href="#workers">Workers</a> · <a href="#workers-kv">Workers KV</a> · <a href="#workflow">Workflow</a> · <a href="#wrangler">wrangler</a> · <a href="#wsl">WSL</a></li>
+<li><strong>Z</strong> — <a href="#zip">zip</a> · <a href="#zone">Zone</a></li>
+</ul>
+<hr />
+<h2 id="domains-and-dns">Domains and DNS<a class="anchor" href="#domains-and-dns" aria-label="Link to this section">#</a></h2>
+<h3 id="a-record">A record<a class="anchor" href="#a-record" aria-label="Link to this section">#</a></h3>
+<p>A <a href="#dns">DNS</a> record that maps a name to an IPv4 address — <code>yourthing.com</code> →
+<code>104.21.5.12</code>. It is the most basic answer DNS can give, and on
+<a href="20-aws.html#44-point-the-domain-at-it">Track B</a> your domain's A record is a
+special <a href="#alias-record">alias</a> one pointing at CloudFront rather than a literal
+number.</p>
+<h3 id="aaaa-record">AAAA record<a class="anchor" href="#aaaa-record" aria-label="Link to this section">#</a></h3>
+<p>The same idea as an <a href="#a-record">A record</a> but for an IPv6 address (the longer,
+colon-separated kind). Pronounced "quad-A". You rarely add these by hand — your
+host adds them alongside the A record if it supports IPv6.</p>
+<h3 id="alias-record">ALIAS record<a class="anchor" href="#alias-record" aria-label="Link to this section">#</a></h3>
+<p>A non-standard record type that behaves like a <a href="#cname">CNAME</a> but is allowed at
+the <a href="#apex-domain">apex</a>, where a real CNAME is forbidden.
+<a href="#route-53">Route 53</a> calls it an ALIAS; other providers call it ANAME. See
+<a href="04-three-layers.html#the-apex-problem--the-one-gotcha-worth-knowing-in-advance">the apex problem</a>.</p>
+<h3 id="apex-domain">Apex domain<a class="anchor" href="#apex-domain" aria-label="Link to this section">#</a></h3>
+<p>The bare domain with nothing in front of it — <code>yourthing.com</code>, not
+<code>www.yourthing.com</code>. Also called the root domain, the naked domain or the zone
+apex. It matters because the DNS specification forbids a <a href="#cname">CNAME</a> there,
+which is why hosts invent <a href="#alias-record">ALIAS</a> records and
+<a href="#cname-flattening">CNAME flattening</a>.</p>
+<h3 id="auth-code">Auth code<a class="anchor" href="#auth-code" aria-label="Link to this section">#</a></h3>
+<p>A one-time password your current <a href="#registrar">registrar</a> gives you so a
+different registrar is allowed to take over the domain. Also called an EPP code
+or transfer code. Transfers take around five days and your site stays up
+throughout, because the <a href="#nameserver">nameservers</a> don't change.</p>
+<h3 id="cname">CNAME<a class="anchor" href="#cname" aria-label="Link to this section">#</a></h3>
+<p>A DNS record meaning "don't ask me, go and look up this <em>other</em> name instead" —
+<code>www.yourthing.com</code> → <code>your-project.pages.dev</code>. It is what modern hosts hand you
+instead of an IP address, so that when their addresses change your site doesn't
+notice. See <a href="04-three-layers.html#layer-2--dns">layer 2</a>.</p>
+<h3 id="cname-flattening">CNAME flattening<a class="anchor" href="#cname-flattening" aria-label="Link to this section">#</a></h3>
+<p>Cloudflare's answer to <a href="#apex-domain">the apex problem</a>: you add what looks like
+a CNAME at the apex, and Cloudflare quietly resolves it and serves an
+<a href="#a-record">A record</a> instead. You don't configure it — it just happens, which
+is why <a href="10-cloudflare.html#4-put-it-on-your-domain">Track A</a> never mentions the
+problem at the point it would otherwise bite.</p>
+<h3 id="delegation">Delegation<a class="anchor" href="#delegation" aria-label="Link to this section">#</a></h3>
+<p>The moment the <a href="#registry">registry</a> for your <a href="#tld">TLD</a> publishes your
+<a href="#nameserver">nameservers</a>, so the rest of the internet knows who to ask about
+your domain. A brand-new registration is <strong>not delegated instantly</strong>, and until
+it is, your DNS records are correct but invisible — which is exactly why
+<a href="20-aws.html#42-the-certificate--us-east-1-always">a certificate can hang</a> on a
+freshly bought domain. Check with <code>dig NS yourthing.com +short</code>; empty means not
+yet.</p>
+<h3 id="dig"><code>dig</code><a class="anchor" href="#dig" aria-label="Link to this section">#</a></h3>
+<p>The standard command-line tool for asking DNS a question directly, rather than
+trusting your browser. <code>dig NS yourthing.com +short</code> shows the nameservers;
+<code>dig @1.1.1.1 yourthing.com</code> bypasses your own cache. macOS has it; Ubuntu needs
+<code>bind9-dnsutils</code>; Windows without <a href="#wsl">WSL</a> has no <code>dig</code> — use
+<code>nslookup -type=NS yourthing.com</code> or <a href="https://dnschecker.org">dnschecker.org</a>.
+See <a href="04-three-layers.html#see-it-for-yourself">seeing it for yourself</a>.</p>
+<h3 id="dns">DNS<a class="anchor" href="#dns" aria-label="Link to this section">#</a></h3>
+<p>The Domain Name System — the global phone book that turns a name people can
+remember into an address machines can use. It is
+<a href="04-three-layers.html#layer-2--dns">layer 2</a> of the four, and it is far and away
+the layer people get stuck on.</p>
+<h3 id="domain">Domain<a class="anchor" href="#domain" aria-label="Link to this section">#</a></h3>
+<p>The name you rent, like <code>yourthing.com</code>. <strong>A domain is not a website and not
+hosting</strong> — this is the single most common confusion in the whole subject. The
+domain is only a name plus the right to say who answers questions about it; the
+files live somewhere else entirely, which is why you can change host without
+changing domain. See <a href="04-three-layers.html">the three layers</a>.</p>
+<h3 id="hostname">Hostname<a class="anchor" href="#hostname" aria-label="Link to this section">#</a></h3>
+<p>One specific name in DNS, including everything in front of the domain.
+<code>yourthing.com</code> and <code>www.yourthing.com</code> are <strong>two different hostnames</strong>, each
+needing its own record and its own place in the <a href="#certificate">certificate</a>.
+That single fact explains the classic "works with <code>www</code>, not without"
+(<a href="90-troubleshooting.html#works-with-www-not-without-or-vice-versa">troubleshooting</a>).</p>
+<h3 id="icann">ICANN<a class="anchor" href="#icann" aria-label="Link to this section">#</a></h3>
+<p>The non-profit that oversees the domain name system. Two things it does affect
+you directly: a small fixed fee added to every registration, and a rule that you
+must <strong>click the verification email</strong> after registering or the domain gets
+suspended after roughly a fortnight (<a href="20-aws.html#31-buy-it">Track B</a>).</p>
+<h3 id="mx-record">MX record<a class="anchor" href="#mx-record" aria-label="Link to this section">#</a></h3>
+<p>A DNS record saying which server receives email for the domain. It matters here
+for one reason: when you
+<a href="10-cloudflare.html#2b-you-already-own-a-domain-elsewhere">move DNS to Cloudflare</a>
+and the MX records don't come across, your email silently stops. Check them
+before you switch nameservers, not after.</p>
+<h3 id="nameserver">Nameserver<a class="anchor" href="#nameserver" aria-label="Link to this section">#</a></h3>
+<p>A machine that holds your <a href="#zone">zone</a> and answers DNS questions about it. Your
+<a href="#registrar">registrar</a> stores a short list of them against your domain, and
+changing that list is how you move your entire DNS to a different provider. It
+is the one registrar setting that genuinely matters.</p>
+<h3 id="ns-record">NS record<a class="anchor" href="#ns-record" aria-label="Link to this section">#</a></h3>
+<p>The record type that lists your <a href="#nameserver">nameservers</a>. <code>dig NS
+yourthing.com +short</code> is usually the first command to run when something is
+broken, because it tells you which provider is actually in charge — often not
+the one whose dashboard you've been editing.</p>
+<h3 id="nxdomain">NXDOMAIN<a class="anchor" href="#nxdomain" aria-label="Link to this section">#</a></h3>
+<p>DNS's way of saying "that name doesn't exist". In a browser it shows up as
+"Server not found". It means the failure is at
+<a href="04-three-layers.html#when-it-breaks-which-layer-is-it">layer 1 or 2</a> — the name
+never resolved, so nothing has even tried to reach your host yet.</p>
+<h3 id="premium-domain">Premium domain<a class="anchor" href="#premium-domain" aria-label="Link to this section">#</a></h3>
+<p>A name the <a href="#registry">registry</a> has flagged as desirable and priced at ten to a
+hundred times normal, often with a renewal to match. Route 53 refuses to
+register premium names at all, which makes it a
+<a href="20-aws.html#31-buy-it">free premium detector</a>: if it offers you the name at a
+normal price, it isn't premium.</p>
+<h3 id="propagation">Propagation<a class="anchor" href="#propagation" aria-label="Link to this section">#</a></h3>
+<p>The folklore that DNS changes take 24–48 hours. Mostly untrue — a record with a
+short <a href="#ttl">TTL</a> is visible worldwide in minutes. What is genuinely slow is a
+<a href="#nameserver">nameserver</a> change, and what fools you is your own machine's
+cache. See <a href="04-three-layers.html#dns-propagation--mostly-a-myth">"propagation" — mostly a myth</a>.</p>
+<h3 id="registrar">Registrar<a class="anchor" href="#registrar" aria-label="Link to this section">#</a></h3>
+<p>The company you buy the domain from — Cloudflare, Namecheap, Route 53 Domains,
+GoDaddy, Gandi. You're buying a lease, usually annual, plus the right to set the
+<a href="#nameserver">nameservers</a>. This is
+<a href="04-three-layers.html#layer-1--the-registrar">layer 1</a> and the least sticky thing
+you own.</p>
+<h3 id="registry">Registry<a class="anchor" href="#registry" aria-label="Link to this section">#</a></h3>
+<p>The organisation that runs an entire <a href="#tld">TLD</a> — Verisign for <code>.com</code>, Nominet
+for <code>.uk</code>. You never deal with it directly; your <a href="#registrar">registrar</a> does.
+It sets the wholesale price, which is why <code>.com</code> costs roughly the same
+everywhere and why some newer extensions renew at fifteen times their first-year
+price.</p>
+<h3 id="resolver">Resolver<a class="anchor" href="#resolver" aria-label="Link to this section">#</a></h3>
+<p>The DNS server your computer actually asks — usually your router's or your ISP's,
+sometimes a public one like Cloudflare's <code>1.1.1.1</code> or Google's <code>8.8.8.8</code>.
+Resolvers cache answers, which is why <code>dig @1.1.1.1 yourthing.com</code> is the fastest
+way to prove <a href="90-troubleshooting.html#it-works-for-everyone-but-me">"it works for everyone but me"</a>
+is your own machine's fault.</p>
+<h3 id="route-53">Route 53<a class="anchor" href="#route-53" aria-label="Link to this section">#</a></h3>
+<p>AWS's DNS service, and also an AWS <a href="#registrar">registrar</a>. It is the only piece
+of <a href="20-aws.html">Track B</a> that costs money whether or not anyone visits — around
+$0.50 a month per <a href="#zone">hosted zone</a> — which is why
+<a href="20-aws.html#part-9--turning-it-off">turning it off properly</a> has its own section.</p>
+<h3 id="soa-record">SOA record<a class="anchor" href="#soa-record" aria-label="Link to this section">#</a></h3>
+<p>The "start of authority" record that sits at the top of every <a href="#zone">zone</a>,
+carrying administrative settings. You never create or edit it; it appears
+automatically, and the only time you'll notice it is when
+<a href="20-aws.html#part-9--turning-it-off">deleting a hosted zone</a>, where SOA and
+<a href="#ns-record">NS</a> records are the two you must leave alone.</p>
+<h3 id="spf-dkim-and-dmarc">SPF, DKIM and DMARC<a class="anchor" href="#spf-dkim-and-dmarc" aria-label="Link to this section">#</a></h3>
+<p>Three <a href="#txt-record">TXT record</a> conventions that between them tell the world
+which servers may send email as your domain. Values start <code>v=spf1</code>, or live
+under names containing <code>_domainkey</code> or <code>_dmarc</code>. If you receive email at your
+domain, these must survive a
+<a href="10-cloudflare.html#2b-you-already-own-a-domain-elsewhere">DNS move</a> intact.</p>
+<h3 id="subdomain">Subdomain<a class="anchor" href="#subdomain" aria-label="Link to this section">#</a></h3>
+<p>Anything in front of the domain: <code>www.yourthing.com</code>, <code>api.yourthing.com</code>,
+<code>blog.yourthing.com</code>. Subdomains are free and unlimited once you own the domain,
+and a second project on one costs nothing extra —
+<a href="20-aws.html#part-8--worth-doing-next">Track B notes</a> it takes about ten minutes
+once the <a href="#zone">zone</a> exists.</p>
+<h3 id="tld">TLD<a class="anchor" href="#tld" aria-label="Link to this section">#</a></h3>
+<p>Top-level domain — the last part of the name: <code>.com</code>, <code>.co.uk</code>, <code>.dev</code>,
+<code>.online</code>. The TLD decides both the price and some behaviour: <code>.dev</code>, for
+instance, is on the <a href="#hsts">HSTS</a> preload list, so browsers refuse plain HTTP on
+it entirely.</p>
+<h3 id="ttl">TTL<a class="anchor" href="#ttl" aria-label="Link to this section">#</a></h3>
+<p>Time-to-live, in seconds — a note attached to every DNS record saying "you may
+cache this answer for this long". A 300-second TTL means the world sees your
+change within five minutes. <strong>Lower the TTL before a change you know is coming</strong>,
+not after (<a href="04-three-layers.html#dns-propagation--mostly-a-myth">layer 2</a>).</p>
+<h3 id="txt-record">TXT record<a class="anchor" href="#txt-record" aria-label="Link to this section">#</a></h3>
+<p>A DNS record holding arbitrary text. Its real use is proving you control a
+domain: <a href="#certificate-authority">certificate authorities</a> and services like
+Google ask you to publish a specific string, and read it back to confirm. Also
+where <a href="#spf-dkim-and-dmarc">SPF, DKIM and DMARC</a> live.</p>
+<h3 id="upsert">UPSERT<a class="anchor" href="#upsert" aria-label="Link to this section">#</a></h3>
+<p>The word Route 53 uses in its JSON change files meaning "create this record, or
+overwrite it if it already exists". It appears throughout
+<a href="20-aws.html#44-point-the-domain-at-it">Track B</a> and matters because it makes
+those commands safe to run twice.</p>
+<h3 id="whois">WHOIS<a class="anchor" href="#whois" aria-label="Link to this section">#</a></h3>
+<p>The public directory of who owns which domain. Registration would otherwise
+publish your name and home address; <strong>privacy protection</strong> replaces them with
+the registrar's details and is free at every registrar this guide mentions.
+Leave it on.</p>
+<h3 id="zone">Zone<a class="anchor" href="#zone" aria-label="Link to this section">#</a></h3>
+<p>Your slice of DNS — the complete set of records answering questions about your
+domain. AWS calls it a <strong>hosted zone</strong> and charges monthly for it; Cloudflare
+just calls it your domain and doesn't. Records live inside a zone, and editing
+records in a zone that isn't <a href="#delegation">delegated</a> is a popular way to spend
+an hour changing nothing.</p>
+<hr />
+<h2 id="security-and-certificates">Security and certificates<a class="anchor" href="#security-and-certificates" aria-label="Link to this section">#</a></h2>
+<h3 id="acm">ACM<a class="anchor" href="#acm" aria-label="Link to this section">#</a></h3>
+<p>AWS Certificate Manager — the service that issues and auto-renews free
+<a href="#certificate">certificates</a> for AWS. One rule catches everybody: <strong>a
+certificate used by <a href="#cloudfront">CloudFront</a> must be issued in the <code>us-east-1</code>
+region</strong>, whatever region you or your users are in
+(<a href="20-aws.html#42-the-certificate--us-east-1-always">Track B</a>).</p>
+<h3 id="certificate">Certificate<a class="anchor" href="#certificate" aria-label="Link to this section">#</a></h3>
+<p>A file proving that whoever is serving <code>yourthing.com</code> really controls
+<code>yourthing.com</code>, so the browser shows a padlock rather than a red warning. It is
+<a href="04-three-layers.html#layer-4--the-certificate">layer 4</a>, it is free, and in both
+tracks it is issued and renewed for you.</p>
+<h3 id="certificate-authority">Certificate authority<a class="anchor" href="#certificate-authority" aria-label="Link to this section">#</a></h3>
+<p>An organisation browsers trust to issue <a href="#certificate">certificates</a> — <a href="#lets-encrypt">Let's
+Encrypt</a>, <a href="#acm">ACM</a>, and others. Before issuing, it must verify
+you control the domain, which is why certificate setup so often sits waiting on
+a DNS record. See <a href="#domain-validation">domain validation</a>.</p>
+<h3 id="domain-validation">Domain validation<a class="anchor" href="#domain-validation" aria-label="Link to this section">#</a></h3>
+<p>The proof step a <a href="#certificate-authority">certificate authority</a> demands: it
+gives you a specific <a href="#txt-record">TXT</a> or <a href="#cname">CNAME</a> record to publish, or
+a file to serve, and issues only once it can read it back. A certificate stuck
+on <em>"pending validation"</em> is
+<a href="90-troubleshooting.html#the-certificate-is-stuck-pending">layer 4 waiting on layer 2</a>
+— check the record actually resolves with <a href="#dig"><code>dig</code></a>.</p>
+<h3 id="hsts">HSTS<a class="anchor" href="#hsts" aria-label="Link to this section">#</a></h3>
+<p>A rule a site (or an entire <a href="#tld">TLD</a>) can publish saying "only ever reach me
+over HTTPS". Browsers then refuse plain HTTP with no click-through. The whole
+<code>.dev</code> TLD is on the preload list, so a half-finished <code>.dev</code> setup looks
+completely broken rather than partly working (<a href="20-aws.html#32-find-your-hosted-zone">Track B</a>).</p>
+<h3 id="https">HTTPS<a class="anchor" href="#https" aria-label="Link to this section">#</a></h3>
+<p>HTTP with the connection encrypted, using <a href="#tls-and-ssl">TLS</a> and a
+<a href="#certificate">certificate</a>. Browsers now warn on sites without it, so it isn't
+optional — but both tracks give it to you automatically, and neither charges for
+it.</p>
+<h3 id="lets-encrypt">Let's Encrypt<a class="anchor" href="#lets-encrypt" aria-label="Link to this section">#</a></h3>
+<p>The non-profit <a href="#certificate-authority">certificate authority</a> that made
+certificates free in 2015, after which everyone else followed. You probably
+won't use it directly here — Cloudflare and AWS issue their own — but it's the
+reason <a href="04-three-layers.html#layer-4--the-certificate">layer 4</a> costs nothing.</p>
+<h3 id="row-level-security">Row Level Security<a class="anchor" href="#row-level-security" aria-label="Link to this section">#</a></h3>
+<p>A database setting (Supabase and Postgres) controlling which rows each user may
+read or write. It is the <em>only</em> thing standing between a public
+<a href="#anon-key">anon key</a> and your entire database. If you built on
+<a href="#supabase">Supabase</a>, confirm RLS is on and the policies are right
+<a href="05-github.html#3-what-counts-as-a-secret">before the repo goes public</a>.</p>
+<h3 id="sni">SNI<a class="anchor" href="#sni" aria-label="Link to this section">#</a></h3>
+<p>Server Name Indication — the part of the <a href="#tls-and-ssl">TLS</a> handshake where the
+browser says which hostname it wants, so one server can hold certificates for
+many sites. You'll only ever see it as <code>"SSLSupportMethod": "sni-only"</code> in the
+<a href="20-aws.html#43-cloudfront-with-a-private-bucket">CloudFront config</a>. Leave it as
+written.</p>
+<h3 id="tls-and-ssl">TLS and SSL<a class="anchor" href="#tls-and-ssl" aria-label="Link to this section">#</a></h3>
+<p>The encryption that puts the S in <a href="#https">HTTPS</a>. <strong>They are the same thing
+under two names:</strong> SSL is the old protocol, TLS the modern replacement, and the
+industry never stopped saying "SSL" out of habit. When a dashboard says SSL and
+a command says TLS, they mean each other.</p>
+<hr />
+<h2 id="hosting-and-the-cloud">Hosting and the cloud<a class="anchor" href="#hosting-and-the-cloud" aria-label="Link to this section">#</a></h2>
+<h3 id="arn">ARN<a class="anchor" href="#arn" aria-label="Link to this section">#</a></h3>
+<p>Amazon Resource Name — the long unique identifier AWS gives every single thing
+it owns, like
+<code>arn:aws:iam::123456789012:role/github-deploy</code>. You'll copy them constantly on
+<a href="20-aws.html">Track B</a>; the useful habit is reading them left to right as
+service, account, then thing.</p>
+<h3 id="binding">Binding<a class="anchor" href="#binding" aria-label="Link to this section">#</a></h3>
+<p>Cloudflare's word for connecting a resource — a database, a
+<a href="#workers-kv">KV</a> store, an <a href="#r2">R2</a> bucket — to your code, so it appears on
+<code>context.env</code> at runtime with no connection string to manage. Added under
+Settings → Bindings (<a href="10-cloudflare.html#if-you-need-to-store-data">Track A</a>).</p>
+<h3 id="bucket">Bucket<a class="anchor" href="#bucket" aria-label="Link to this section">#</a></h3>
+<p>A container for files in <a href="#s3">S3</a> — think "a folder with a globally unique
+name". Yours stays completely private in this guide; only
+<a href="#cloudfront">CloudFront</a> is allowed to read it. <strong>Never put dots in the name</strong>,
+for a <a href="#tls-and-ssl">TLS</a> reason explained at
+<a href="20-aws.html#41-the-bucket">Track B, 4.1</a>.</p>
+<h3 id="budget-alarm">Budget alarm<a class="anchor" href="#budget-alarm" aria-label="Link to this section">#</a></h3>
+<p>An AWS setting that emails you when spending crosses a threshold. It is the
+seatbelt for <a href="20-aws.html#13-a-budget-alarm--also-now">Track B</a>, because this
+guide's whole setup should cost under a pound a month — so a $5 alarm means
+<em>something is wrong</em>, not <em>you're being frugal</em>. Set it before you build
+anything (<a href="02-accounts.html#2-set-a-budget-alarm--before-you-build-anything">accounts</a>).</p>
+<h3 id="build-command">Build command<a class="anchor" href="#build-command" aria-label="Link to this section">#</a></h3>
+<p>The command your host runs to turn your source into servable files, almost
+always <code>npm run build</code>. Static sites with no <a href="#build-step">build step</a> leave it
+empty. Getting it wrong shows up as a failed build with a readable log; getting
+the <a href="#output-directory">output directory</a> wrong shows up as a <em>successful</em> build
+and a blank site, which is much more confusing.</p>
+<h3 id="build-step">Build step<a class="anchor" href="#build-step" aria-label="Link to this section">#</a></h3>
+<p>The stage where source code becomes plain files a browser can read — React, Vue,
+Svelte, Vite and Astro projects all have one; a folder of hand-written HTML does
+not. Whether you have one decides several answers in
+<a href="00-start-here.html#shape-1--a-static-site">the chooser</a>.</p>
+<h3 id="cache">Cache<a class="anchor" href="#cache" aria-label="Link to this section">#</a></h3>
+<p>A stored copy of something, kept so it needn't be fetched again. There are at
+least four caches between your files and a visitor's eyes — your browser, your
+<a href="#resolver">resolver</a>, the <a href="#cdn">CDN</a>, and the host — and "old version still
+showing" is nearly always one of them rather than a failed deploy
+(<a href="90-troubleshooting.html#old-version-still-showing">troubleshooting</a>).</p>
+<h3 id="cache-invalidation">Cache invalidation<a class="anchor" href="#cache-invalidation" aria-label="Link to this section">#</a></h3>
+<p>Telling a <a href="#cdn">CDN</a> to throw away its stored copies so it fetches fresh ones.
+Cloudflare calls it <strong>Purge Everything</strong>; CloudFront calls it an invalidation
+(<code>aws cloudfront create-invalidation --paths "/*"</code>), and it takes a couple of
+minutes. Clear the browser first — it's free and it's the answer more often.</p>
+<h3 id="cdn">CDN<a class="anchor" href="#cdn" aria-label="Link to this section">#</a></h3>
+<p>Content delivery network — a fleet of servers around the world that keep copies
+of your files so visitors are served from somewhere near them. Cloudflare and
+<a href="#cloudfront">CloudFront</a> are both CDNs. It is also the thing that serves an old
+version of your site after you deploy, which is the price of the speed.</p>
+<h3 id="cloudflare-pages">Cloudflare Pages<a class="anchor" href="#cloudflare-pages" aria-label="Link to this section">#</a></h3>
+<p>Cloudflare's hosting product for static sites and <a href="#pages-functions">Pages
+Functions</a>: you connect a GitHub repo, it builds on every
+<a href="#push">push</a> and serves the result worldwide with a <a href="#certificate">certificate</a>
+included. It's the whole of <a href="10-cloudflare.html#3-deploy-the-site">Track A</a>.</p>
+<h3 id="cloudfront">CloudFront<a class="anchor" href="#cloudfront" aria-label="Link to this section">#</a></h3>
+<p>AWS's <a href="#cdn">CDN</a>. On <a href="20-aws.html#43-cloudfront-with-a-private-bucket">Track B</a>
+it does three jobs at once: holds your domain name, terminates
+<a href="#https">HTTPS</a> with the <a href="#acm">ACM</a> certificate, and reads files from a private
+<a href="#s3">S3</a> bucket that nobody else can touch.</p>
+<h3 id="cold-start">Cold start<a class="anchor" href="#cold-start" aria-label="Link to this section">#</a></h3>
+<p>The extra delay on the first request to a <a href="#serverless">serverless</a> function
+after it has been idle, while the platform starts a copy of it — typically a
+fraction of a second. It's the honest trade for paying nothing when nobody
+visits, and at personal-project scale it is not worth engineering around.</p>
+<h3 id="cost-explorer">Cost Explorer<a class="anchor" href="#cost-explorer" aria-label="Link to this section">#</a></h3>
+<p>The AWS screen that breaks your bill down by service. When a charge appears you
+don't recognise, group by service there first — it's usually the
+<a href="#zone">hosted zone</a> or a <a href="#nat-gateway">NAT gateway</a> created by accident
+(<a href="90-troubleshooting.html#track-b--aws-specifics">troubleshooting</a>).</p>
+<h3 id="d1">D1<a class="anchor" href="#d1" aria-label="Link to this section">#</a></h3>
+<p>Cloudflare's managed SQL database (SQLite underneath), attached to your code as
+a <a href="#binding">binding</a>. The right choice on <a href="10-cloudflare.html#if-you-need-to-store-data">Track A</a>
+when you need real tables and queries rather than simple key-value storage.</p>
+<h3 id="deploy">Deploy<a class="anchor" href="#deploy" aria-label="Link to this section">#</a></h3>
+<p>Making the version of your project that's on your machine become the version
+strangers see. After both tracks are set up, deploying is <code>git push</code> and nothing
+else — the <a href="#workflow">workflow</a> or the host does the rest.</p>
+<h3 id="distribution">Distribution<a class="anchor" href="#distribution" aria-label="Link to this section">#</a></h3>
+<p>CloudFront's word for one CDN configuration — which <a href="#origin-hosting">origin</a> to
+read from, which domain names to answer for, which
+<a href="#certificate">certificate</a> to present. Its ID (<code>E1ABCDEF…</code>) is what you pass to
+<a href="#cache-invalidation">invalidation</a> commands, and it's
+<a href="05-github.html#3-what-counts-as-a-secret">safe to publish</a>.</p>
+<h3 id="durable-objects">Durable Objects<a class="anchor" href="#durable-objects" aria-label="Link to this section">#</a></h3>
+<p>Cloudflare's answer for things that must hold state and stay connected —
+websockets, multiplayer, a live game. Mentioned once in this guide as the
+advanced escape hatch for
+<a href="00-start-here.html#the-honest-note-about-shape-3">Shape 3</a>; it's a step beyond a
+first deploy.</p>
+<h3 id="edge">Edge<a class="anchor" href="#edge" aria-label="Link to this section">#</a></h3>
+<p>Shorthand for "the CDN servers near your visitors", as opposed to the single
+place your files are stored. "Runs at the edge" means your code executes in a
+data centre close to whoever asked, which is how
+<a href="#workers">Workers</a> respond quickly worldwide without you deploying anywhere.</p>
+<h3 id="eventual-consistency">Eventual consistency<a class="anchor" href="#eventual-consistency" aria-label="Link to this section">#</a></h3>
+<p>The property that a change to a cloud service may take a few seconds to become
+visible everywhere. It's why <a href="20-aws.html#52-a-role-for-it">Track B</a> has a literal
+<code>sleep 10</code> after creating an IAM <a href="#role">role</a>: the role exists, Lambda just
+can't see it yet, and the error blames the role rather than the timing.</p>
+<h3 id="free-tier">Free tier<a class="anchor" href="#free-tier" aria-label="Link to this section">#</a></h3>
+<p>The amount of a paid service you can use for nothing. Two shapes worth telling
+apart: Cloudflare's free tiers generally <strong>stop serving</strong> when exhausted, while
+AWS's generally <strong>start charging</strong> — which is the real reason
+<a href="00-start-here.html#question-2--which-track">the chooser</a> treats bill-shock risk as
+a temperament question. Always check the live pricing page; published limits
+change.</p>
+<h3 id="function-url">Function URL<a class="anchor" href="#function-url" aria-label="Link to this section">#</a></h3>
+<p>An HTTPS address AWS gives a <a href="#lambda">Lambda</a> so it can be called directly,
+without an API Gateway in front. Creating one is two commands, not one — the URL
+alone returns <a href="#http-status-code">403</a> until you also
+<a href="20-aws.html#53-deploy-it-and-give-it-a-url">add the permission</a>.</p>
+<h3 id="infrastructure-as-code">Infrastructure as code<a class="anchor" href="#infrastructure-as-code" aria-label="Link to this section">#</a></h3>
+<p>Describing your cloud setup in files you commit, instead of clicking in a
+console — AWS SAM, CDK, Terraform. Worth looking at <em>after</em> you've done this
+guide by hand twice, because then you'll understand what the tool generates
+instead of copying a template you can't debug.</p>
+<h3 id="lambda">Lambda<a class="anchor" href="#lambda" aria-label="Link to this section">#</a></h3>
+<p>AWS's <a href="#serverless">serverless</a> compute: your code runs when a request arrives,
+then stops. You pay per request, the free allowance is large, and it's how
+<a href="20-aws.html#part-5--adding-a-backend-shape-2">Track B adds a backend</a>. The
+equivalent on Track A is a <a href="#pages-functions">Pages Function</a>.</p>
+<h3 id="managed-platform">Managed platform<a class="anchor" href="#managed-platform" aria-label="Link to this section">#</a></h3>
+<p>A host that runs a whole always-on process for you — Fly.io, Railway, Render,
+Streamlit Community Cloud, Hugging Face Spaces, Supabase, Neon. Neither track's
+free tier suits <a href="00-start-here.html#the-honest-note-about-shape-3">Shape 3</a>, so
+this is where a Flask app or a Discord bot should go; the domain and DNS parts
+of this guide still apply unchanged.</p>
+<h3 id="nat-gateway">NAT gateway<a class="anchor" href="#nat-gateway" aria-label="Link to this section">#</a></h3>
+<p>An AWS networking component that costs real money per hour and is easy to create
+by accident when following an unrelated tutorial. Named here only so that if an
+unexplained charge appears in <a href="#cost-explorer">Cost Explorer</a>, you recognise the
+usual suspect.</p>
+<h3 id="object">Object<a class="anchor" href="#object" aria-label="Link to this section">#</a></h3>
+<p>What S3 calls a file. A <a href="#bucket">bucket</a> holds objects, each with a key (its
+path) and its contents. The distinction only matters when reading AWS
+documentation, which never says "file".</p>
+<h3 id="origin-hosting">Origin (hosting)<a class="anchor" href="#origin-hosting" aria-label="Link to this section">#</a></h3>
+<p>The place a <a href="#cdn">CDN</a> fetches from when it doesn't have a copy — your
+<a href="#bucket">S3 bucket</a>, or a <a href="#lambda">Lambda</a> behind <code>/api/*</code>. <strong>This word means
+something completely different in git</strong> — see <a href="#origin-git">origin (git)</a> — and
+they appear on the same pages of this guide, which is genuinely confusing rather
+than your misunderstanding.</p>
+<h3 id="origin-access-control">Origin Access Control<a class="anchor" href="#origin-access-control" aria-label="Link to this section">#</a></h3>
+<p>The CloudFront feature that lets a <a href="#distribution">distribution</a> read a private
+<a href="#bucket">S3 bucket</a> that is closed to everybody else. Usually written OAC. It
+is what makes <a href="20-aws.html#43-cloudfront-with-a-private-bucket">"private bucket, public site"</a>
+possible, and it's paired with a bucket <a href="#policy">policy</a> naming your specific
+distribution.</p>
+<h3 id="output-directory">Output directory<a class="anchor" href="#output-directory" aria-label="Link to this section">#</a></h3>
+<p>The folder your <a href="#build-step">build step</a> produces — <code>dist/</code>, <code>build/</code>, <code>out/</code>,
+<code>_site/</code>, <code>public/</code>. Point the host at the wrong one and you get a green build
+and a blank site, the most common non-error failure in this guide. To find it,
+run the build locally and look at which folder appears
+(<a href="10-cloudflare.html#3-deploy-the-site">Track A</a>).</p>
+<h3 id="pages-functions">Pages Functions<a class="anchor" href="#pages-functions" aria-label="Link to this section">#</a></h3>
+<p>Cloudflare Pages' built-in backend: any file in a <code>functions/</code> folder at the
+<strong>repo root</strong> becomes an API <a href="#endpoint">endpoint</a> matching its path, with no
+separate deploy. <code>functions/api/ask.js</code> answers at <code>/api/ask</code>. Put the folder
+inside <code>src/</code> and your API returns your HTML instead
+(<a href="10-cloudflare.html#5-only-if-you-have-a-backend-shape-2">Track A</a>).</p>
+<h3 id="preview-deployment">Preview deployment<a class="anchor" href="#preview-deployment" aria-label="Link to this section">#</a></h3>
+<p>A complete, separately-addressed copy of your site built from a
+<a href="#pull-request">pull request</a>, so you can look at a change before merging it.
+Cloudflare Pages does this automatically for every PR, and it's one of the
+genuinely nice things you get for free (<a href="10-cloudflare.html#6-from-now-on">Track A</a>).</p>
+<h3 id="r2">R2<a class="anchor" href="#r2" aria-label="Link to this section">#</a></h3>
+<p>Cloudflare's file storage, compatible with the <a href="#s3">S3</a> API and — the reason
+people choose it — with no charge for data leaving it. Good for user uploads and
+images (<a href="10-cloudflare.html#if-you-need-to-store-data">Track A</a>).</p>
+<h3 id="region">Region<a class="anchor" href="#region" aria-label="Link to this section">#</a></h3>
+<p>The physical location of an AWS service — <code>eu-west-2</code> is London, <code>us-east-1</code> is
+Northern Virginia. Mostly you pick one near you and forget it, with two
+exceptions on <a href="20-aws.html">Track B</a>: <a href="#acm">ACM</a> certificates for CloudFront
+<strong>must</strong> be in <code>us-east-1</code>, and bucket creation in <code>us-east-1</code> needs the
+<code>--create-bucket-configuration</code> flag omitted or it fails with
+<code>InvalidLocationConstraint</code>.</p>
+<h3 id="rollback">Rollback<a class="anchor" href="#rollback" aria-label="Link to this section">#</a></h3>
+<p>Putting a previous version back as the live one. On Cloudflare Pages it's a
+button next to any past deployment and takes effect immediately without touching
+your git history (<a href="10-cloudflare.html#6-from-now-on">Track A</a>).</p>
+<h3 id="runtime">Runtime<a class="anchor" href="#runtime" aria-label="Link to this section">#</a></h3>
+<p>The language version a <a href="#lambda">Lambda</a> runs on, written like <code>nodejs24.x</code>.
+Runtimes go stale and AWS eventually refuses the old ones, so if a
+<code>create-function</code> call rejects your runtime string, check the
+<a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html">supported list</a>
+before debugging anything else.</p>
+<h3 id="s3">S3<a class="anchor" href="#s3" aria-label="Link to this section">#</a></h3>
+<p>AWS's file storage, and where your site's files live on
+<a href="20-aws.html#part-4--hosting-your-files-shape-1">Track B</a>. Files go in a
+<a href="#bucket">bucket</a>; the bucket stays private; <a href="#cloudfront">CloudFront</a> is the
+only thing allowed to read it.</p>
+<h3 id="serverless">Serverless<a class="anchor" href="#serverless" aria-label="Link to this section">#</a></h3>
+<p>Code that runs per request and then stops, on machines you never see or manage.
+There are still servers — you just don't own, patch or pay for idle ones. Both
+tracks' backends (<a href="#workers">Workers</a>, <a href="#lambda">Lambda</a>) are serverless, which
+is why a personal project's backend rounds to free.</p>
+<h3 id="spa">SPA<a class="anchor" href="#spa" aria-label="Link to this section">#</a></h3>
+<p>Single-page app — a site where JavaScript rewrites the page as you navigate,
+rather than the server sending a new document (React Router and Vue Router are
+the usual signs). It has one deployment consequence: deep links like
+<code>/about</code> <a href="20-aws.html#43-cloudfront-with-a-private-bucket">return 404</a> because
+there's no <code>about.html</code>, until you configure 403 and 404 to serve
+<code>/index.html</code> with status 200.</p>
+<h3 id="static-site">Static site<a class="anchor" href="#static-site" aria-label="Link to this section">#</a></h3>
+<p>A site made only of files — HTML, CSS, JavaScript, images — with nothing running
+on the server. It's the cheapest and most robust thing to host, and it includes
+anything with a <a href="#build-step">build step</a> that outputs a folder. See
+<a href="00-start-here.html#shape-1--a-static-site">Shape 1</a>.</p>
+<h3 id="static-site-generator">Static site generator<a class="anchor" href="#static-site-generator" aria-label="Link to this section">#</a></h3>
+<p>A tool that turns templates and content into a folder of plain files — Astro,
+Eleventy, Hugo, Jekyll, Next.js in static-export mode. From the host's point of
+view the result is just a <a href="#static-site">static site</a>; all you need to know is
+its <a href="#build-command">build command</a> and <a href="#output-directory">output directory</a>.</p>
+<h3 id="supabase">Supabase<a class="anchor" href="#supabase" aria-label="Link to this section">#</a></h3>
+<p>A hosted Postgres platform with authentication and realtime built in, commonly
+paired with either track. Its <strong>anon key</strong> is designed to be public — but only
+safely so if <a href="#row-level-security">Row Level Security</a> is on and your policies
+are correct (<a href="05-github.html#3-what-counts-as-a-secret">05-github</a>).</p>
+<h3 id="virtual-machine">Virtual machine<a class="anchor" href="#virtual-machine" aria-label="Link to this section">#</a></h3>
+<p>A whole computer you rent, that stays on and that you're responsible for
+patching. Sometimes the honest answer for
+<a href="00-start-here.html#the-honest-note-about-shape-3">Shape 3</a> — a Discord bot or a
+game server — and unlike everything else in this guide it costs money whether or
+not anyone visits.</p>
+<h3 id="workers">Workers<a class="anchor" href="#workers" aria-label="Link to this section">#</a></h3>
+<p>Cloudflare's <a href="#serverless">serverless</a> platform, running your code at the
+<a href="#edge">edge</a>. <a href="#pages-functions">Pages Functions</a> are Workers with the
+configuration hidden; Cloudflare is gradually merging the two products, which is
+why documentation may push you toward Workers when Pages is
+<a href="10-cloudflare.html#3-deploy-the-site">simpler for a first deploy</a>.</p>
+<h3 id="workers-kv">Workers KV<a class="anchor" href="#workers-kv" aria-label="Link to this section">#</a></h3>
+<p>Cloudflare's key-value store — good for settings, sessions and counters, not for
+anything needing queries or joins. Attached to your code as a
+<a href="#binding">binding</a>; for real tables use <a href="#d1">D1</a>.</p>
+<h3 id="wrangler"><code>wrangler</code><a class="anchor" href="#wrangler" aria-label="Link to this section">#</a></h3>
+<p>Cloudflare's command-line tool, used for logging in and for deploying Workers.
+Run it with <code>npx wrangler …</code> rather than installing it globally, so you always
+get a current version. Like the AWS CLI, it holds its own login — which is why
+you never paste a Cloudflare secret into a chat.</p>
+<hr />
+<h2 id="git-and-github">Git and GitHub<a class="anchor" href="#git-and-github" aria-label="Link to this section">#</a></h2>
+<h3 id="branch">Branch<a class="anchor" href="#branch" aria-label="Link to this section">#</a></h3>
+<p>A named line of development. <code>main</code> is the one that deploys; making a branch
+lets you work on something without touching what's live, and a
+<a href="#pull-request">pull request</a> is how it comes back. For a solo project you can
+happily work on <code>main</code> for a long time.</p>
+<h3 id="ci-and-cd">CI and CD<a class="anchor" href="#ci-and-cd" aria-label="Link to this section">#</a></h3>
+<p>Continuous integration and continuous deployment — jargon for "a server runs
+your checks and your deploy automatically when you push". You get CD in this
+guide the moment <a href="#github-actions">GitHub Actions</a> or Cloudflare Pages starts
+building on push; you don't need to say the words to use it.</p>
+<h3 id="clone">Clone<a class="anchor" href="#clone" aria-label="Link to this section">#</a></h3>
+<p>Making a local copy of a <a href="#repository">repository</a> that stays connected to the
+original, with <code>git clone</code> or <code>gh repo clone</code>. Distinct from a <a href="#fork">fork</a>,
+which makes a copy <em>on GitHub</em> under your own account.</p>
+<h3 id="commit">Commit<a class="anchor" href="#commit" aria-label="Link to this section">#</a></h3>
+<p>A saved snapshot of your project, with a message describing it. <strong>Commits are
+effectively permanent</strong>: a secret committed and deleted in the next commit is
+still in the history and still fetchable, which is why
+<a href="05-github.html#2-write-gitignore-before-your-first-commit"><code>.gitignore</code> comes first</a>.</p>
+<h3 id="fork">Fork<a class="anchor" href="#fork" aria-label="Link to this section">#</a></h3>
+<p>Your own copy of somebody else's <a href="#repository">repository</a>, on GitHub, under
+your account. It's what GitHub offers when you try to edit a repo you don't own,
+and it's step one of adding yourself to
+<a href="30-share-it.html#3-add-yourself-to-the-showcase">the showcase</a> — you're editing
+your copy, not mine, and you can't break anything.</p>
+<h3 id="force-push">Force-push<a class="anchor" href="#force-push" aria-label="Link to this section">#</a></h3>
+<p>Overwriting the <a href="#repository">repository</a>'s history with a different version of
+it, needed after any <a href="#history-rewriting">history rewriting</a>. It breaks every
+existing <a href="#clone">clone</a> and <a href="#fork">fork</a>, so it's painless on a repo nobody
+else has and disruptive on one they do.</p>
+<h3 id="gh"><code>gh</code><a class="anchor" href="#gh" aria-label="Link to this section">#</a></h3>
+<p>GitHub's official command-line tool. It creates repos, sets
+<a href="#github-secret">secrets</a> and watches <a href="#workflow">workflow</a> runs without you
+opening a browser, and <code>gh auth login</code> handles authentication properly so you
+never deal with a <a href="#personal-access-token">personal access token</a>
+(<a href="05-github.html#1-install-the-two-tools">05-github</a>).</p>
+<h3 id="git"><code>git</code><a class="anchor" href="#git" aria-label="Link to this section">#</a></h3>
+<p>The program on your machine that tracks changes to your files. <strong>git is not
+GitHub</strong> — git is the tool and works entirely offline; <a href="#github">GitHub</a> is a
+website that stores copies of git repositories. Almost every "I don't understand
+git" moment starts with that conflation.</p>
+<h3 id="gitignore"><code>.gitignore</code><a class="anchor" href="#gitignore" aria-label="Link to this section">#</a></h3>
+<p>A file listing patterns git should never track — <code>.env</code>, <code>node_modules/</code>,
+<code>dist/</code>, <code>*.pem</code>. It must exist <strong>before your first commit</strong>, because it only
+prevents things being added, and cannot remove what's already in the history
+(<a href="05-github.html#2-write-gitignore-before-your-first-commit">05-github</a>).</p>
+<h3 id="github">GitHub<a class="anchor" href="#github" aria-label="Link to this section">#</a></h3>
+<p>The website that hosts git <a href="#repository">repositories</a>, plus everything built
+around them — <a href="#pull-request">pull requests</a>, <a href="#github-actions">Actions</a>,
+<a href="#issue">issues</a>, <a href="#secret-scanning">secret scanning</a>. Both tracks deploy <em>from</em>
+a GitHub repo, which is why <a href="05-github.html">05-github</a> comes before either.</p>
+<h3 id="github-actions">GitHub Actions<a class="anchor" href="#github-actions" aria-label="Link to this section">#</a></h3>
+<p>GitHub's built-in automation: you commit a <a href="#workflow">workflow</a> file, and
+GitHub runs it on a machine it provides whenever the trigger fires. On
+<a href="20-aws.html#63-the-workflow">Track B</a> it's what makes <code>git push</code> deploy to AWS;
+it's also a free way to run a scheduled job.</p>
+<h3 id="github-secret">GitHub secret<a class="anchor" href="#github-secret" aria-label="Link to this section">#</a></h3>
+<p>An encrypted value stored on your repository, readable by
+<a href="#workflow">workflows</a> as <code>${{ secrets.NAME }}</code> and never displayable again in
+the UI. <a href="20-aws.html#63-the-workflow">Track B</a> puts the
+<a href="#aws-account-id">AWS account ID</a> here — not because it's a credential, but
+because it's reconnaissance you needn't hand out.</p>
+<h3 id="github-variable">GitHub variable<a class="anchor" href="#github-variable" aria-label="Link to this section">#</a></h3>
+<p>The same idea as a <a href="#github-secret">secret</a> but not hidden — you can read it
+back, and it's for values that are effectively public anyway, like a
+<a href="#bucket">bucket</a> name or a <a href="#distribution">distribution</a> ID. Referenced as
+<code>${{ vars.NAME }}</code>.</p>
+<h3 id="history-rewriting">History rewriting<a class="anchor" href="#history-rewriting" aria-label="Link to this section">#</a></h3>
+<p>Editing past <a href="#commit">commits</a> to remove something — usually a leaked secret —
+with <a href="https://github.com/newren/git-filter-repo"><code>git-filter-repo</code></a> or
+<a href="https://rtyley.github.io/bfg-repo-cleaner/">BFG Repo-Cleaner</a>. It requires a
+<a href="#force-push">force-push</a>, and it is always the <em>second</em> step: <strong>rotate the key
+first</strong>, because a public commit is scraped within seconds
+(<a href="05-github.html#6-if-youve-already-leaked-something">05-github</a>).</p>
+<h3 id="issue">Issue<a class="anchor" href="#issue" aria-label="Link to this section">#</a></h3>
+<p>A numbered discussion thread on a repository — a bug report, a question, a
+suggestion. Opening one is how you tell this guide it's wrong, and how you'd
+report a broken step or an out-of-date price.</p>
+<h3 id="licence">Licence<a class="anchor" href="#licence" aria-label="Link to this section">#</a></h3>
+<p>The file saying what others may legally do with your code. Without one, "public"
+means "you may look and nothing else" — nobody may use, <a href="#fork">fork</a> or build
+on it. See <a href="#mit-licence">MIT</a>; GPL-3.0 if you want changes shared back;
+Unlicense if you genuinely don't care.</p>
+<h3 id="main"><code>main</code><a class="anchor" href="#main" aria-label="Link to this section">#</a></h3>
+<p>The default <a href="#branch">branch</a> name on GitHub, and by convention the one that
+deploys. Older repositories and documentation call it <code>master</code>; they are the
+same thing under an older name.</p>
+<h3 id="merge">Merge<a class="anchor" href="#merge" aria-label="Link to this section">#</a></h3>
+<p>Combining one <a href="#branch">branch</a> into another — usually accepting a
+<a href="#pull-request">pull request</a> into <a href="#main"><code>main</code></a>. On a repo with automatic
+deploys, merging to <code>main</code> is what makes the change go live.</p>
+<h3 id="mit-licence">MIT licence<a class="anchor" href="#mit-licence" aria-label="Link to this section">#</a></h3>
+<p>The standard "do what you like, don't sue me" <a href="#licence">licence</a>, and what most
+personal projects use, including this one. It's three paragraphs long; you edit
+the year and your name and you're done
+(<a href="05-github.html#add-a-licence">05-github</a>).</p>
+<h3 id="open-source">Open source<a class="anchor" href="#open-source" aria-label="Link to this section">#</a></h3>
+<p>Publishing your code under a <a href="#licence">licence</a> that lets other people use and
+change it. It is a legal state, not a quality bar — half-finished things that
+work are entirely welcome, and adding yourself to
+<a href="30-share-it.html#3-add-yourself-to-the-showcase">the showcase</a> may well be your
+first contribution to someone else's.</p>
+<h3 id="origin-git">Origin (git)<a class="anchor" href="#origin-git" aria-label="Link to this section">#</a></h3>
+<p>The default name for the <a href="#remote">remote</a> your repository was cloned from or
+first pushed to — in practice, "the copy on GitHub". <strong>This is a completely
+different meaning from <a href="#origin-hosting">origin in a CDN</a></strong>, and both appear in
+this guide. If a sentence mentions pushing, it's this one; if it mentions
+caching, it's the other.</p>
+<h3 id="personal-access-token">Personal access token<a class="anchor" href="#personal-access-token" aria-label="Link to this section">#</a></h3>
+<p>A long-lived password-substitute some tools want for GitHub. You shouldn't need
+one: <code>gh auth login</code> uses a browser flow and stores credentials properly for
+both <a href="#gh"><code>gh</code></a> and <a href="#git"><code>git</code></a>. If something is asking you to create a
+token, check whether <code>gh auth login</code> would do instead.</p>
+<h3 id="pull-request">Pull request<a class="anchor" href="#pull-request" aria-label="Link to this section">#</a></h3>
+<p>A proposal to merge one <a href="#branch">branch</a> into another, with a place to discuss
+it first. Often shortened to PR. It is also how you contribute to somebody
+else's project, and <a href="30-share-it.html#3-add-yourself-to-the-showcase">the showcase</a>
+walks through making one entirely in the browser, with no terminal.</p>
+<h3 id="push">Push<a class="anchor" href="#push" aria-label="Link to this section">#</a></h3>
+<p>Sending your local <a href="#commit">commits</a> to the <a href="#remote">remote</a>, with <code>git push</code>.
+Once either track is set up, this is your deploy — everything that follows
+happens without you.</p>
+<h3 id="push-protection">Push protection<a class="anchor" href="#push-protection" aria-label="Link to this section">#</a></h3>
+<p>A GitHub feature that <strong>blocks a <a href="#push">push</a></strong> containing something matching a
+known credential format, before it ever reaches the server. Free on public
+repos, enabled with one <code>gh repo edit</code> flag, and it has saved an enormous number
+of people from a very bad afternoon
+(<a href="05-github.html#turn-on-the-safety-nets">05-github</a>).</p>
+<h3 id="readme">README<a class="anchor" href="#readme" aria-label="Link to this section">#</a></h3>
+<p>The file GitHub shows on your repository's front page. People decide in about
+four seconds, so it leads with one sentence, a live link and a screenshot —
+<a href="30-share-it.html#2-write-a-readme-worth-reading">30-share-it</a> gives the running
+order.</p>
+<h3 id="remote">Remote<a class="anchor" href="#remote" aria-label="Link to this section">#</a></h3>
+<p>A copy of your <a href="#repository">repository</a> that lives somewhere else, referred to
+by a short name. You'll almost always have exactly one, called
+<a href="#origin-git"><code>origin</code></a>, pointing at GitHub.</p>
+<h3 id="repository">Repository<a class="anchor" href="#repository" aria-label="Link to this section">#</a></h3>
+<p>A project tracked by <a href="#git">git</a> — your files plus their entire history. Often
+shortened to repo. Both tracks treat the repo as the source of truth: what's on
+<code>main</code> is what's live.</p>
+<h3 id="runner">Runner<a class="anchor" href="#runner" aria-label="Link to this section">#</a></h3>
+<p>The temporary machine GitHub provides to execute a <a href="#workflow">workflow</a>, named
+in the file as <code>runs-on: ubuntu-latest</code>. Two consequences bite people: it's
+Linux, so <a href="#case-sensitivity">filename case matters</a>, and it starts empty, so
+anything your build needs must be installed or committed.</p>
+<h3 id="secret-scanning">Secret scanning<a class="anchor" href="#secret-scanning" aria-label="Link to this section">#</a></h3>
+<p>GitHub scanning your repository for strings that look like credentials and
+alerting you. Free on public repos. Its more useful sibling is
+<a href="#push-protection">push protection</a>, which stops the secret arriving in the
+first place.</p>
+<h3 id="stage">Stage<a class="anchor" href="#stage" aria-label="Link to this section">#</a></h3>
+<p>Marking changes to be included in the next <a href="#commit">commit</a>, with <code>git add</code>.
+The gap between staging and committing exists precisely so you can run
+<code>git status</code> and <em>actually look</em> before anything becomes permanent
+(<a href="05-github.html#5-make-the-repository">05-github</a>).</p>
+<h3 id="topics">Topics<a class="anchor" href="#topics" aria-label="Link to this section">#</a></h3>
+<p>Keyword tags on a GitHub repository, set from the gear next to <em>About</em>. They're
+most of how anyone discovers a repo, so pick five or six that genuinely describe
+it — the language, the kind of thing it is, where it runs
+(<a href="30-share-it.html#2-write-a-readme-worth-reading">30-share-it</a>).</p>
+<h3 id="workflow">Workflow<a class="anchor" href="#workflow" aria-label="Link to this section">#</a></h3>
+<p>A <a href="#json">YAML</a> file in <code>.github/workflows/</code> describing what
+<a href="#github-actions">GitHub Actions</a> should run and when. Track B's is a dozen
+lines: check out the code, build it, assume an AWS <a href="#role">role</a> via
+<a href="#oidc">OIDC</a>, sync to <a href="#s3">S3</a>, invalidate
+<a href="#cache-invalidation">CloudFront</a>.</p>
+<hr />
+<h2 id="keys-and-identity">Keys and identity<a class="anchor" href="#keys-and-identity" aria-label="Link to this section">#</a></h2>
+<h3 id="access-key">Access key<a class="anchor" href="#access-key" aria-label="Link to this section">#</a></h3>
+<p>An AWS credential in two parts: an <strong>access key ID</strong> (starts <code>AKIA…</code>,
+semi-public) and a <strong>secret access key</strong>, shown exactly once and never
+recoverable. Together they let the CLI act as you. Never create one for the
+<a href="#root-account">root account</a>, never commit one, and
+<a href="#rotate-a-key">rotate on suspicion</a>
+(<a href="03-keys-and-access.html#the-three-legitimate-homes-for-a-key">03-keys-and-access</a>).</p>
+<h3 id="anon-key">Anon key<a class="anchor" href="#anon-key" aria-label="Link to this section">#</a></h3>
+<p>A key deliberately designed to sit in browser code — Supabase's anon key,
+Stripe's <code>pk_</code> publishable key. Safe to publish <strong>only</strong> if the service's access
+rules are correct behind it; for Supabase that means
+<a href="#row-level-security">Row Level Security</a>
+(<a href="05-github.html#3-what-counts-as-a-secret">05-github</a>).</p>
+<h3 id="api-key">API key<a class="anchor" href="#api-key" aria-label="Link to this section">#</a></h3>
+<p>A string that identifies and authorises your app when it calls somebody else's
+service. It is a password with a bill attached: whoever holds it can spend your
+money. This is why it lives in an <a href="#environment-variable">environment variable</a>
+on the server and never in browser code
+(<a href="03-keys-and-access.html#1-what-an-api-key-actually-is">03-keys-and-access</a>).</p>
+<h3 id="audience-claim">Audience claim<a class="anchor" href="#audience-claim" aria-label="Link to this section">#</a></h3>
+<p>The <code>aud</code> field in a <a href="#jwt">JWT</a>, naming who the token is <em>for</em> — in
+<a href="20-aws.html#62-a-role-only-your-repo-can-assume">Track B's OIDC setup</a> it must
+equal <code>sts.amazonaws.com</code>. Along with the <a href="#subject-claim">subject claim</a>, it's
+one half of what the <a href="#trust-policy">trust policy</a> checks.</p>
+<h3 id="authentication-and-authorisation">Authentication and authorisation<a class="anchor" href="#authentication-and-authorisation" aria-label="Link to this section">#</a></h3>
+<p><strong>Authentication is who you are; authorisation is what you're allowed to do.</strong>
+They're both shortened to "auth", which is why error messages are confusing: a
+403 usually means you authenticated fine and simply aren't permitted, and
+retyping your password will not help.</p>
+<h3 id="aws-account-id">AWS account ID<a class="anchor" href="#aws-account-id" aria-label="Link to this section">#</a></h3>
+<p>The twelve-digit number identifying your AWS account. Not a credential — it
+appears in every <a href="#arn">ARN</a> — but it is useful reconnaissance for an attacker,
+so this guide puts it in a <a href="#github-secret">GitHub secret</a> rather than a
+<a href="#github-variable">variable</a>.</p>
+<h3 id="blast-radius">Blast radius<a class="anchor" href="#blast-radius" aria-label="Link to this section">#</a></h3>
+<p>How much damage a credential could do if it were misused. Track B scopes the
+deploy <a href="#role">role</a> to exactly one <a href="#bucket">bucket</a> and one
+<a href="#distribution">distribution</a>, so the worst case is "overwrite my site" rather
+than "empty my bank account" (<a href="20-aws.html#62-a-role-only-your-repo-can-assume">20-aws</a>).</p>
+<h3 id="claim">Claim<a class="anchor" href="#claim" aria-label="Link to this section">#</a></h3>
+<p>One statement inside a <a href="#jwt">JWT</a> — "this token is for GitHub Actions", "it
+came from repository X, branch main". AWS reads the claims to decide whether to
+hand back credentials, which is why the fix for a failing
+<a href="#oidc">OIDC</a> setup is to <em>print the claims</em> rather than guess at them.</p>
+<h3 id="credential">Credential<a class="anchor" href="#credential" aria-label="Link to this section">#</a></h3>
+<p>Anything that proves identity to a system: a password, an
+<a href="#access-key">access key</a>, an <a href="#api-key">API key</a>, a private key file. The
+distinguishing test for this guide is simple — if publishing it would let a
+stranger act as you, it's a credential and it never touches your repo.</p>
+<h3 id="env"><code>.env</code><a class="anchor" href="#env" aria-label="Link to this section">#</a></h3>
+<p>A plain text file of <code>NAME=value</code> lines holding your local secrets, read by your
+app at startup. It must be in <a href="#gitignore"><code>.gitignore</code></a> from the very
+beginning. Its committed sibling <code>.env.example</code> lists the <em>names</em> with fake
+values so anyone cloning your repo knows what to fill in
+(<a href="03-keys-and-access.html#the-three-legitimate-homes-for-a-key">03-keys-and-access</a>).</p>
+<h3 id="environment-variable">Environment variable<a class="anchor" href="#environment-variable" aria-label="Link to this section">#</a></h3>
+<p>A named value handed to a program by whatever started it, rather than written
+inside it. It's how the same code runs with a real key in production and a test
+key locally. Two things catch people: variables are read at build or start time,
+so <strong>a change needs a redeploy</strong>, and setting one in a terminal lasts only for
+that terminal
+(<a href="03-keys-and-access.html#what-an-environment-variable-actually-is">03-keys-and-access</a>).</p>
+<h3 id="iam">IAM<a class="anchor" href="#iam" aria-label="Link to this section">#</a></h3>
+<p>Identity and Access Management — AWS's system of <a href="#iam-user">users</a>,
+<a href="#role">roles</a> and <a href="#policy">policies</a> deciding who may do what. Nearly every
+confusing AWS error is an IAM error wearing a different hat.</p>
+<h3 id="iam-identity-center">IAM Identity Center<a class="anchor" href="#iam-identity-center" aria-label="Link to this section">#</a></h3>
+<p>AWS's newer login system, where <code>aws sso login</code> grants short-lived credentials
+and nothing durable sits on disk. Genuinely better than an
+<a href="#access-key">access key</a>, and more moving parts than a first project needs —
+<a href="20-aws.html#24-check-it-and-save-your-account-id">Track B</a> says start simple and
+upgrade later.</p>
+<h3 id="iam-user">IAM user<a class="anchor" href="#iam-user" aria-label="Link to this section">#</a></h3>
+<p>A named identity inside your AWS account, separate from the
+<a href="#root-account">root account</a>, with its own credentials. You create one for the
+CLI so that a leaked key can be deleted without losing the account itself
+(<a href="02-accounts.html#what-an-iam-user-is-and-why-you-make-one">accounts</a>).</p>
+<h3 id="identity-provider">Identity provider<a class="anchor" href="#identity-provider" aria-label="Link to this section">#</a></h3>
+<p>A system another system agrees to trust for authentication. Track B registers
+GitHub as one in AWS, which is what makes
+<a href="20-aws.html#61-trust-github-as-an-identity-provider">keyless deploys</a> possible:
+AWS believes GitHub when it vouches for a workflow run.</p>
+<h3 id="jwt">JWT<a class="anchor" href="#jwt" aria-label="Link to this section">#</a></h3>
+<p>JSON Web Token — a signed blob of <a href="#json">JSON</a> asserting facts
+(<a href="#claim">claims</a>) about who is calling. GitHub mints one per workflow run and
+AWS verifies it. The parts you may print — <code>sub</code>, <code>aud</code>, <code>repository</code> — are not
+secret, but <strong>the whole token is a credential</strong>, so never log it
+(<a href="20-aws.html#62-a-role-only-your-repo-can-assume">20-aws</a>).</p>
+<h3 id="least-privilege">Least privilege<a class="anchor" href="#least-privilege" aria-label="Link to this section">#</a></h3>
+<p>Granting exactly the permissions needed and no more. This guide deliberately
+breaks it once, using <code>AdministratorAccess</code> on a personal account, and says why:
+fighting permission errors all afternoon is a worse outcome than relying on
+<a href="#mfa">MFA</a> and a <a href="#budget-alarm">budget alarm</a> as the real guardrails
+(<a href="20-aws.html#21-an-iam-user">20-aws</a>).</p>
+<h3 id="mfa">MFA<a class="anchor" href="#mfa" aria-label="Link to this section">#</a></h3>
+<p>Multi-factor authentication, also written 2FA — a code from an app on top of
+your password. Turn it on for GitHub, Cloudflare and especially the AWS
+<a href="#root-account">root account</a> before anything else, because it removes an entire
+category of disaster for two minutes' work
+(<a href="02-accounts.html#3-turn-on-two-factor-authentication">accounts</a>).</p>
+<h3 id="oidc">OIDC<a class="anchor" href="#oidc" aria-label="Link to this section">#</a></h3>
+<p>OpenID Connect — the standard letting GitHub prove a workflow run's identity to
+AWS directly, so AWS can hand back credentials that expire in minutes. The point
+is that <strong>no AWS key exists in GitHub at all</strong>
+(<a href="20-aws.html#part-6--deploys-without-storing-a-key">20-aws</a>).</p>
+<h3 id="policy">Policy<a class="anchor" href="#policy" aria-label="Link to this section">#</a></h3>
+<p>A JSON document listing permitted actions and the resources they apply to. Two
+kinds appear in this guide: permission policies attached to a <a href="#role">role</a>
+saying what it may <em>do</em>, and <a href="#trust-policy">trust policies</a> saying who may
+<em>become</em> it.</p>
+<h3 id="principal">Principal<a class="anchor" href="#principal" aria-label="Link to this section">#</a></h3>
+<p>The "who" in an AWS <a href="#policy">policy</a> — an account, a <a href="#role">role</a>, or an AWS
+service such as <code>cloudfront.amazonaws.com</code> or <code>lambda.amazonaws.com</code>. Every
+<code>Principal</code> block in <a href="20-aws.html">Track B</a> is naming who is allowed to do the
+thing described next to it.</p>
+<h3 id="role">Role<a class="anchor" href="#role" aria-label="Link to this section">#</a></h3>
+<p>An AWS identity that can be <em>assumed</em> temporarily, rather than logged into. A
+<a href="#lambda">Lambda</a> runs as one; a GitHub workflow assumes one via
+<a href="#oidc">OIDC</a>. Roles are how AWS avoids long-lived keys, and are the single most
+useful IAM concept to actually understand.</p>
+<h3 id="root-account">Root account<a class="anchor" href="#root-account" aria-label="Link to this section">#</a></h3>
+<p>The email and password you created an AWS account with. It can do anything,
+including close the account and spend without limit. Give it
+<a href="#mfa">MFA</a> immediately, never create an <a href="#access-key">access key</a> for it, and
+use an <a href="#iam-user">IAM user</a> for daily work
+(<a href="02-accounts.html#the-root-account-plainly">accounts</a>).</p>
+<h3 id="rotate-a-key">Rotate a key<a class="anchor" href="#rotate-a-key" aria-label="Link to this section">#</a></h3>
+<p>Delete a credential and issue a replacement. Do it <strong>on suspicion, not proof</strong> —
+it takes thirty seconds, and it's the first step when anything leaks, before any
+tidying of git history
+(<a href="03-keys-and-access.html#6-when-a-key-leaks">03-keys-and-access</a>).</p>
+<h3 id="secret">Secret<a class="anchor" href="#secret" aria-label="Link to this section">#</a></h3>
+<p>Any value that would let someone act as you or spend your money. The line is
+drawn concretely in <a href="05-github.html#3-what-counts-as-a-secret">05-github</a> — source
+code, domain names and bucket names are fine to publish; <code>.env</code> files, <code>AKIA…</code>
+keys, <code>sk_</code> keys and <code>.pem</code> files never are.</p>
+<h3 id="secrets-manager">Secrets Manager<a class="anchor" href="#secrets-manager" aria-label="Link to this section">#</a></h3>
+<p>AWS's dedicated store for secrets, with per-secret monthly pricing. Worth
+graduating to for anything you'd genuinely mind leaking, because
+<a href="#lambda">Lambda</a> environment variables are visible to anyone with console read
+access to the function (<a href="20-aws.html#54-secrets-for-the-function">20-aws</a>).</p>
+<h3 id="sts-and-assumerole">STS and AssumeRole<a class="anchor" href="#sts-and-assumerole" aria-label="Link to this section">#</a></h3>
+<p>STS is AWS's Security Token Service — the thing that hands out temporary
+credentials. <code>sts:AssumeRole</code> is asking to become a <a href="#role">role</a>;
+<code>sts:AssumeRoleWithWebIdentity</code> is the <a href="#oidc">OIDC</a> variant GitHub uses.
+<code>aws sts get-caller-identity</code> is also the quickest way to check your CLI is
+working at all.</p>
+<h3 id="subject-claim">Subject claim<a class="anchor" href="#subject-claim" aria-label="Link to this section">#</a></h3>
+<p>The <code>sub</code> <a href="#claim">claim</a> in GitHub's <a href="#jwt">JWT</a>, identifying which repository
+and branch the workflow ran in. It is the security boundary of the whole
+keyless-deploy setup, and it frequently arrives in an <strong>ID-qualified</strong> form
+(<code>repo:you@8456990/your-repo@1329892525:…</code>) that guessed patterns don't match.
+Print the real value rather than guessing, and never widen it with wildcards
+(<a href="20-aws.html#62-a-role-only-your-repo-can-assume">20-aws</a>).</p>
+<h3 id="trust-policy">Trust policy<a class="anchor" href="#trust-policy" aria-label="Link to this section">#</a></h3>
+<p>The <a href="#policy">policy</a> attached to a <a href="#role">role</a> saying <em>who may assume it</em> —
+as opposed to what it can do once assumed. Track B's trust policy is what
+restricts an AWS role to workflows from one specific GitHub repository, and a
+mismatch there produces <code>Not authorized to perform
+sts:AssumeRoleWithWebIdentity</code>.</p>
+<hr />
+<h2 id="web-and-general">Web and general<a class="anchor" href="#web-and-general" aria-label="Link to this section">#</a></h2>
+<h3 id="absolute-and-relative-url">Absolute and relative URL<a class="anchor" href="#absolute-and-relative-url" aria-label="Link to this section">#</a></h3>
+<p>A relative URL (<code>/preview.png</code>) is interpreted against the page it appears on;
+an absolute one (<code>https://yourthing.com/preview.png</code>) works from anywhere. It
+matters most for <a href="#open-graph">Open Graph</a> images: the scraper isn't on your
+site, so a relative path means nothing to it and the preview comes out blank
+(<a href="30-share-it.html#1-make-the-link-look-like-something-when-its-shared">30-share-it</a>).</p>
+<h3 id="api">API<a class="anchor" href="#api" aria-label="Link to this section">#</a></h3>
+<p>An interface one program uses to talk to another, over the web in this guide's
+sense. Your page calls <em>your</em> API at <code>/api/ask</code>, and your API calls somebody
+else's — Anthropic's, say — with an <a href="#api-key">API key</a> the browser never sees.</p>
+<h3 id="apt"><code>apt</code><a class="anchor" href="#apt" aria-label="Link to this section">#</a></h3>
+<p>The <a href="#package-manager">package manager</a> on Debian and Ubuntu, and therefore
+inside <a href="#wsl">WSL</a>. <code>sudo apt install git jq curl zip dnsutils</code> installs most of
+what this guide needs (<a href="00-start-here.html#what-you-need-on-your-machine">00-start-here</a>).</p>
+<h3 id="bash"><code>bash</code><a class="anchor" href="#bash" aria-label="Link to this section">#</a></h3>
+<p>The shell language this guide's commands are written in — the default on Linux
+and inside <a href="#wsl">WSL</a>, and available on macOS. <strong>Its syntax is not
+PowerShell's</strong>, which is why Windows users are pointed at WSL or
+<a href="#git-bash">Git Bash</a> before Track B in particular
+(<a href="00-start-here.html#what-you-need-on-your-machine">00-start-here</a>).</p>
+<h3 id="browser-cache-and-hard-reload">Browser cache and hard reload<a class="anchor" href="#browser-cache-and-hard-reload" aria-label="Link to this section">#</a></h3>
+<p>Your browser keeps its own copies of pages, scripts and images, separately from
+any <a href="#cdn">CDN</a>. A hard reload — <strong>Cmd/Ctrl + Shift + R</strong> — fetches fresh
+copies, and a private window sidesteps the cache entirely. Do this <em>before</em>
+suspecting a deploy failed; it's five seconds and it's the answer more often
+than not.</p>
+<h3 id="case-sensitivity">Case sensitivity<a class="anchor" href="#case-sensitivity" aria-label="Link to this section">#</a></h3>
+<p>Linux treats <code>Header.jsx</code> and <code>header.jsx</code> as different files; macOS and Windows
+usually don't. Since builds <a href="#runner">run on Linux</a>, a filename whose case
+doesn't match the import produces "module not found" for a file you can plainly
+see (<a href="90-troubleshooting.html#the-build-works-locally-but-fails-on-the-host">troubleshooting</a>).</p>
+<h3 id="cli">CLI<a class="anchor" href="#cli" aria-label="Link to this section">#</a></h3>
+<p>Command-line interface — a program you drive by typing rather than clicking, in
+a <a href="#terminal">terminal</a>. <code>git</code>, <code>gh</code>, <code>aws</code> and <code>wrangler</code> are all CLIs. They
+tend to be more reliable to follow in a guide than dashboards, because a
+dashboard's menus get renamed and a command doesn't.</p>
+<h3 id="curl"><code>curl</code><a class="anchor" href="#curl" aria-label="Link to this section">#</a></h3>
+<p>A command-line tool for fetching a URL, used throughout this guide to check
+things from outside a browser. <code>curl -sI https://yourthing.com | head -1</code> prints
+just the <a href="#http-status-code">status line</a> — the fastest way to tell whether your
+site is actually answering.</p>
+<h3 id="endpoint">Endpoint<a class="anchor" href="#endpoint" aria-label="Link to this section">#</a></h3>
+<p>One addressable URL that does something — <code>/api/ask</code>, <code>/api/save</code>. On
+<a href="10-cloudflare.html#5-only-if-you-have-a-backend-shape-2">Track A</a> each file in
+<code>functions/</code> becomes one; on Track B a <a href="#lambda">Lambda</a> behind <code>/api/*</code> does.</p>
+<h3 id="etag">ETag<a class="anchor" href="#etag" aria-label="Link to this section">#</a></h3>
+<p>A short identifier for the current version of a resource, used so that changes
+can't overwrite each other. It matters in exactly one place here:
+<a href="20-aws.html#part-9--turning-it-off">deleting a CloudFront distribution</a> requires
+a <em>fresh</em> ETag with each modification, and reusing a stale one fails.</p>
+<h3 id="favicon">Favicon<a class="anchor" href="#favicon" aria-label="Link to this section">#</a></h3>
+<p>The small icon shown in a browser tab, conventionally <code>favicon.ico</code> or a PNG
+linked from your <code>&lt;head&gt;</code>. Not required for anything to work, but its absence
+is the difference between a site that looks finished and one that doesn't —
+worth adding alongside your <a href="#open-graph">Open Graph</a> image
+(<a href="30-share-it.html#1-make-the-link-look-like-something-when-its-shared">30-share-it</a>).</p>
+<h3 id="git-bash">Git Bash<a class="anchor" href="#git-bash" aria-label="Link to this section">#</a></h3>
+<p>A <a href="#bash">bash</a> shell for Windows that comes with
+<a href="https://gitforwindows.org/">Git for Windows</a>. Fine for Track A and for getting
+onto GitHub; Track B's <a href="#heredoc">heredocs</a> mostly work but path handling
+occasionally bites, so <a href="#wsl">WSL</a> is the better answer there.</p>
+<h3 id="headless-browser">Headless browser<a class="anchor" href="#headless-browser" aria-label="Link to this section">#</a></h3>
+<p>A real browser running with no window, driven by a script. It's how the guide's
+<code>og-image.sh</code> renders a card to an exact 1200×630 PNG
+(<a href="30-share-it.html#make-the-image">30-share-it</a>) — the same rendering as your
+screen, just captured instead of displayed.</p>
+<h3 id="heredoc">Heredoc<a class="anchor" href="#heredoc" aria-label="Link to this section">#</a></h3>
+<p>The <code>cat &gt; file &lt;&lt;EOF … EOF</code> shape used throughout <a href="20-aws.html#part-4--hosting-your-files-shape-1">Track B</a>
+to write a config file. <strong>It is one command, not three</strong> — paste the whole block
+including the closing <code>EOF</code>. Paste it line by line and you'll sit at a bare <code>&gt;</code>
+prompt with no output and no error, waiting for the <code>EOF</code>; press <code>Ctrl-C</code> and
+start again.</p>
+<h3 id="homebrew">Homebrew<a class="anchor" href="#homebrew" aria-label="Link to this section">#</a></h3>
+<p>The package manager most people use on macOS, installed with the one-line script
+in <a href="00-start-here.html#what-you-need-on-your-machine">00-start-here</a>. After it,
+<code>brew install git gh jq awscli</code> gets you everything both tracks need.</p>
+<h3 id="html-css-and-javascript">HTML, CSS and JavaScript<a class="anchor" href="#html-css-and-javascript" aria-label="Link to this section">#</a></h3>
+<p>The three languages a browser understands: HTML is the content and structure,
+CSS the appearance, JavaScript the behaviour. A <a href="#static-site">static site</a> is
+these three plus images, and everything else in web development eventually
+produces them.</p>
+<h3 id="http">HTTP<a class="anchor" href="#http" aria-label="Link to this section">#</a></h3>
+<p>The protocol browsers use to ask for pages and receive them. Plain HTTP is
+unencrypted; <a href="#https">HTTPS</a> is the same thing with <a href="#tls-and-ssl">TLS</a> around
+it. Both tracks redirect HTTP to HTTPS for you.</p>
+<h3 id="http-header">HTTP header<a class="anchor" href="#http-header" aria-label="Link to this section">#</a></h3>
+<p>A name-and-value line attached to a request or response, carrying things the
+body doesn't — <code>content-type: application/json</code>, an API key, a cache
+instruction. <code>curl -sI</code> shows you a response's headers without its body.</p>
+<h3 id="http-status-code">HTTP status code<a class="anchor" href="#http-status-code" aria-label="Link to this section">#</a></h3>
+<p>The three-digit number in every HTTP response saying how it went. The ones this
+guide runs into:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Means</th>
+<th>Usually because</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>Fine</td>
+<td>Nothing to do</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden</td>
+<td>You're identified but not permitted — a bucket <a href="#policy">policy</a>, or a <a href="#function-url">function URL</a> missing its <code>add-permission</code></td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not found</td>
+<td>Wrong <a href="#output-directory">output directory</a>, or an <a href="#spa">SPA</a> deep link with no error-page rule</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too many requests</td>
+<td>A <a href="#free-tier">free tier</a> limit — Cloudflare's failure mode instead of a bill</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Server error</td>
+<td>Your code threw — usually a missing <a href="#environment-variable">environment variable</a></td>
+</tr>
+<tr>
+<td>502</td>
+<td>Bad gateway</td>
+<td>The thing in front couldn't reach the thing behind — e.g. CloudFront failing TLS to a dotted <a href="#bucket">bucket</a> name</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ip-address">IP address<a class="anchor" href="#ip-address" aria-label="Link to this section">#</a></h3>
+<p>The numeric address of a machine on the internet — <code>104.21.5.12</code> (IPv4) or the
+longer colon-separated IPv6 form. <a href="#dns">DNS</a> exists to save you from ever
+typing one, and <a href="#cname">CNAME</a> records exist so your host can change theirs
+without telling you.</p>
+<h3 id="jq"><code>jq</code><a class="anchor" href="#jq" aria-label="Link to this section">#</a></h3>
+<p>A command-line tool for reading and reshaping <a href="#json">JSON</a>. Track B uses it to
+pull IDs out of AWS responses and to build change files, which is why it's in
+the install list (<a href="00-start-here.html#what-you-need-on-your-machine">00-start-here</a>).</p>
+<h3 id="json">JSON<a class="anchor" href="#json" aria-label="Link to this section">#</a></h3>
+<p>A plain-text format for structured data — objects in braces, lists in brackets.
+Nearly every AWS command returns it, every API in this guide speaks it, and
+<a href="#workflow">YAML</a> (used by GitHub Actions) is the same shapes with indentation
+instead of punctuation.</p>
+<h3 id="localhost"><code>localhost</code><a class="anchor" href="#localhost" aria-label="Link to this section">#</a></h3>
+<p>The name your computer uses for itself. <code>http://localhost:3000</code> is a server
+running on your own machine, reachable by nobody else — which is precisely the
+problem this guide exists to solve.</p>
+<h3 id="lockfile">Lockfile<a class="anchor" href="#lockfile" aria-label="Link to this section">#</a></h3>
+<p>A file recording the exact version of every dependency actually installed —
+<code>package-lock.json</code> for <a href="#npm">npm</a>. <strong>It must be committed</strong>, because it's what
+<code>npm ci</code> reads on the build machine; without it, the host resolves different
+versions from yours and "works locally, fails on the host" follows.</p>
+<h3 id="nodejs">Node.js<a class="anchor" href="#nodejs" aria-label="Link to this section">#</a></h3>
+<p>The program that runs JavaScript outside a browser — used by build tools,
+<a href="#workers">Workers</a> and <a href="#lambda">Lambda</a>. Its version matters: a build that
+works locally and fails on the host is most often a version mismatch, fixed by
+setting <code>NODE_VERSION</code> (Track A) or <code>node-version</code> (Track B) to match your
+<code>node -v</code>.</p>
+<h3 id="node_modules"><code>node_modules</code><a class="anchor" href="#node_modules" aria-label="Link to this section">#</a></h3>
+<p>The folder holding your installed dependencies. It is enormous, machine-specific
+and rebuildable from the <a href="#lockfile">lockfile</a>, so it belongs in
+<a href="#gitignore"><code>.gitignore</code></a> and never in a <a href="#commit">commit</a>.</p>
+<h3 id="npm"><code>npm</code><a class="anchor" href="#npm" aria-label="Link to this section">#</a></h3>
+<p>Node's <a href="#package-manager">package manager</a>. Three commands cover this guide:
+<code>npm install</code> adds dependencies, <code>npm ci</code> installs exactly what the
+<a href="#lockfile">lockfile</a> says (what build machines use), and <code>npm run build</code> runs
+your <a href="#build-command">build command</a>.</p>
+<h3 id="open-graph">Open Graph<a class="anchor" href="#open-graph" aria-label="Link to this section">#</a></h3>
+<p>The <code>&lt;meta property="og:…"&gt;</code> convention every social platform reads to build a
+link preview card. Four tags — title, description, image, url — decide whether a
+shared link looks like something or like a bare blue link nobody clicks. Get it
+right <em>before</em> you post, because platforms cache the first version they see
+(<a href="30-share-it.html#1-make-the-link-look-like-something-when-its-shared">30-share-it</a>).</p>
+<h3 id="package-manager">Package manager<a class="anchor" href="#package-manager" aria-label="Link to this section">#</a></h3>
+<p>A tool that installs software and its dependencies for you:
+<a href="#homebrew">Homebrew</a> on macOS, <a href="#apt">apt</a> on Ubuntu, <a href="#winget">winget</a> on
+Windows for system tools; <a href="#npm">npm</a> for your project's JavaScript libraries.
+Same idea, different scopes.</p>
+<h3 id="port">Port<a class="anchor" href="#port" aria-label="Link to this section">#</a></h3>
+<p>The numbered door on a machine that a particular program listens at — the
+<code>:3000</code> in <code>http://localhost:3000</code>. Once your project is deployed you stop
+thinking about ports, because the web uses 80 and 443 and the host handles both.</p>
+<h3 id="powershell">PowerShell<a class="anchor" href="#powershell" aria-label="Link to this section">#</a></h3>
+<p>Windows' own shell. <strong>This guide's commands are <a href="#bash">bash</a> and will not all
+work in it</strong> — the <a href="#heredoc">heredocs</a> and quoting in Track B especially. Use
+<a href="#wsl">WSL</a>, or <a href="#git-bash">Git Bash</a>, or take Track A, which needs far less
+terminal (<a href="00-start-here.html#what-you-need-on-your-machine">00-start-here</a>).</p>
+<h3 id="server">Server<a class="anchor" href="#server" aria-label="Link to this section">#</a></h3>
+<p>A program (on a machine somewhere) that waits for requests and answers them. The
+useful distinction for this guide is between a <a href="#static-site">static site</a>,
+where no program of yours runs at all, and a backend, where one does — and
+between <a href="#serverless">serverless</a>, which starts one per request, and a
+<a href="#virtual-machine">virtual machine</a>, which keeps one running.</p>
+<h3 id="shell">Shell<a class="anchor" href="#shell" aria-label="Link to this section">#</a></h3>
+<p>The program inside a <a href="#terminal">terminal</a> that reads what you type and runs it.
+<a href="#bash">bash</a> and zsh are shells; <a href="#powershell">PowerShell</a> is a different one
+with different syntax. "Open a shell" and "open a terminal" are used
+interchangeably in practice.</p>
+<h3 id="shell-variable">Shell variable<a class="anchor" href="#shell-variable" aria-label="Link to this section">#</a></h3>
+<p>A named value in your current terminal, set with <code>export NAME=value</code> and read
+back as <code>$NAME</code>. The catch that bites hardest on
+<a href="20-aws.html#25-keep-your-variables-somewhere-that-survives">Track B</a>: <strong>it lasts
+only as long as that window</strong>. A new tab, and every variable is an empty string
+— and commands then fail with something baffling like
+<code>Invalid length for parameter</code> rather than "that's empty". Keep them in a file
+and <code>source</code> it.</p>
+<h3 id="terminal">Terminal<a class="anchor" href="#terminal" aria-label="Link to this section">#</a></h3>
+<p>The window where you type commands. macOS has Terminal and iTerm; Windows has
+Windows Terminal; Linux has several. It is only a window — the thing
+interpreting your typing is the <a href="#shell">shell</a>
+(<a href="01-your-machine.html">01-your-machine</a>).</p>
+<h3 id="url">URL<a class="anchor" href="#url" aria-label="Link to this section">#</a></h3>
+<p>The full address of something on the web:
+<code>https://yourthing.com/api/ask</code> is protocol, <a href="#hostname">hostname</a>, path.
+Getting your project one — a real one, that you own — is the entire point of
+this guide.</p>
+<h3 id="winget"><code>winget</code><a class="anchor" href="#winget" aria-label="Link to this section">#</a></h3>
+<p>Windows' built-in <a href="#package-manager">package manager</a>.
+<code>winget install Git.Git GitHub.cli</code> installs <a href="#git">git</a> and <a href="#gh">gh</a>
+(<a href="05-github.html#1-install-the-two-tools">05-github</a>).</p>
+<h3 id="wsl">WSL<a class="anchor" href="#wsl" aria-label="Link to this section">#</a></h3>
+<p>Windows Subsystem for Linux — a real Ubuntu terminal inside Windows, installed
+with <code>wsl --install</code> from an administrator PowerShell. It's the recommended
+Windows setup here because every command in the guide then works exactly as
+written, <a href="#heredoc">heredocs</a> included
+(<a href="00-start-here.html#what-you-need-on-your-machine">00-start-here</a>).</p>
+<h3 id="zip"><code>zip</code><a class="anchor" href="#zip" aria-label="Link to this section">#</a></h3>
+<p>The command that packages files into a <code>.zip</code>, used to bundle a
+<a href="#lambda">Lambda</a> before uploading it. Preinstalled on macOS; on Ubuntu or WSL,
+<code>sudo apt install zip</code> (<a href="20-aws.html#53-deploy-it-and-give-it-a-url">20-aws</a>).</p>
+<hr />
+<p><strong>Next:</strong> <a href="90-troubleshooting.html">When it breaks →</a> if something is failing
+right now — otherwise back to <a href="00-start-here.html">Start here</a>.</p>
+    <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
+    <nav class="pager"><a class="prev" href="90-troubleshooting.html"><span>Previous</span>When it breaks</a></nav>
+  </main>
+</div>
+<script>
+// Copy the whole block — several are heredocs that break if pasted line by line.
+document.querySelectorAll('.codewrap').forEach(function (w) {
+  var btn = w.querySelector('.copy'), pre = w.querySelector('pre');
+  if (!btn || !pre) return;
+  btn.addEventListener('click', function () {
+    navigator.clipboard.writeText(pre.innerText).then(function () {
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+    }).catch(function () { btn.textContent = 'Press Ctrl+C'; });
+  });
+});
+
+// Remember which pages are finished — the AWS track spans more than one sitting.
+(function () {
+  var KEY = 'swyb-done', box = document.getElementById('page-done');
+  if (!box) return;
+  var page = document.body.dataset.page;
+  var read = function () { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
+  var done = read();
+  box.checked = !!done[page];
+  box.addEventListener('change', function () {
+    var d = read();
+    if (box.checked) { d[page] = true; } else { delete d[page]; }
+    localStorage.setItem(KEY, JSON.stringify(d));
+    paint();
+  });
+  function paint() {
+    var d = read();
+    document.querySelectorAll('.nav a[data-page]').forEach(function (a) {
+      a.textContent.indexOf('✓') === 0 && (a.textContent = a.textContent.slice(1));
+      var t = a.querySelector('.tick');
+      if (t) t.textContent = d[a.dataset.page] ? '✓ ' : '';
+    });
+  }
+  paint();
+})();
+</script>
+</body>
+</html>

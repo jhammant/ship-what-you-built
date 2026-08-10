@@ -2,7 +2,7 @@
 #
 # status.sh — is it live, and which layer is broken if it isn't?
 #
-# Read-only. Walks the four layers from guide/01-three-layers.md in order, so
+# Read-only. Walks the four layers from guide/04-three-layers.md in order, so
 # the first thing that fails is the thing to fix.
 #
 set -euo pipefail

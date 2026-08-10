@@ -54,8 +54,8 @@ themselves. **[The chooser walks you through it →](guide/00-start-here.md)**
 | Page | What it covers |
 |---|---|
 | [00 — Start here](guide/00-start-here.md) | What did you build, and which track fits it |
-| [01 — The three layers](guide/01-three-layers.md) | Registrar vs DNS vs hosting — the model that makes everything else obvious |
-| [02 — GitHub](guide/02-github.md) | Your code in a repo, safely, without leaking a key |
+| [01 — The three layers](guide/04-three-layers.md) | Registrar vs DNS vs hosting — the model that makes everything else obvious |
+| [02 — GitHub](guide/05-github.md) | Your code in a repo, safely, without leaking a key |
 | [10 — Track A: Cloudflare](guide/10-cloudflare.md) | Domain, Pages, Workers, custom domain, auto-deploy |
 | [20 — Track B: AWS](guide/20-aws.md) | Account safety, S3, CloudFront, Route 53, Lambda, OIDC deploys |
 | [30 — Share it](guide/30-share-it.md) | A README worth reading, and adding yourself to the showcase |

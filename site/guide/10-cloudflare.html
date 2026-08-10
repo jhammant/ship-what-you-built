@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Track A — Cloudflare — Ship What You Built</title>
+<meta name="description" content="Track A — Cloudflare — part of a free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:title" content="Track A — Cloudflare — Ship What You Built">
+<meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/10-cloudflare.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#F6F7F5;--surface:#FFF;--sunken:#EEF0EC;--ink:#14181B;--ink-soft:#3D4642;
+--muted:#5B6560;--line:rgba(20,24,27,.13);--line-soft:rgba(20,24,27,.07);
+--live:#16794C;--live-ink:#FFF;--live-wash:rgba(22,121,76,.09);--stuck:#9A5B18;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+--sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;--ink-soft:#C3CCC6;
+--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}}
+:root[data-theme="dark"]{--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;
+--ink-soft:#C3CCC6;--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+line-height:1.68;font-size:1.02rem;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--live)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--live);outline-offset:3px;border-radius:5px}
+.shell{display:grid;grid-template-columns:17rem minmax(0,1fr);gap:2.5rem;
+max-width:78rem;margin-inline:auto;padding:0 clamp(1rem,4vw,2.5rem)}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr);gap:0}}
+.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;
+padding:2rem 0;border-right:1px solid var(--line-soft)}
+@media (max-width:900px){.side{position:static;max-height:none;border-right:0;
+border-bottom:1px solid var(--line-soft);padding-bottom:1rem}}
+.brand{font-weight:660;letter-spacing:-.02em;text-decoration:none;display:block;margin-bottom:.35rem}
+.brand small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;letter-spacing:0}
+.nav{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:.15rem}
+.nav a{display:block;padding:.42rem .6rem;border-radius:7px;text-decoration:none;
+font-size:.925rem;color:var(--ink-soft)}
+.nav a:hover{background:var(--sunken)}
+.nav a[aria-current="page"]{background:var(--live-wash);color:var(--ink);font-weight:600}
+.nav small{display:block;color:var(--muted);font-size:.76rem;line-height:1.35}
+.onpage{margin-top:1.5rem;border-top:1px solid var(--line-soft);padding-top:1rem}
+.onpage p{margin:0 0 .5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;
+text-transform:uppercase;color:var(--muted)}
+.onpage ul{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+.onpage a{display:block;padding:.2rem .35rem;font-size:.85rem;color:var(--muted);
+text-decoration:none;border-radius:5px}
+.onpage a:hover{color:var(--ink);background:var(--sunken)}
+.onpage .lvl3{padding-left:1rem;font-size:.8rem}
+main{padding:2.5rem 0 4rem;min-width:0;max-width:46rem}
+h1{font-size:clamp(1.9rem,1.4rem+2vw,2.7rem);line-height:1.1;letter-spacing:-.03em;
+margin:0 0 1.5rem;text-wrap:balance}
+h2{font-size:1.5rem;line-height:1.2;letter-spacing:-.022em;margin:2.8rem 0 .9rem;
+padding-top:1.4rem;border-top:1px solid var(--line-soft);text-wrap:balance}
+h3{font-size:1.13rem;letter-spacing:-.015em;margin:2rem 0 .6rem}
+h2 .anchor,h3 .anchor{opacity:0;margin-left:.4rem;color:var(--muted);text-decoration:none;font-weight:400}
+h2:hover .anchor,h3:hover .anchor,.anchor:focus-visible{opacity:1}
+p,ul,ol{margin:0 0 1.05rem}
+li{margin-bottom:.3rem}
+strong{font-weight:650}
+code{font-family:var(--mono);font-size:.875em;background:var(--sunken);
+padding:.12em .34em;border-radius:4px;overflow-wrap:break-word}
+.codewrap{position:relative;margin:0 0 1.2rem}
+pre{margin:0;overflow-x:auto;background:var(--sunken);border:1px solid var(--line-soft);
+border-radius:10px;padding:1rem 1.1rem;font-family:var(--mono);font-size:.845rem;line-height:1.62}
+pre code{background:none;padding:0;font-size:1em}
+.copy{position:absolute;top:.5rem;right:.5rem;font:inherit;font-size:.75rem;
+padding:.28rem .6rem;border-radius:6px;border:1px solid var(--line);
+background:var(--surface);color:var(--muted);cursor:pointer;opacity:0;transition:opacity .12s}
+.codewrap:hover .copy,.copy:focus-visible{opacity:1}
+.copy.done{color:var(--live);border-color:var(--live)}
+@media (hover:none){.copy{opacity:1}}
+blockquote{margin:0 0 1.2rem;padding:.9rem 1.1rem;border-left:3px solid var(--live);
+background:var(--live-wash);border-radius:0 9px 9px 0}
+blockquote > :last-child{margin-bottom:0}
+blockquote h3{margin-top:.2rem}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:0 0 1.2rem}
+table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+th,td{text-align:left;padding:.65rem .9rem;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+tbody tr:last-child td{border-bottom:0}
+hr{border:0;border-top:1px solid var(--line-soft);margin:2.5rem 0}
+img{max-width:100%;height:auto}
+.done-toggle{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);
+margin:.2rem 0 1.6rem;cursor:pointer;user-select:none}
+.done-toggle input{accent-color:var(--live);width:1rem;height:1rem}
+.pager{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:space-between;
+margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line-soft)}
+.pager a{flex:1 1 14rem;padding:.9rem 1.1rem;border:1px solid var(--line);border-radius:10px;
+text-decoration:none;background:var(--surface)}
+.pager a:hover{border-color:var(--live)}
+.pager span{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
+.pager .next{text-align:right}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-page="10-cloudflare">
+<div class="shell">
+  <aside class="side">
+    <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
+    <nav><ul class="nav"><li><a href="00-start-here.html" data-page="00-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="01-your-machine.html" data-page="01-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="02-accounts.html" data-page="02-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="03-keys-and-access.html" data-page="03-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="04-three-layers.html" data-page="04-three-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="05-github.html" data-page="05-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="06-let-claude-drive.html" data-page="06-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" aria-current="page" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#1-make-an-account">1. Make an account</a></li><li><a class="lvl2" href="#2-get-your-domain-into-cloudflare">2. Get your domain into Cloudflare</a></li><li><a class="lvl3" href="#2a-buying-a-new-domain-here">2a. Buying a new domain here</a></li><li><a class="lvl3" href="#2b-you-already-own-a-domain-elsewhere">2b. You already own a domain elsewhere</a></li><li><a class="lvl2" href="#3-deploy-the-site">3. Deploy the site</a></li><li><a class="lvl2" href="#4-put-it-on-your-domain">4. Put it on your domain</a></li><li><a class="lvl2" href="#5-only-if-you-have-a-backend-shape-2">5. Only if you have a backend (Shape 2)</a></li><li><a class="lvl3" href="#the-idea">The idea</a></li><li><a class="lvl3" href="#a-real-one">A real one</a></li><li><a class="lvl3" href="#your-api-key">Your API key</a></li><li><a class="lvl3" href="#if-you-need-to-store-data">If you need to store data</a></li><li><a class="lvl2" href="#6-from-now-on">6. From now on</a></li><li><a class="lvl2" href="#7-what-it-costs">7. What it costs</a></li><li><a class="lvl2" href="#8-things-that-will-bite-you">8. Things that will bite you</a></li></ul></div>
+  </aside>
+  <main>
+<h1>Track A — Cloudflare</h1>
+<p><strong>You'll end with:</strong> your project live on your own domain, over HTTPS, rebuilding
+itself every time you push to GitHub.</p>
+<p><strong>Time:</strong> ~20 minutes for a static site, ~45 with a backend.
+<strong>Cost:</strong> the domain. Everything else here is free at personal-project scale, and
+Cloudflare's free tiers <em>stop serving</em> rather than silently billing you.</p>
+<p><strong>Before you start:</strong> <a href="04-three-layers.html">the three layers</a> and
+<a href="05-github.html">your code on GitHub</a>.</p>
+<blockquote>
+<p><strong>UI wording moves.</strong> Cloudflare renames menu items a few times a year. If a
+label below doesn't match what you see, search the dashboard for the nearest
+word — the shape of the steps hasn't changed in years even when the names have.</p>
+</blockquote>
+<hr />
+<h2 id="1-make-an-account">1. Make an account<a class="anchor" href="#1-make-an-account" aria-label="Link to this section">#</a></h2>
+<p><a href="https://dash.cloudflare.com/sign-up">dash.cloudflare.com/sign-up</a>. Email and
+password, no card required yet.</p>
+<p><strong>Turn on two-factor now</strong> (top-right menu → <strong>My Profile</strong> → <strong>Authentication</strong>).
+This account will shortly control your domain's DNS, which means whoever holds
+it can point your name anywhere they like. Two minutes, removes a whole category
+of problem.</p>
+<hr />
+<h2 id="2-get-your-domain-into-cloudflare">2. Get your domain into Cloudflare<a class="anchor" href="#2-get-your-domain-into-cloudflare" aria-label="Link to this section">#</a></h2>
+<p>Two routes depending on whether you already own one.</p>
+<h3 id="2a-buying-a-new-domain-here">2a. Buying a new domain here<a class="anchor" href="#2a-buying-a-new-domain-here" aria-label="Link to this section">#</a></h3>
+<p>Dashboard → <strong>Domain Registration</strong> → <strong>Register Domains</strong>. Search, pick, pay.</p>
+<p>Cloudflare sells at wholesale cost with no markup and — importantly — <strong>no
+renewal jump</strong>. The price you pay in year one is the price in year five. Compare
+that against the £1.50-now-£26-later offers elsewhere; over five years the
+"cheap" one costs three times as much.</p>
+<p>Two things to know:</p>
+<ul>
+<li>A domain bought at Cloudflare <strong>must use Cloudflare's DNS</strong>. That's fine for
+  this guide, and you can still host anywhere. It does mean you can't buy here
+  and run DNS elsewhere.</li>
+<li>Cloudflare doesn't sell every extension. Notably no <code>.co.uk</code> at time of
+  writing. If you want one it isn't offering, buy it at Namecheap or Gandi and
+  use route 2b.</li>
+</ul>
+<p>Registration is instant, and the domain appears in your dashboard already set up.
+<strong>Skip to step 3.</strong></p>
+<h3 id="2b-you-already-own-a-domain-elsewhere">2b. You already own a domain elsewhere<a class="anchor" href="#2b-you-already-own-a-domain-elsewhere" aria-label="Link to this section">#</a></h3>
+<p>You're keeping the registrar and moving only DNS — <a href="04-three-layers.html#layer-2--dns">layer 2</a>.
+Nothing is transferred, nothing costs money, and it takes about ten minutes.</p>
+<ol>
+<li>Dashboard → <strong>Add a domain</strong> → type it → choose the <strong>Free</strong> plan.</li>
+<li>Cloudflare scans your existing DNS and imports what it finds. <strong>Check the
+   imported list against your current provider before continuing</strong> — this is the
+   step where people accidentally drop their email. If you receive email at this
+   domain, make sure the <code>MX</code> records and any <code>TXT</code> records starting <code>v=spf1</code>,
+   plus any <code>_dmarc</code> or <code>_domainkey</code> records, all came across.</li>
+<li>Cloudflare gives you two nameservers, like <code>zoe.ns.cloudflare.com</code>.</li>
+<li>Go to your <strong>current registrar</strong>, find <em>Nameservers</em> (sometimes under DNS
+   settings or "custom DNS"), replace what's there with Cloudflare's two.</li>
+<li>Wait. Usually 10–60 minutes, occasionally a few hours. Cloudflare emails you.</li>
+</ol>
+<p>Check progress yourself rather than refreshing the dashboard:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">dig NS yourthing.com +short
+</code></pre></div>
+<p>When that prints the Cloudflare nameservers, layer 1 has caught up.</p>
+<hr />
+<h2 id="3-deploy-the-site">3. Deploy the site<a class="anchor" href="#3-deploy-the-site" aria-label="Link to this section">#</a></h2>
+<p>Dashboard → <strong>Workers &amp; Pages</strong> → <strong>Create</strong> → <strong>Pages</strong> → <strong>Connect to Git</strong>.</p>
+<p>Authorise GitHub (you can grant access to just this one repository), pick your
+repo, and you land on build settings. This is the only screen that needs
+thought:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>You built…</th>
+<th>Framework preset</th>
+<th>Build command</th>
+<th>Output directory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plain HTML/CSS/JS</td>
+<td><strong>None</strong></td>
+<td><em>(leave empty)</em></td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td>Vite / React / Vue / Svelte</td>
+<td>the matching one</td>
+<td><code>npm run build</code></td>
+<td><code>dist</code></td>
+</tr>
+<tr>
+<td>Astro</td>
+<td>Astro</td>
+<td><code>npm run build</code></td>
+<td><code>dist</code></td>
+</tr>
+<tr>
+<td>Next.js (static export)</td>
+<td>Next.js (Static HTML Export)</td>
+<td><code>npm run build</code></td>
+<td><code>out</code></td>
+</tr>
+<tr>
+<td>Eleventy / Hugo / Jekyll</td>
+<td>the matching one</td>
+<td>its build command</td>
+<td><code>_site</code> / <code>public</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Not sure what your output directory is?</strong> Run <code>npm run build</code> locally and look
+at which folder appears. That's the answer. Or ask:</p>
+<blockquote>
+<p>Look at my build config and tell me exactly what to put in Cloudflare Pages
+for build command and output directory.</p>
+</blockquote>
+<p>Click <strong>Save and Deploy</strong>. Roughly a minute later you have a live URL like
+<code>your-project.pages.dev</code>. <strong>Open it.</strong> If it works, layers 3 and 4 are done — the
+certificate was issued automatically and you didn't have to think about it.</p>
+<p>If the build fails, the log tells you why and it's nearly always one of:
+the wrong output directory, a dependency that was in <code>.gitignore</code> and shouldn't
+have been, or a Node version mismatch (set <code>NODE_VERSION</code> in the environment
+variables to match your local <code>node -v</code>).</p>
+<blockquote>
+<p><strong>"The docs keep telling me to use Workers instead of Pages."</strong> Cloudflare is
+gradually merging the two, and Workers now serves static assets too. Pages
+still works, is still supported, and is markedly simpler for a first deploy —
+use it. Nothing here becomes wasted effort if you move later.</p>
+</blockquote>
+<hr />
+<h2 id="4-put-it-on-your-domain">4. Put it on your domain<a class="anchor" href="#4-put-it-on-your-domain" aria-label="Link to this section">#</a></h2>
+<p>Pages project → <strong>Custom domains</strong> → <strong>Set up a custom domain</strong> → type
+<code>yourthing.com</code>.</p>
+<p>Because the domain is already in this Cloudflare account, that's the whole job.
+Cloudflare creates the DNS record itself, handles <a href="04-three-layers.html#the-apex-problem--the-one-gotcha-worth-knowing-in-advance">the apex CNAME
+problem</a>
+with CNAME flattening, and issues the certificate. Two to five minutes.</p>
+<p><strong>Add <code>www.yourthing.com</code> as well.</strong> People type it. Cloudflare will redirect
+one to the other, and you avoid the classic "works with www, not without."</p>
+<p>Verify from outside your own machine's cache:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">dig @1.1.1.1 yourthing.com +short
+curl -sI https://yourthing.com | head -n 1
+</code></pre></div>
+<p>You want <code>HTTP/2 200</code>.</p>
+<hr />
+<h2 id="5-only-if-you-have-a-backend-shape-2">5. Only if you have a backend (Shape 2)<a class="anchor" href="#5-only-if-you-have-a-backend-shape-2" aria-label="Link to this section">#</a></h2>
+<p>Skip this if your project is static files. You're finished — go to
+<a href="30-share-it.html">Share it</a>.</p>
+<h3 id="the-idea">The idea<a class="anchor" href="#the-idea" aria-label="Link to this section">#</a></h3>
+<p>You add a <code>functions/</code> folder to your repo. Cloudflare turns each file in it
+into an API endpoint, using the path. No config, no separate deploy.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">functions/api/hello.js   -&gt;   https://yourthing.com/api/hello
+functions/api/save.js    -&gt;   https://yourthing.com/api/save
+</code></pre></div>
+<p>The function runs when someone hits that URL, then stops. You are billed for
+requests, not for time waiting — which is why this is free at your scale.</p>
+<h3 id="a-real-one">A real one<a class="anchor" href="#a-real-one" aria-label="Link to this section">#</a></h3>
+<p><code>functions/api/ask.js</code> — a backend that calls Claude, keeping your API key out
+of the browser:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-javascript">export async function onRequestPost(context) {
+  const { question } = await context.request.json();
+
+  const res = await fetch(&quot;https://api.anthropic.com/v1/messages&quot;, {
+    method: &quot;POST&quot;,
+    headers: {
+      &quot;content-type&quot;: &quot;application/json&quot;,
+      &quot;anthropic-version&quot;: &quot;2023-06-01&quot;,
+      // Set in the dashboard, NOT in this file
+      &quot;x-api-key&quot;: context.env.ANTHROPIC_API_KEY,
+    },
+    body: JSON.stringify({
+      model: &quot;claude-sonnet-5&quot;,
+      max_tokens: 4096,
+      messages: [{ role: &quot;user&quot;, content: question }],
+    }),
+  });
+
+  if (!res.ok) {
+    return new Response(JSON.stringify({ error: &quot;upstream failed&quot; }), {
+      status: 502,
+      headers: { &quot;content-type&quot;: &quot;application/json&quot; },
+    });
+  }
+
+  const data = await res.json();
+
+  // Pick the text block by TYPE, never by position. The response is a list of
+  // blocks, and the first one is not always the answer — a model doing its
+  // reasoning first puts a thinking block at index 0, and `content[0].text`
+  // would be undefined. That failure is silent: the page shows a blank reply
+  // and nothing errors anywhere.
+  const answer = (data.content ?? [])
+    .filter((b) =&gt; b.type === &quot;text&quot;)
+    .map((b) =&gt; b.text)
+    .join(&quot;&quot;);
+
+  return new Response(JSON.stringify({ answer }), {
+    headers: { &quot;content-type&quot;: &quot;application/json&quot; },
+  });
+}
+</code></pre></div>
+<p>Called from your page:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-javascript">const res = await fetch(&quot;/api/ask&quot;, {
+  method: &quot;POST&quot;,
+  headers: { &quot;content-type&quot;: &quot;application/json&quot; },
+  body: JSON.stringify({ question: &quot;Why is the sky blue?&quot; }),
+});
+const { answer } = await res.json();
+</code></pre></div>
+<p><code>onRequestPost</code> handles POST. <code>onRequestGet</code> handles GET. <code>onRequest</code> handles
+everything.</p>
+<h3 id="your-api-key">Your API key<a class="anchor" href="#your-api-key" aria-label="Link to this section">#</a></h3>
+<p>Pages project → <strong>Settings</strong> → <strong>Variables and Secrets</strong> → <strong>Add</strong> →
+<strong>Production</strong> → add <code>ANTHROPIC_API_KEY</code>, and select <strong>Encrypt</strong>. (This menu was
+called <em>Environment variables</em> until recently; if you see that name instead,
+it's the same screen.) Encrypted values can
+never be read back out of the dashboard — you can replace one, but not view it.
+That's the behaviour you want.</p>
+<p>Add it to <strong>Preview</strong> too if you want pull-request builds to work.</p>
+<p>Redeploy after adding variables. Existing deployments don't pick them up.</p>
+<blockquote>
+<p><strong>The reason for all of this</strong>, if it isn't obvious: anything in your
+browser-side JavaScript is readable by anyone who presses F12. A key in
+front-end code is a public key. The function exists so the key stays on
+Cloudflare's side of the fence.</p>
+</blockquote>
+<h3 id="if-you-need-to-store-data">If you need to store data<a class="anchor" href="#if-you-need-to-store-data" aria-label="Link to this section">#</a></h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>You need</th>
+<th>Use</th>
+<th>Free tier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Key-value (settings, sessions, counters)</td>
+<td><strong>Workers KV</strong></td>
+<td>Generous</td>
+</tr>
+<tr>
+<td>A real SQL database</td>
+<td><strong>D1</strong> (SQLite)</td>
+<td>Generous</td>
+</tr>
+<tr>
+<td>File/image uploads</td>
+<td><strong>R2</strong> (S3-compatible, no egress fees)</td>
+<td>10 GB</td>
+</tr>
+<tr>
+<td>Auth, Postgres, realtime</td>
+<td><strong>Supabase</strong> — not Cloudflare, but it pairs well</td>
+<td>Generous</td>
+</tr>
+</tbody>
+</table></div>
+<p>Add these under <strong>Settings</strong> → <strong>Bindings</strong> → <strong>Add</strong>, which makes them appear
+on <code>context.env</code> alongside your variables. Each has its own short setup;
+follow <a href="https://developers.cloudflare.com/">Cloudflare's docs</a> for the one you
+pick, and ask Claude to wire it in — it's mechanical.</p>
+<hr />
+<h2 id="6-from-now-on">6. From now on<a class="anchor" href="#6-from-now-on" aria-label="Link to this section">#</a></h2>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">git add .
+git commit -m &quot;Make the button blue&quot;
+git push
+</code></pre></div>
+<p>That's the deploy. Cloudflare sees the push, builds, and swaps the live version
+when it succeeds. Watch it in the Pages dashboard, or:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">gh browse   # opens the repo; Actions tab if you added checks
+</code></pre></div>
+<p>Every pull request gets its own <strong>preview URL</strong> automatically, so you can look
+at a change before merging it. This is a genuinely nice thing to have for free.</p>
+<p><strong>Rolling back:</strong> Pages project → <strong>Deployments</strong> → find the last good one →
+<strong>Rollback</strong>. Instant, and it doesn't touch your git history.</p>
+<hr />
+<h2 id="7-what-it-costs">7. What it costs<a class="anchor" href="#7-what-it-costs" aria-label="Link to this section">#</a></h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Thing</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Domain</td>
+<td>~$10–12/yr, at cost, no renewal jump</td>
+</tr>
+<tr>
+<td>DNS</td>
+<td>Free, unlimited queries</td>
+</tr>
+<tr>
+<td>Pages hosting &amp; bandwidth</td>
+<td>Free, unlimited</td>
+</tr>
+<tr>
+<td>Builds</td>
+<td>Free up to a monthly cap you won't reach</td>
+</tr>
+<tr>
+<td>Functions (Workers)</td>
+<td>Free up to a daily request cap you won't reach</td>
+</tr>
+<tr>
+<td>Certificate</td>
+<td>Free, auto-renewed</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Realistically: the domain, and nothing else.</strong> <a href="https://www.cloudflare.com/plans/">Current
+pricing</a> — check it rather than trusting this
+table, which will age.</p>
+<p>The one thing to know: the free tier's failure mode is a <strong>429 / "over limit"</strong>
+response, not a bill. If your project unexpectedly goes viral, it goes down
+rather than charging you. For a personal project that's the right trade.</p>
+<hr />
+<h2 id="8-things-that-will-bite-you">8. Things that will bite you<a class="anchor" href="#8-things-that-will-bite-you" aria-label="Link to this section">#</a></h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>What's actually happening</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Build succeeds, site is blank</td>
+<td>Wrong output directory. Check what <code>npm run build</code> produces</td>
+</tr>
+<tr>
+<td>Build fails on a dependency</td>
+<td><code>node_modules</code> was committed, or <code>package-lock.json</code> wasn't. Commit the lockfile, ignore the folder</td>
+</tr>
+<tr>
+<td>Build fails, works locally</td>
+<td>Node version. Set <code>NODE_VERSION</code> in environment variables to your <code>node -v</code></td>
+</tr>
+<tr>
+<td>Custom domain stuck "pending"</td>
+<td>Domain isn't in this Cloudflare account, or nameservers haven't switched. <code>dig NS yourthing.com</code></td>
+</tr>
+<tr>
+<td>Function returns 500</td>
+<td>Missing environment variable, usually. Check the real-time logs under <strong>Functions</strong></td>
+</tr>
+<tr>
+<td><code>/api/…</code> returns your HTML</td>
+<td>The <code>functions/</code> folder must be at the <strong>repo root</strong>, not inside <code>src/</code></td>
+</tr>
+<tr>
+<td>Env var change had no effect</td>
+<td>Variables apply at build time — redeploy</td>
+</tr>
+<tr>
+<td>Works with <code>www</code>, not without</td>
+<td>Add both as custom domains</td>
+</tr>
+<tr>
+<td>Old version still showing</td>
+<td>Your browser. Hard-reload (Cmd/Ctrl+Shift+R) before suspecting Cloudflare</td>
+</tr>
+<tr>
+<td>Email stopped after moving DNS</td>
+<td>The <code>MX</code> records didn't import. Copy them from your old provider — see step 2b</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<p><strong>Next:</strong> <a href="30-share-it.html">Share it →</a></p>
+<p><em>Curious what the other track looks like? <a href="20-aws.html">Track B: AWS</a>. You don't
+need it, but the comparison is instructive — the same four layers, more visible.</em></p>
+    <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
+    <nav class="pager"><a class="prev" href="06-let-claude-drive.html"><span>Previous</span>Let Claude drive</a><a class="next" href="20-aws.html"><span>Next</span>Track B — AWS</a></nav>
+  </main>
+</div>
+<script>
+// Copy the whole block — several are heredocs that break if pasted line by line.
+document.querySelectorAll('.codewrap').forEach(function (w) {
+  var btn = w.querySelector('.copy'), pre = w.querySelector('pre');
+  if (!btn || !pre) return;
+  btn.addEventListener('click', function () {
+    navigator.clipboard.writeText(pre.innerText).then(function () {
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+    }).catch(function () { btn.textContent = 'Press Ctrl+C'; });
+  });
+});
+
+// Remember which pages are finished — the AWS track spans more than one sitting.
+(function () {
+  var KEY = 'swyb-done', box = document.getElementById('page-done');
+  if (!box) return;
+  var page = document.body.dataset.page;
+  var read = function () { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
+  var done = read();
+  box.checked = !!done[page];
+  box.addEventListener('change', function () {
+    var d = read();
+    if (box.checked) { d[page] = true; } else { delete d[page]; }
+    localStorage.setItem(KEY, JSON.stringify(d));
+    paint();
+  });
+  function paint() {
+    var d = read();
+    document.querySelectorAll('.nav a[data-page]').forEach(function (a) {
+      a.textContent.indexOf('✓') === 0 && (a.textContent = a.textContent.slice(1));
+      var t = a.querySelector('.tick');
+      if (t) t.textContent = d[a.dataset.page] ? '✓ ' : '';
+    });
+  }
+  paint();
+})();
+</script>
+</body>
+</html>

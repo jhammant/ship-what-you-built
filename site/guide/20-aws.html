@@ -1,0 +1,1066 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Track B — AWS — Ship What You Built</title>
+<meta name="description" content="Track B — AWS — part of a free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:title" content="Track B — AWS — Ship What You Built">
+<meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/20-aws.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#F6F7F5;--surface:#FFF;--sunken:#EEF0EC;--ink:#14181B;--ink-soft:#3D4642;
+--muted:#5B6560;--line:rgba(20,24,27,.13);--line-soft:rgba(20,24,27,.07);
+--live:#16794C;--live-ink:#FFF;--live-wash:rgba(22,121,76,.09);--stuck:#9A5B18;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+--sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;--ink-soft:#C3CCC6;
+--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}}
+:root[data-theme="dark"]{--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;
+--ink-soft:#C3CCC6;--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+line-height:1.68;font-size:1.02rem;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--live)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--live);outline-offset:3px;border-radius:5px}
+.shell{display:grid;grid-template-columns:17rem minmax(0,1fr);gap:2.5rem;
+max-width:78rem;margin-inline:auto;padding:0 clamp(1rem,4vw,2.5rem)}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr);gap:0}}
+.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;
+padding:2rem 0;border-right:1px solid var(--line-soft)}
+@media (max-width:900px){.side{position:static;max-height:none;border-right:0;
+border-bottom:1px solid var(--line-soft);padding-bottom:1rem}}
+.brand{font-weight:660;letter-spacing:-.02em;text-decoration:none;display:block;margin-bottom:.35rem}
+.brand small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;letter-spacing:0}
+.nav{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:.15rem}
+.nav a{display:block;padding:.42rem .6rem;border-radius:7px;text-decoration:none;
+font-size:.925rem;color:var(--ink-soft)}
+.nav a:hover{background:var(--sunken)}
+.nav a[aria-current="page"]{background:var(--live-wash);color:var(--ink);font-weight:600}
+.nav small{display:block;color:var(--muted);font-size:.76rem;line-height:1.35}
+.onpage{margin-top:1.5rem;border-top:1px solid var(--line-soft);padding-top:1rem}
+.onpage p{margin:0 0 .5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;
+text-transform:uppercase;color:var(--muted)}
+.onpage ul{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+.onpage a{display:block;padding:.2rem .35rem;font-size:.85rem;color:var(--muted);
+text-decoration:none;border-radius:5px}
+.onpage a:hover{color:var(--ink);background:var(--sunken)}
+.onpage .lvl3{padding-left:1rem;font-size:.8rem}
+main{padding:2.5rem 0 4rem;min-width:0;max-width:46rem}
+h1{font-size:clamp(1.9rem,1.4rem+2vw,2.7rem);line-height:1.1;letter-spacing:-.03em;
+margin:0 0 1.5rem;text-wrap:balance}
+h2{font-size:1.5rem;line-height:1.2;letter-spacing:-.022em;margin:2.8rem 0 .9rem;
+padding-top:1.4rem;border-top:1px solid var(--line-soft);text-wrap:balance}
+h3{font-size:1.13rem;letter-spacing:-.015em;margin:2rem 0 .6rem}
+h2 .anchor,h3 .anchor{opacity:0;margin-left:.4rem;color:var(--muted);text-decoration:none;font-weight:400}
+h2:hover .anchor,h3:hover .anchor,.anchor:focus-visible{opacity:1}
+p,ul,ol{margin:0 0 1.05rem}
+li{margin-bottom:.3rem}
+strong{font-weight:650}
+code{font-family:var(--mono);font-size:.875em;background:var(--sunken);
+padding:.12em .34em;border-radius:4px;overflow-wrap:break-word}
+.codewrap{position:relative;margin:0 0 1.2rem}
+pre{margin:0;overflow-x:auto;background:var(--sunken);border:1px solid var(--line-soft);
+border-radius:10px;padding:1rem 1.1rem;font-family:var(--mono);font-size:.845rem;line-height:1.62}
+pre code{background:none;padding:0;font-size:1em}
+.copy{position:absolute;top:.5rem;right:.5rem;font:inherit;font-size:.75rem;
+padding:.28rem .6rem;border-radius:6px;border:1px solid var(--line);
+background:var(--surface);color:var(--muted);cursor:pointer;opacity:0;transition:opacity .12s}
+.codewrap:hover .copy,.copy:focus-visible{opacity:1}
+.copy.done{color:var(--live);border-color:var(--live)}
+@media (hover:none){.copy{opacity:1}}
+blockquote{margin:0 0 1.2rem;padding:.9rem 1.1rem;border-left:3px solid var(--live);
+background:var(--live-wash);border-radius:0 9px 9px 0}
+blockquote > :last-child{margin-bottom:0}
+blockquote h3{margin-top:.2rem}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:0 0 1.2rem}
+table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+th,td{text-align:left;padding:.65rem .9rem;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+tbody tr:last-child td{border-bottom:0}
+hr{border:0;border-top:1px solid var(--line-soft);margin:2.5rem 0}
+img{max-width:100%;height:auto}
+.done-toggle{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);
+margin:.2rem 0 1.6rem;cursor:pointer;user-select:none}
+.done-toggle input{accent-color:var(--live);width:1rem;height:1rem}
+.pager{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:space-between;
+margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line-soft)}
+.pager a{flex:1 1 14rem;padding:.9rem 1.1rem;border:1px solid var(--line);border-radius:10px;
+text-decoration:none;background:var(--surface)}
+.pager a:hover{border-color:var(--live)}
+.pager span{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
+.pager .next{text-align:right}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-page="20-aws">
+<div class="shell">
+  <aside class="side">
+    <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
+    <nav><ul class="nav"><li><a href="00-start-here.html" data-page="00-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="01-your-machine.html" data-page="01-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="02-accounts.html" data-page="02-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="03-keys-and-access.html" data-page="03-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="04-three-layers.html" data-page="04-three-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="05-github.html" data-page="05-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="06-let-claude-drive.html" data-page="06-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" aria-current="page" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#part-1--not-getting-a-surprise-bill">Part 1 — Not getting a surprise bill</a></li><li><a class="lvl3" href="#11-create-the-account">1.1 Create the account</a></li><li><a class="lvl3" href="#12-mfa-on-root--now-not-later">1.2 MFA on root — now, not later</a></li><li><a class="lvl3" href="#13-a-budget-alarm--also-now">1.3 A budget alarm — also now</a></li><li><a class="lvl3" href="#14-never-create-an-access-key-for-root">1.4 Never create an access key for root</a></li><li><a class="lvl2" href="#part-2--credentials">Part 2 — Credentials</a></li><li><a class="lvl3" href="#21-an-iam-user">2.1 An IAM user</a></li><li><a class="lvl3" href="#22-the-key">2.2 The key</a></li><li><a class="lvl3" href="#23-store-it-properly">2.3 Store it properly</a></li><li><a class="lvl3" href="#24-check-it-and-save-your-account-id">2.4 Check it, and save your account ID</a></li><li><a class="lvl3" href="#25-keep-your-variables-somewhere-that-survives">2.5 Keep your variables somewhere that survives</a></li><li><a class="lvl2" href="#part-3--the-domain">Part 3 — The domain</a></li><li><a class="lvl3" href="#31-buy-it">3.1 Buy it</a></li><li><a class="lvl3" href="#32-find-your-hosted-zone">3.2 Find your hosted zone</a></li><li><a class="lvl2" href="#part-4--hosting-your-files-shape-1">Part 4 — Hosting your files (Shape 1)</a></li><li><a class="lvl3" href="#about-the-cat--file-eof-blocks-below">About the cat &gt; file &lt;&lt;EOF blocks below</a></li><li><a class="lvl3" href="#41-the-bucket">4.1 The bucket</a></li><li><a class="lvl3" href="#42-the-certificate--us-east-1-always">4.2 The certificate — us-east-1, always</a></li><li><a class="lvl3" href="#43-cloudfront-with-a-private-bucket">4.3 CloudFront, with a private bucket</a></li><li><a class="lvl3" href="#44-point-the-domain-at-it">4.4 Point the domain at it</a></li><li><a class="lvl2" href="#part-5--adding-a-backend-shape-2">Part 5 — Adding a backend (Shape 2)</a></li><li><a class="lvl3" href="#51-the-function">5.1 The function</a></li><li><a class="lvl3" href="#52-a-role-for-it">5.2 A role for it</a></li><li><a class="lvl3" href="#53-deploy-it-and-give-it-a-url">5.3 Deploy it and give it a URL</a></li><li><a class="lvl3" href="#54-secrets-for-the-function">5.4 Secrets for the function</a></li><li><a class="lvl3" href="#55-putting-it-on-api-of-your-domain">5.5 Putting it on /api/* of your domain</a></li><li><a class="lvl2" href="#part-6--deploys-without-storing-a-key">Part 6 — Deploys without storing a key</a></li><li><a class="lvl3" href="#61-trust-github-as-an-identity-provider">6.1 Trust GitHub as an identity provider</a></li><li><a class="lvl3" href="#62-a-role-only-your-repo-can-assume">6.2 A role only your repo can assume</a></li><li><a class="lvl3" href="#if-this-fails-with-not-authorized-read-this-before-changing-anything">If this fails with &quot;Not authorized&quot;, read this before changing anything</a></li><li><a class="lvl3" href="#63-the-workflow">6.3 The workflow</a></li><li><a class="lvl2" href="#part-7--what-it-costs">Part 7 — What it costs</a></li><li><a class="lvl2" href="#part-8--worth-doing-next">Part 8 — Worth doing next</a></li><li><a class="lvl2" href="#part-9--turning-it-off">Part 9 — Turning it off</a></li><li><a class="lvl2" href="#things-that-will-bite-you">Things that will bite you</a></li><li><a class="lvl2" href="#working-with-claude-code-on-this-track">Working with Claude Code on this track</a></li></ul></div>
+  </aside>
+  <main>
+<h1>Track B — AWS</h1>
+<p><strong>You'll end with:</strong> your project live on your own domain, over HTTPS, served by
+CloudFront, deploying itself from GitHub with <strong>no AWS key stored anywhere</strong>.</p>
+<p><strong>Time:</strong> ~90 minutes, much of it waiting for DNS and CloudFront.
+<strong>Cost:</strong> the domain, plus ~$0.50/month for the DNS zone. Everything else rounds
+to zero at personal-project scale. Route 53 charges a little more for the domain
+itself than a budget registrar — about $16/yr for a <code>.com</code> against roughly $11
+elsewhere — in exchange for registration and DNS being wired together for you.</p>
+<blockquote>
+<p><strong>Everything below was run start-to-finish while writing this</strong>, on a
+newly-registered domain, and the guide was corrected wherever reality
+disagreed with it. The site you're reading this on is hosted exactly this way.</p>
+</blockquote>
+<p><strong>Before you start:</strong> <a href="04-three-layers.html">the three layers</a> and
+<a href="05-github.html">your code on GitHub</a>.</p>
+<blockquote>
+<p><strong>This track has a real failure mode that Track A doesn't: money.</strong> A leaked
+AWS key gets used for crypto mining, and the bills reach five figures within
+hours. Part 1 is not optional throat-clearing — it's the seatbelt. Do it
+first, in order.</p>
+</blockquote>
+<hr />
+<h2 id="part-1--not-getting-a-surprise-bill">Part 1 — Not getting a surprise bill<a class="anchor" href="#part-1--not-getting-a-surprise-bill" aria-label="Link to this section">#</a></h2>
+<h3 id="11-create-the-account">1.1 Create the account<a class="anchor" href="#11-create-the-account" aria-label="Link to this section">#</a></h3>
+<p><a href="https://aws.amazon.com">aws.amazon.com</a>. You need a card even though you'll
+spend almost nothing.</p>
+<p>The email and password you just used are the <strong>root account</strong>. It can do
+anything, including close the account and run up unlimited charges. Treat it
+like the deed to your house.</p>
+<h3 id="12-mfa-on-root--now-not-later">1.2 MFA on root — now, not later<a class="anchor" href="#12-mfa-on-root--now-not-later" aria-label="Link to this section">#</a></h3>
+<p>Console → your account name (top right) → <strong>Security credentials</strong> →
+<strong>Multi-factor authentication</strong> → assign an authenticator app.</p>
+<p>Two minutes, and it removes the entire category of disaster above.</p>
+<h3 id="13-a-budget-alarm--also-now">1.3 A budget alarm — also now<a class="anchor" href="#13-a-budget-alarm--also-now" aria-label="Link to this section">#</a></h3>
+<p>Console → <strong>Billing and Cost Management</strong> → <strong>Budgets</strong> → <strong>Create budget</strong> →
+<strong>Zero spend budget</strong>, or a monthly cost budget of $5. Give it your email.</p>
+<p>This is your smoke detector. Everything in this guide should keep you under
+$1/month, so a $5 alarm means <em>something is wrong</em>, not <em>you're being frugal</em>.</p>
+<p>Do this in the console — the CLI version wants JSON files and you have no
+credentials yet anyway.</p>
+<h3 id="14-never-create-an-access-key-for-root">1.4 Never create an access key for root<a class="anchor" href="#14-never-create-an-access-key-for-root" aria-label="Link to this section">#</a></h3>
+<p>If you're offered one, decline. Part 2 makes a separate identity. This is the
+most common beginner mistake on AWS and it's the one that costs money.</p>
+<hr />
+<h2 id="part-2--credentials">Part 2 — Credentials<a class="anchor" href="#part-2--credentials" aria-label="Link to this section">#</a></h2>
+<p>An access key is two strings: an <strong>access key ID</strong> (<code>AKIA…</code>, semi-public) and a
+<strong>secret access key</strong> (shown exactly once). Together they let the AWS CLI — and
+therefore Claude Code — act as you.</p>
+<h3 id="21-an-iam-user">2.1 An IAM user<a class="anchor" href="#21-an-iam-user" aria-label="Link to this section">#</a></h3>
+<p>Console → <strong>IAM</strong> → <strong>Users</strong> → <strong>Create user</strong>.</p>
+<ol>
+<li>Name it something like <code>myname-cli</code>.</li>
+<li><strong>Don't</strong> tick "Provide user access to the AWS Management Console" — this
+   identity is for the CLI only.</li>
+<li>Permissions → <strong>Attach policies directly</strong> → <strong>AdministratorAccess</strong>.</li>
+<li>Create.</li>
+</ol>
+<blockquote>
+<p><strong>On AdministratorAccess:</strong> more power than this project needs, and in a work
+account you'd scope it down. For a personal account where you're the only user
+and you're about to touch six services, the alternative is fighting permission
+errors all afternoon. Accept it, and let the budget alarm and MFA be the real
+guardrails.</p>
+</blockquote>
+<h3 id="22-the-key">2.2 The key<a class="anchor" href="#22-the-key" aria-label="Link to this section">#</a></h3>
+<p>Click into the user → <strong>Security credentials</strong> → <strong>Create access key</strong> →
+<strong>Command Line Interface (CLI)</strong> → acknowledge → <strong>Create</strong>.</p>
+<p>The secret is shown <strong>once</strong>. Lose it and you delete the key and make another —
+there's no recovery.</p>
+<h3 id="23-store-it-properly">2.3 Store it properly<a class="anchor" href="#23-store-it-properly" aria-label="Link to this section">#</a></h3>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># macOS
+brew install awscli jq
+
+aws configure
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">AWS Access Key ID     : AKIA................
+AWS Secret Access Key : ....................
+Default region name   : eu-west-2      # London. us-east-1 if you're in the US
+Default output format : json
+</code></pre></div>
+<p>That writes <code>~/.aws/credentials</code>, which is the correct home for it.</p>
+<p><strong>The rules:</strong></p>
+<ul>
+<li><strong>Never</strong> put the key in your project folder or a <code>.env</code> file you might commit.</li>
+<li><strong>Never</strong> paste it into a chat with Claude. Claude reads it from <code>~/.aws/</code> via
+  the CLI — it never needs to see the string. If something asks you to paste a
+  secret, something is set up wrong.</li>
+<li>Suspect a leak? IAM → user → Security credentials → deactivate, delete, create
+  a new one. Thirty seconds. Do it <strong>on suspicion, not proof</strong>.</li>
+</ul>
+<h3 id="24-check-it-and-save-your-account-id">2.4 Check it, and save your account ID<a class="anchor" href="#24-check-it-and-save-your-account-id" aria-label="Link to this section">#</a></h3>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">aws sts get-caller-identity
+export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+echo $ACCOUNT_ID
+</code></pre></div>
+<p><code>InvalidClientTokenId</code> means the key was mistyped — rerun <code>aws configure</code>.</p>
+<blockquote>
+<p><strong>Longer term:</strong> access keys are long-lived secrets, and AWS's own advice is
+IAM Identity Center (<code>aws sso login</code>, nothing durable on disk). Better, and
+more moving parts than a first project needs. Start here, upgrade later.</p>
+</blockquote>
+<h3 id="25-keep-your-variables-somewhere-that-survives">2.5 Keep your variables somewhere that survives<a class="anchor" href="#25-keep-your-variables-somewhere-that-survives" aria-label="Link to this section">#</a></h3>
+<p>The rest of this track builds up a set of shell variables — <code>$DOMAIN</code>,
+<code>$ZONE_ID</code>, <code>$CERT_ARN</code>, <code>$BUCKET</code>, <code>$DIST_ID</code> — and each step uses the ones
+before it.</p>
+<p><strong><code>export</code> only lasts as long as that one terminal window.</strong> Close it, reboot,
+or open a second tab, and they're all gone. Half of them are then genuinely
+annoying to look up again. This catches people out constantly, because it
+happens between sessions and the error you get is a command silently running
+against an empty string.</p>
+<p>So put them in a file from the start:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">mkdir -p ~/.config/myproject
+touch ~/.config/myproject/env
+chmod 600 ~/.config/myproject/env
+</code></pre></div>
+<p>Save each value <strong>as you create it</strong>, with this helper:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">remember() {
+  local file=&quot;$HOME/.config/myproject/env&quot;
+  grep -v &quot;^export $1=&quot; &quot;$file&quot; &gt; &quot;$file.tmp&quot; 2&gt;/dev/null || true
+  echo &quot;export $1='$2'&quot; &gt;&gt; &quot;$file.tmp&quot;
+  mv &quot;$file.tmp&quot; &quot;$file&quot;
+  export &quot;$1=$2&quot;
+}
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">remember DOMAIN yourthing.com
+remember ACCOUNT_ID &quot;$(aws sts get-caller-identity --query Account --output text)&quot;
+</code></pre></div>
+<p><strong>The command blocks below all say <code>export</code>,</strong> because that's the idiom you'll
+see everywhere else and it's what you should recognise. Wherever one appears,
+<code>remember FOO bar</code> does the same thing to your current shell <em>and</em> survives
+closing it. Use whichever you like — just be consistent.</p>
+<p>And at the start of any new terminal:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">source ~/.config/myproject/env
+</code></pre></div>
+<p><strong>This file holds identifiers, not credentials</strong> — bucket names, ARNs, zone IDs.
+Your actual key stays in <code>~/.aws/credentials</code> where the CLI put it. Don't put
+secrets in here, and don't put this file in your project folder where it could
+get committed.</p>
+<p>If you'd rather not bother, that's fine — just know that when a command three
+sections from now fails with something like <code>Invalid length for parameter</code>, the
+first thing to check is <code>echo $ZONE_ID</code> and whether it's empty.</p>
+<hr />
+<h2 id="part-3--the-domain">Part 3 — The domain<a class="anchor" href="#part-3--the-domain" aria-label="Link to this section">#</a></h2>
+<h3 id="31-buy-it">3.1 Buy it<a class="anchor" href="#31-buy-it" aria-label="Link to this section">#</a></h3>
+<p>Console → <strong>Route 53</strong> → <strong>Registered domains</strong> → <strong>Register domains</strong>.</p>
+<p>Registering inside Route 53 means AWS handles both registration and DNS and
+wires them together automatically. A pound or two more per year than a budget
+registrar; for a first project, take the simplicity.</p>
+<p>Leave <strong>privacy protection enabled</strong> (free, keeps your home address out of
+public WHOIS). Registration takes minutes to a few hours.</p>
+<p><strong>Click the verification email.</strong> ICANN requires it, and an unverified domain
+gets suspended after 15 days. This genuinely catches people out.</p>
+<blockquote>
+<p><strong>Free premium-price detector.</strong> Some names are flagged <em>premium</em> by the
+registry and cost 10–100× normal. Route 53 refuses to register premium domains
+at all — so if Route 53 offers you the name at ~$12–16/yr, it isn't premium,
+buy it. If Route 53 says it can't while other registrars show it available,
+that's your signal. Check the real number elsewhere before falling in love.</p>
+</blockquote>
+<h3 id="32-find-your-hosted-zone">3.2 Find your hosted zone<a class="anchor" href="#32-find-your-hosted-zone" aria-label="Link to this section">#</a></h3>
+<p>Registering creates a <strong>hosted zone</strong> automatically — the container for this
+domain's DNS records, and the thing that costs $0.50/month.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">export DOMAIN=yourthing.com                          # &lt;-- change this
+export ZONE_ID=$(aws route53 list-hosted-zones \
+  --query &quot;HostedZones[?Name=='${DOMAIN}.'].Id&quot; --output text | cut -d/ -f3)
+echo $ZONE_ID
+</code></pre></div>
+<blockquote>
+<p><strong>If you bought a <code>.dev</code> domain:</strong> the whole <code>.dev</code> TLD is on the browser HSTS
+preload list, so browsers <em>refuse</em> plain HTTP — there's no "click through the
+warning" escape hatch. A half-finished setup looks completely broken rather
+than partly working. This guide sets up a real certificate anyway.</p>
+</blockquote>
+<hr />
+<h2 id="part-4--hosting-your-files-shape-1">Part 4 — Hosting your files (Shape 1)<a class="anchor" href="#part-4--hosting-your-files-shape-1" aria-label="Link to this section">#</a></h2>
+<p>Static files live in an <strong>S3 bucket</strong>; <strong>CloudFront</strong> puts them on your domain
+with HTTPS. The bucket stays completely private — only CloudFront can read it.</p>
+<blockquote>
+<h3 id="about-the-cat--file-eof-blocks-below">About the <code>cat &gt; file &lt;&lt;EOF</code> blocks below<a class="anchor" href="#about-the-cat--file-eof-blocks-below" aria-label="Link to this section">#</a></h3>
+<p>Several steps write a configuration file using a shape that looks like this:</p>
+<p><code>text
+cat &gt; example.json &lt;&lt;EOF
+{ "some": "config" }
+EOF</code></p>
+<p>That is <strong>one command</strong>, not three. Copy and paste the <em>whole block at once</em>,
+including the closing <code>EOF</code> and the newline after it. If you paste it line by
+line you'll end up staring at a bare <code>&gt;</code> prompt with no output and no error —
+the shell is waiting for the <code>EOF</code> that ends the file. Press <code>Ctrl-C</code> and
+paste the whole thing again.</p>
+<p>These blocks also write scratch files into whatever folder you're in. Keep
+them out of your repo and off your website:</p>
+<p><code>bash
+mkdir -p .aws-setup &amp;&amp; cd .aws-setup
+printf '.aws-setup/\n' &gt;&gt; ../.gitignore</code></p>
+<p>Run the rest of this track from there. One of those files contains your AWS
+account ID, which Part 6 rightly tells you to keep out of a public repo.</p>
+</blockquote>
+<h3 id="41-the-bucket">4.1 The bucket<a class="anchor" href="#41-the-bucket" aria-label="Link to this section">#</a></h3>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># Globally unique, and NO DOTS — see the warning below.
+export BUCKET=$(printf '%s' &quot;$DOMAIN&quot; | tr '.' '-')-site   # yourthing-com-site
+export REGION=$(aws configure get region)
+
+aws s3api create-bucket --bucket $BUCKET --region $REGION \
+  --create-bucket-configuration LocationConstraint=$REGION
+
+# Keep it private. CloudFront will be given its own way in.
+aws s3api put-public-access-block --bucket $BUCKET \
+  --public-access-block-configuration \
+  &quot;BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true&quot;
+</code></pre></div>
+<blockquote>
+<p><strong>Don't put dots in the bucket name.</strong> It's tempting to name it after the
+domain — <code>yourthing.com-site</code> — and it will create fine. But CloudFront reaches
+the bucket at <code>&lt;bucket&gt;.s3.&lt;region&gt;.amazonaws.com</code> over HTTPS, and AWS's
+certificate for that endpoint is <code>*.s3.&lt;region&gt;.amazonaws.com</code>. A wildcard
+covers exactly <strong>one</strong> label, so any dot in the bucket name adds a label the
+certificate doesn't cover and the origin connection fails TLS validation. The
+error surfaces much later as a confusing 502 from CloudFront. Hyphens
+throughout, always.</p>
+<p><code>us-east-1</code> is a special case: <strong>omit</strong> the <code>--create-bucket-configuration</code>
+flag entirely there, or the call fails with <code>InvalidLocationConstraint</code>.</p>
+</blockquote>
+<p>Upload your site:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># From the folder holding your built files (dist/, build/, or the HTML itself).
+# Check you're in the right place before running anything:
+pwd &amp;&amp; ls index.html
+
+aws s3 sync . s3://$BUCKET/ --delete \
+  --exclude &quot;.*&quot; --exclude &quot;.*/*&quot; --exclude &quot;node_modules/*&quot;
+</code></pre></div>
+<blockquote>
+<p><strong>Why the <code>--exclude</code> flags matter more than they look.</strong> If you have no build
+step, the folder holding your HTML <em>is</em> your project folder — the one with
+<code>.git/</code> and possibly <code>.env</code> in it. <strong><code>aws s3 sync</code> does not read
+<code>.gitignore</code>.</strong> Without those excludes you would publish your entire commit
+history and your API keys to a bucket that CloudFront then serves to the
+world, having spent all of <a href="05-github.html">page 02</a> learning not to.</p>
+</blockquote>
+<p><code>--delete</code> removes files from the bucket that no longer exist locally. Powerful
+and unforgiving — <strong>always check you're in the right folder first</strong>, which is
+what the <code>pwd &amp;&amp; ls</code> line is for.</p>
+<h3 id="42-the-certificate--us-east-1-always">4.2 The certificate — <code>us-east-1</code>, always<a class="anchor" href="#42-the-certificate--us-east-1-always" aria-label="Link to this section">#</a></h3>
+<p><strong>This must be in <code>us-east-1</code>.</strong> Not your region. CloudFront is global and only
+reads certificates from that one region. This is the single most common failure
+in the whole setup, and the error you get is unhelpfully vague.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">export CERT_ARN=$(aws acm request-certificate \
+  --domain-name $DOMAIN \
+  --subject-alternative-names &quot;www.$DOMAIN&quot; \
+  --validation-method DNS \
+  --region us-east-1 \
+  --query CertificateArn --output text)
+echo $CERT_ARN
+</code></pre></div>
+<p>Prove you own the domain by publishing the records ACM asks for.</p>
+<p><strong>You asked for two names, so ACM wants two records</strong> — one for the apex and one
+for <code>www</code>. Publishing only the first is the commonest way to get a certificate
+that sits on "pending" forever, so build the change batch from <em>all</em> of them:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">aws acm describe-certificate --certificate-arn $CERT_ARN --region us-east-1 \
+  --query &quot;Certificate.DomainValidationOptions[].ResourceRecord&quot; \
+  --output json &gt; validation.json
+
+jq '{Changes: [.[] | {
+      Action: &quot;UPSERT&quot;,
+      ResourceRecordSet: {
+        Name: .Name, Type: .Type, TTL: 300,
+        ResourceRecords: [{ Value: .Value }]
+      }
+    }] | unique_by(.ResourceRecordSet.Name)}' validation.json &gt; change-batch.json
+
+aws route53 change-resource-record-sets \
+  --hosted-zone-id $ZONE_ID --change-batch file://change-batch.json
+</code></pre></div>
+<p><code>unique_by</code> matters: when the names overlap ACM sometimes asks for the same
+record twice, and Route 53 rejects a batch containing duplicates.</p>
+<p>Now wait:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">aws acm wait certificate-validated --certificate-arn $CERT_ARN --region us-east-1
+aws acm describe-certificate --certificate-arn $CERT_ARN --region us-east-1 \
+  --query 'Certificate.Status' --output text
+</code></pre></div>
+<p>That's <a href="04-three-layers.html#layer-4--the-certificate">layer 4 waiting on layer 2</a>,
+made visible. Usually 2–5 minutes. <strong>Always check the status afterwards</strong> — the
+waiter gives up after a fixed number of attempts and, depending on your CLI
+version, may not fail loudly when it does.</p>
+<blockquote>
+<p><strong>If you registered the domain minutes ago, expect this to time out the first
+time, and don't go hunting for a mistake.</strong> A brand-new registration isn't
+<em>delegated</em> straight away: the <code>.com</code> registry has to publish your nameservers
+before anyone — including ACM — can look anything up in your zone. Until then
+your validation records are correct and invisible.</p>
+<p>Check with <code>dig NS $DOMAIN +short</code>. Empty means not delegated yet; wait and
+re-run the waiter. It's typically 10–60 minutes after registration completes.
+This is a layer 1 problem wearing a layer 4 costume, and it catches everyone
+who buys a domain and builds immediately.</p>
+</blockquote>
+<p>If the domain <em>is</em> delegated and validation still hangs past 15 minutes, the
+record really is wrong — check it resolves:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">dig +short _something.$DOMAIN CNAME
+</code></pre></div>
+<h3 id="43-cloudfront-with-a-private-bucket">4.3 CloudFront, with a private bucket<a class="anchor" href="#43-cloudfront-with-a-private-bucket" aria-label="Link to this section">#</a></h3>
+<p>First an <strong>Origin Access Control</strong> — the thing that lets CloudFront read a
+bucket that's closed to everyone else:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">export OAC_ID=$(aws cloudfront create-origin-access-control \
+  --origin-access-control-config \
+  &quot;Name=$BUCKET-oac,Description=OAC for $BUCKET,SigningProtocol=sigv4,SigningBehavior=always,OriginAccessControlOriginType=s3&quot; \
+  --query 'OriginAccessControl.Id' --output text)
+echo $OAC_ID
+</code></pre></div>
+<p>Then the distribution:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">cat &gt; cf-config.json &lt;&lt;EOF
+{
+  &quot;CallerReference&quot;: &quot;$BUCKET-$(date +%s)&quot;,
+  &quot;Comment&quot;: &quot;$DOMAIN&quot;,
+  &quot;Enabled&quot;: true,
+  &quot;DefaultRootObject&quot;: &quot;index.html&quot;,
+  &quot;Aliases&quot;: { &quot;Quantity&quot;: 2, &quot;Items&quot;: [&quot;${DOMAIN}&quot;, &quot;www.${DOMAIN}&quot;] },
+  &quot;Origins&quot;: {
+    &quot;Quantity&quot;: 1,
+    &quot;Items&quot;: [{
+      &quot;Id&quot;: &quot;s3-origin&quot;,
+      &quot;DomainName&quot;: &quot;${BUCKET}.s3.${REGION}.amazonaws.com&quot;,
+      &quot;OriginAccessControlId&quot;: &quot;${OAC_ID}&quot;,
+      &quot;S3OriginConfig&quot;: { &quot;OriginAccessIdentity&quot;: &quot;&quot; }
+    }]
+  },
+  &quot;DefaultCacheBehavior&quot;: {
+    &quot;TargetOriginId&quot;: &quot;s3-origin&quot;,
+    &quot;ViewerProtocolPolicy&quot;: &quot;redirect-to-https&quot;,
+    &quot;AllowedMethods&quot;: {
+      &quot;Quantity&quot;: 2, &quot;Items&quot;: [&quot;GET&quot;,&quot;HEAD&quot;],
+      &quot;CachedMethods&quot;: { &quot;Quantity&quot;: 2, &quot;Items&quot;: [&quot;GET&quot;,&quot;HEAD&quot;] }
+    },
+    &quot;CachePolicyId&quot;: &quot;658327ea-f89d-4fab-a63d-7e88639e58f6&quot;,
+    &quot;Compress&quot;: true
+  },
+  &quot;ViewerCertificate&quot;: {
+    &quot;ACMCertificateArn&quot;: &quot;${CERT_ARN}&quot;,
+    &quot;SSLSupportMethod&quot;: &quot;sni-only&quot;,
+    &quot;MinimumProtocolVersion&quot;: &quot;TLSv1.2_2021&quot;
+  }
+}
+EOF
+
+aws cloudfront create-distribution --distribution-config file://cf-config.json &gt; cf-out.json
+
+export DIST_ID=$(jq -r '.Distribution.Id' cf-out.json)
+export DIST_DOMAIN=$(jq -r '.Distribution.DomainName' cf-out.json)
+export DIST_ARN=$(jq -r '.Distribution.ARN' cf-out.json)
+echo &quot;$DIST_ID -&gt; $DIST_DOMAIN&quot;
+</code></pre></div>
+<p><code>658327ea-…</code> is the AWS-managed <strong>CachingOptimized</strong> policy — a fixed ID,
+identical in every account.</p>
+<p>Now let CloudFront — and only this distribution — read the bucket:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">cat &gt; bucket-policy.json &lt;&lt;EOF
+{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [{
+    &quot;Sid&quot;: &quot;AllowCloudFrontServicePrincipal&quot;,
+    &quot;Effect&quot;: &quot;Allow&quot;,
+    &quot;Principal&quot;: { &quot;Service&quot;: &quot;cloudfront.amazonaws.com&quot; },
+    &quot;Action&quot;: &quot;s3:GetObject&quot;,
+    &quot;Resource&quot;: &quot;arn:aws:s3:::${BUCKET}/*&quot;,
+    &quot;Condition&quot;: { &quot;StringEquals&quot;: { &quot;AWS:SourceArn&quot;: &quot;${DIST_ARN}&quot; } }
+  }]
+}
+EOF
+
+aws s3api put-bucket-policy --bucket $BUCKET --policy file://bucket-policy.json
+</code></pre></div>
+<p>That <code>Condition</code> is what keeps the bucket private: it grants access to the
+CloudFront <em>service</em>, but only when the request comes from <strong>your</strong> distribution.</p>
+<p>Wait for it to roll out — 5–15 minutes:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">aws cloudfront wait distribution-deployed --id $DIST_ID
+</code></pre></div>
+<blockquote>
+<p><strong>Got more than one page?</strong> <code>DefaultRootObject</code> above only applies to <code>/</code>.
+It does <strong>not</strong> make <code>/guide/</code> serve <code>/guide/index.html</code> — an S3 origin behind
+an Origin Access Control does no directory-index lookup of its own, so every
+folder-style URL returns <strong>403</strong>, which reads like a permissions problem and
+isn't one. (This site hit exactly that.)</p>
+<p>Fix it with a CloudFront Function, which runs on every request for a fraction
+of a penny per million:</p>
+<p><code>javascript
+function handler(event) {
+  var request = event.request;
+  var uri = request.uri;
+  if (uri.endsWith('/')) {
+    request.uri = uri + 'index.html';
+  } else if (!uri.includes('.')) {
+    request.uri = uri + '/index.html';
+  }
+  return request;
+}</code></p>
+<p><code>bash
+aws cloudfront create-function --name dir-index \
+  --function-config '{"Comment":"Resolve directory URLs","Runtime":"cloudfront-js-2.0"}' \
+  --function-code fileb://dirindex.js
+aws cloudfront publish-function --name dir-index --if-match &lt;ETag-from-above&gt;</code></p>
+<p>Then attach it to your distribution's default behaviour as a
+<strong>viewer-request</strong> function — easiest in the console under <strong>Behaviors</strong> →
+<strong>Edit</strong> → <strong>Function associations</strong>. Skip this entirely if your site is a
+single <code>index.html</code>.</p>
+<p><strong>Building a single-page app</strong> (React Router, Vue Router)? Deep links will 404,
+because there's no <code>about.html</code> in the bucket. Fix: CloudFront → your
+distribution → <strong>Error pages</strong> → create two custom responses, <code>403</code> and <code>404</code>,
+both returning <code>/index.html</code> with HTTP <strong>200</strong>. Then the router handles the
+path client-side.</p>
+</blockquote>
+<h3 id="44-point-the-domain-at-it">4.4 Point the domain at it<a class="anchor" href="#44-point-the-domain-at-it" aria-label="Link to this section">#</a></h3>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">for NAME in &quot;$DOMAIN&quot; &quot;www.$DOMAIN&quot;; do
+cat &gt; dns-$NAME.json &lt;&lt;EOF
+{
+  &quot;Changes&quot;: [{
+    &quot;Action&quot;: &quot;UPSERT&quot;,
+    &quot;ResourceRecordSet&quot;: {
+      &quot;Name&quot;: &quot;${NAME}&quot;,
+      &quot;Type&quot;: &quot;A&quot;,
+      &quot;AliasTarget&quot;: {
+        &quot;HostedZoneId&quot;: &quot;Z2FDTNDATAQYW2&quot;,
+        &quot;DNSName&quot;: &quot;${DIST_DOMAIN}&quot;,
+        &quot;EvaluateTargetHealth&quot;: false
+      }
+    }
+  }]
+}
+EOF
+aws route53 change-resource-record-sets \
+  --hosted-zone-id $ZONE_ID --change-batch file://dns-$NAME.json
+done
+</code></pre></div>
+<p><code>Z2FDTNDATAQYW2</code> is not a typo and not specific to you — it's a fixed constant
+meaning "CloudFront" to Route 53. Every CloudFront alias record on earth uses it.</p>
+<p>An <strong>alias record</strong> is a Route 53 speciality: behaves like a CNAME, works at the
+apex — <a href="04-three-layers.html#the-apex-problem--the-one-gotcha-worth-knowing-in-advance">the problem from layer 2</a>,
+solved.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">dig +short $DOMAIN
+curl -sI https://$DOMAIN | head -1
+</code></pre></div>
+<p><code>HTTP/2 200</code> and you're live. <strong>Skip to Part 6</strong> unless you need a backend.</p>
+<hr />
+<h2 id="part-5--adding-a-backend-shape-2">Part 5 — Adding a backend (Shape 2)<a class="anchor" href="#part-5--adding-a-backend-shape-2" aria-label="Link to this section">#</a></h2>
+<p>A <strong>Lambda</strong> runs your code per request, then stops. You pay per request, and a
+million a month are free.</p>
+<h3 id="51-the-function">5.1 The function<a class="anchor" href="#51-the-function" aria-label="Link to this section">#</a></h3>
+<p><code>index.mjs</code>:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-javascript">export const handler = async (event) =&gt; {
+  const body = event.body ? JSON.parse(event.body) : {};
+
+  return {
+    statusCode: 200,
+    headers: { &quot;content-type&quot;: &quot;application/json&quot; },
+    body: JSON.stringify({ ok: true, youSent: body }),
+  };
+};
+</code></pre></div>
+<p><code>.mjs</code> tells Node it's an ES module, so <code>export</code> works without a <code>package.json</code>.</p>
+<h3 id="52-a-role-for-it">5.2 A role for it<a class="anchor" href="#52-a-role-for-it" aria-label="Link to this section">#</a></h3>
+<p>Every Lambda runs <em>as</em> an IAM role — even a hello-world, because it needs
+permission to write its own logs.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">cat &gt; trust-policy.json &lt;&lt;'EOF'
+{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [{
+    &quot;Effect&quot;: &quot;Allow&quot;,
+    &quot;Principal&quot;: { &quot;Service&quot;: &quot;lambda.amazonaws.com&quot; },
+    &quot;Action&quot;: &quot;sts:AssumeRole&quot;
+  }]
+}
+EOF
+
+aws iam create-role --role-name api-lambda-role \
+  --assume-role-policy-document file://trust-policy.json
+
+aws iam attach-role-policy --role-name api-lambda-role \
+  --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
+# IAM is eventually consistent across services: a role that exists here may not
+# be visible to Lambda for a few seconds. Without this pause, the next command
+# fails with &quot;The role defined for the function cannot be assumed by Lambda&quot;,
+# which blames the role when the real problem is timing.
+sleep 10
+</code></pre></div>
+<h3 id="53-deploy-it-and-give-it-a-url">5.3 Deploy it and give it a URL<a class="anchor" href="#53-deploy-it-and-give-it-a-url" aria-label="Link to this section">#</a></h3>
+<p><code>zip</code> is preinstalled on macOS; on Ubuntu/WSL it's <code>sudo apt install zip</code>.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">zip function.zip index.mjs
+
+aws lambda create-function \
+  --function-name api \
+  --runtime nodejs24.x \
+  --role arn:aws:iam::${ACCOUNT_ID}:role/api-lambda-role \
+  --handler index.handler \
+  --zip-file fileb://function.zip
+
+aws lambda create-function-url-config --function-name api --auth-type NONE
+aws lambda add-permission --function-name api \
+  --statement-id FunctionURLAllowPublicAccess \
+  --action lambda:InvokeFunctionUrl --principal &quot;*&quot; \
+  --function-url-auth-type NONE
+
+export FN_URL=$(aws lambda get-function-url-config \
+  --function-name api --query FunctionUrl --output text)
+curl -X POST $FN_URL -d '{&quot;hello&quot;:&quot;world&quot;}'
+</code></pre></div>
+<p><strong>Both</strong> permission commands are needed — creating the URL alone gets you a 403.</p>
+<blockquote>
+<p><strong>Runtimes go stale.</strong> <code>nodejs24.x</code> is current. If the CLI rejects it, your AWS
+CLI is out of date (<code>brew upgrade awscli</code>) — or use <code>nodejs22.x</code>, identical for
+this. Check the <a href="https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html">supported runtimes
+list</a> before
+debugging anything else.</p>
+</blockquote>
+<p>Update it later with:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">zip function.zip index.mjs
+aws lambda update-function-code --function-name api --zip-file fileb://function.zip
+</code></pre></div>
+<h3 id="54-secrets-for-the-function">5.4 Secrets for the function<a class="anchor" href="#54-secrets-for-the-function" aria-label="Link to this section">#</a></h3>
+<p>Environment variables, set on the function, never in the code:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">aws lambda update-function-configuration --function-name api \
+  --environment &quot;Variables={ANTHROPIC_API_KEY=sk-ant-...}&quot;
+</code></pre></div>
+<p>Read it in the handler as <code>process.env.ANTHROPIC_API_KEY</code>.</p>
+<blockquote>
+<p>For anything you'd mind leaking, graduate to <strong>AWS Secrets Manager</strong> (~$0.40
+per secret per month) — Lambda env vars are visible to anyone with console
+read access to the function. For a personal project's own key, env vars are a
+reasonable place to start.</p>
+</blockquote>
+<h3 id="55-putting-it-on-api-of-your-domain">5.5 Putting it on <code>/api/*</code> of your domain<a class="anchor" href="#55-putting-it-on-api-of-your-domain" aria-label="Link to this section">#</a></h3>
+<p>Add a second origin and cache behaviour to the distribution you already have, so
+<code>yourthing.com/api/…</code> hits the Lambda and everything else hits S3. It's fiddly
+in raw CLI and much easier in the console — CloudFront → your distribution →
+<strong>Origins</strong> → add the Lambda URL's hostname; then <strong>Behaviors</strong> → add
+<code>/api/*</code> → that origin → cache policy <strong>CachingDisabled</strong>
+(<code>4135ea2d-6df8-44a3-9df3-4b5a84be39ad</code>) → allow all HTTP methods.</p>
+<p>Or hand it over:</p>
+<blockquote>
+<p>Add my Lambda function URL as a second origin on CloudFront distribution
+$DIST_ID, with a cache behaviour routing <code>/api/*</code> to it, caching disabled, all
+HTTP methods allowed. Show me the config before you apply it.</p>
+</blockquote>
+<hr />
+<h2 id="part-6--deploys-without-storing-a-key">Part 6 — Deploys without storing a key<a class="anchor" href="#part-6--deploys-without-storing-a-key" aria-label="Link to this section">#</a></h2>
+<p>Right now deploying means running <code>aws s3 sync</code> by hand. Better: push to GitHub,
+GitHub deploys.</p>
+<p>The naive version puts an AWS access key in GitHub secrets. Don't. <strong>OIDC</strong> lets
+GitHub prove each workflow run's identity to AWS directly, and AWS hands back
+credentials that expire in minutes. <strong>No AWS key exists in GitHub at all.</strong></p>
+<h3 id="61-trust-github-as-an-identity-provider">6.1 Trust GitHub as an identity provider<a class="anchor" href="#61-trust-github-as-an-identity-provider" aria-label="Link to this section">#</a></h3>
+<p>Once per AWS account:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">aws iam create-open-id-connect-provider \
+  --url https://token.actions.githubusercontent.com \
+  --client-id-list sts.amazonaws.com
+</code></pre></div>
+<p><code>EntityAlreadyExists</code> means it's already there — fine, carry on.</p>
+<h3 id="62-a-role-only-your-repo-can-assume">6.2 A role only your repo can assume<a class="anchor" href="#62-a-role-only-your-repo-can-assume" aria-label="Link to this section">#</a></h3>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">export GH_REPO=&quot;yourname/your-repo&quot;      # &lt;-- change this
+
+cat &gt; gh-trust.json &lt;&lt;EOF
+{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [{
+    &quot;Effect&quot;: &quot;Allow&quot;,
+    &quot;Principal&quot;: {
+      &quot;Federated&quot;: &quot;arn:aws:iam::${ACCOUNT_ID}:oidc-provider/token.actions.githubusercontent.com&quot;
+    },
+    &quot;Action&quot;: &quot;sts:AssumeRoleWithWebIdentity&quot;,
+    &quot;Condition&quot;: {
+      &quot;StringEquals&quot;: {
+        &quot;token.actions.githubusercontent.com:aud&quot;: &quot;sts.amazonaws.com&quot;
+      },
+      &quot;StringLike&quot;: {
+        &quot;token.actions.githubusercontent.com:sub&quot;: &quot;repo:${GH_REPO}:*&quot;
+      }
+    }
+  }]
+}
+EOF
+
+aws iam create-role --role-name github-deploy \
+  --assume-role-policy-document file://gh-trust.json
+</code></pre></div>
+<p>That <code>sub</code> condition is the security boundary: <strong>only workflows in that one
+repository</strong> can assume this role. Get it wrong and any repo on GitHub can.</p>
+<blockquote>
+<h3 id="if-this-fails-with-not-authorized-read-this-before-changing-anything">If this fails with "Not authorized", read this before changing anything<a class="anchor" href="#if-this-fails-with-not-authorized-read-this-before-changing-anything" aria-label="Link to this section">#</a></h3>
+<p>Some accounts — increasingly, all of them — issue <strong>ID-qualified subjects</strong>,
+where GitHub appends the numeric owner and repo IDs to the claim:</p>
+<p>```text
+what most guides tell you to expect
+  repo:you/your-repo:ref:refs/heads/main</p>
+<p>what you may actually get
+  repo:you@8456990/your-repo@1329892525:ref:refs/heads/main
+```</p>
+<p>The pattern above then matches nothing, and the only error you get is
+<code>Not authorized to perform sts:AssumeRoleWithWebIdentity</code> — which names no
+cause and sends people off rewriting a trust policy that was nearly right.</p>
+<p><strong>Don't guess. Print the claim.</strong> Add this workflow, run it once, and read
+the real <code>sub</code>:</p>
+<p><code>yaml
+name: OIDC debug
+on: workflow_dispatch
+permissions: { id-token: write, contents: read }
+jobs:
+  claims:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          TOKEN=$(curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&amp;audience=sts.amazonaws.com" | jq -r '.value')
+          P=$(echo "$TOKEN" | cut -d. -f2)
+          P="${P}$(printf '=%.0s' $(seq 1 $(( (4 - ${#P} % 4) % 4 ))))"
+          echo "$P" | tr '_-' '/+' | base64 -d | jq '{sub, aud, repository}'</code></p>
+<p>The <code>sub</code>, <code>aud</code> and <code>repository</code> claims are not secrets — but never print the
+whole token, which is a credential. Delete the workflow once you have the answer.</p>
+<p>Then put the exact subject you saw into the trust policy, keeping <code>:*</code> on the
+end so any branch or tag in that repo still matches:</p>
+<p><code>text
+"token.actions.githubusercontent.com:sub": "repo:you@8456990/your-repo@1329892525:*"</code></p>
+<p>Pinning the IDs is <em>better</em> than the name-based form, not a workaround: numeric
+IDs never change, so the trust survives a rename and can't be inherited by
+someone who later registers a username you gave up.</p>
+<p>Resist the temptation to "fix" it with <code>repo:you*/your-repo*:*</code>. That wildcard
+also matches <code>you-evil/your-repo-evil</code>, and hands your AWS role to a stranger.</p>
+</blockquote>
+<p>Scope its permissions to your one bucket and your one distribution:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">cat &gt; gh-policy.json &lt;&lt;EOF
+{
+  &quot;Version&quot;: &quot;2012-10-17&quot;,
+  &quot;Statement&quot;: [
+    {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Action&quot;: [&quot;s3:PutObject&quot;,&quot;s3:DeleteObject&quot;,&quot;s3:ListBucket&quot;,&quot;s3:GetObject&quot;],
+      &quot;Resource&quot;: [&quot;arn:aws:s3:::${BUCKET}&quot;,&quot;arn:aws:s3:::${BUCKET}/*&quot;]
+    },
+    {
+      &quot;Effect&quot;: &quot;Allow&quot;,
+      &quot;Action&quot;: [&quot;cloudfront:CreateInvalidation&quot;],
+      &quot;Resource&quot;: &quot;${DIST_ARN}&quot;
+    }
+  ]
+}
+EOF
+
+aws iam put-role-policy --role-name github-deploy \
+  --policy-name deploy --policy-document file://gh-policy.json
+</code></pre></div>
+<p>That list is the entire blast radius if this role were ever misused: overwrite
+one bucket, invalidate one distribution. Nothing else.</p>
+<h3 id="63-the-workflow">6.3 The workflow<a class="anchor" href="#63-the-workflow" aria-label="Link to this section">#</a></h3>
+<p><code>.github/workflows/deploy.yml</code>:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-yaml">name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  id-token: write      # required for OIDC — without it, auth fails
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Delete these two steps if your site needs no build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci &amp;&amp; npm run build
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-deploy
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - run: |
+          aws s3 sync dist/ s3://${{ vars.S3_BUCKET }}/ --delete \
+            --exclude &quot;.*&quot; --exclude &quot;.*/*&quot;
+
+      - run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ vars.CLOUDFRONT_DIST_ID }} \
+            --paths &quot;/*&quot;
+</code></pre></div>
+<p>Change <code>dist/</code> to whatever folder holds your built files.</p>
+<p><strong>If you have no build step, don't put <code>.</code> here.</strong> In a GitHub Action, <code>.</code> is
+the checked-out repository root, so you would publish <code>.git/</code> and
+<code>.github/workflows/</code> to your live site — and <code>--delete</code> would then make that the
+permanent contents of the bucket. Move your HTML into a <code>site/</code> folder and sync
+that instead. (This repository does exactly that, for exactly this reason.)</p>
+<p>Set the values, from your project folder:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">gh secret set AWS_ACCOUNT_ID   --body &quot;$ACCOUNT_ID&quot;
+gh variable set AWS_REGION     --body &quot;$REGION&quot;
+gh variable set S3_BUCKET      --body &quot;$BUCKET&quot;
+gh variable set CLOUDFRONT_DIST_ID --body &quot;$DIST_ID&quot;
+</code></pre></div>
+<p>The account ID goes in a <strong>secret</strong> — it isn't a credential, but it's
+reconnaissance you needn't hand out. Bucket name and distribution ID are
+<strong>variables</strong>: both are effectively public anyway.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">git add .github &amp;&amp; git commit -m &quot;Deploy on push&quot; &amp;&amp; git push
+gh run watch
+</code></pre></div>
+<p>From now on, <code>git push</code> is the deploy.</p>
+<hr />
+<h2 id="part-7--what-it-costs">Part 7 — What it costs<a class="anchor" href="#part-7--what-it-costs" aria-label="Link to this section">#</a></h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Thing</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Domain</td>
+<td>~$12–16/yr</td>
+</tr>
+<tr>
+<td><strong>Route 53 hosted zone</strong></td>
+<td><strong>$0.50/month</strong> — the only charge that accrues with zero traffic</td>
+</tr>
+<tr>
+<td>S3 storage</td>
+<td>Fractions of a penny at this size</td>
+</tr>
+<tr>
+<td>CloudFront</td>
+<td>Generous free tier; a personal site won't touch it</td>
+</tr>
+<tr>
+<td>Lambda</td>
+<td>1M free requests/month</td>
+</tr>
+<tr>
+<td>ACM certificate</td>
+<td>Free, always, with CloudFront</td>
+</tr>
+</tbody>
+</table></div>
+<p>Roughly <strong>£15–20/year all in</strong>, nearly all of it the domain.
+<a href="https://aws.amazon.com/pricing/">Current pricing</a> — check rather than trusting
+this table.</p>
+<p><strong>A second site on the same domain costs nothing extra.</strong> A second <em>domain</em>
+means a second hosted zone, so another $6/yr.</p>
+<hr />
+<h2 id="part-8--worth-doing-next">Part 8 — Worth doing next<a class="anchor" href="#part-8--worth-doing-next" aria-label="Link to this section">#</a></h2>
+<p><strong>Lock the Lambda's back door.</strong> Your <code>.on.aws</code> URL still works directly,
+bypassing CloudFront and any protection you put there. Switch it to IAM auth and
+let only your distribution through:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">aws lambda update-function-url-config --function-name api --auth-type AWS_IAM
+aws lambda remove-permission --function-name api \
+  --statement-id FunctionURLAllowPublicAccess
+aws lambda add-permission --function-name api \
+  --statement-id AllowCloudFront \
+  --action lambda:InvokeFunctionUrl \
+  --principal cloudfront.amazonaws.com \
+  --source-arn arn:aws:cloudfront::${ACCOUNT_ID}:distribution/${DIST_ID} \
+  --function-url-auth-type AWS_IAM
+
+# Both actions are required. With only InvokeFunctionUrl, CloudFront's signed
+# request is accepted at the URL and then refused at the function, and /api/*
+# returns 403 with nothing in the logs to explain it.
+aws lambda add-permission --function-name api \
+  --statement-id AllowCloudFrontInvoke \
+  --action lambda:InvokeFunction \
+  --principal cloudfront.amazonaws.com \
+  --source-arn arn:aws:cloudfront::${ACCOUNT_ID}:distribution/${DIST_ID}
+</code></pre></div>
+<p>Then attach an Origin Access Control of type <em>Lambda</em> to that origin (console:
+CloudFront → Origin access → Create control setting). One catch: with OAC,
+<code>POST</code>/<code>PUT</code> requests must carry an <code>x-amz-content-sha256</code> header containing the
+SHA-256 of the body — irrelevant for a GET-only site, and it will bite the moment
+you add a form.</p>
+<p><strong>Other next steps:</strong> <code>aws logs tail /aws/lambda/api --follow</code> for logs; repeat
+Parts 4–5 on a subdomain for a second app (~10 minutes once the zone exists);
+and when you've done this twice by hand, look at AWS SAM or CDK — doing it
+manually first means you'll understand what the tools generate instead of
+cargo-culting a template.</p>
+<hr />
+<h2 id="part-9--turning-it-off">Part 9 — Turning it off<a class="anchor" href="#part-9--turning-it-off" aria-label="Link to this section">#</a></h2>
+<p>If you abandon the project, <strong>the hosted zone keeps charging $0.50/month</strong>,
+which is small enough to go unnoticed for years.</p>
+<p><strong>First, get your variables back</strong> — this section always runs in a new terminal
+weeks later, so start with <code>source ~/.config/myproject/env</code> (see 2.5) or re-set
+<code>DOMAIN</code>, <code>BUCKET</code>, <code>DIST_ID</code> and <code>ZONE_ID</code> by hand.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># 1. Disable CloudFront. It cannot be deleted while enabled, and the ETag
+#    changes with every modification, so re-read it each time.
+aws cloudfront get-distribution-config --id $DIST_ID &gt; dist.json
+ETAG=$(jq -r '.ETag' dist.json)
+jq '.DistributionConfig | .Enabled = false' dist.json &gt; dist-off.json
+aws cloudfront update-distribution --id $DIST_ID \
+  --distribution-config file://dist-off.json --if-match &quot;$ETAG&quot;
+
+# 2. Wait for the disable to roll out (~15 minutes), then delete with a FRESH ETag
+aws cloudfront wait distribution-deployed --id $DIST_ID
+ETAG=$(aws cloudfront get-distribution-config --id $DIST_ID --query ETag --output text)
+aws cloudfront delete-distribution --id $DIST_ID --if-match &quot;$ETAG&quot;
+
+# 3. Bucket and Lambda
+aws s3 rm &quot;s3://$BUCKET&quot; --recursive &amp;&amp; aws s3api delete-bucket --bucket &quot;$BUCKET&quot;
+aws lambda delete-function --function-name api 2&gt;/dev/null || true
+
+# 4. IAM
+aws iam delete-role-policy --role-name github-deploy --policy-name deploy 2&gt;/dev/null || true
+aws iam delete-role --role-name github-deploy 2&gt;/dev/null || true
+
+# 5. Empty the hosted zone BEFORE deleting it. delete-hosted-zone fails with
+#    HostedZoneNotEmpty while your A records and the ACM validation CNAME are
+#    still there — and people read that error as &quot;done&quot; and keep paying.
+aws route53 list-resource-record-sets --hosted-zone-id $ZONE_ID \
+  --query &quot;ResourceRecordSets[?Type!='NS' &amp;&amp; Type!='SOA']&quot; &gt; records.json
+jq '{Changes: [.[] | {Action: &quot;DELETE&quot;, ResourceRecordSet: .}]}' records.json &gt; delete-records.json
+[ &quot;$(jq '.Changes | length' delete-records.json)&quot; -gt 0 ] &amp;&amp; \
+  aws route53 change-resource-record-sets --hosted-zone-id $ZONE_ID \
+    --change-batch file://delete-records.json
+
+aws route53 delete-hosted-zone --id $ZONE_ID
+</code></pre></div>
+<p><strong>Then check the charge has actually stopped:</strong></p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">aws route53 list-hosted-zones --query &quot;HostedZones[?Name=='${DOMAIN}.']&quot;
+</code></pre></div>
+<p>Empty output means the $0.50/month is gone. Anything else means it isn't.</p>
+<p>The domain registration is separate and runs to its yearly expiry — turn off
+auto-renew in the Route 53 console if you don't want it.</p>
+<hr />
+<h2 id="things-that-will-bite-you">Things that will bite you<a class="anchor" href="#things-that-will-bite-you" aria-label="Link to this section">#</a></h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CloudFront won't accept the certificate</td>
+<td>Cert isn't in <code>us-east-1</code>. Recreate it there</td>
+</tr>
+<tr>
+<td><code>InvalidLocationConstraint</code> creating a bucket</td>
+<td>You're in <code>us-east-1</code> — drop the <code>--create-bucket-configuration</code> flag</td>
+</tr>
+<tr>
+<td><code>AccessDenied</code> from CloudFront</td>
+<td>Bucket policy missing, or its <code>AWS:SourceArn</code> doesn't match the distribution</td>
+</tr>
+<tr>
+<td>ACM stuck "Pending validation"</td>
+<td>Validation CNAME wrong or missing — check with <code>dig</code></td>
+</tr>
+<tr>
+<td>403 from the Lambda URL</td>
+<td><code>add-permission</code> skipped after creating the URL</td>
+</tr>
+<tr>
+<td>Deep links 404 on an SPA</td>
+<td>Add the 403/404 → <code>/index.html</code> custom error responses</td>
+</tr>
+<tr>
+<td>Code changes don't appear</td>
+<td>CloudFront cache. Invalidate, then hard-reload the browser</td>
+</tr>
+<tr>
+<td><code>Not authorized to perform sts:AssumeRoleWithWebIdentity</code></td>
+<td>The trust policy <code>sub</code> doesn't match. Very often GitHub sends an <strong>ID-qualified</strong> subject (<code>repo:you@123/repo@456:…</code>) — print the real claim, see Part 6.2</td>
+</tr>
+<tr>
+<td><code>Credentials could not be loaded</code> in Actions</td>
+<td>Workflow is missing <code>permissions: id-token: write</code></td>
+</tr>
+<tr>
+<td>Workflow green, site unchanged</td>
+<td>The invalidation step didn't run, or synced the wrong folder</td>
+</tr>
+<tr>
+<td>Deploy wiped the site</td>
+<td><code>aws s3 sync --delete</code> ran from the wrong directory</td>
+</tr>
+<tr>
+<td><code>InvalidClientTokenId</code></td>
+<td>Access key wrong or deleted. Rerun <code>aws configure</code></td>
+</tr>
+<tr>
+<td>Domain suspended after two weeks</td>
+<td>ICANN verification email never clicked</td>
+</tr>
+<tr>
+<td><code>.dev</code> site shows <code>ERR_SSL_PROTOCOL_ERROR</code></td>
+<td>CloudFront not deployed yet, or the alias record is missing. <code>.dev</code> has no plain-HTTP fallback</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="working-with-claude-code-on-this-track">Working with Claude Code on this track<a class="anchor" href="#working-with-claude-code-on-this-track" aria-label="Link to this section">#</a></h2>
+<ul>
+<li><strong>Give it the goal, not the commands.</strong> "Create the CloudFront distribution
+  from Part 4.3 and wire the bucket policy" beats pasting commands one at a time.</li>
+<li><strong>Ask it to explain before running.</strong> "What does this trust policy actually
+  do?" is a fair question with a real answer.</li>
+<li><strong>Never paste your secret key into the chat.</strong> Claude uses the CLI, which reads
+  <code>~/.aws/credentials</code> itself.</li>
+<li><strong>Paste whole errors, not summaries.</strong> These failures look like permissions
+  problems when they're usually configuration ones.</li>
+<li><strong>Ask what it costs</strong> before creating anything you didn't plan for. AWS has
+  around 200 services and most of them are not free.</li>
+</ul>
+<hr />
+<p><strong>Next:</strong> <a href="30-share-it.html">Share it →</a></p>
+    <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
+    <nav class="pager"><a class="prev" href="10-cloudflare.html"><span>Previous</span>Track A — Cloudflare</a><a class="next" href="30-share-it.html"><span>Next</span>Share it</a></nav>
+  </main>
+</div>
+<script>
+// Copy the whole block — several are heredocs that break if pasted line by line.
+document.querySelectorAll('.codewrap').forEach(function (w) {
+  var btn = w.querySelector('.copy'), pre = w.querySelector('pre');
+  if (!btn || !pre) return;
+  btn.addEventListener('click', function () {
+    navigator.clipboard.writeText(pre.innerText).then(function () {
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+    }).catch(function () { btn.textContent = 'Press Ctrl+C'; });
+  });
+});
+
+// Remember which pages are finished — the AWS track spans more than one sitting.
+(function () {
+  var KEY = 'swyb-done', box = document.getElementById('page-done');
+  if (!box) return;
+  var page = document.body.dataset.page;
+  var read = function () { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
+  var done = read();
+  box.checked = !!done[page];
+  box.addEventListener('change', function () {
+    var d = read();
+    if (box.checked) { d[page] = true; } else { delete d[page]; }
+    localStorage.setItem(KEY, JSON.stringify(d));
+    paint();
+  });
+  function paint() {
+    var d = read();
+    document.querySelectorAll('.nav a[data-page]').forEach(function (a) {
+      a.textContent.indexOf('✓') === 0 && (a.textContent = a.textContent.slice(1));
+      var t = a.querySelector('.tick');
+      if (t) t.textContent = d[a.dataset.page] ? '✓ ' : '';
+    });
+  }
+  paint();
+})();
+</script>
+</body>
+</html>

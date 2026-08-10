@@ -237,4 +237,4 @@ things is the single biggest time-saver in this entire guide.
 
 ---
 
-**Next:** [Get it on GitHub →](02-github.md)
+**Next:** [Get it on GitHub →](05-github.md)

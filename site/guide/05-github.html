@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get it on GitHub — Ship What You Built</title>
+<meta name="description" content="Get it on GitHub — part of a free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:title" content="Get it on GitHub — Ship What You Built">
+<meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/05-github.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#F6F7F5;--surface:#FFF;--sunken:#EEF0EC;--ink:#14181B;--ink-soft:#3D4642;
+--muted:#5B6560;--line:rgba(20,24,27,.13);--line-soft:rgba(20,24,27,.07);
+--live:#16794C;--live-ink:#FFF;--live-wash:rgba(22,121,76,.09);--stuck:#9A5B18;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+--sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;--ink-soft:#C3CCC6;
+--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}}
+:root[data-theme="dark"]{--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;
+--ink-soft:#C3CCC6;--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+line-height:1.68;font-size:1.02rem;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--live)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--live);outline-offset:3px;border-radius:5px}
+.shell{display:grid;grid-template-columns:17rem minmax(0,1fr);gap:2.5rem;
+max-width:78rem;margin-inline:auto;padding:0 clamp(1rem,4vw,2.5rem)}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr);gap:0}}
+.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;
+padding:2rem 0;border-right:1px solid var(--line-soft)}
+@media (max-width:900px){.side{position:static;max-height:none;border-right:0;
+border-bottom:1px solid var(--line-soft);padding-bottom:1rem}}
+.brand{font-weight:660;letter-spacing:-.02em;text-decoration:none;display:block;margin-bottom:.35rem}
+.brand small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;letter-spacing:0}
+.nav{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:.15rem}
+.nav a{display:block;padding:.42rem .6rem;border-radius:7px;text-decoration:none;
+font-size:.925rem;color:var(--ink-soft)}
+.nav a:hover{background:var(--sunken)}
+.nav a[aria-current="page"]{background:var(--live-wash);color:var(--ink);font-weight:600}
+.nav small{display:block;color:var(--muted);font-size:.76rem;line-height:1.35}
+.onpage{margin-top:1.5rem;border-top:1px solid var(--line-soft);padding-top:1rem}
+.onpage p{margin:0 0 .5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;
+text-transform:uppercase;color:var(--muted)}
+.onpage ul{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+.onpage a{display:block;padding:.2rem .35rem;font-size:.85rem;color:var(--muted);
+text-decoration:none;border-radius:5px}
+.onpage a:hover{color:var(--ink);background:var(--sunken)}
+.onpage .lvl3{padding-left:1rem;font-size:.8rem}
+main{padding:2.5rem 0 4rem;min-width:0;max-width:46rem}
+h1{font-size:clamp(1.9rem,1.4rem+2vw,2.7rem);line-height:1.1;letter-spacing:-.03em;
+margin:0 0 1.5rem;text-wrap:balance}
+h2{font-size:1.5rem;line-height:1.2;letter-spacing:-.022em;margin:2.8rem 0 .9rem;
+padding-top:1.4rem;border-top:1px solid var(--line-soft);text-wrap:balance}
+h3{font-size:1.13rem;letter-spacing:-.015em;margin:2rem 0 .6rem}
+h2 .anchor,h3 .anchor{opacity:0;margin-left:.4rem;color:var(--muted);text-decoration:none;font-weight:400}
+h2:hover .anchor,h3:hover .anchor,.anchor:focus-visible{opacity:1}
+p,ul,ol{margin:0 0 1.05rem}
+li{margin-bottom:.3rem}
+strong{font-weight:650}
+code{font-family:var(--mono);font-size:.875em;background:var(--sunken);
+padding:.12em .34em;border-radius:4px;overflow-wrap:break-word}
+.codewrap{position:relative;margin:0 0 1.2rem}
+pre{margin:0;overflow-x:auto;background:var(--sunken);border:1px solid var(--line-soft);
+border-radius:10px;padding:1rem 1.1rem;font-family:var(--mono);font-size:.845rem;line-height:1.62}
+pre code{background:none;padding:0;font-size:1em}
+.copy{position:absolute;top:.5rem;right:.5rem;font:inherit;font-size:.75rem;
+padding:.28rem .6rem;border-radius:6px;border:1px solid var(--line);
+background:var(--surface);color:var(--muted);cursor:pointer;opacity:0;transition:opacity .12s}
+.codewrap:hover .copy,.copy:focus-visible{opacity:1}
+.copy.done{color:var(--live);border-color:var(--live)}
+@media (hover:none){.copy{opacity:1}}
+blockquote{margin:0 0 1.2rem;padding:.9rem 1.1rem;border-left:3px solid var(--live);
+background:var(--live-wash);border-radius:0 9px 9px 0}
+blockquote > :last-child{margin-bottom:0}
+blockquote h3{margin-top:.2rem}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:0 0 1.2rem}
+table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+th,td{text-align:left;padding:.65rem .9rem;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+tbody tr:last-child td{border-bottom:0}
+hr{border:0;border-top:1px solid var(--line-soft);margin:2.5rem 0}
+img{max-width:100%;height:auto}
+.done-toggle{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);
+margin:.2rem 0 1.6rem;cursor:pointer;user-select:none}
+.done-toggle input{accent-color:var(--live);width:1rem;height:1rem}
+.pager{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:space-between;
+margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line-soft)}
+.pager a{flex:1 1 14rem;padding:.9rem 1.1rem;border:1px solid var(--line);border-radius:10px;
+text-decoration:none;background:var(--surface)}
+.pager a:hover{border-color:var(--live)}
+.pager span{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
+.pager .next{text-align:right}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-page="05-github">
+<div class="shell">
+  <aside class="side">
+    <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
+    <nav><ul class="nav"><li><a href="00-start-here.html" data-page="00-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="01-your-machine.html" data-page="01-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="02-accounts.html" data-page="02-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="03-keys-and-access.html" data-page="03-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="04-three-layers.html" data-page="04-three-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="05-github.html" aria-current="page" data-page="05-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="06-let-claude-drive.html" data-page="06-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#1-install-the-two-tools">1. Install the two tools</a></li><li><a class="lvl2" href="#2-write-gitignore-before-your-first-commit">2. Write .gitignore BEFORE your first commit</a></li><li><a class="lvl3" href="#where-secrets-go-instead">Where secrets go instead</a></li><li><a class="lvl2" href="#3-what-counts-as-a-secret">3. What counts as a secret</a></li><li><a class="lvl3" href="#scan-before-you-publish">Scan before you publish</a></li><li><a class="lvl2" href="#4-one-thing-to-decide-before-you-go-public">4. One thing to decide before you go public</a></li><li><a class="lvl2" href="#5-make-the-repository">5. Make the repository</a></li><li><a class="lvl3" href="#turn-on-the-safety-nets">Turn on the safety nets</a></li><li><a class="lvl3" href="#add-a-licence">Add a licence</a></li><li><a class="lvl2" href="#6-if-youve-already-leaked-something">6. If you&#x27;ve already leaked something</a></li><li><a class="lvl2" href="#7-let-claude-do-it">7. Let Claude do it</a></li></ul></div>
+  </aside>
+  <main>
+<h1>Get it on GitHub</h1>
+<p>Both tracks deploy <strong>from a GitHub repository</strong>. That's the modern shape: your
+repo is the source of truth, and pushing to it is what makes the live site
+change. So this comes first.</p>
+<p>It's also where you find out whether you're about to publish an API key in front
+of the entire internet, which is a much better thing to discover now than in an
+hour.</p>
+<blockquote>
+<p><strong>Fast lane:</strong> already have this project in a repo with a <code>.gitignore</code> you
+trust? Jump to <a href="#3-what-counts-as-a-secret">What counts as a secret</a> — read that
+section, run the scan, then go to your track.</p>
+</blockquote>
+<hr />
+<h2 id="1-install-the-two-tools">1. Install the two tools<a class="anchor" href="#1-install-the-two-tools" aria-label="Link to this section">#</a></h2>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># macOS
+brew install git gh
+
+# Windows
+winget install Git.Git GitHub.cli
+
+# Debian/Ubuntu
+sudo apt install git &amp;&amp; \
+  (type -p curl &gt;/dev/null || sudo apt install curl) &amp;&amp; \
+  curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+    | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg &amp;&amp; \
+  echo &quot;deb [signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] \
+https://cli.github.com/packages stable main&quot; \
+    | sudo tee /etc/apt/sources.list.d/github-cli.list &gt;/dev/null &amp;&amp; \
+  sudo apt update &amp;&amp; sudo apt install gh
+</code></pre></div>
+<p><code>git</code> tracks your changes. <code>gh</code> is GitHub's command-line tool — it saves you a
+lot of clicking, and it handles login properly so you never deal with personal
+access tokens.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">gh auth login
+</code></pre></div>
+<p>Choose <strong>GitHub.com</strong> → <strong>HTTPS</strong> → <strong>Login with a web browser</strong>. It prints a
+code, opens your browser, you paste the code. Done — you're authenticated for
+both <code>git</code> and <code>gh</code> from now on.</p>
+<hr />
+<h2 id="2-write-gitignore-before-your-first-commit">2. Write <code>.gitignore</code> BEFORE your first commit<a class="anchor" href="#2-write-gitignore-before-your-first-commit" aria-label="Link to this section">#</a></h2>
+<p>This is the single most important instruction on this page, and the ordering is
+not negotiable.</p>
+<p>Git remembers everything. If you commit a file containing a password and delete
+it in the next commit, <strong>the password is still in the repository forever</strong> — in
+the history, fetchable by anyone, indexed by bots. Deleting it later does not
+help. Not committing it in the first place is the only clean answer.</p>
+<p>Create a file called <code>.gitignore</code> in your project folder:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-gitignore"># Secrets — never commit these
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+secrets.*
+
+# Dependencies — huge, and rebuildable from a lockfile
+node_modules/
+venv/
+.venv/
+__pycache__/
+
+# Build output — regenerated on every deploy
+dist/
+build/
+.next/
+.cache/
+
+# Local noise
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+
+# Local databases
+*.sqlite
+*.sqlite3
+*.db
+</code></pre></div>
+<p>Trim it to what applies. Leaving extra lines in costs nothing.</p>
+<blockquote>
+<p><strong>If you've already committed</strong> and you're not sure what went in, don't panic
+and don't push yet. Skip to
+<a href="#6-if-youve-already-leaked-something">If you've already leaked something</a>.</p>
+</blockquote>
+<h3 id="where-secrets-go-instead">Where secrets go instead<a class="anchor" href="#where-secrets-go-instead" aria-label="Link to this section">#</a></h3>
+<p>Not in the code. Ever. The pattern is:</p>
+<ol>
+<li>Real values live in <code>.env</code> — which <code>.gitignore</code> excludes.</li>
+<li>A file called <code>.env.example</code> <strong>is</strong> committed, listing the <em>names</em> with fake
+   values, so anyone cloning your repo knows what to fill in:</li>
+</ol>
+<p><code>bash
+   OPENAI_API_KEY=sk-replace-me
+   DATABASE_URL=postgres://user:pass@localhost:5432/dev</code></p>
+<ol start="3">
+<li>In production, the real values are set in your host's dashboard as
+   environment variables. Both tracks cover exactly where.</li>
+</ol>
+<hr />
+<h2 id="3-what-counts-as-a-secret">3. What counts as a secret<a class="anchor" href="#3-what-counts-as-a-secret" aria-label="Link to this section">#</a></h2>
+<p>People either publish keys by accident or get so nervous they never publish
+anything. Here's the actual line:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Thing</th>
+<th>Safe to publish?</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Your source code</td>
+<td><strong>Yes</strong></td>
+<td>That's the point</td>
+</tr>
+<tr>
+<td>Your domain name</td>
+<td><strong>Yes</strong></td>
+<td>It's in public DNS already</td>
+</tr>
+<tr>
+<td>An S3 bucket name</td>
+<td><strong>Yes</strong></td>
+<td>Usually visible in URLs anyway</td>
+</tr>
+<tr>
+<td>A CloudFront distribution ID</td>
+<td><strong>Yes</strong></td>
+<td>Useless without credentials</td>
+</tr>
+<tr>
+<td>A <strong>publishable</strong>/anon key (Stripe <code>pk_</code>, Supabase anon)</td>
+<td><strong>Yes</strong></td>
+<td>Designed to sit in browser code — but <em>only</em> if your access rules are set up</td>
+</tr>
+<tr>
+<td>Your AWS <strong>account ID</strong></td>
+<td>Prefer not</td>
+<td>Not a credential, but it's reconnaissance. Put it in a GitHub secret</td>
+</tr>
+<tr>
+<td>An AWS access key (<code>AKIA…</code>)</td>
+<td><strong>NEVER</strong></td>
+<td>Full control of your account</td>
+</tr>
+<tr>
+<td>A Stripe secret key (<code>sk_</code>)</td>
+<td><strong>NEVER</strong></td>
+<td>Full control of your money</td>
+</tr>
+<tr>
+<td>A <code>.env</code> file</td>
+<td><strong>NEVER</strong></td>
+<td>That's what it's for</td>
+</tr>
+<tr>
+<td>A private key / <code>.pem</code></td>
+<td><strong>NEVER</strong></td>
+<td>The name is a hint</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The Supabase row deserves a flag.</strong> The anon key is genuinely designed to be
+public — but it is only safe if Row Level Security is switched on and your
+policies are right. Publishing an anon key against a table with RLS disabled
+hands the world your database. If you built with Supabase and don't know the
+answer, check before you go public:</p>
+<blockquote>
+<p>Check every table in my Supabase project for whether RLS is enabled and what
+the policies actually allow. Assume the anon key is public knowledge. Tell me
+what an anonymous user could read or write.</p>
+</blockquote>
+<h3 id="scan-before-you-publish">Scan before you publish<a class="anchor" href="#scan-before-you-publish" aria-label="Link to this section">#</a></h3>
+<p>Run these in your project folder. They take seconds.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># Anything that looks like a key, in your tracked files
+git grep -nE '(sk-[A-Za-z0-9]{16,}|AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)'
+
+# Is anything ignore-worthy accidentally tracked?
+git ls-files | grep -Ei '(^|/)\.env|\.pem$|\.key$|credentials'
+
+# What is git actually about to include?
+git status --short
+</code></pre></div>
+<p>No output from the first two is what you want. And ask Claude Code, which is
+better at this than a regex:</p>
+<blockquote>
+<p>Review everything staged for commit and flag anything that looks like a
+credential, a personal detail, or something I'd regret publishing. Be
+paranoid — this repo is about to be public and permanent.</p>
+</blockquote>
+<hr />
+<h2 id="4-one-thing-to-decide-before-you-go-public">4. One thing to decide before you go public<a class="anchor" href="#4-one-thing-to-decide-before-you-go-public" aria-label="Link to this section">#</a></h2>
+<p>A public repo is permanent and searchable. The code is fine — that's why you're
+here. It's the <em>incidental</em> content that people regret:</p>
+<ul>
+<li><strong>Real names</strong>, especially children's, in file names, app titles or seed data</li>
+<li><strong>Home addresses</strong> or postcodes in test fixtures</li>
+<li><strong>Photos</strong> of family in an <code>assets/</code> folder</li>
+<li><strong>Personal email addresses</strong> in commit history (<code>git config user.email</code>)</li>
+<li><strong>Internal URLs</strong> or client names from work</li>
+</ul>
+<p>None of these are security problems. They're permanence problems: renaming
+<em>before</em> the first commit costs nothing, and renaming <em>after</em> means rewriting
+history and force-pushing.</p>
+<p>So take one minute now and look. If something gives you pause, change it now.
+If you'd rather keep your email out of commits, GitHub gives you a no-reply
+address:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># Settings → Emails → &quot;Keep my email addresses private&quot; gives you this
+git config --global user.email &quot;12345678+yourname@users.noreply.github.com&quot;
+</code></pre></div>
+<p>None of this is a reason not to publish. It's a two-minute check that means you
+never have to unpublish.</p>
+<hr />
+<h2 id="5-make-the-repository">5. Make the repository<a class="anchor" href="#5-make-the-repository" aria-label="Link to this section">#</a></h2>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">cd /path/to/your-project
+
+git init
+git add .
+git status          # &lt;- look at this list. Actually look at it.
+git commit -m &quot;Initial commit&quot;
+</code></pre></div>
+<p>Then create it on GitHub and push, in one command:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">gh repo create your-project-name --public --source=. --remote=origin --push
+</code></pre></div>
+<ul>
+<li><code>--public</code> — swap for <code>--private</code> if you want to think about it. You can flip
+  it later in Settings; going private→public is easy, public→private doesn't
+  un-publish what people already cloned.</li>
+<li><code>--source=.</code> — use this folder.</li>
+<li><code>--push</code> — push straight away.</li>
+</ul>
+<h3 id="turn-on-the-safety-nets">Turn on the safety nets<a class="anchor" href="#turn-on-the-safety-nets" aria-label="Link to this section">#</a></h3>
+<p>Free on public repos, and worth thirty seconds:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">gh repo edit --enable-secret-scanning --enable-secret-scanning-push-protection
+</code></pre></div>
+<p><strong>Push protection</strong> is the good one: it blocks a <code>git push</code> that contains
+something matching a known key format, <em>before</em> it reaches GitHub. It has saved
+an enormous number of people from a very bad afternoon.</p>
+<h3 id="add-a-licence">Add a licence<a class="anchor" href="#add-a-licence" aria-label="Link to this section">#</a></h3>
+<p>Without one, "public" legally means "you may look at it and nothing else" — no
+one can use, fork or build on your work. If you want people to actually use it,
+say so:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">gh repo edit --add-topic open-source
+curl -sL https://raw.githubusercontent.com/licenses/license-templates/master/templates/mit.txt \
+  -o LICENSE
+</code></pre></div>
+<p>Then edit the year and your name in <code>LICENSE</code>. <strong>MIT</strong> is the standard "do what
+you like, don't sue me" choice and is what most personal projects use. If you'd
+rather anyone who modifies your code has to share their changes, use <strong>GPL-3.0</strong>
+instead. If you genuinely don't care, <strong>Unlicense</strong>. Any of the three is a
+better answer than none.</p>
+<hr />
+<h2 id="6-if-youve-already-leaked-something">6. If you've already leaked something<a class="anchor" href="#6-if-youve-already-leaked-something" aria-label="Link to this section">#</a></h2>
+<p>It happens. The order matters enormously:</p>
+<ol>
+<li>
+<p><strong>Rotate the key first.</strong> Go to the provider — AWS, OpenAI, Stripe, whoever —
+   delete the exposed key and issue a new one. Do this <em>before</em> anything else.
+   Public commits are scraped by bots within <em>seconds</em>, and an exposed AWS key
+   gets used for crypto mining measured in minutes. Once the key is dead, the
+   leak is a tidiness problem instead of an emergency.</p>
+</li>
+<li>
+<p><strong>Then clean the history</strong>, if you want to. Tools:
+   <a href="https://github.com/newren/git-filter-repo"><code>git-filter-repo</code></a> or
+   <a href="https://rtyley.github.io/bfg-repo-cleaner/">BFG Repo-Cleaner</a>. Both rewrite
+   history, which means a force-push and a broken clone for anyone who already
+   has one. On a repo nobody has forked, that's painless.</p>
+</li>
+<li>
+<p><strong>If it was never pushed</strong>, you got away with it — clean the history locally
+   and rotate anyway, because "I'm fairly sure it never left my laptop" is not a
+   security posture.</p>
+</li>
+</ol>
+<p><strong>Never</strong> just delete the file and commit. The old commit is still there and
+still fetchable.</p>
+<hr />
+<h2 id="7-let-claude-do-it">7. Let Claude do it<a class="anchor" href="#7-let-claude-do-it" aria-label="Link to this section">#</a></h2>
+<p>All of the above, as one instruction — in the folder where your project lives:</p>
+<blockquote>
+<p>Read https://github.com/jhammant/ship-what-you-built/blob/main/guide/05-github.md. Set this project up as a public GitHub repository
+following it exactly: write an appropriate <code>.gitignore</code> first, scan for
+secrets and personal details before anything is staged, show me <code>git status</code>
+and stop for my approval before the first commit, then create the repo with
+secret scanning and push protection on and add an MIT licence.</p>
+</blockquote>
+<p>The stop-before-the-first-commit part is deliberate. It's the one step in this
+whole guide where a mistake is permanent, so it's worth your own eyes.</p>
+<hr />
+<p><strong>Next:</strong> pick your track —
+<a href="10-cloudflare.html">Track A: Cloudflare →</a> · <a href="20-aws.html">Track B: AWS →</a></p>
+    <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
+    <nav class="pager"><a class="prev" href="04-three-layers.html"><span>Previous</span>The four layers</a><a class="next" href="06-let-claude-drive.html"><span>Next</span>Let Claude drive</a></nav>
+  </main>
+</div>
+<script>
+// Copy the whole block — several are heredocs that break if pasted line by line.
+document.querySelectorAll('.codewrap').forEach(function (w) {
+  var btn = w.querySelector('.copy'), pre = w.querySelector('pre');
+  if (!btn || !pre) return;
+  btn.addEventListener('click', function () {
+    navigator.clipboard.writeText(pre.innerText).then(function () {
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+    }).catch(function () { btn.textContent = 'Press Ctrl+C'; });
+  });
+});
+
+// Remember which pages are finished — the AWS track spans more than one sitting.
+(function () {
+  var KEY = 'swyb-done', box = document.getElementById('page-done');
+  if (!box) return;
+  var page = document.body.dataset.page;
+  var read = function () { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
+  var done = read();
+  box.checked = !!done[page];
+  box.addEventListener('change', function () {
+    var d = read();
+    if (box.checked) { d[page] = true; } else { delete d[page]; }
+    localStorage.setItem(KEY, JSON.stringify(d));
+    paint();
+  });
+  function paint() {
+    var d = read();
+    document.querySelectorAll('.nav a[data-page]').forEach(function (a) {
+      a.textContent.indexOf('✓') === 0 && (a.textContent = a.textContent.slice(1));
+      var t = a.querySelector('.tick');
+      if (t) t.textContent = d[a.dataset.page] ? '✓ ' : '';
+    });
+  }
+  paint();
+})();
+</script>
+</body>
+</html>

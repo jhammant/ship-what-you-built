@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Make a launch video — Ship What You Built</title>
+<meta name="description" content="Make a launch video — part of a free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:title" content="Make a launch video — Ship What You Built">
+<meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/40-launch-video.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#F6F7F5;--surface:#FFF;--sunken:#EEF0EC;--ink:#14181B;--ink-soft:#3D4642;
+--muted:#5B6560;--line:rgba(20,24,27,.13);--line-soft:rgba(20,24,27,.07);
+--live:#16794C;--live-ink:#FFF;--live-wash:rgba(22,121,76,.09);--stuck:#9A5B18;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+--sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;--ink-soft:#C3CCC6;
+--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}}
+:root[data-theme="dark"]{--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;
+--ink-soft:#C3CCC6;--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+line-height:1.68;font-size:1.02rem;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--live)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--live);outline-offset:3px;border-radius:5px}
+.shell{display:grid;grid-template-columns:17rem minmax(0,1fr);gap:2.5rem;
+max-width:78rem;margin-inline:auto;padding:0 clamp(1rem,4vw,2.5rem)}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr);gap:0}}
+.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;
+padding:2rem 0;border-right:1px solid var(--line-soft)}
+@media (max-width:900px){.side{position:static;max-height:none;border-right:0;
+border-bottom:1px solid var(--line-soft);padding-bottom:1rem}}
+.brand{font-weight:660;letter-spacing:-.02em;text-decoration:none;display:block;margin-bottom:.35rem}
+.brand small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;letter-spacing:0}
+.nav{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:.15rem}
+.nav a{display:block;padding:.42rem .6rem;border-radius:7px;text-decoration:none;
+font-size:.925rem;color:var(--ink-soft)}
+.nav a:hover{background:var(--sunken)}
+.nav a[aria-current="page"]{background:var(--live-wash);color:var(--ink);font-weight:600}
+.nav small{display:block;color:var(--muted);font-size:.76rem;line-height:1.35}
+.onpage{margin-top:1.5rem;border-top:1px solid var(--line-soft);padding-top:1rem}
+.onpage p{margin:0 0 .5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;
+text-transform:uppercase;color:var(--muted)}
+.onpage ul{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+.onpage a{display:block;padding:.2rem .35rem;font-size:.85rem;color:var(--muted);
+text-decoration:none;border-radius:5px}
+.onpage a:hover{color:var(--ink);background:var(--sunken)}
+.onpage .lvl3{padding-left:1rem;font-size:.8rem}
+main{padding:2.5rem 0 4rem;min-width:0;max-width:46rem}
+h1{font-size:clamp(1.9rem,1.4rem+2vw,2.7rem);line-height:1.1;letter-spacing:-.03em;
+margin:0 0 1.5rem;text-wrap:balance}
+h2{font-size:1.5rem;line-height:1.2;letter-spacing:-.022em;margin:2.8rem 0 .9rem;
+padding-top:1.4rem;border-top:1px solid var(--line-soft);text-wrap:balance}
+h3{font-size:1.13rem;letter-spacing:-.015em;margin:2rem 0 .6rem}
+h2 .anchor,h3 .anchor{opacity:0;margin-left:.4rem;color:var(--muted);text-decoration:none;font-weight:400}
+h2:hover .anchor,h3:hover .anchor,.anchor:focus-visible{opacity:1}
+p,ul,ol{margin:0 0 1.05rem}
+li{margin-bottom:.3rem}
+strong{font-weight:650}
+code{font-family:var(--mono);font-size:.875em;background:var(--sunken);
+padding:.12em .34em;border-radius:4px;overflow-wrap:break-word}
+.codewrap{position:relative;margin:0 0 1.2rem}
+pre{margin:0;overflow-x:auto;background:var(--sunken);border:1px solid var(--line-soft);
+border-radius:10px;padding:1rem 1.1rem;font-family:var(--mono);font-size:.845rem;line-height:1.62}
+pre code{background:none;padding:0;font-size:1em}
+.copy{position:absolute;top:.5rem;right:.5rem;font:inherit;font-size:.75rem;
+padding:.28rem .6rem;border-radius:6px;border:1px solid var(--line);
+background:var(--surface);color:var(--muted);cursor:pointer;opacity:0;transition:opacity .12s}
+.codewrap:hover .copy,.copy:focus-visible{opacity:1}
+.copy.done{color:var(--live);border-color:var(--live)}
+@media (hover:none){.copy{opacity:1}}
+blockquote{margin:0 0 1.2rem;padding:.9rem 1.1rem;border-left:3px solid var(--live);
+background:var(--live-wash);border-radius:0 9px 9px 0}
+blockquote > :last-child{margin-bottom:0}
+blockquote h3{margin-top:.2rem}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:0 0 1.2rem}
+table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+th,td{text-align:left;padding:.65rem .9rem;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+tbody tr:last-child td{border-bottom:0}
+hr{border:0;border-top:1px solid var(--line-soft);margin:2.5rem 0}
+img{max-width:100%;height:auto}
+.done-toggle{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);
+margin:.2rem 0 1.6rem;cursor:pointer;user-select:none}
+.done-toggle input{accent-color:var(--live);width:1rem;height:1rem}
+.pager{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:space-between;
+margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line-soft)}
+.pager a{flex:1 1 14rem;padding:.9rem 1.1rem;border:1px solid var(--line);border-radius:10px;
+text-decoration:none;background:var(--surface)}
+.pager a:hover{border-color:var(--live)}
+.pager span{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
+.pager .next{text-align:right}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-page="40-launch-video">
+<div class="shell">
+  <aside class="side">
+    <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
+    <nav><ul class="nav"><li><a href="00-start-here.html" data-page="00-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="01-your-machine.html" data-page="01-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="02-accounts.html" data-page="02-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="03-keys-and-access.html" data-page="03-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="04-three-layers.html" data-page="04-three-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="05-github.html" data-page="05-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="06-let-claude-drive.html" data-page="06-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" aria-current="page" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#1-why-bother">1. Why bother</a></li><li><a class="lvl2" href="#2-what-remotion-is">2. What Remotion is</a></li><li><a class="lvl2" href="#3-getting-started">3. Getting started</a></li><li><a class="lvl3" href="#what-you-just-got">What you just got</a></li><li><a class="lvl3" href="#the-studio">The Studio</a></li><li><a class="lvl2" href="#4-the-mental-model-and-the-seven-things-that-make-it-work">4. The mental model, and the seven things that make it work</a></li><li><a class="lvl3" href="#usecurrentframe--the-number">useCurrentFrame() — the number</a></li><li><a class="lvl3" href="#fps-and-durationinframes--the-exchange-rate">fps and durationInFrames — the exchange rate</a></li><li><a class="lvl3" href="#composition--declaring-a-video">&lt;Composition&gt; — declaring a video</a></li><li><a class="lvl3" href="#absolutefill--the-layer">&lt;AbsoluteFill&gt; — the layer</a></li><li><a class="lvl3" href="#sequence--scheduling-and-the-trick-that-makes-it-manageable">&lt;Sequence&gt; — scheduling, and the trick that makes it manageable</a></li><li><a class="lvl3" href="#interpolate--mapping-frames-to-values">interpolate() — mapping frames to values</a></li><li><a class="lvl3" href="#spring--natural-motion-without-thinking-about-easing">spring() — natural motion, without thinking about easing</a></li><li><a class="lvl3" href="#the-one-helper-that-does-most-of-the-work">The one helper that does most of the work</a></li><li><a class="lvl2" href="#5-rendering">5. Rendering</a></li><li><a class="lvl3" href="#render-a-still-frame">Render a still frame</a></li><li><a class="lvl2" href="#6-sizes-that-matter">6. Sizes that matter</a></li><li><a class="lvl2" href="#7-get-claude-to-do-it">7. Get Claude to do it</a></li><li><a class="lvl3" href="#why-that-prompt-works">Why that prompt works</a></li><li><a class="lvl3" href="#then-iterate-in-the-studio-not-in-the-chat">Then iterate in the Studio, not in the chat</a></li><li><a class="lvl2" href="#8-what-makes-a-launch-video-actually-good">8. What makes a launch video actually good</a></li><li><a class="lvl2" href="#9-when-it-breaks">9. When it breaks</a></li><li><a class="lvl2" href="#and-then-post-it">And then post it</a></li></ul></div>
+  </aside>
+  <main>
+<h1>Make a launch video</h1>
+<p><strong>You'll end with:</strong> a 30-second video of your project, written as code in your
+repository, rendered to an <code>.mp4</code> from the terminal — and regenerable in one
+command every time the product changes.</p>
+<p><strong>Time:</strong> ~45 minutes for your first one. About ten for the next.
+<strong>Cost:</strong> nothing. No editing software, no subscription, no stock footage site.</p>
+<p>This chapter is optional. Everything before it got your thing online. This is
+about getting it <em>seen</em>, and it is the single biggest lever left.</p>
+<hr />
+<h2 id="1-why-bother">1. Why bother<a class="anchor" href="#1-why-bother" aria-label="Link to this section">#</a></h2>
+<p>On LinkedIn, X, Instagram and almost everywhere else, a video is the strongest
+thing you can put in a post. It occupies more of the screen, it holds the thumb
+for longer, and every one of those platforms would rather show it than show your
+link.</p>
+<p>But here is the part that changes everything about how you build it:</p>
+<blockquote>
+<p><strong>It autoplays muted.</strong> Nearly nobody turns the sound on. Your video has to
+work with no audio at all — which means no voiceover, no music cue, no
+"as you can see here". Every single thing you want to communicate has to be on
+the screen, in text, large enough to read on a phone held at arm's length.</p>
+</blockquote>
+<p>That is not a limitation you work around. It is the brief. A launch video is
+closer to a <strong>slide deck that animates itself</strong> than to a film, and once you
+accept that, making one stops being intimidating.</p>
+<p>It also solves a real problem: you already made a static preview image in
+<a href="30-share-it.html">Share it</a>. A video is that image, but it can show a <em>sequence</em> —
+the problem, then the thing, then the URL — which a single still cannot.</p>
+<hr />
+<h2 id="2-what-remotion-is">2. What Remotion is<a class="anchor" href="#2-what-remotion-is" aria-label="Link to this section">#</a></h2>
+<p><strong><a href="https://www.remotion.dev">Remotion</a></strong> lets you write a video as React
+components — the same kind of function-that-returns-markup you'd write for a web
+page. It renders each component once per frame in a headless browser (a real
+Chrome with no window), then stitches those frames into an <code>.mp4</code>.</p>
+<p>The value is not that it's easier than a video editor. Sometimes it isn't. The
+value is that <strong>your video is code</strong>:</p>
+<ul>
+<li>It lives in your repository, next to the thing it advertises.</li>
+<li><code>git diff</code> shows what changed between v1 and v2 of your video.</li>
+<li>Your product changed? Edit two lines, re-render, post the new one. No
+  reopening a 4 GB project file and hunting for the layer you need.</li>
+<li><strong>Claude can edit it.</strong> This is the real reason. Describing a design change in
+  English and having it appear is dramatically faster than dragging keyframes,
+  and it works precisely because the video is text.</li>
+</ul>
+<p>If you have never opened video editing software in your life, this is an
+advantage rather than a gap.</p>
+<hr />
+<h2 id="3-getting-started">3. Getting started<a class="anchor" href="#3-getting-started" aria-label="Link to this section">#</a></h2>
+<p>Do this in a <strong>new folder, next to your project</strong> — not inside it. The video is
+its own small project with its own dependencies, and keeping them separate means
+your site's build never has to care that Remotion exists.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">cd ~/dev
+npx create-video@latest
+</code></pre></div>
+<p>It asks for a folder name and a template. <strong>Pick the blank / "Hello World"
+one.</strong> The fancier templates are impressive and you will spend an hour
+unpicking them.</p>
+<p>Then:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">cd my-launch-video
+npm install
+npm run dev
+</code></pre></div>
+<blockquote>
+<p>Some scaffolds name that script <code>studio</code> rather than <code>dev</code>. Look in
+<code>package.json</code> — whichever one runs <code>remotion studio</code> is the right one.</p>
+</blockquote>
+<h3 id="what-you-just-got">What you just got<a class="anchor" href="#what-you-just-got" aria-label="Link to this section">#</a></h3>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">my-launch-video/
+├── src/
+│   ├── index.ts        ← one line: hands your Root to Remotion
+│   ├── Root.tsx        ← the list of videos this project can render
+│   └── HelloWorld.tsx  ← an actual video
+├── package.json
+└── tsconfig.json
+</code></pre></div>
+<p>That is genuinely all of it. <code>index.ts</code> is three lines and you will never touch
+it again:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-tsx">import { registerRoot } from 'remotion';
+import { RemotionRoot } from './Root';
+registerRoot(RemotionRoot);
+</code></pre></div>
+<h3 id="the-studio">The Studio<a class="anchor" href="#the-studio" aria-label="Link to this section">#</a></h3>
+<p><code>npm run dev</code> opens the <strong>Remotion Studio</strong> in your browser at
+<code>http://localhost:3000</code>. It is the closest thing here to a normal video editor,
+and it has three parts:</p>
+<ul>
+<li><strong>Left:</strong> the list of compositions — the videos this project knows how to
+  render. Click one to load it.</li>
+<li><strong>Middle:</strong> a live preview. Press space to play.</li>
+<li><strong>Bottom:</strong> a <strong>timeline</strong> with a playhead and a frame counter. Drag it and
+  the preview jumps to that exact frame. You can also step one frame at a time
+  with the arrow keys, which you will do constantly.</li>
+</ul>
+<p>The important behaviour: <strong>save a file and the preview updates immediately</strong>,
+holding your position in the timeline. That is the whole development loop. Park
+the playhead on the frame you're fiddling with, put the editor and the Studio
+side by side, and change numbers until it looks right.</p>
+<hr />
+<h2 id="4-the-mental-model-and-the-seven-things-that-make-it-work">4. The mental model, and the seven things that make it work<a class="anchor" href="#4-the-mental-model-and-the-seven-things-that-make-it-work" aria-label="Link to this section">#</a></h2>
+<p>Here is the idea the entire tool rests on, and it is worth reading twice:</p>
+<blockquote>
+<p><strong>A video is a pure function of the frame number.</strong></p>
+<p>Remotion asks your component "what does frame 412 look like?", screenshots the
+answer, then asks about frame 413. Nothing is remembered between frames.
+Nothing "moves". There is no playback, no state, no timeline object. There is
+only: given this number, draw this picture.</p>
+</blockquote>
+<p>Everything below is a consequence of that.</p>
+<h3 id="usecurrentframe--the-number"><code>useCurrentFrame()</code> — the number<a class="anchor" href="#usecurrentframe--the-number" aria-label="Link to this section">#</a></h3>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-tsx">import { useCurrentFrame } from 'remotion';
+
+export const Counter: React.FC = () =&gt; {
+  const frame = useCurrentFrame();
+  return &lt;h1&gt;Frame {frame}&lt;/h1&gt;;
+};
+</code></pre></div>
+<p>That is a complete, working video. It counts. Every animation you ever write is
+this hook plus arithmetic.</p>
+<h3 id="fps-and-durationinframes--the-exchange-rate"><code>fps</code> and <code>durationInFrames</code> — the exchange rate<a class="anchor" href="#fps-and-durationinframes--the-exchange-rate" aria-label="Link to this section">#</a></h3>
+<p>There are no seconds anywhere in Remotion. There are frames, and there is
+<strong>fps</strong> (frames per second), which converts between the two:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">durationInFrames ÷ fps = seconds
+1085 ÷ 30 = 36.2 seconds
+</code></pre></div>
+<p><strong>Use 30 fps.</strong> It is the default, every social platform re-encodes to something
+like it anyway, and it makes the mental arithmetic easy: one second is thirty
+frames, so a beat that should last three seconds is ninety frames.</p>
+<h3 id="composition--declaring-a-video"><code>&lt;Composition&gt;</code> — declaring a video<a class="anchor" href="#composition--declaring-a-video" aria-label="Link to this section">#</a></h3>
+<p><code>Root.tsx</code> is a list of the videos this project can produce. Each one is a
+<code>&lt;Composition&gt;</code>:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-tsx">import { Composition } from 'remotion';
+import { RouteVideo } from './RouteVideo';
+
+export const RemotionRoot: React.FC = () =&gt; (
+  &lt;&gt;
+    &lt;Composition
+      id=&quot;RouteVideo&quot;
+      component={RouteVideo}
+      durationInFrames={1085}
+      fps={30}
+      width={1080}
+      height={1350}
+    /&gt;
+  &lt;/&gt;
+);
+</code></pre></div>
+<p>The <strong><code>id</code></strong> is the name you type on the command line to render it, and the name
+that appears in the Studio's sidebar. One project can hold as many compositions
+as you like — a vertical cut, a square cut, and a one-frame still image, all
+sharing the same components.</p>
+<h3 id="absolutefill--the-layer"><code>&lt;AbsoluteFill&gt;</code> — the layer<a class="anchor" href="#absolutefill--the-layer" aria-label="Link to this section">#</a></h3>
+<p>A <code>&lt;div&gt;</code> that is absolutely positioned and fills the frame edge to edge. It is
+the background, the safe area, and the layering primitive all at once — stack
+two of them and the second sits on top of the first.</p>
+<p>In practice you wrap it once, in a helper, so every scene in your video shares
+the same padding and background without repeating yourself:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-tsx">const Shell: React.FC&lt;{ children: React.ReactNode; gap?: number }&gt; = ({ children, gap = 36 }) =&gt; (
+  &lt;AbsoluteFill
+    style={{
+      background: '#0B0E14',
+      padding: '70px 74px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      gap,
+    }}
+  &gt;
+    {children}
+  &lt;/AbsoluteFill&gt;
+);
+</code></pre></div>
+<p>Flexbox inside an <code>AbsoluteFill</code> is how essentially all of this gets laid out.
+No absolute pixel positions, no "nudge it left by 4" — the same CSS you'd use
+for a web page.</p>
+<h3 id="sequence--scheduling-and-the-trick-that-makes-it-manageable"><code>&lt;Sequence&gt;</code> — scheduling, and the trick that makes it manageable<a class="anchor" href="#sequence--scheduling-and-the-trick-that-makes-it-manageable" aria-label="Link to this section">#</a></h3>
+<p><code>&lt;Sequence&gt;</code> shows its children only during a window of frames. But the reason
+it matters is subtler and much more useful:</p>
+<blockquote>
+<p><strong>Inside a <code>&lt;Sequence from={95}&gt;</code>, <code>useCurrentFrame()</code> returns <code>0</code> at the
+video's frame 95.</strong> Time is shifted, not just clipped.</p>
+</blockquote>
+<p>So every scene can be written as if the video starts when <em>it</em> starts. You never
+do global-frame arithmetic. Here is a real, shipped timeline — six scenes,
+1085 frames, 36 seconds:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-tsx">export const RouteVideo: React.FC = () =&gt; (
+  &lt;AbsoluteFill style={{ background: BG }}&gt;
+    &lt;Sequence from={0}   durationInFrames={95}&gt;  &lt;Title /&gt;   &lt;/Sequence&gt;
+    &lt;Sequence from={95}  durationInFrames={180}&gt; &lt;Pools /&gt;   &lt;/Sequence&gt;
+    &lt;Sequence from={275} durationInFrames={235}&gt; &lt;Decide /&gt;  &lt;/Sequence&gt;
+    &lt;Sequence from={510} durationInFrames={250}&gt; &lt;Loop /&gt;    &lt;/Sequence&gt;
+    &lt;Sequence from={760} durationInFrames={185}&gt; &lt;Privacy /&gt; &lt;/Sequence&gt;
+    &lt;Sequence from={945} durationInFrames={140}&gt; &lt;Outro /&gt;   &lt;/Sequence&gt;
+  &lt;/AbsoluteFill&gt;
+);
+</code></pre></div>
+<p>Read that as the storyboard, because that is exactly what it is. Each <code>from</code> is
+the previous <code>from</code> plus the previous <code>durationInFrames</code>, and the last one lands
+on 1085 — which is the <code>durationInFrames</code> on the <code>&lt;Composition&gt;</code>. Keep those two
+numbers agreeing and most timing bugs never happen.</p>
+<p><code>&lt;Title /&gt;</code>, <code>&lt;Pools /&gt;</code> and the rest are just components in the same file, each
+one written as though it were the only thing in the world.</p>
+<h3 id="interpolate--mapping-frames-to-values"><code>interpolate()</code> — mapping frames to values<a class="anchor" href="#interpolate--mapping-frames-to-values" aria-label="Link to this section">#</a></h3>
+<p>The workhorse. "As the frame goes from <em>here</em> to <em>there</em>, take this value from
+<em>this</em> to <em>that</em>."</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-tsx">import { interpolate, Easing } from 'remotion';
+
+const frame = useCurrentFrame();
+
+// Between frames 22 and 54, grow a rule from 0% to 100% wide.
+const rule = interpolate(frame, [22, 54], [0, 100], {
+  extrapolateRight: 'clamp',
+  easing: Easing.out(Easing.cubic),
+});
+
+return &lt;div style={{ height: 3, background: ACCENT, width: `${rule}%` }} /&gt;;
+</code></pre></div>
+<p>Two things that will bite you exactly once:</p>
+<ul>
+<li><strong><code>extrapolateRight: 'clamp'</code>.</strong> Without it, <code>interpolate</code> keeps going.
+  At frame 500 that rule is 1500% wide. Clamp both ends
+  (<code>extrapolateLeft: 'clamp'</code> too) unless you specifically want the value to
+  keep running.</li>
+<li><strong><code>easing</code>.</strong> Linear motion looks mechanical. <code>Easing.out(Easing.cubic)</code>
+  starts fast and settles — right for something arriving.
+  <code>Easing.inOut(Easing.cubic)</code> is right for something travelling across the
+  screen.</li>
+</ul>
+<h3 id="spring--natural-motion-without-thinking-about-easing"><code>spring()</code> — natural motion, without thinking about easing<a class="anchor" href="#spring--natural-motion-without-thinking-about-easing" aria-label="Link to this section">#</a></h3>
+<p><code>spring()</code> returns a number that travels from 0 to 1 with physics, which reads
+as more alive than any easing curve you'd pick by hand.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-tsx">import { spring, useCurrentFrame, useVideoConfig } from 'remotion';
+
+const frame = useCurrentFrame();
+const { fps } = useVideoConfig();
+
+const s = spring({ frame: frame - start, fps, config: { damping: 200 } });
+</code></pre></div>
+<ul>
+<li><code>frame - start</code> is how you delay it. The spring only begins once <code>frame</code>
+  passes <code>start</code>.</li>
+<li><code>useVideoConfig()</code> gives you <code>fps</code>, <code>width</code>, <code>height</code> and
+  <code>durationInFrames</code> — the spring needs <code>fps</code> because springs are defined in
+  real time.</li>
+<li><code>damping: 200</code> means <strong>no wobble</strong> — it arrives and stops. The default
+  overshoots slightly, which is charming for a bouncing ball and wrong for a
+  headline.</li>
+</ul>
+<h3 id="the-one-helper-that-does-most-of-the-work">The one helper that does most of the work<a class="anchor" href="#the-one-helper-that-does-most-of-the-work" aria-label="Link to this section">#</a></h3>
+<p>Put those two together and you get the component that, in practice, animates
+almost everything in a launch video:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-tsx">const Rise: React.FC&lt;{ start: number; children: React.ReactNode; distance?: number }&gt; = ({
+  start,
+  children,
+  distance = 26,
+}) =&gt; {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const s = spring({ frame: frame - start, fps, config: { damping: 200 } });
+  return (
+    &lt;div style={{ opacity: s, transform: `translateY(${interpolate(s, [0, 1], [distance, 0])}px)` }}&gt;
+      {children}
+    &lt;/div&gt;
+  );
+};
+</code></pre></div>
+<p>One spring drives <strong>both</strong> the fade and the movement, so they can never drift
+out of step. Now your entire scene is written in plain English:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-tsx">&lt;Shell&gt;
+  &lt;Rise start={2}&gt;  &lt;Eyebrow&gt;Five places a task could run&lt;/Eyebrow&gt; &lt;/Rise&gt;
+  &lt;Rise start={8}&gt;  &lt;Headline&gt;Which one gets it?&lt;/Headline&gt;         &lt;/Rise&gt;
+  &lt;Rise start={22}&gt; &lt;Row name=&quot;Claude&quot; /&gt;                            &lt;/Rise&gt;
+  &lt;Rise start={33}&gt; &lt;Row name=&quot;Codex&quot; /&gt;                             &lt;/Rise&gt;
+  &lt;Rise start={44}&gt; &lt;Row name=&quot;Kimi&quot; /&gt;                              &lt;/Rise&gt;
+&lt;/Shell&gt;
+</code></pre></div>
+<p>Staggering <code>start</code> by 11 frames per row is the whole "list animates in" effect.
+That is roughly 90% of the motion in a good launch video, and you now know all
+of it.</p>
+<hr />
+<h2 id="5-rendering">5. Rendering<a class="anchor" href="#5-rendering" aria-label="Link to this section">#</a></h2>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">npx remotion render RouteVideo out/route-launch.mp4
+</code></pre></div>
+<p>The composition <code>id</code>, then where to put the file. That's it. A 36-second
+1080×1350 video takes a couple of minutes on a laptop and lands at around 3 MB —
+comfortably inside every platform's limit.</p>
+<p>Put it in <code>package.json</code> so you never have to remember it:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;dev&quot;: &quot;remotion studio&quot;,
+    &quot;render&quot;: &quot;remotion render RouteVideo out/route-launch.mp4&quot;
+  }
+}
+</code></pre></div>
+<h3 id="render-a-still-frame">Render a still frame<a class="anchor" href="#render-a-still-frame" aria-label="Link to this section">#</a></h3>
+<p>This is the command you will use most, and not for the reason you'd expect:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">npx remotion still RouteVideo out/rv-220.png --frame=220
+</code></pre></div>
+<p><strong>As a fallback post:</strong> some places still prefer an image, and a frame from your
+own video is a better one than a screenshot.</p>
+<p><strong>As your iteration loop:</strong> rather than watching a 36-second video back to check
+one beat, render the first frame of each scene as a PNG and look at all six at
+once. Pick the frame numbers straight out of your <code>&lt;Sequence&gt;</code> list:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">for f in 40 180 420 640 850 1010; do
+  npx remotion still RouteVideo out/nv-$f.png --frame=$f
+done
+</code></pre></div>
+<p><strong>And as an image generator.</strong> A composition with <code>durationInFrames={1}</code> is not
+really a video at all — it's a designed PNG, made from the same components and
+the same palette as your video:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-tsx">&lt;Composition id=&quot;Og&quot; component={LaunchCard}
+  durationInFrames={1} fps={30} width={1200} height={630} /&gt;
+</code></pre></div>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">npx remotion still Og preview.png
+</code></pre></div>
+<p>That is the exact 1200×630 Open Graph image from
+<a href="30-share-it.html">Share it</a> — the picture that appears when someone pastes your
+link — now produced by one command and guaranteed to match your video.</p>
+<hr />
+<h2 id="6-sizes-that-matter">6. Sizes that matter<a class="anchor" href="#6-sizes-that-matter" aria-label="Link to this section">#</a></h2>
+<p>Set these on the <code>&lt;Composition&gt;</code> (<code>width</code> and <code>height</code>). If you want two shapes,
+make two compositions pointing at the same component rather than editing numbers
+back and forth.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Size</th>
+<th>Ratio</th>
+<th>Use it for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1080×1350</strong></td>
+<td>4:5 vertical</td>
+<td><strong>The default.</strong> LinkedIn and Instagram feeds. The tallest thing the feed allows, so it takes the most screen for the same scroll</td>
+</tr>
+<tr>
+<td><strong>1080×1080</strong></td>
+<td>1:1 square</td>
+<td>Safe absolutely everywhere — X, Slack, Discord, anywhere you're unsure</td>
+</tr>
+<tr>
+<td><strong>1920×1080</strong></td>
+<td>16:9 landscape</td>
+<td>YouTube, embedding in your README or site, anything shown on a monitor</td>
+</tr>
+<tr>
+<td><strong>1200×630</strong></td>
+<td>1.91:1 still</td>
+<td>Not a video. The Open Graph preview image for your link (<a href="30-share-it.html">chapter 30</a>)</td>
+</tr>
+</tbody>
+</table></div>
+<p>If in doubt, <strong>1080×1350</strong>. If you're posting the same video to several places
+and can only be bothered making one, <strong>1080×1080</strong> never looks wrong anywhere.</p>
+<blockquote>
+<p>Full-screen vertical (1080×1920, 9:16) is for Stories, Reels, Shorts and
+TikTok. It's a different edit with a different pace, not a re-crop, so don't
+reach for it just to cover more platforms.</p>
+</blockquote>
+<hr />
+<h2 id="7-get-claude-to-do-it">7. Get Claude to do it<a class="anchor" href="#7-get-claude-to-do-it" aria-label="Link to this section">#</a></h2>
+<p>Here is the honest fastest path: <strong>describe the video, let Claude write it, then
+fix it in the Studio.</strong> You now understand enough of the model to review what
+comes back and to say precisely what's wrong with it, which is the part that
+matters.</p>
+<p>First, give Claude the official Remotion instructions — the Remotion team ship a
+skill for exactly this, and it stops the guessing about current API shapes:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">npx remotion skills add
+</code></pre></div>
+<p>Then, from inside the video folder, paste something like this — changing the
+project, the colours and the beats to yours:</p>
+<blockquote>
+<p>Build me a launch video for <strong>Tide Clock</strong> in this Remotion project.</p>
+<p><strong>Composition:</strong> id <code>Launch</code>, <strong>1080×1350</strong>, <strong>30 fps</strong>, <strong>1080 frames</strong>
+(36 seconds).</p>
+<p><strong>Palette:</strong> background <code>#0B0E14</code>, panel <code>#0F141B</code>, border <code>#1E2630</code>,
+text <code>#C9D1D9</code>, dim text <code>#6E7681</code>, accent <code>#D97757</code>, green <code>#3FB950</code>,
+cyan <code>#56D4DD</code>.</p>
+<p><strong>Fonts:</strong> system stacks only — no webfonts, no <code>@import</code>.
+Sans: <code>-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif</code>.
+Mono: <code>ui-monospace, SFMono-Regular, Menlo, Consolas, monospace</code>.</p>
+<p><strong>No audio.</strong> It must read completely with the sound off.</p>
+<p><strong>The beats, in order — one <code>&lt;Sequence&gt;</code> each:</strong></p>
+<ol>
+<li><strong>0–105</strong> (3.5 s) — The problem, one huge line: <em>"You can't tell from the
+   kitchen window whether it's safe to swim."</em> Accent rule draws underneath it.</li>
+<li><strong>105–330</strong> (7.5 s) — The answer: <em>"Tide Clock"</em>, one supporting line, and
+   the tagline <em>today's tides for your nearest beach</em>.</li>
+<li><strong>330–600</strong> (9 s) — <strong>The hero beat.</strong> A mocked-up phone screen showing the
+   tide curve, with the "safe to swim" window highlighting in green as it
+   animates in. This is the beat that has to be good.</li>
+<li><strong>600–810</strong> (7 s) — How it's built: three stacked rows, staggered in —
+   <em>no app to install</em>, <em>works offline</em>, <em>free forever</em>.</li>
+<li><strong>810–960</strong> (5 s) — <em>Open source, MIT licensed</em> with the GitHub repo path
+   in mono.</li>
+<li><strong>960–1080</strong> (4 s) — Hold on the URL, <strong>tide-clock.example.com</strong>, large and
+   still. Nothing else moving.</li>
+</ol>
+<p><strong>Structure:</strong> one component per beat in one file, plus a shared <code>Shell</code>
+(AbsoluteFill, background, padding, flex column) and a <code>Rise</code> helper that
+springs <code>opacity</code> and <code>translateY</code> together with a <code>start</code> prop. Stagger list
+items by about 11 frames.</p>
+<p>Text must be readable at phone size — nothing under about 24px at this
+resolution. Render a still at frames 40, 200, 450, 700, 880 and 1020 when
+you're done so I can check each beat.</p>
+</blockquote>
+<h3 id="why-that-prompt-works">Why that prompt works<a class="anchor" href="#why-that-prompt-works" aria-label="Link to this section">#</a></h3>
+<p>It leaves nothing to guess, and that is the entire trick:</p>
+<ul>
+<li><strong>The story is specified beat by beat, with frame numbers</strong>, so Claude is
+  arranging content rather than inventing a narrative. Note that the frames add
+  up exactly to 1080 — a budget that balances is the single most useful thing
+  you can hand over.</li>
+<li><strong>The colours are hex codes</strong>, not "make it look modern". Six hex values buy
+  you more design consistency than six paragraphs of adjectives.</li>
+<li><strong>The dimensions and fps are named</strong>, so nothing has to be resized later, and
+  "is this text big enough" has an actual answer.</li>
+<li><strong>The constraints are stated as constraints</strong> — no audio, no webfonts, minimum
+  text size. These are the three things that silently ruin a launch video, and
+  each is one line to prevent.</li>
+<li><strong>It names the hero beat.</strong> Every video has one beat that does the work. Say
+  which, or effort gets spread evenly across six beats that are all fine and
+  none memorable.</li>
+</ul>
+<h3 id="then-iterate-in-the-studio-not-in-the-chat">Then iterate in the Studio, not in the chat<a class="anchor" href="#then-iterate-in-the-studio-not-in-the-chat" aria-label="Link to this section">#</a></h3>
+<p>Keep <code>npm run dev</code> running the whole time. When something's off, <strong>look at it,
+scrub to the frame, and describe the fix in frames and pixels</strong>:</p>
+<blockquote>
+<p>The headline in beat 3 collides with the phone mock between frames 380 and
+420. Drop the headline to 52px and start the phone at frame 400 instead of 360.</p>
+</blockquote>
+<p>That is a ten-second fix. Trying to describe the same problem from memory,
+without the playhead parked on it, is how you end up with three rounds of
+"a bit more". Seeing it is always faster than describing it.</p>
+<hr />
+<h2 id="8-what-makes-a-launch-video-actually-good">8. What makes a launch video actually good<a class="anchor" href="#8-what-makes-a-launch-video-actually-good" aria-label="Link to this section">#</a></h2>
+<p>Short list. All of it earned the hard way.</p>
+<ul>
+<li><strong>Open on the problem, not the product.</strong> Nobody knows what your thing is
+  called and nobody is waiting to find out. "You can't tell from the window
+  whether the tide is in" earns the next three seconds. A logo does not.</li>
+<li><strong>One idea per beat.</strong> If a beat needs two sentences to explain, it's two
+  beats. The commonest fault in a first video is four points crammed into three
+  seconds, which lands as none.</li>
+<li><strong>Text large enough for a phone.</strong> Check it by shrinking the Studio preview to
+  roughly thumbnail size. If you can't read it there, it doesn't exist.</li>
+<li><strong>No audio dependency at all.</strong> No voiceover, no "listen to this". Ship it
+  with a silent track and assume nobody will ever hear it — because they won't.</li>
+<li><strong>Under 40 seconds.</strong> 30 is better. Watch-through rate is what the feed
+  rewards, and a complete 25-second video beats an abandoned 90-second one every
+  time.</li>
+<li><strong>End on the URL, and hold it.</strong> Last beat, four seconds, nothing else moving.
+  This is the only frame with a job beyond attention: it has to be readable
+  long enough to be typed.</li>
+</ul>
+<p>And one that sits underneath all of them: <strong>watch it once with your eyes
+half-shut</strong>, the way people actually see it while scrolling. If the shape of it
+still tells the story, it works.</p>
+<hr />
+<h2 id="9-when-it-breaks">9. When it breaks<a class="anchor" href="#9-when-it-breaks" aria-label="Link to this section">#</a></h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause and fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Chrome Headless Shell</code> not found, or render exits instantly on a fresh machine</td>
+<td>Remotion needs its own browser. <code>npx remotion browser ensure</code>. On a bare Linux box you may also be missing Chrome's system libraries — the error names them</td>
+</tr>
+<tr>
+<td>Looking for a system <code>ffmpeg</code> to install</td>
+<td>You don't need one. Remotion 4 bundles its own renderer. If a tutorial tells you to <code>brew install ffmpeg</code>, it was written for Remotion 3</td>
+</tr>
+<tr>
+<td>Fonts look right in the Studio but wrong in the rendered file</td>
+<td>Almost always a bare CSS <code>@import</code>. The renderer screenshots each frame the moment it's ready, which can be before the webfont has downloaded — so it silently falls back. <strong>Never use <code>@import</code> in a Remotion project.</strong> Use a system font stack (as in the prompt above), or <code>npx remotion add @remotion/google-fonts</code> and its <code>loadFont()</code>, which tells the renderer to wait</td>
+</tr>
+<tr>
+<td><code>Cannot find module</code> or type errors after adding a Remotion package</td>
+<td>Mismatched versions across <code>@remotion/*</code>. <code>npx remotion versions</code> reports it; install with <code>npx remotion add &lt;package&gt;</code> rather than <code>npm install</code> so versions stay locked together</td>
+</tr>
+<tr>
+<td>The file is too large for the platform</td>
+<td>Raise <code>--crf</code> (higher number, smaller file — try <code>--crf 28</code>), or shorten it. Shortening is nearly always the better answer</td>
+</tr>
+<tr>
+<td>The last beat is cut off, or the video ends mid-animation</td>
+<td>The final <code>&lt;Sequence&gt;</code>'s <code>from + durationInFrames</code> overruns the <code>durationInFrames</code> on the <code>&lt;Composition&gt;</code>. Add the sequence durations up — they must equal the composition's, exactly</td>
+</tr>
+<tr>
+<td>A beat is blank</td>
+<td>A <code>&lt;Sequence from={N}&gt;</code> with an inner animation whose <code>start</code> is written in <em>global</em> frames. Inside a Sequence, frame counting restarts at 0 — <code>start</code> is relative to that scene</td>
+</tr>
+<tr>
+<td>Preview stutters or drops frames</td>
+<td>Preview only. It renders live in a browser tab; the final render is frame-exact and unaffected. Don't chase it</td>
+</tr>
+<tr>
+<td>Platform rejects the upload for having no audio</td>
+<td>Remotion adds a silent audio track by default for exactly this reason. If you disabled it, put it back: <code>--enforce-audio-track</code></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="and-then-post-it">And then post it<a class="anchor" href="#and-then-post-it" aria-label="Link to this section">#</a></h2>
+<p>You have a video, a still from it, and an Open Graph image — all three generated
+from the same file, all three regenerable when the product moves.</p>
+<p>The advice in <a href="30-share-it.html">Share it</a> still applies: lead with the thing, put
+the link in the post rather than the first comment, say what surprised you. Add
+the video, and add yourself to the <a href="https://github.com/jhammant/ship-what-you-built/blob/main/SHOWCASE.md">showcase</a>.</p>
+<p>When you ship v2, change the two lines that are now wrong, run <code>npm run render</code>,
+and post again. That is the whole point of having built it out of code.</p>
+<hr />
+<p><strong>Next:</strong> <a href="90-troubleshooting.html">When it breaks →</a> — for when the render, the
+deploy, or the DNS doesn't do what it said it would.</p>
+    <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
+    <nav class="pager"><a class="prev" href="30-share-it.html"><span>Previous</span>Share it</a><a class="next" href="90-troubleshooting.html"><span>Next</span>When it breaks</a></nav>
+  </main>
+</div>
+<script>
+// Copy the whole block — several are heredocs that break if pasted line by line.
+document.querySelectorAll('.codewrap').forEach(function (w) {
+  var btn = w.querySelector('.copy'), pre = w.querySelector('pre');
+  if (!btn || !pre) return;
+  btn.addEventListener('click', function () {
+    navigator.clipboard.writeText(pre.innerText).then(function () {
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+    }).catch(function () { btn.textContent = 'Press Ctrl+C'; });
+  });
+});
+
+// Remember which pages are finished — the AWS track spans more than one sitting.
+(function () {
+  var KEY = 'swyb-done', box = document.getElementById('page-done');
+  if (!box) return;
+  var page = document.body.dataset.page;
+  var read = function () { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
+  var done = read();
+  box.checked = !!done[page];
+  box.addEventListener('change', function () {
+    var d = read();
+    if (box.checked) { d[page] = true; } else { delete d[page]; }
+    localStorage.setItem(KEY, JSON.stringify(d));
+    paint();
+  });
+  function paint() {
+    var d = read();
+    document.querySelectorAll('.nav a[data-page]').forEach(function (a) {
+      a.textContent.indexOf('✓') === 0 && (a.textContent = a.textContent.slice(1));
+      var t = a.querySelector('.tick');
+      if (t) t.textContent = d[a.dataset.page] ? '✓ ' : '';
+    });
+  }
+  paint();
+})();
+</script>
+</body>
+</html>

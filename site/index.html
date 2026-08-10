@@ -173,6 +173,31 @@
   .card p { color: var(--ink-soft); font-size: 0.95rem; }
   .card.flag { border-color: var(--stuck); }
   .card.flag .tag { color: var(--stuck); }
+  /* The cards are links, so they must look and behave like links. */
+  a.card { text-decoration: none; color: inherit; transition: transform .12s ease, border-color .12s ease; }
+  a.card:hover { transform: translateY(-2px); border-color: var(--live); }
+  a.card.flag:hover { border-color: var(--stuck); }
+  .card .more {
+    margin-top: auto; padding-top: .5rem; font-size: .85rem; font-weight: 560;
+    color: var(--live);
+  }
+  .card.flag .more { color: var(--stuck); }
+
+  /* ------------------------------ Three steps ------------------------------ */
+  .steps { counter-reset: step; display: grid; gap: 1.5rem; }
+  .step { position: relative; padding-left: 3rem; }
+  .step::before {
+    counter-increment: step; content: counter(step);
+    position: absolute; left: 0; top: -0.1rem;
+    width: 2rem; height: 2rem; border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--live); color: var(--live-ink);
+    font-weight: 660; font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .step h3 { margin-bottom: .3rem; }
+  .step p { color: var(--ink-soft); }
+  .step .meta { font-size: .85rem; color: var(--muted); }
 
   /* --------------------------------- Table --------------------------------- */
   .scroller { overflow-x: auto; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); }
@@ -227,7 +252,8 @@
       </div>
 
       <div class="actions">
-        <a class="btn btn-primary" href="https://github.com/jhammant/ship-what-you-built/blob/main/guide/00-start-here.md">Read the guide</a>
+        <a class="btn btn-primary" href="/guide/00-start-here.html">Read the guide</a>
+        <a class="btn btn-ghost" href="#start">Start in three steps</a>
         <a class="btn btn-ghost" href="https://github.com/jhammant/ship-what-you-built/blob/main/SHOWCASE.md">See what people shipped</a>
       </div>
     </div>
@@ -320,21 +346,24 @@
         <p class="lede">The guide starts by working out which of these you have, because it changes everything after it.</p>
       </div>
       <div class="cards">
-        <div class="card">
+        <a class="card" href="/guide/00-start-here.html#shape-1--a-static-site">
           <span class="tag">Shape 1 · ~20 min</span>
           <h3>A static site</h3>
           <p>HTML, CSS and JS — or anything with a build step that spits out a folder. Nothing has to stay running.</p>
-        </div>
-        <div class="card">
+          <span class="more">Read this bit &rarr;</span>
+        </a>
+        <a class="card" href="/guide/00-start-here.html#shape-2--a-site-with-a-bit-of-backend">
           <span class="tag">Shape 2 · ~45 min</span>
           <h3>Plus a bit of backend</h3>
           <p>A form that saves something, or an API key you can't put in the browser. A function runs per request, then stops.</p>
-        </div>
-        <div class="card flag">
+          <span class="more">Read this bit &rarr;</span>
+        </a>
+        <a class="card flag" href="/guide/00-start-here.html#the-honest-note-about-shape-3">
           <span class="tag">Shape 3 · be honest</span>
           <h3>Something that keeps running</h3>
           <p>A Python server, a bot, a database you manage. Neither track's free tier fits — so the guide says so, and points you somewhere that does.</p>
-        </div>
+          <span class="more">Read the honest note &rarr;</span>
+        </a>
       </div>
     </div>
   </section>
@@ -362,6 +391,70 @@
         domain registered the same morning. Four bugs in the guide were found
         and fixed that way — including one where GitHub sends an OIDC subject
         claim that no published example matches.
+      </p>
+    </div>
+  </section>
+
+  <section id="start">
+    <div class="wrap stack">
+      <p class="eyebrow">The short version</p>
+      <h2>Start in three steps</h2>
+      <p class="lede">
+        You create the accounts. You authorise the tools. Then you hand the work
+        to Claude Code and answer its questions. About 30 minutes, most of it
+        waiting for DNS.
+      </p>
+
+      <div class="steps">
+        <div class="step">
+          <h3>Set up your machine</h3>
+          <p>
+            A terminal and a handful of tools. On Windows this means installing
+            WSL first — the guide walks through it, because everything here is
+            written in bash and PowerShell is not the same thing.
+          </p>
+          <pre><code># macOS
+brew install git gh jq awscli
+
+# Windows: open PowerShell as Administrator, then reboot
+wsl --install</code></pre>
+          <p class="meta"><a href="/guide/01-your-machine.html">Full setup, per platform &rarr;</a></p>
+        </div>
+
+        <div class="step">
+          <h3>Create the accounts</h3>
+          <p>
+            GitHub for everyone. Then Cloudflare <em>or</em> AWS depending on
+            your track — and Anthropic only if your project calls Claude. Turn
+            on two-factor while you're there, and on AWS set the budget alarm
+            <strong>before</strong> you build anything.
+          </p>
+          <p class="meta"><a href="/guide/02-accounts.html">Which accounts, and what they cost &rarr;</a></p>
+        </div>
+
+        <div class="step">
+          <h3>Hand it to Claude</h3>
+          <p>
+            Authorise each tool once — you never paste a key into the chat,
+            because the tools already hold it:
+          </p>
+          <pre><code>gh auth login                      # GitHub
+aws configure                      # Track B (AWS)
+npx --yes wrangler@latest login    # Track A (Cloudflare)</code></pre>
+          <p>Then, in your project folder, start Claude Code and say:</p>
+          <div class="says">
+            <span>I've built something in this folder and I want it online at a domain I own. Read shipwhatyoubuilt.com/guide and follow it. Use Track B (AWS). Tell me what shape my project is first, and stop before anything that spends money.</span>
+          </div>
+          <p class="meta"><a href="/guide/06-let-claude-drive.html">The full handover, and where it stops to ask you &rarr;</a></p>
+        </div>
+      </div>
+
+      <p style="color:var(--muted)">
+        Prefer to type it yourself? Both tracks list every command with an
+        explanation of what it does —
+        <a href="/guide/10-cloudflare.html">Cloudflare</a> or
+        <a href="/guide/20-aws.html">AWS</a>. New to any of the words on this
+        page? <a href="/guide/99-glossary.html">Every term is explained here</a>.
       </p>
     </div>
   </section>

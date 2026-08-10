@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The four layers — Ship What You Built</title>
+<meta name="description" content="The four layers — part of a free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:title" content="The four layers — Ship What You Built">
+<meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/04-three-layers.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#F6F7F5;--surface:#FFF;--sunken:#EEF0EC;--ink:#14181B;--ink-soft:#3D4642;
+--muted:#5B6560;--line:rgba(20,24,27,.13);--line-soft:rgba(20,24,27,.07);
+--live:#16794C;--live-ink:#FFF;--live-wash:rgba(22,121,76,.09);--stuck:#9A5B18;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+--sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;--ink-soft:#C3CCC6;
+--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}}
+:root[data-theme="dark"]{--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;
+--ink-soft:#C3CCC6;--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+line-height:1.68;font-size:1.02rem;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--live)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--live);outline-offset:3px;border-radius:5px}
+.shell{display:grid;grid-template-columns:17rem minmax(0,1fr);gap:2.5rem;
+max-width:78rem;margin-inline:auto;padding:0 clamp(1rem,4vw,2.5rem)}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr);gap:0}}
+.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;
+padding:2rem 0;border-right:1px solid var(--line-soft)}
+@media (max-width:900px){.side{position:static;max-height:none;border-right:0;
+border-bottom:1px solid var(--line-soft);padding-bottom:1rem}}
+.brand{font-weight:660;letter-spacing:-.02em;text-decoration:none;display:block;margin-bottom:.35rem}
+.brand small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;letter-spacing:0}
+.nav{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:.15rem}
+.nav a{display:block;padding:.42rem .6rem;border-radius:7px;text-decoration:none;
+font-size:.925rem;color:var(--ink-soft)}
+.nav a:hover{background:var(--sunken)}
+.nav a[aria-current="page"]{background:var(--live-wash);color:var(--ink);font-weight:600}
+.nav small{display:block;color:var(--muted);font-size:.76rem;line-height:1.35}
+.onpage{margin-top:1.5rem;border-top:1px solid var(--line-soft);padding-top:1rem}
+.onpage p{margin:0 0 .5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;
+text-transform:uppercase;color:var(--muted)}
+.onpage ul{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+.onpage a{display:block;padding:.2rem .35rem;font-size:.85rem;color:var(--muted);
+text-decoration:none;border-radius:5px}
+.onpage a:hover{color:var(--ink);background:var(--sunken)}
+.onpage .lvl3{padding-left:1rem;font-size:.8rem}
+main{padding:2.5rem 0 4rem;min-width:0;max-width:46rem}
+h1{font-size:clamp(1.9rem,1.4rem+2vw,2.7rem);line-height:1.1;letter-spacing:-.03em;
+margin:0 0 1.5rem;text-wrap:balance}
+h2{font-size:1.5rem;line-height:1.2;letter-spacing:-.022em;margin:2.8rem 0 .9rem;
+padding-top:1.4rem;border-top:1px solid var(--line-soft);text-wrap:balance}
+h3{font-size:1.13rem;letter-spacing:-.015em;margin:2rem 0 .6rem}
+h2 .anchor,h3 .anchor{opacity:0;margin-left:.4rem;color:var(--muted);text-decoration:none;font-weight:400}
+h2:hover .anchor,h3:hover .anchor,.anchor:focus-visible{opacity:1}
+p,ul,ol{margin:0 0 1.05rem}
+li{margin-bottom:.3rem}
+strong{font-weight:650}
+code{font-family:var(--mono);font-size:.875em;background:var(--sunken);
+padding:.12em .34em;border-radius:4px;overflow-wrap:break-word}
+.codewrap{position:relative;margin:0 0 1.2rem}
+pre{margin:0;overflow-x:auto;background:var(--sunken);border:1px solid var(--line-soft);
+border-radius:10px;padding:1rem 1.1rem;font-family:var(--mono);font-size:.845rem;line-height:1.62}
+pre code{background:none;padding:0;font-size:1em}
+.copy{position:absolute;top:.5rem;right:.5rem;font:inherit;font-size:.75rem;
+padding:.28rem .6rem;border-radius:6px;border:1px solid var(--line);
+background:var(--surface);color:var(--muted);cursor:pointer;opacity:0;transition:opacity .12s}
+.codewrap:hover .copy,.copy:focus-visible{opacity:1}
+.copy.done{color:var(--live);border-color:var(--live)}
+@media (hover:none){.copy{opacity:1}}
+blockquote{margin:0 0 1.2rem;padding:.9rem 1.1rem;border-left:3px solid var(--live);
+background:var(--live-wash);border-radius:0 9px 9px 0}
+blockquote > :last-child{margin-bottom:0}
+blockquote h3{margin-top:.2rem}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:0 0 1.2rem}
+table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+th,td{text-align:left;padding:.65rem .9rem;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+tbody tr:last-child td{border-bottom:0}
+hr{border:0;border-top:1px solid var(--line-soft);margin:2.5rem 0}
+img{max-width:100%;height:auto}
+.done-toggle{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);
+margin:.2rem 0 1.6rem;cursor:pointer;user-select:none}
+.done-toggle input{accent-color:var(--live);width:1rem;height:1rem}
+.pager{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:space-between;
+margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line-soft)}
+.pager a{flex:1 1 14rem;padding:.9rem 1.1rem;border:1px solid var(--line);border-radius:10px;
+text-decoration:none;background:var(--surface)}
+.pager a:hover{border-color:var(--live)}
+.pager span{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
+.pager .next{text-align:right}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-page="04-three-layers">
+<div class="shell">
+  <aside class="side">
+    <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
+    <nav><ul class="nav"><li><a href="00-start-here.html" data-page="00-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="01-your-machine.html" data-page="01-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="02-accounts.html" data-page="02-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="03-keys-and-access.html" data-page="03-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="04-three-layers.html" aria-current="page" data-page="04-three-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="05-github.html" data-page="05-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="06-let-claude-drive.html" data-page="06-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#what-actually-happens-when-someone-visits-your-site">What actually happens when someone visits your site</a></li><li><a class="lvl2" href="#layer-1--the-registrar">Layer 1 — The registrar</a></li><li><a class="lvl2" href="#layer-2--dns">Layer 2 — DNS</a></li><li><a class="lvl3" href="#nameservers-who-holds-the-phone-book">Nameservers: who holds the phone book</a></li><li><a class="lvl3" href="#records-whats-in-the-phone-book">Records: what&#x27;s in the phone book</a></li><li><a class="lvl3" href="#the-apex-problem--the-one-gotcha-worth-knowing-in-advance">The apex problem — the one gotcha worth knowing in advance</a></li><li><a class="lvl3" href="#dns-propagation--mostly-a-myth">&quot;DNS propagation&quot; — mostly a myth</a></li><li><a class="lvl3" href="#see-it-for-yourself">See it for yourself</a></li><li><a class="lvl2" href="#layer-3--hosting">Layer 3 — Hosting</a></li><li><a class="lvl2" href="#layer-4--the-certificate">Layer 4 — The certificate</a></li><li><a class="lvl2" href="#the-mix-and-match-table">The mix-and-match table</a></li><li><a class="lvl2" href="#when-it-breaks-which-layer-is-it">When it breaks, which layer is it?</a></li></ul></div>
+  </aside>
+  <main>
+<h1>The three layers</h1>
+<p>Ten minutes here saves you an afternoon later. Almost every "I'm stuck" moment
+in hosting comes from not knowing which of these three things is broken.</p>
+<hr />
+<h2 id="what-actually-happens-when-someone-visits-your-site">What actually happens when someone visits your site<a class="anchor" href="#what-actually-happens-when-someone-visits-your-site" aria-label="Link to this section">#</a></h2>
+<p>Someone types <code>yourthing.com</code> into a browser. Four separate systems, owned by
+up to four different companies, have to cooperate:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">  1. &quot;Who is allowed to answer for yourthing.com?&quot;
+     ──&gt; REGISTRAR    (you bought the name here; you told it which
+                       nameservers are in charge)
+                             │
+                             ▼
+  2. &quot;Where is yourthing.com?&quot;
+     ──&gt; DNS          (the nameservers answer with an address)
+                             │
+                             ▼
+  3. &quot;Give me the page.&quot;
+     ──&gt; HOSTING      (a server sends back your HTML)
+                             │
+                             ▼
+  4. &quot;Prove you're really yourthing.com.&quot;
+     ──&gt; CERTIFICATE  (proves it, so the browser shows a padlock
+                       instead of a red warning)
+</code></pre></div>
+<p><strong>These are four separate purchases from four possible vendors.</strong> You can buy
+the name at AWS, run DNS at Cloudflare, host on GitHub, and get the certificate
+free from Let's Encrypt. Nothing forces them to match.</p>
+<p>That single fact is worth more than any command in this guide, because it means
+<strong>no choice you make today is a trap</strong>. Don't like your host? Change layer 3,
+keep the domain. Registrar being annoying? Move layer 1, nothing goes down.</p>
+<hr />
+<h2 id="layer-1--the-registrar">Layer 1 — The registrar<a class="anchor" href="#layer-1--the-registrar" aria-label="Link to this section">#</a></h2>
+<p><strong>What it is:</strong> the company you buy the domain name from. Namecheap, Cloudflare,
+AWS Route 53 Domains, GoDaddy, Gandi.</p>
+<p><strong>What you're actually buying:</strong> not the name — a <em>lease</em> on it, usually a year
+at a time, and the right to say who answers DNS questions about it. That's it.
+That second part is the important one.</p>
+<p><strong>What it costs:</strong> the registrar's price plus a fixed ICANN fee. There's no
+technical difference between registrars. There are two commercial ones:</p>
+<ul>
+<li><strong>The renewal trap.</strong> <code>.online</code> at £1.50 for year one, then £26 every year
+  after. Always look up the <em>renewal</em> price. Some TLDs renew at 15× year one.</li>
+<li><strong>The markup.</strong> Some registrars sell at cost, some add 30%.</li>
+</ul>
+<p><code>.com</code> is boringly flat — roughly $11/year forever, everywhere. That's part of
+why it's still the default.</p>
+<p><strong>How to switch registrar:</strong> transfer the domain (needs an auth code from the
+old one, takes ~5 days). Your site stays up the entire time, because the
+nameservers don't change. Layer 1 is the least sticky thing you own.</p>
+<hr />
+<h2 id="layer-2--dns">Layer 2 — DNS<a class="anchor" href="#layer-2--dns" aria-label="Link to this section">#</a></h2>
+<p>This is the layer people find confusing, so it gets the most space.</p>
+<p>DNS is a global phone book. Your bit of it is called a <strong>zone</strong> — the set of
+records that answer questions about <code>yourthing.com</code>.</p>
+<h3 id="nameservers-who-holds-the-phone-book">Nameservers: who holds the phone book<a class="anchor" href="#nameservers-who-holds-the-phone-book" aria-label="Link to this section">#</a></h3>
+<p>At the registrar, your domain has <strong>nameservers</strong> set against it — usually two
+to four addresses like <code>ns1.example.com</code>. They mean: <em>these machines are the
+authority on this domain, ask them.</em></p>
+<p>Change the nameservers and you've moved your entire DNS to a new provider. This
+is the one setting at the registrar that really matters, and it's the reason
+"where I bought the domain" and "who runs my DNS" are different questions.</p>
+<h3 id="records-whats-in-the-phone-book">Records: what's in the phone book<a class="anchor" href="#records-whats-in-the-phone-book" aria-label="Link to this section">#</a></h3>
+<p>Inside the zone, you add records. In practice you need four kinds:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Record</th>
+<th>Answers</th>
+<th>Example value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong></td>
+<td>"What IPv4 address?"</td>
+<td><code>104.21.5.12</code></td>
+</tr>
+<tr>
+<td><strong>AAAA</strong></td>
+<td>"What IPv6 address?"</td>
+<td><code>2606:4700::6815:50c</code></td>
+</tr>
+<tr>
+<td><strong>CNAME</strong></td>
+<td>"What <em>other name</em> should I look up instead?"</td>
+<td><code>yourthing.pages.dev</code></td>
+</tr>
+<tr>
+<td><strong>TXT</strong></td>
+<td>"Here's some text" — used to prove you own the domain</td>
+<td><code>google-site-verification=…</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>A <strong>CNAME</strong> is an alias, and it's what modern hosts want you to use. You point
+<code>www.yourthing.com</code> at <code>yourthing.pages.dev</code>, and now if Cloudflare changes
+their IP addresses tomorrow, your site doesn't notice. This is why hosts hand
+you a hostname rather than an IP.</p>
+<h3 id="the-apex-problem--the-one-gotcha-worth-knowing-in-advance">The apex problem — the one gotcha worth knowing in advance<a class="anchor" href="#the-apex-problem--the-one-gotcha-worth-knowing-in-advance" aria-label="Link to this section">#</a></h3>
+<p>You cannot put a CNAME on the <strong>apex</strong> (also called the root, or the naked
+domain): <code>yourthing.com</code> with no <code>www.</code>. The DNS specification forbids it, and
+this trips up nearly everyone.</p>
+<p>Providers solve it with a non-standard record type that looks like a CNAME but
+resolves to an A record behind the scenes:</p>
+<ul>
+<li>Cloudflare calls it <strong>CNAME flattening</strong> (it just works, you add a CNAME and
+  Cloudflare handles it)</li>
+<li>Route 53 calls it an <strong>ALIAS</strong> record</li>
+<li>Others call it <code>ANAME</code> or <code>ALIAS</code></li>
+</ul>
+<p><strong>Both tracks in this guide handle this for you.</strong> You're being told now so that
+when you read "you can't CNAME the apex" on Stack Overflow at 11pm, you already
+know what it means and that it's solved.</p>
+<h3 id="dns-propagation--mostly-a-myth">"DNS propagation" — mostly a myth<a class="anchor" href="#dns-propagation--mostly-a-myth" aria-label="Link to this section">#</a></h3>
+<p>You'll be told changes take 24–48 hours. They almost never do.</p>
+<p>Every DNS record has a <strong>TTL</strong> (time-to-live) in seconds — a note saying "you
+may cache this answer for this long." Set a record with a 300-second TTL and the
+world sees your change within five minutes.</p>
+<p>The 48-hour folklore comes from two real things:</p>
+<ol>
+<li><strong>Nameserver changes</strong> (layer 1) genuinely are slow — the <code>.com</code> registry
+   publishes those on its own schedule, typically a few hours.</li>
+<li><strong>Your own computer and router cache aggressively</strong>, so <em>you</em> are often the
+   last person on earth still seeing the old value. This produces the classic
+   "it works for everyone but me."</li>
+</ol>
+<p><strong>Lower the TTL to 300 <em>before</em> you make a change you know is coming.</strong> Then the
+change itself is nearly instant.</p>
+<h3 id="see-it-for-yourself">See it for yourself<a class="anchor" href="#see-it-for-yourself" aria-label="Link to this section">#</a></h3>
+<p>You don't have to take any of this on faith. In a terminal:</p>
+<blockquote>
+<p><code>dig</code> is the standard tool for asking DNS a question directly. macOS has it
+already. On Ubuntu or WSL: <code>sudo apt install bind9-dnsutils</code>. On Windows
+without WSL there's no <code>dig</code> — use <code>nslookup -type=NS yourthing.com</code>, or
+<a href="https://dnschecker.org">dnschecker.org</a> in a browser, which also shows you
+what the rest of the world sees rather than just your own machine.</p>
+</blockquote>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># Which nameservers are in charge? (layer 1 answering)
+dig NS shipwhatyoubuilt.com +short
+
+# What address does the site resolve to, and what's the TTL?
+dig A shipwhatyoubuilt.com
+
+# Ask a specific public resolver, bypassing your own cache
+dig @1.1.1.1 A shipwhatyoubuilt.com +short
+
+# Follow the whole chain from the root servers down — genuinely worth
+# running once just to watch it happen
+dig +trace shipwhatyoubuilt.com
+</code></pre></div>
+<p><code>dig +trace</code> is the one to run when something is inexplicably wrong. It shows
+you exactly which layer stops cooperating.</p>
+<hr />
+<h2 id="layer-3--hosting">Layer 3 — Hosting<a class="anchor" href="#layer-3--hosting" aria-label="Link to this section">#</a></h2>
+<p>Where your actual files or code live, and what sends them to the browser.</p>
+<p>Three broad shapes, matching the three in <a href="00-start-here.html">the chooser</a>:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Shape</th>
+<th>What "hosting" means</th>
+<th>Track A</th>
+<th>Track B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Static files</td>
+<td>A CDN serving files from storage</td>
+<td>Cloudflare Pages</td>
+<td>S3 + CloudFront</td>
+</tr>
+<tr>
+<td>Plus a backend</td>
+<td>A function that runs per request, then stops</td>
+<td>Cloudflare Workers</td>
+<td>Lambda</td>
+</tr>
+<tr>
+<td>Always running</td>
+<td>A machine that stays on</td>
+<td>(see <a href="00-start-here.html#the-honest-note-about-shape-3">the honest note</a>)</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p>The first two only cost money when someone visits, and at personal-project
+traffic that rounds to zero. The third costs money whether or not anyone visits,
+which is the whole reason the chooser separates them.</p>
+<hr />
+<h2 id="layer-4--the-certificate">Layer 4 — The certificate<a class="anchor" href="#layer-4--the-certificate" aria-label="Link to this section">#</a></h2>
+<p>HTTPS needs a certificate proving you control the domain. Browsers now shame
+sites that lack one, so this isn't optional.</p>
+<p><strong>It's free and, in both tracks, automatic.</strong> Let's Encrypt made certificates
+free in 2015 and everyone followed. Cloudflare and AWS both issue and renew
+yours without you doing anything.</p>
+<p>The one thing worth knowing: the certificate authority has to <strong>verify you
+control the domain</strong> before issuing, and it does that by asking you to prove it
+via DNS (add a TXT record) or HTTP (serve a specific file). That's why
+certificate setup sometimes says <em>"pending validation"</em> and waits on a DNS
+record. It's layer 4 waiting for layer 2. Both tracks add that record for you.</p>
+<p>AWS has one extra rule that catches everybody: <strong>a certificate used by
+CloudFront must be issued in the <code>us-east-1</code> region</strong>, no matter where you or
+your users are. Track B says this again at the point it matters.</p>
+<hr />
+<h2 id="the-mix-and-match-table">The mix-and-match table<a class="anchor" href="#the-mix-and-match-table" aria-label="Link to this section">#</a></h2>
+<p>Any row of layer 1 works with any row of layer 2, and so on. Some common
+combinations:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Registrar</th>
+<th>DNS</th>
+<th>Hosting</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cloudflare</td>
+<td>Cloudflare</td>
+<td>Cloudflare Pages</td>
+<td>Fewest moving parts. <strong>Track A.</strong></td>
+</tr>
+<tr>
+<td>Route 53</td>
+<td>Route 53</td>
+<td>S3 + CloudFront</td>
+<td>All in one bill. <strong>Track B.</strong></td>
+</tr>
+<tr>
+<td>Namecheap</td>
+<td>Cloudflare</td>
+<td>Cloudflare Pages</td>
+<td>Fine. Point Namecheap's nameservers at Cloudflare, done.</td>
+</tr>
+<tr>
+<td>Route 53</td>
+<td>Cloudflare</td>
+<td>Anything</td>
+<td>Fine, and saves the hosted-zone fee. Keep the name at AWS, move the nameservers.</td>
+</tr>
+<tr>
+<td>Cloudflare</td>
+<td>Cloudflare</td>
+<td>AWS Lambda</td>
+<td>Fine. Cloudflare DNS in front of AWS compute is a common production setup.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>There is no wrong row.</strong> There are only rows with more or fewer accounts to
+log into.</p>
+<hr />
+<h2 id="when-it-breaks-which-layer-is-it">When it breaks, which layer is it?<a class="anchor" href="#when-it-breaks-which-layer-is-it" aria-label="Link to this section">#</a></h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>What you see</th>
+<th>Layer</th>
+<th>First thing to check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"Server not found" / <code>NXDOMAIN</code></td>
+<td>2 (or 1)</td>
+<td><code>dig NS yourthing.com</code> — are the nameservers what you expect?</td>
+</tr>
+<tr>
+<td>Resolves, but connection refused/times out</td>
+<td>3</td>
+<td>The host isn't serving. Is the deploy actually finished?</td>
+</tr>
+<tr>
+<td>Red padlock warning</td>
+<td>4</td>
+<td>Certificate missing, expired, or issued for the wrong name</td>
+</tr>
+<tr>
+<td>Works with <code>www.</code>, not without (or vice versa)</td>
+<td>2</td>
+<td>You created a record for one hostname and not the other</td>
+</tr>
+<tr>
+<td>Everyone sees it but you</td>
+<td>2</td>
+<td>Your own cache. <code>dig @1.1.1.1</code> to bypass it</td>
+</tr>
+<tr>
+<td>Old version still showing</td>
+<td>3</td>
+<td>CDN cache — needs a purge/invalidation, plus a browser hard-reload</td>
+</tr>
+</tbody>
+</table></div>
+<p>Getting into the habit of asking <em>"which layer?"</em> before you start changing
+things is the single biggest time-saver in this entire guide.</p>
+<hr />
+<p><strong>Next:</strong> <a href="05-github.html">Get it on GitHub →</a></p>
+    <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
+    <nav class="pager"><a class="prev" href="03-keys-and-access.html"><span>Previous</span>Keys and access</a><a class="next" href="05-github.html"><span>Next</span>Get it on GitHub</a></nav>
+  </main>
+</div>
+<script>
+// Copy the whole block — several are heredocs that break if pasted line by line.
+document.querySelectorAll('.codewrap').forEach(function (w) {
+  var btn = w.querySelector('.copy'), pre = w.querySelector('pre');
+  if (!btn || !pre) return;
+  btn.addEventListener('click', function () {
+    navigator.clipboard.writeText(pre.innerText).then(function () {
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+    }).catch(function () { btn.textContent = 'Press Ctrl+C'; });
+  });
+});
+
+// Remember which pages are finished — the AWS track spans more than one sitting.
+(function () {
+  var KEY = 'swyb-done', box = document.getElementById('page-done');
+  if (!box) return;
+  var page = document.body.dataset.page;
+  var read = function () { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
+  var done = read();
+  box.checked = !!done[page];
+  box.addEventListener('change', function () {
+    var d = read();
+    if (box.checked) { d[page] = true; } else { delete d[page]; }
+    localStorage.setItem(KEY, JSON.stringify(d));
+    paint();
+  });
+  function paint() {
+    var d = read();
+    document.querySelectorAll('.nav a[data-page]').forEach(function (a) {
+      a.textContent.indexOf('✓') === 0 && (a.textContent = a.textContent.slice(1));
+      var t = a.querySelector('.tick');
+      if (t) t.textContent = d[a.dataset.page] ? '✓ ' : '';
+    });
+  }
+  paint();
+})();
+</script>
+</body>
+</html>

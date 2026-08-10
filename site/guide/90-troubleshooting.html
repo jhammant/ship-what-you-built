@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>When it breaks — Ship What You Built</title>
+<meta name="description" content="When it breaks — part of a free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:title" content="When it breaks — Ship What You Built">
+<meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/90-troubleshooting.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#F6F7F5;--surface:#FFF;--sunken:#EEF0EC;--ink:#14181B;--ink-soft:#3D4642;
+--muted:#5B6560;--line:rgba(20,24,27,.13);--line-soft:rgba(20,24,27,.07);
+--live:#16794C;--live-ink:#FFF;--live-wash:rgba(22,121,76,.09);--stuck:#9A5B18;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+--sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;--ink-soft:#C3CCC6;
+--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}}
+:root[data-theme="dark"]{--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;
+--ink-soft:#C3CCC6;--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+line-height:1.68;font-size:1.02rem;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--live)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--live);outline-offset:3px;border-radius:5px}
+.shell{display:grid;grid-template-columns:17rem minmax(0,1fr);gap:2.5rem;
+max-width:78rem;margin-inline:auto;padding:0 clamp(1rem,4vw,2.5rem)}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr);gap:0}}
+.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;
+padding:2rem 0;border-right:1px solid var(--line-soft)}
+@media (max-width:900px){.side{position:static;max-height:none;border-right:0;
+border-bottom:1px solid var(--line-soft);padding-bottom:1rem}}
+.brand{font-weight:660;letter-spacing:-.02em;text-decoration:none;display:block;margin-bottom:.35rem}
+.brand small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;letter-spacing:0}
+.nav{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:.15rem}
+.nav a{display:block;padding:.42rem .6rem;border-radius:7px;text-decoration:none;
+font-size:.925rem;color:var(--ink-soft)}
+.nav a:hover{background:var(--sunken)}
+.nav a[aria-current="page"]{background:var(--live-wash);color:var(--ink);font-weight:600}
+.nav small{display:block;color:var(--muted);font-size:.76rem;line-height:1.35}
+.onpage{margin-top:1.5rem;border-top:1px solid var(--line-soft);padding-top:1rem}
+.onpage p{margin:0 0 .5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;
+text-transform:uppercase;color:var(--muted)}
+.onpage ul{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+.onpage a{display:block;padding:.2rem .35rem;font-size:.85rem;color:var(--muted);
+text-decoration:none;border-radius:5px}
+.onpage a:hover{color:var(--ink);background:var(--sunken)}
+.onpage .lvl3{padding-left:1rem;font-size:.8rem}
+main{padding:2.5rem 0 4rem;min-width:0;max-width:46rem}
+h1{font-size:clamp(1.9rem,1.4rem+2vw,2.7rem);line-height:1.1;letter-spacing:-.03em;
+margin:0 0 1.5rem;text-wrap:balance}
+h2{font-size:1.5rem;line-height:1.2;letter-spacing:-.022em;margin:2.8rem 0 .9rem;
+padding-top:1.4rem;border-top:1px solid var(--line-soft);text-wrap:balance}
+h3{font-size:1.13rem;letter-spacing:-.015em;margin:2rem 0 .6rem}
+h2 .anchor,h3 .anchor{opacity:0;margin-left:.4rem;color:var(--muted);text-decoration:none;font-weight:400}
+h2:hover .anchor,h3:hover .anchor,.anchor:focus-visible{opacity:1}
+p,ul,ol{margin:0 0 1.05rem}
+li{margin-bottom:.3rem}
+strong{font-weight:650}
+code{font-family:var(--mono);font-size:.875em;background:var(--sunken);
+padding:.12em .34em;border-radius:4px;overflow-wrap:break-word}
+.codewrap{position:relative;margin:0 0 1.2rem}
+pre{margin:0;overflow-x:auto;background:var(--sunken);border:1px solid var(--line-soft);
+border-radius:10px;padding:1rem 1.1rem;font-family:var(--mono);font-size:.845rem;line-height:1.62}
+pre code{background:none;padding:0;font-size:1em}
+.copy{position:absolute;top:.5rem;right:.5rem;font:inherit;font-size:.75rem;
+padding:.28rem .6rem;border-radius:6px;border:1px solid var(--line);
+background:var(--surface);color:var(--muted);cursor:pointer;opacity:0;transition:opacity .12s}
+.codewrap:hover .copy,.copy:focus-visible{opacity:1}
+.copy.done{color:var(--live);border-color:var(--live)}
+@media (hover:none){.copy{opacity:1}}
+blockquote{margin:0 0 1.2rem;padding:.9rem 1.1rem;border-left:3px solid var(--live);
+background:var(--live-wash);border-radius:0 9px 9px 0}
+blockquote > :last-child{margin-bottom:0}
+blockquote h3{margin-top:.2rem}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:0 0 1.2rem}
+table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+th,td{text-align:left;padding:.65rem .9rem;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+tbody tr:last-child td{border-bottom:0}
+hr{border:0;border-top:1px solid var(--line-soft);margin:2.5rem 0}
+img{max-width:100%;height:auto}
+.done-toggle{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);
+margin:.2rem 0 1.6rem;cursor:pointer;user-select:none}
+.done-toggle input{accent-color:var(--live);width:1rem;height:1rem}
+.pager{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:space-between;
+margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line-soft)}
+.pager a{flex:1 1 14rem;padding:.9rem 1.1rem;border:1px solid var(--line);border-radius:10px;
+text-decoration:none;background:var(--surface)}
+.pager a:hover{border-color:var(--live)}
+.pager span{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
+.pager .next{text-align:right}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-page="90-troubleshooting">
+<div class="shell">
+  <aside class="side">
+    <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
+    <nav><ul class="nav"><li><a href="00-start-here.html" data-page="00-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="01-your-machine.html" data-page="01-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="02-accounts.html" data-page="02-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="03-keys-and-access.html" data-page="03-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="04-three-layers.html" data-page="04-three-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="05-github.html" data-page="05-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="06-let-claude-drive.html" data-page="06-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" aria-current="page" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#first-which-layer">First: which layer?</a></li><li><a class="lvl2" href="#the-ones-that-catch-nearly-everyone">The ones that catch nearly everyone</a></li><li><a class="lvl3" href="#it-works-for-everyone-but-me">&quot;It works for everyone but me&quot;</a></li><li><a class="lvl3" href="#old-version-still-showing">&quot;Old version still showing&quot;</a></li><li><a class="lvl3" href="#works-with-www-not-without-or-vice-versa">&quot;Works with www, not without&quot; (or vice versa)</a></li><li><a class="lvl3" href="#my-api-key-stopped-working-after-i-deployed">&quot;My API key stopped working after I deployed&quot;</a></li><li><a class="lvl3" href="#the-certificate-is-stuck-pending">&quot;The certificate is stuck pending&quot;</a></li><li><a class="lvl3" href="#it-deployed-but-the-site-is-blank">&quot;It deployed, but the site is blank&quot;</a></li><li><a class="lvl3" href="#the-build-works-locally-but-fails-on-the-host">&quot;The build works locally but fails on the host&quot;</a></li><li><a class="lvl2" href="#track-a--cloudflare-specifics">Track A — Cloudflare specifics</a></li><li><a class="lvl2" href="#track-b--aws-specifics">Track B — AWS specifics</a></li><li><a class="lvl2" href="#getting-unstuck-faster">Getting unstuck faster</a></li></ul></div>
+  </aside>
+  <main>
+<h1>When it breaks</h1>
+<p>Deploys break. It's normal, it's usually one of about fifteen things, and the
+trick is narrowing down <em>where</em> before you start changing settings.</p>
+<hr />
+<h2 id="first-which-layer">First: which layer?<a class="anchor" href="#first-which-layer" aria-label="Link to this section">#</a></h2>
+<p>Before anything else, ask which of <a href="04-three-layers.html">the four layers</a> is
+failing. Two commands tell you almost every time:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">dig yourthing.com                        # layers 1 &amp; 2 — does the name resolve?
+curl -sI https://yourthing.com | head -1 # layers 3 &amp; 4 — does the server answer?
+</code></pre></div>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>What you get</th>
+<th>Layer</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NXDOMAIN</code>, no answer section</td>
+<td>1 or 2</td>
+<td>DNS. The name doesn't resolve at all</td>
+</tr>
+<tr>
+<td>An IP, but <code>curl</code> hangs or refuses</td>
+<td>3</td>
+<td>DNS is fine; the host isn't serving</td>
+</tr>
+<tr>
+<td>An IP, and an SSL error</td>
+<td>4</td>
+<td>Certificate missing, expired, or for the wrong name</td>
+</tr>
+<tr>
+<td><code>HTTP/2 404</code></td>
+<td>3</td>
+<td>Host is serving, but not your file</td>
+</tr>
+<tr>
+<td><code>HTTP/2 200</code> but the page is wrong</td>
+<td>3</td>
+<td>Cache, or you deployed the wrong folder</td>
+</tr>
+</tbody>
+</table></div>
+<p>Fixing DNS when the problem is caching wastes an hour. Ninety seconds of
+narrowing pays for itself.</p>
+<hr />
+<h2 id="the-ones-that-catch-nearly-everyone">The ones that catch nearly everyone<a class="anchor" href="#the-ones-that-catch-nearly-everyone" aria-label="Link to this section">#</a></h2>
+<h3 id="it-works-for-everyone-but-me">"It works for everyone but me"<a class="anchor" href="#it-works-for-everyone-but-me" aria-label="Link to this section">#</a></h3>
+<p>Your own DNS cache. You are almost always the last person on the planet seeing
+the old value.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">dig @1.1.1.1 yourthing.com +short      # ask Cloudflare's resolver directly
+dig @8.8.8.8 yourthing.com +short      # and Google's
+</code></pre></div>
+<p>If those look right, the internet is fine and your machine is behind.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder   # macOS
+ipconfig /flushdns                                              # Windows
+resolvectl flush-caches                                         # Linux (systemd)
+</code></pre></div>
+<p>Then a browser hard-reload: <strong>Cmd/Ctrl + Shift + R</strong>. Browsers cache DNS
+<em>separately</em> from the OS, which is why this sometimes needs both.</p>
+<h3 id="old-version-still-showing">"Old version still showing"<a class="anchor" href="#old-version-still-showing" aria-label="Link to this section">#</a></h3>
+<p>Layer 3, and there are usually <strong>two</strong> caches between you and the truth. Clear
+them in this order and re-check after each — most people only clear one and
+conclude the deploy failed.</p>
+<ol>
+<li><strong>Your browser.</strong> Hard-reload, or open a private window. Rules out the most
+   common cause in five seconds.</li>
+<li><strong>The CDN.</strong> Track A: Cloudflare → <strong>Caching</strong> → <strong>Purge Everything</strong>.
+   Track B: <code>aws cloudfront create-invalidation --distribution-id $DIST_ID --paths "/*"</code>
+   (takes a couple of minutes).</li>
+<li><strong>The deploy itself.</strong> Did it actually run and succeed? <code>gh run list --limit 3</code>,
+   or look at the deployments list in your host's dashboard. Plenty of "cache
+   problems" are a build that failed twenty minutes ago.</li>
+</ol>
+<h3 id="works-with-www-not-without-or-vice-versa">"Works with <code>www</code>, not without" (or vice versa)<a class="anchor" href="#works-with-www-not-without-or-vice-versa" aria-label="Link to this section">#</a></h3>
+<p>Layer 2. <code>yourthing.com</code> and <code>www.yourthing.com</code> are <strong>different hostnames</strong> and
+each needs its own DNS record and its own place in the certificate. Add both.
+Both tracks tell you to; it's the step people skip.</p>
+<h3 id="my-api-key-stopped-working-after-i-deployed">"My API key stopped working after I deployed"<a class="anchor" href="#my-api-key-stopped-working-after-i-deployed" aria-label="Link to this section">#</a></h3>
+<p>It was in a file that <code>.gitignore</code> excluded, so it never left your laptop.
+Correct behaviour — that's the whole point. Set it as an environment variable in
+your host's dashboard (Track A: Pages → Settings → Environment variables. Track
+B: <code>aws lambda update-function-configuration --environment</code>) and <strong>redeploy</strong>,
+because variables are read at build/start time.</p>
+<h3 id="the-certificate-is-stuck-pending">"The certificate is stuck pending"<a class="anchor" href="#the-certificate-is-stuck-pending" aria-label="Link to this section">#</a></h3>
+<p>Layer 4 waiting on layer 2. The certificate authority wants a DNS record to
+appear and it hasn't. Check the exact record it's asking for actually resolves:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">dig +short _abc123.yourthing.com CNAME
+</code></pre></div>
+<p>Empty means the record wasn't added, or was added to a different zone — a
+classic when you have the domain in two DNS providers at once and are editing
+the one that isn't authoritative. <code>dig NS yourthing.com</code> tells you which one is
+in charge.</p>
+<h3 id="it-deployed-but-the-site-is-blank">"It deployed, but the site is blank"<a class="anchor" href="#it-deployed-but-the-site-is-blank" aria-label="Link to this section">#</a></h3>
+<p>The build produced nothing, or you pointed the host at the wrong folder.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">npm run build &amp;&amp; ls -la dist/   # or build/, or out/
+</code></pre></div>
+<p>Whatever folder appears with an <code>index.html</code> in it — that's your output
+directory. Set it in Pages, or in the <code>aws s3 sync</code> path.</p>
+<h3 id="the-build-works-locally-but-fails-on-the-host">"The build works locally but fails on the host"<a class="anchor" href="#the-build-works-locally-but-fails-on-the-host" aria-label="Link to this section">#</a></h3>
+<p>In descending order of likelihood:</p>
+<ol>
+<li><strong>Node version.</strong> <code>node -v</code> locally vs the host's default. Track A: set
+   <code>NODE_VERSION</code> in environment variables. Track B: <code>node-version</code> in the
+   workflow.</li>
+<li><strong>A dependency was gitignored.</strong> <code>node_modules/</code> should be ignored, but
+   <code>package-lock.json</code> must be <strong>committed</strong> — it's what <code>npm ci</code> reads.</li>
+<li><strong>Case sensitivity.</strong> macOS and Windows don't care about <code>Header.jsx</code> vs
+   <code>header.jsx</code>. Linux, which your build runs on, cares enormously. This one
+   produces a genuinely baffling "module not found" for a file you can plainly
+   see.</li>
+</ol>
+<hr />
+<h2 id="track-a--cloudflare-specifics">Track A — Cloudflare specifics<a class="anchor" href="#track-a--cloudflare-specifics" aria-label="Link to this section">#</a></h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Custom domain stuck "pending"</td>
+<td>The domain isn't in this Cloudflare account, or nameservers haven't switched. <code>dig NS yourthing.com</code></td>
+</tr>
+<tr>
+<td><code>/api/…</code> returns your HTML</td>
+<td>The <code>functions/</code> folder must be at the <strong>repo root</strong>, not inside <code>src/</code></td>
+</tr>
+<tr>
+<td>Function returns 500</td>
+<td>Usually a missing environment variable. Real-time logs are under the project's <strong>Functions</strong> tab</td>
+</tr>
+<tr>
+<td>Env var change had no effect</td>
+<td>They apply at build time — redeploy</td>
+</tr>
+<tr>
+<td>Email stopped after moving DNS</td>
+<td><code>MX</code> records didn't import. Copy them from your old provider</td>
+</tr>
+<tr>
+<td>Deploy succeeded, 404 on every page</td>
+<td>Output directory wrong, or <code>index.html</code> isn't at its root</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="track-b--aws-specifics">Track B — AWS specifics<a class="anchor" href="#track-b--aws-specifics" aria-label="Link to this section">#</a></h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CloudFront won't accept the certificate</td>
+<td>Cert isn't in <code>us-east-1</code>. It must be. Recreate it there</td>
+</tr>
+<tr>
+<td><code>AccessDenied</code> from CloudFront</td>
+<td>Bucket policy missing, or <code>AWS:SourceArn</code> doesn't match the distribution</td>
+</tr>
+<tr>
+<td><code>InvalidLocationConstraint</code> on bucket create</td>
+<td>You're in <code>us-east-1</code> — omit <code>--create-bucket-configuration</code></td>
+</tr>
+<tr>
+<td>403 from a Lambda URL</td>
+<td>The <code>add-permission</code> step after creating the URL was skipped</td>
+</tr>
+<tr>
+<td>Deep links 404 on a single-page app</td>
+<td>Add custom error responses: 403 and 404 → <code>/index.html</code>, status 200</td>
+</tr>
+<tr>
+<td><code>sts:AssumeRoleWithWebIdentity</code> denied</td>
+<td>The trust policy <code>sub</code> doesn't match the claim GitHub actually sends. Don't guess it — print it (<a href="20-aws.html#62-a-role-only-your-repo-can-assume">Track B, Part 6.2</a>)</td>
+</tr>
+<tr>
+<td><code>Credentials could not be loaded</code> in Actions</td>
+<td>Workflow missing <code>permissions: id-token: write</code></td>
+</tr>
+<tr>
+<td><code>InvalidClientTokenId</code></td>
+<td>Access key wrong or deleted. <code>aws configure</code> again</td>
+</tr>
+<tr>
+<td>Domain suspended after two weeks</td>
+<td>ICANN verification email never clicked</td>
+</tr>
+<tr>
+<td>A charge you don't recognise</td>
+<td>Cost Explorer → group by service. Usually the hosted zone, or a NAT gateway you created by accident</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="getting-unstuck-faster">Getting unstuck faster<a class="anchor" href="#getting-unstuck-faster" aria-label="Link to this section">#</a></h2>
+<p><strong>Paste the whole error.</strong> Not a summary, not "it says something about
+permissions". These failures routinely <em>look</em> like permission problems and
+<em>are</em> configuration problems, and the distinguishing detail is always in the
+part people trim off.</p>
+<p>A prompt that works:</p>
+<blockquote>
+<p>This is failing. Here's the complete error:</p>
+<p><code>text
+&lt;paste everything&gt;</code></p>
+<p>I'm on Track A/B of the guide, at step N. Before changing anything, tell me
+which of the four layers you think this is and why.</p>
+</blockquote>
+<p>Asking for the diagnosis before the fix is worth doing. It stops the shotgun
+approach where six settings change at once and you end up unable to tell which
+one mattered — or worse, with a working site and no idea why.</p>
+<p><strong>Still stuck?</strong> <a href="https://github.com/jhammant/ship-what-you-built/issues">Open an issue</a> with the error and which track
+you're on. Someone else has almost certainly hit the same thing, and if the
+guide caused it, the guide should be fixed.</p>
+    <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
+    <nav class="pager"><a class="prev" href="40-launch-video.html"><span>Previous</span>Make a launch video</a><a class="next" href="99-glossary.html"><span>Next</span>Glossary</a></nav>
+  </main>
+</div>
+<script>
+// Copy the whole block — several are heredocs that break if pasted line by line.
+document.querySelectorAll('.codewrap').forEach(function (w) {
+  var btn = w.querySelector('.copy'), pre = w.querySelector('pre');
+  if (!btn || !pre) return;
+  btn.addEventListener('click', function () {
+    navigator.clipboard.writeText(pre.innerText).then(function () {
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+    }).catch(function () { btn.textContent = 'Press Ctrl+C'; });
+  });
+});
+
+// Remember which pages are finished — the AWS track spans more than one sitting.
+(function () {
+  var KEY = 'swyb-done', box = document.getElementById('page-done');
+  if (!box) return;
+  var page = document.body.dataset.page;
+  var read = function () { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
+  var done = read();
+  box.checked = !!done[page];
+  box.addEventListener('change', function () {
+    var d = read();
+    if (box.checked) { d[page] = true; } else { delete d[page]; }
+    localStorage.setItem(KEY, JSON.stringify(d));
+    paint();
+  });
+  function paint() {
+    var d = read();
+    document.querySelectorAll('.nav a[data-page]').forEach(function (a) {
+      a.textContent.indexOf('✓') === 0 && (a.textContent = a.textContent.slice(1));
+      var t = a.querySelector('.tick');
+      if (t) t.textContent = d[a.dataset.page] ? '✓ ' : '';
+    });
+  }
+  paint();
+})();
+</script>
+</body>
+</html>

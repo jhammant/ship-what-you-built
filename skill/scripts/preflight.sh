@@ -60,7 +60,7 @@ done
 [ -d "$TARGET" ] || die "Not a directory: $TARGET"
 cd "$TARGET"
 git rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
-  bad "Not a git repository. Run 'git init' first, or see guide/02-github.md."
+  bad "Not a git repository. Run 'git init' first, or see guide/05-github.md."
   exit 2
 }
 
@@ -160,7 +160,7 @@ fi
 
 head1 "4. .gitignore"
 if [ ! -f .gitignore ]; then
-  bad "There is no .gitignore. Write one before the first commit — see guide/02-github.md."
+  bad "There is no .gitignore. Write one before the first commit — see guide/05-github.md."
   found
 elif ! grep -qE '^[[:space:]]*\.env([[:space:]]*$|\*|\.\*)' .gitignore; then
   warn ".gitignore doesn't mention .env. Add these lines:"
