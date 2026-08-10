@@ -178,7 +178,7 @@ export async function onRequestPost(context) {
     },
     body: JSON.stringify({
       model: "claude-sonnet-5",
-      max_tokens: 1024,
+      max_tokens: 4096,
       messages: [{ role: "user", content: question }],
     }),
   });
@@ -191,7 +191,18 @@ export async function onRequestPost(context) {
   }
 
   const data = await res.json();
-  return new Response(JSON.stringify({ answer: data.content[0].text }), {
+
+  // Pick the text block by TYPE, never by position. The response is a list of
+  // blocks, and the first one is not always the answer — a model doing its
+  // reasoning first puts a thinking block at index 0, and `content[0].text`
+  // would be undefined. That failure is silent: the page shows a blank reply
+  // and nothing errors anywhere.
+  const answer = (data.content ?? [])
+    .filter((b) => b.type === "text")
+    .map((b) => b.text)
+    .join("");
+
+  return new Response(JSON.stringify({ answer }), {
     headers: { "content-type": "application/json" },
   });
 }
@@ -213,8 +224,10 @@ everything.
 
 ### Your API key
 
-Pages project → **Settings** → **Environment variables** → **Production** → add
-`ANTHROPIC_API_KEY`, and click the **Encrypt** button. Encrypted values can
+Pages project → **Settings** → **Variables and Secrets** → **Add** →
+**Production** → add `ANTHROPIC_API_KEY`, and select **Encrypt**. (This menu was
+called *Environment variables* until recently; if you see that name instead,
+it's the same screen.) Encrypted values can
 never be read back out of the dashboard — you can replace one, but not view it.
 That's the behaviour you want.
 
@@ -236,8 +249,8 @@ Redeploy after adding variables. Existing deployments don't pick them up.
 | File/image uploads | **R2** (S3-compatible, no egress fees) | 10 GB |
 | Auth, Postgres, realtime | **Supabase** — not Cloudflare, but it pairs well | Generous |
 
-Add these under **Settings** → **Functions** → **Bindings**, which makes them
-appear on `context.env` alongside your variables. Each has its own short setup;
+Add these under **Settings** → **Bindings** → **Add**, which makes them appear
+on `context.env` alongside your variables. Each has its own short setup;
 follow [Cloudflare's docs](https://developers.cloudflare.com/) for the one you
 pick, and ask Claude to wire it in — it's mechanical.
 

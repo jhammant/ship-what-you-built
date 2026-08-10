@@ -133,7 +133,7 @@ it: the language (`python`), the kind of thing it is (`cli`, `dashboard`,
 Or hand the whole job over:
 
 > Write a README for this project following the structure in
-> `guide/30-share-it.md`. Read the actual code first — I want it accurate about
+> https://github.com/jhammant/ship-what-you-built/blob/main/guide/30-share-it.md. Read the actual code first — I want it accurate about
 > what this does, not generic. Include real local-setup commands and check they
 > work.
 

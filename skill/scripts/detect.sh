@@ -62,7 +62,9 @@ cd "$TARGET"
 SHAPE="unknown"; FRAMEWORK="none"; BUILD_CMD=""; OUTPUT_DIR="."
 HAS_FUNCTIONS="no"; PKG_MANAGER=""; NODE_VERSION=""; NOTES=""
 
-note() { NOTES="${NOTES}${NOTES:+; }$1"; }
+# Newline-joined: joining on "; " and splitting on ";" tore any note whose own
+# prose contained a semicolon into two meaningless half-bullets.
+note() { NOTES="${NOTES}${NOTES:+$'\n'}$1"; }
 
 # ---------------------------------------------------------------- Node projects
 if [ -f package.json ]; then
@@ -182,7 +184,13 @@ if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     | grep -Ei '(^|/)\.env($|\.)|\.pem$|\.key$|credentials' | tr '\n' ' ' || true)"
 fi
 
-[ "$SHAPE" = "unknown" ] && [ -z "$FRAMEWORK" ] && exit 3
+# "none" is the sentinel FRAMEWORK actually holds — testing -z could never fire,
+# so the documented exit code 3 was unreachable.
+if [ "$SHAPE" = "unknown" ] && [ "$FRAMEWORK" = "none" ] && [ "$EMIT_ENV" = "0" ]; then
+  warn "Nothing recognisable in $(pwd) — no index.html, package.json or requirements.txt."
+  dim "  Say what you built and I'll work out where it should go."
+  exit 3
+fi
 
 # ------------------------------------------------------------------- Reporting
 if [ "$EMIT_ENV" = "1" ]; then
@@ -240,7 +248,7 @@ fi
 
 if [ -n "$NOTES" ]; then
   head1 "Worth knowing"
-  printf '%s\n' "$NOTES" | tr ';' '\n' | sed 's/^ *//; s/^/  · /' >&2
+  printf '%s\n' "$NOTES" | sed 's/^ *//; s/^/  · /' >&2
 fi
 
 say ""

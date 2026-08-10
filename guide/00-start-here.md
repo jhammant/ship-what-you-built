@@ -21,7 +21,8 @@ whole site.
 
 **Tell-tale:** nothing on your machine has to stay running for the site to work.
 
-> **Time:** ~20 minutes · **Cost:** the domain, nothing else
+> **Time:** ~20 minutes on Track A, ~90 on Track B
+> **Cost:** the domain on Track A; the domain plus ~$0.50/month on Track B
 
 ### Shape 2 — A site with a bit of backend
 
@@ -32,7 +33,8 @@ database.
 **Tell-tale:** parts of it work if you open the files directly, but the
 interesting bits need a server to answer.
 
-> **Time:** ~45 minutes · **Cost:** the domain, almost certainly nothing else
+> **Time:** ~45 minutes on Track A, ~90 on Track B
+> **Cost:** the domain on Track A; the domain plus ~$0.50/month on Track B
 
 ### Shape 3 — Something that has to keep running
 

@@ -22,9 +22,23 @@ die()  { bad "$*"; exit 1; }
 
 have() { command -v "$1" >/dev/null 2>&1; }
 
-# Name a project after its directory, sanitised for use as a filename.
+# Name a project after its directory — plus a short hash of the FULL path.
+# Keying on the basename alone means two projects both called "site" (or "app",
+# or "web") share one config, and a bare deploy.sh in the second would sync it
+# into the first one's bucket with --delete, destroying a live site.
 project_slug() {
-  basename "$(pwd)" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9-]/-/g; s/--*/-/g; s/^-//; s/-$//'
+  local dir base hash
+  dir="$(pwd)"
+  base="$(basename "$dir" | tr '[:upper:]' '[:lower:]' \
+          | sed 's/[^a-z0-9-]/-/g; s/--*/-/g; s/^-//; s/-$//')"
+  if command -v shasum >/dev/null 2>&1; then
+    hash="$(printf '%s' "$dir" | shasum | cut -c1-8)"
+  elif command -v sha1sum >/dev/null 2>&1; then
+    hash="$(printf '%s' "$dir" | sha1sum | cut -c1-8)"
+  else
+    hash="$(printf '%s' "$dir" | cksum | tr -d ' ' | cut -c1-8)"
+  fi
+  printf '%s-%s\n' "${base:-project}" "$hash"
 }
 
 config_path() { printf '%s/%s.conf\n' "$CONFIG_DIR" "$(project_slug)"; }

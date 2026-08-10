@@ -54,7 +54,9 @@ if [ -z "$DOMAIN" ]; then
   exit 2
 fi
 
-DOMAIN="$(printf '%s' "$DOMAIN" | sed -e 's|^https\?://||' -e 's|/.*$||')"
+# -E and a portable class: BSD sed (macOS) does not support \? , so a pasted
+# URL used to be truncated to "https:" and every layer then reported broken.
+DOMAIN="$(printf '%s' "$DOMAIN" | sed -E 's#^[a-zA-Z][a-zA-Z0-9+.-]*://##; s#/.*$##')"
 PROBLEMS=0
 fail() { PROBLEMS=$((PROBLEMS + 1)); }
 
@@ -95,6 +97,9 @@ if have dig; then
       *cloudflare*)  dim "  → Cloudflare is authoritative (Track A)" ;;
       *awsdns*)      dim "  → Route 53 is authoritative (Track B)" ;;
     esac
+  elif [ "$(printf '%s' "$DOMAIN" | tr -cd '.' | wc -c | tr -d ' ')" -gt 1 ]; then
+    # A subdomain has no NS records of its own — that's normal, not a fault.
+    dim "  no NS at this exact name, which is normal for a subdomain"
   else
     bad "no nameservers on any resolver — not registered, or registration hasn't propagated"
     fail
@@ -135,7 +140,8 @@ fi
 
 # ------------------------------------------------------------------- layer 3
 head1 "Layer 3 · The server"
-CODE="$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 "https://$DOMAIN" || echo "000")"
+CODE="$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 "https://$DOMAIN" || true)"
+CODE="${CODE:-000}"   # curl prints 000 itself and exits non-zero; "|| echo 000" made it 000000
 SERVER="$(curl -sI --max-time 15 "https://$DOMAIN" 2>/dev/null | tr -d '\r' \
   | sed -n 's/^[Ss]erver: //p' | head -1 || true)"
 case "$CODE" in
@@ -154,7 +160,8 @@ case "$CODE" in
 esac
 [ -n "$SERVER" ] && dim "  served by: $SERVER"
 
-WWW_CODE="$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "https://www.$DOMAIN" || echo "000")"
+WWW_CODE="$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "https://www.$DOMAIN" || true)"
+WWW_CODE="${WWW_CODE:-000}"
 case "$WWW_CODE" in
   200|30*) ok "www.$DOMAIN → $WWW_CODE" ;;
   000)     warn "www.$DOMAIN doesn't resolve — people do type it"
@@ -162,7 +169,8 @@ case "$WWW_CODE" in
   *)       warn "www.$DOMAIN → $WWW_CODE" ;;
 esac
 
-HTTP_CODE="$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "http://$DOMAIN" || echo "000")"
+HTTP_CODE="$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "http://$DOMAIN" || true)"
+HTTP_CODE="${HTTP_CODE:-000}"
 case "$HTTP_CODE" in
   30*) ok "plain HTTP redirects to HTTPS" ;;
   200) warn "plain HTTP serves the site without redirecting to HTTPS" ;;
@@ -215,7 +223,7 @@ if [ -n "$HTML" ]; then
   if [ -n "$OG_IMAGE" ]; then
     ok "Open Graph image set"
     case "$OG_IMAGE" in
-      http*) IMG_CODE="$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "$OG_IMAGE" || echo 000)"
+      http*) IMG_CODE="$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 "$OG_IMAGE" || true)"; IMG_CODE="${IMG_CODE:-000}"
              if [ "$IMG_CODE" = "200" ]; then
                dim "  and it loads ($OG_IMAGE)"
              else

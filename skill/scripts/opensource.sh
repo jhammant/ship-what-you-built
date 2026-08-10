@@ -220,8 +220,14 @@ if [ -f .env ] && [ ! -f .env.example ]; then
   if [ "$DRY" = "1" ]; then
     dim "  would create .env.example (names only, values blanked)"
   else
-    sed 's/=.*/=/' .env > .env.example
-    ok "created .env.example from .env — values stripped, names kept"
+    # Names only, and ONLY from lines that are a simple NAME= assignment.
+    # A blanket 's/=.*/=/' copies comments and every continuation line of a
+    # multi-line value (a PEM private key, a certificate) verbatim into a file
+    # that is staged for the first public commit — and preflight can't catch it,
+    # because the "-----BEGIN … KEY-----" line is the one that got stripped.
+    grep -E '^[A-Za-z_][A-Za-z0-9_]*=' .env | sed 's/=.*/=/' > .env.example
+    ok "created .env.example — variable names only, every value dropped"
+    dim "  Read it before committing; only simple NAME=value lines were carried over."
   fi
 fi
 
@@ -229,7 +235,14 @@ run git add -A
 
 head1 "Preflight"
 PREFLIGHT_RC=0
-"$SCRIPT_DIR/preflight.sh" || PREFLIGHT_RC=$?
+if [ "$DRY" = "1" ]; then
+  # Dry-run skipped the git init, so preflight would report "not a git
+  # repository" and fail — the script raising a false alarm about itself on
+  # the very first command the guide asks a beginner to run.
+  dim "  would run preflight.sh once the repository exists"
+else
+  "$SCRIPT_DIR/preflight.sh" || PREFLIGHT_RC=$?
+fi
 
 head1 "Over to you"
 if [ "$PREFLIGHT_RC" -ne 0 ]; then

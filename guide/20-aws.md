@@ -235,6 +235,33 @@ echo $ZONE_ID
 Static files live in an **S3 bucket**; **CloudFront** puts them on your domain
 with HTTPS. The bucket stays completely private — only CloudFront can read it.
 
+> ### About the `cat > file <<EOF` blocks below
+>
+> Several steps write a configuration file using a shape that looks like this:
+>
+> ```text
+> cat > example.json <<EOF
+> { "some": "config" }
+> EOF
+> ```
+>
+> That is **one command**, not three. Copy and paste the *whole block at once*,
+> including the closing `EOF` and the newline after it. If you paste it line by
+> line you'll end up staring at a bare `>` prompt with no output and no error —
+> the shell is waiting for the `EOF` that ends the file. Press `Ctrl-C` and
+> paste the whole thing again.
+>
+> These blocks also write scratch files into whatever folder you're in. Keep
+> them out of your repo and off your website:
+>
+> ```bash
+> mkdir -p .aws-setup && cd .aws-setup
+> printf '.aws-setup/\n' >> ../.gitignore
+> ```
+>
+> Run the rest of this track from there. One of those files contains your AWS
+> account ID, which Part 6 rightly tells you to keep out of a public repo.
+
 ### 4.1 The bucket
 
 ```bash
@@ -266,12 +293,24 @@ aws s3api put-public-access-block --bucket $BUCKET \
 Upload your site:
 
 ```bash
-# from the folder holding your built files (dist/, build/, or the HTML itself)
-aws s3 sync . s3://$BUCKET/ --delete
+# From the folder holding your built files (dist/, build/, or the HTML itself).
+# Check you're in the right place before running anything:
+pwd && ls index.html
+
+aws s3 sync . s3://$BUCKET/ --delete \
+  --exclude ".*" --exclude ".*/*" --exclude "node_modules/*"
 ```
 
+> **Why the `--exclude` flags matter more than they look.** If you have no build
+> step, the folder holding your HTML *is* your project folder — the one with
+> `.git/` and possibly `.env` in it. **`aws s3 sync` does not read
+> `.gitignore`.** Without those excludes you would publish your entire commit
+> history and your API keys to a bucket that CloudFront then serves to the
+> world, having spent all of [page 02](02-github.md) learning not to.
+
 `--delete` removes files from the bucket that no longer exist locally. Powerful
-and unforgiving — **always check you're in the right folder first.**
+and unforgiving — **always check you're in the right folder first**, which is
+what the `pwd && ls` line is for.
 
 ### 4.2 The certificate — `us-east-1`, always
 
@@ -528,9 +567,17 @@ aws iam create-role --role-name api-lambda-role \
 
 aws iam attach-role-policy --role-name api-lambda-role \
   --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
+# IAM is eventually consistent across services: a role that exists here may not
+# be visible to Lambda for a few seconds. Without this pause, the next command
+# fails with "The role defined for the function cannot be assumed by Lambda",
+# which blames the role when the real problem is timing.
+sleep 10
 ```
 
 ### 5.3 Deploy it and give it a URL
+
+`zip` is preinstalled on macOS; on Ubuntu/WSL it's `sudo apt install zip`.
 
 ```bash
 zip function.zip index.mjs
@@ -770,7 +817,9 @@ jobs:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-deploy
           aws-region: ${{ vars.AWS_REGION }}
 
-      - run: aws s3 sync dist/ s3://${{ vars.S3_BUCKET }}/ --delete
+      - run: |
+          aws s3 sync dist/ s3://${{ vars.S3_BUCKET }}/ --delete \
+            --exclude ".*" --exclude ".*/*"
 
       - run: |
           aws cloudfront create-invalidation \
@@ -778,8 +827,13 @@ jobs:
             --paths "/*"
 ```
 
-Change `dist/` to whatever folder holds your built files — `.` if there's no
-build step.
+Change `dist/` to whatever folder holds your built files.
+
+**If you have no build step, don't put `.` here.** In a GitHub Action, `.` is
+the checked-out repository root, so you would publish `.git/` and
+`.github/workflows/` to your live site — and `--delete` would then make that the
+permanent contents of the bucket. Move your HTML into a `site/` folder and sync
+that instead. (This repository does exactly that, for exactly this reason.)
 
 Set the values, from your project folder:
 
@@ -839,6 +893,15 @@ aws lambda add-permission --function-name api \
   --principal cloudfront.amazonaws.com \
   --source-arn arn:aws:cloudfront::${ACCOUNT_ID}:distribution/${DIST_ID} \
   --function-url-auth-type AWS_IAM
+
+# Both actions are required. With only InvokeFunctionUrl, CloudFront's signed
+# request is accepted at the URL and then refused at the function, and /api/*
+# returns 403 with nothing in the logs to explain it.
+aws lambda add-permission --function-name api \
+  --statement-id AllowCloudFrontInvoke \
+  --action lambda:InvokeFunction \
+  --principal cloudfront.amazonaws.com \
+  --source-arn arn:aws:cloudfront::${ACCOUNT_ID}:distribution/${DIST_ID}
 ```
 
 Then attach an Origin Access Control of type *Lambda* to that origin (console:
@@ -860,17 +923,52 @@ cargo-culting a template.
 If you abandon the project, **the hosted zone keeps charging $0.50/month**,
 which is small enough to go unnoticed for years.
 
-```bash
-# CloudFront must be disabled and fully deployed before it can be deleted
-aws cloudfront get-distribution-config --id $DIST_ID   # note the ETag, set Enabled=false, update, wait
-aws cloudfront delete-distribution --id $DIST_ID --if-match <ETAG>
+**First, get your variables back** — this section always runs in a new terminal
+weeks later, so start with `source ~/.config/myproject/env` (see 2.5) or re-set
+`DOMAIN`, `BUCKET`, `DIST_ID` and `ZONE_ID` by hand.
 
-aws s3 rm s3://$BUCKET --recursive && aws s3api delete-bucket --bucket $BUCKET
-aws lambda delete-function --function-name api
-aws iam delete-role-policy --role-name github-deploy --policy-name deploy
-aws iam delete-role --role-name github-deploy
+```bash
+# 1. Disable CloudFront. It cannot be deleted while enabled, and the ETag
+#    changes with every modification, so re-read it each time.
+aws cloudfront get-distribution-config --id $DIST_ID > dist.json
+ETAG=$(jq -r '.ETag' dist.json)
+jq '.DistributionConfig | .Enabled = false' dist.json > dist-off.json
+aws cloudfront update-distribution --id $DIST_ID \
+  --distribution-config file://dist-off.json --if-match "$ETAG"
+
+# 2. Wait for the disable to roll out (~15 minutes), then delete with a FRESH ETag
+aws cloudfront wait distribution-deployed --id $DIST_ID
+ETAG=$(aws cloudfront get-distribution-config --id $DIST_ID --query ETag --output text)
+aws cloudfront delete-distribution --id $DIST_ID --if-match "$ETAG"
+
+# 3. Bucket and Lambda
+aws s3 rm "s3://$BUCKET" --recursive && aws s3api delete-bucket --bucket "$BUCKET"
+aws lambda delete-function --function-name api 2>/dev/null || true
+
+# 4. IAM
+aws iam delete-role-policy --role-name github-deploy --policy-name deploy 2>/dev/null || true
+aws iam delete-role --role-name github-deploy 2>/dev/null || true
+
+# 5. Empty the hosted zone BEFORE deleting it. delete-hosted-zone fails with
+#    HostedZoneNotEmpty while your A records and the ACM validation CNAME are
+#    still there — and people read that error as "done" and keep paying.
+aws route53 list-resource-record-sets --hosted-zone-id $ZONE_ID \
+  --query "ResourceRecordSets[?Type!='NS' && Type!='SOA']" > records.json
+jq '{Changes: [.[] | {Action: "DELETE", ResourceRecordSet: .}]}' records.json > delete-records.json
+[ "$(jq '.Changes | length' delete-records.json)" -gt 0 ] && \
+  aws route53 change-resource-record-sets --hosted-zone-id $ZONE_ID \
+    --change-batch file://delete-records.json
+
 aws route53 delete-hosted-zone --id $ZONE_ID
 ```
+
+**Then check the charge has actually stopped:**
+
+```bash
+aws route53 list-hosted-zones --query "HostedZones[?Name=='${DOMAIN}.']"
+```
+
+Empty output means the $0.50/month is gone. Anything else means it isn't.
 
 The domain registration is separate and runs to its yearly expiry — turn off
 auto-renew in the Route 53 console if you don't want it.

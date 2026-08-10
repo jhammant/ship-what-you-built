@@ -58,6 +58,7 @@ HOST=""; CF_PROJECT=""; S3_BUCKET=""; CLOUDFRONT_DIST_ID=""; DIR=""; DOMAIN=""
 BUILD_CMD=""; FORCE_BUILD=0; NO_BUILD=0; NO_WAIT=0; DRY=0
 
 load_config || true
+SAVED_DEPLOY_DIR="${DEPLOY_DIR:-}"
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -104,16 +105,27 @@ if [ -n "$SAFE_ENV" ]; then
   DETECTED_DIR="${OUTPUT_DIR:-}"
   DETECTED_BUILD="${BUILD_CMD:-}"
 fi
+# Precedence: --dir, then the folder remembered from last time, then detection,
+# then ".". DEPLOY_DIR used to be written and never read, so a bare re-run fell
+# through to "." and synced the whole source tree — .git and .env included —
+# over the live site with --delete.
+DIR="${DIR:-${SAVED_DEPLOY_DIR:-}}"
 DIR="${DIR:-$DETECTED_DIR}"
 DIR="${DIR:-.}"
 BUILD_CMD="${DETECTED_BUILD:-}"
 
-save_config HOST "$HOST"
-[ -n "$CF_PROJECT" ]          && save_config CF_PROJECT "$CF_PROJECT"
-[ -n "$S3_BUCKET" ]           && save_config S3_BUCKET "$S3_BUCKET"
-[ -n "$CLOUDFRONT_DIST_ID" ]  && save_config CLOUDFRONT_DIST_ID "$CLOUDFRONT_DIST_ID"
-[ -n "$DOMAIN" ]              && save_config DOMAIN "$DOMAIN"
-save_config DEPLOY_DIR "$DIR"
+# --dry-run must not persist anything. Otherwise a dry run used to sanity-check
+# a guessed bucket name silently becomes the remembered setting for real runs.
+if [ "$DRY" = "1" ]; then
+  dim "  would remember: HOST=$HOST DIR=$DIR${S3_BUCKET:+ S3_BUCKET=$S3_BUCKET}${CF_PROJECT:+ CF_PROJECT=$CF_PROJECT}${CLOUDFRONT_DIST_ID:+ DIST=$CLOUDFRONT_DIST_ID}${DOMAIN:+ DOMAIN=$DOMAIN}"
+else
+  save_config HOST "$HOST"
+  [ -n "$CF_PROJECT" ]          && save_config CF_PROJECT "$CF_PROJECT"
+  [ -n "$S3_BUCKET" ]           && save_config S3_BUCKET "$S3_BUCKET"
+  [ -n "$CLOUDFRONT_DIST_ID" ]  && save_config CLOUDFRONT_DIST_ID "$CLOUDFRONT_DIST_ID"
+  [ -n "$DOMAIN" ]              && save_config DOMAIN "$DOMAIN"
+  save_config DEPLOY_DIR "$DIR"
+fi
 
 # ----------------------------------------------------------------- build step
 if [ "$NO_BUILD" = "0" ] && [ -n "$BUILD_CMD" ]; then
@@ -128,7 +140,10 @@ if [ "$NO_BUILD" = "0" ] && [ -n "$BUILD_CMD" ]; then
 fi
 
 # --------------------------------------------------------------- sanity check
-if [ "$HOST" != "git" ]; then
+# Skipped under --dry-run: dry-run deliberately doesn't build, so the output
+# folder legitimately may not exist yet, and dying here would abort before
+# printing the deploy command the dry run exists to show.
+if [ "$HOST" != "git" ] && [ "$DRY" = "0" ]; then
   [ -d "$DIR" ] || die "Nothing to deploy: '$DIR' doesn't exist. Did the build fail?"
   if [ -z "$(ls -A "$DIR" 2>/dev/null)" ]; then
     die "Refusing to deploy: '$DIR' is empty. With --delete that would wipe the live site."
@@ -136,6 +151,16 @@ if [ "$HOST" != "git" ]; then
   if [ ! -f "$DIR/index.html" ]; then
     warn "No index.html in '$DIR' — the site's front page may 404."
   fi
+  # The empty-directory guard above only catches the empty case. A wrong-but-
+  # populated directory (typically the project root) is the realistic disaster,
+  # so name the directory plainly and refuse the obviously-wrong one.
+  if [ -d "$DIR/.git" ] || [ -f "$DIR/.env" ]; then
+    bad "'$DIR' looks like your project root, not a build output folder."
+    dim "  It contains $( [ -d "$DIR/.git" ] && printf '.git/ '; [ -f "$DIR/.env" ] && printf '.env ')— publishing it would expose your history and secrets."
+    dim "  Pass the built folder explicitly:  deploy.sh --dir dist"
+    exit 1
+  fi
+  say "  deploying: $(cd "$DIR" && pwd)"
 fi
 
 # ------------------------------------------------------------------- dispatch
@@ -198,7 +223,8 @@ esac
 # ------------------------------------------------------------------ live check
 if [ "$DRY" = "0" ] && [ -n "${DOMAIN:-}" ]; then
   head1 "Checking"
-  CODE="$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 "https://$DOMAIN" || echo "000")"
+  CODE="$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 "https://$DOMAIN" || true)"
+  CODE="${CODE:-000}"
   case "$CODE" in
     200|30*) ok "https://$DOMAIN → $CODE" ;;
     000)     bad "https://$DOMAIN didn't respond. See guide/90-troubleshooting.md" ;;

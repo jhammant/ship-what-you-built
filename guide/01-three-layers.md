@@ -138,6 +138,12 @@ change itself is nearly instant.
 
 You don't have to take any of this on faith. In a terminal:
 
+> `dig` is the standard tool for asking DNS a question directly. macOS has it
+> already. On Ubuntu or WSL: `sudo apt install bind9-dnsutils`. On Windows
+> without WSL there's no `dig` — use `nslookup -type=NS yourthing.com`, or
+> [dnschecker.org](https://dnschecker.org) in a browser, which also shows you
+> what the rest of the world sees rather than just your own machine.
+
 ```bash
 # Which nameservers are in charge? (layer 1 answering)
 dig NS shipwhatyoubuilt.com +short

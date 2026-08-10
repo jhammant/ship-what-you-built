@@ -21,6 +21,17 @@ the boring part. They may not know what DNS is. **They are not stupid, and they
 are not a developer** — those are different things, and confusing them is the
 fastest way to be useless here.
 
+## Where the scripts live
+
+The skill installs to `~/.claude/skills/first-site`. Set this once per shell
+before using any command below — there is no `$SKILL_DIR` provided for you:
+
+```bash
+FIRST_SITE="$HOME/.claude/skills/first-site"
+```
+
+If the user installed it somewhere else, point `FIRST_SITE` there instead.
+
 ## The split
 
 **Scripts do the mechanics** — detection, secret scanning, uploading, cache
@@ -35,12 +46,12 @@ Every script takes `--help`, is safe to run twice, and mutating ones take
 `--dry-run`.
 
 ```bash
-"$SKILL_DIR/scripts/detect.sh"      # what is this project, and what does it need?
-"$SKILL_DIR/scripts/preflight.sh"   # is it safe to make public?
-"$SKILL_DIR/scripts/opensource.sh"  # git repo, licence, GitHub
-"$SKILL_DIR/scripts/deploy.sh"      # put it live
-"$SKILL_DIR/scripts/status.sh"      # is it live? which layer is broken?
-"$SKILL_DIR/scripts/og-image.sh"    # the 1200x630 image shared links show
+"$FIRST_SITE/scripts/detect.sh"      # what is this project, and what does it need?
+"$FIRST_SITE/scripts/preflight.sh"   # is it safe to make public?
+"$FIRST_SITE/scripts/opensource.sh"  # git repo, licence, GitHub
+"$FIRST_SITE/scripts/deploy.sh"      # put it live
+"$FIRST_SITE/scripts/status.sh"      # is it live? which layer is broken?
+"$FIRST_SITE/scripts/og-image.sh"    # the 1200x630 image shared links show
 ```
 
 ## Two modes — work out which one you're in
@@ -60,10 +71,10 @@ broken. Don't re-explain DNS; just deploy.
 ### 1. Detect, then talk about it
 
 ```bash
-"$SKILL_DIR/scripts/detect.sh"
+"$FIRST_SITE/scripts/detect.sh"
 ```
 
-It reports one of three shapes, matching `guide/00-start-here.md`:
+It reports one of three shapes, matching `https://github.com/jhammant/ship-what-you-built/blob/main/guide/00-start-here.md`:
 
 - **static** — files only. Easy. ~20 minutes.
 - **backend** — needs a function to run per request. ~45 minutes.
@@ -72,7 +83,7 @@ It reports one of three shapes, matching `guide/00-start-here.md`:
 **If it says `longrunning`, stop and say so before doing anything else.** A
 Flask app or a Discord bot does not fit either track's free tier, and letting
 someone spend an hour discovering that is a bad outcome. Read them the table in
-`guide/00-start-here.md#the-honest-note-about-shape-3` and offer the honest
+`https://github.com/jhammant/ship-what-you-built/blob/main/guide/00-start-here.md#the-honest-note-about-shape-3` and offer the honest
 question: does it *have* to keep running, or did it just end up that way? A
 surprising number of Flask apps are one form and one API call, and convert to
 `backend` shape in twenty minutes.
@@ -95,7 +106,7 @@ works), it's fair to say so and let them decide.
 ### 3. Before anything becomes public
 
 ```bash
-"$SKILL_DIR/scripts/preflight.sh"
+"$FIRST_SITE/scripts/preflight.sh"
 ```
 
 Then read the diff yourself. The script catches known key formats; it cannot
@@ -119,8 +130,8 @@ are right. Verify before the repo goes public, don't assume.
 ### 4. Repo and licence
 
 ```bash
-"$SKILL_DIR/scripts/opensource.sh" --dry-run     # show the plan
-"$SKILL_DIR/scripts/opensource.sh"               # prepare, then stop
+"$FIRST_SITE/scripts/opensource.sh" --dry-run     # show the plan
+"$FIRST_SITE/scripts/opensource.sh"               # prepare, then stop
 ```
 
 It initialises git, writes `.gitignore` and `LICENSE` if missing, stages
@@ -130,20 +141,20 @@ deliberate. Let them commit.
 Then:
 
 ```bash
-"$SKILL_DIR/scripts/opensource.sh" --publish --repo owner/name
+"$FIRST_SITE/scripts/opensource.sh" --publish --repo owner/name
 ```
 
 **Write a real README** before publishing — what it does, how to run it locally,
 how it's built. Read the actual code first; a generic README is worse than none
-because it's confidently wrong. `guide/30-share-it.md` has the structure.
+because it's confidently wrong. `https://github.com/jhammant/ship-what-you-built/blob/main/guide/30-share-it.md` has the structure.
 
 ### 5. Domain and hosting
 
 This part is genuinely interactive — accounts, payment, dashboards. **Follow the
 track's guide page and drive it with them**, don't try to script it:
 
-- Track A → `guide/10-cloudflare.md`
-- Track B → `guide/20-aws.md`
+- Track A → `https://github.com/jhammant/ship-what-you-built/blob/main/guide/10-cloudflare.md`
+- Track B → `https://github.com/jhammant/ship-what-you-built/blob/main/guide/20-aws.md`
 
 For Track B you can run most of it from the CLI, and should. Stop before
 anything that spends money and confirm. Their budget alarm and MFA come *first*,
@@ -152,20 +163,20 @@ not after — that section is the seatbelt, not throat-clearing.
 Once it's live, record how it deploys so future you doesn't have to ask:
 
 ```bash
-"$SKILL_DIR/scripts/deploy.sh" --host cloudflare --project NAME --dir dist --domain yourthing.com
-"$SKILL_DIR/scripts/deploy.sh" --host aws --bucket NAME --dist ID --dir dist --domain yourthing.com
-"$SKILL_DIR/scripts/deploy.sh" --host git --domain yourthing.com
+"$FIRST_SITE/scripts/deploy.sh" --host cloudflare --project NAME --dir dist --domain yourthing.com
+"$FIRST_SITE/scripts/deploy.sh" --host aws --bucket NAME --dist ID --dir dist --domain yourthing.com
+"$FIRST_SITE/scripts/deploy.sh" --host git --domain yourthing.com
 ```
 
 ### 6. Make it shareable, then ask them to share it
 
 Before they post it anywhere, add Open Graph tags — see
-`guide/30-share-it.md`. `og:image` **must be an absolute URL** and 1200×630;
+`https://github.com/jhammant/ship-what-you-built/blob/main/guide/30-share-it.md`. `og:image` **must be an absolute URL** and 1200×630;
 that one mistake accounts for most blank link previews, and platforms cache the
 broken version.
 
 ```bash
-"$SKILL_DIR/scripts/og-image.sh" --title "Their Project" \
+"$FIRST_SITE/scripts/og-image.sh" --title "Their Project" \
   --subtitle "One line about it" --domain theirthing.com
 ```
 
@@ -173,7 +184,7 @@ Generates the image with headless Chrome and prints the exact `<meta>` tag.
 Deploy it, then check it in LinkedIn's Post Inspector **before** they post —
 a broken preview gets cached and sticks around for days.
 
-Then point them at `SHOWCASE.md`. Getting their project listed is the actual
+Then point them at `https://github.com/jhammant/ship-what-you-built/blob/main/SHOWCASE.md`. Getting their project listed is the actual
 goal of the whole guide, and for many of them it will be their first pull
 request.
 
@@ -182,15 +193,15 @@ request.
 ## Deploy mode
 
 ```bash
-"$SKILL_DIR/scripts/deploy.sh"
+"$FIRST_SITE/scripts/deploy.sh"
 ```
 
 Builds if needed, uploads, invalidates the CDN cache, waits for it, and checks
 the site answers. No arguments needed after the first run.
 
 ```bash
-"$SKILL_DIR/scripts/status.sh"          # walks all four layers, in order
-"$SKILL_DIR/scripts/status.sh" a.com    # any domain
+"$FIRST_SITE/scripts/status.sh"          # walks all four layers, in order
+"$FIRST_SITE/scripts/status.sh" a.com    # any domain
 ```
 
 ### "It's still showing the old version"
@@ -245,7 +256,7 @@ barely better than a broken one.
 | `AccessDenied` from CloudFront | Bucket policy `AWS:SourceArn` doesn't match the distribution |
 | Deploy wiped the site | `s3 sync --delete` from the wrong directory. `deploy.sh` refuses an empty dir for this reason |
 | Certificate stuck pending | Layer 4 waiting on layer 2 — the validation record isn't resolving, or the domain isn't delegated yet |
-| OIDC `Not authorized to perform sts:AssumeRoleWithWebIdentity` | The trust policy `sub` doesn't match. GitHub often sends an ID-qualified subject (`repo:you@123/repo@456:…`). Print the claim, don't guess — `guide/20-aws.md` Part 6.2. Never "fix" it with `repo:you*/repo*:*` |
+| OIDC `Not authorized to perform sts:AssumeRoleWithWebIdentity` | The trust policy `sub` doesn't match. GitHub often sends an ID-qualified subject (`repo:you@123/repo@456:…`). Print the claim, don't guess — `https://github.com/jhammant/ship-what-you-built/blob/main/guide/20-aws.md` Part 6.2. Never "fix" it with `repo:you*/repo*:*` |
 | Env var change did nothing | They apply at build time. Redeploy |
 | Link preview is blank | `og:image` is a relative path, or the image 404s |
 | Everyone can see it but them | Their own DNS cache. `dig @1.1.1.1` |

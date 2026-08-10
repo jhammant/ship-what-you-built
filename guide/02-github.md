@@ -9,7 +9,7 @@ of the entire internet, which is a much better thing to discover now than in an
 hour.
 
 > **Fast lane:** already have this project in a repo with a `.gitignore` you
-> trust? Jump to [What counts as a secret](#what-counts-as-a-secret) — read that
+> trust? Jump to [What counts as a secret](#3-what-counts-as-a-secret) — read that
 > section, run the scan, then go to your track.
 
 ---
@@ -99,7 +99,7 @@ Trim it to what applies. Leaving extra lines in costs nothing.
 
 > **If you've already committed** and you're not sure what went in, don't panic
 > and don't push yet. Skip to
-> [If you've already leaked something](#if-youve-already-leaked-something).
+> [If you've already leaked something](#6-if-youve-already-leaked-something).
 
 ### Where secrets go instead
 
@@ -284,7 +284,7 @@ still fetchable.
 
 All of the above, as one instruction — in the folder where your project lives:
 
-> Read `guide/02-github.md`. Set this project up as a public GitHub repository
+> Read https://github.com/jhammant/ship-what-you-built/blob/main/guide/02-github.md. Set this project up as a public GitHub repository
 > following it exactly: write an appropriate `.gitignore` first, scan for
 > secrets and personal details before anything is staged, show me `git status`
 > and stop for my approval before the first commit, then create the repo with

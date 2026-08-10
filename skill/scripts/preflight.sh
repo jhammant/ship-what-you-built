@@ -82,8 +82,12 @@ if [ -z "$FILE_LIST" ]; then
 fi
 
 head1 "1. Credential-shaped files ($SCOPE)"
+# .env.example / .env.sample / .env.template are meant to be committed — they
+# carry names, not values. opensource.sh creates one deliberately and whitelists
+# it in .gitignore, so flagging it made the toolchain condemn its own output.
 RISKY="$(printf '%s\n' "$FILE_LIST" \
   | grep -Ei '(^|/)\.env($|\.)|\.pem$|\.key$|\.p12$|\.pfx$|(^|/)id_rsa|credentials\.json$|(^|/)secrets?\.(json|ya?ml|txt)$' \
+  | grep -Eiv '\.(example|sample|template|dist)$' \
   || true)"
 if [ -n "$RISKY" ]; then
   bad "These are $SCOPE and should almost certainly not be:"
@@ -125,7 +129,15 @@ HITS="$(printf '%s' "$HITS" | grep -v 'skill/scripts/preflight.sh' || true)"
 
 if [ -n "$HITS" ]; then
   bad "Something matches a known key format:"
-  printf '%s\n' "$HITS" | head -20 | cut -c1-160 | sed 's/^/    /' >&2
+  # REDACT before printing. This output lands in the terminal, the shell
+  # scrollback and any transcript — printing the live key in full would widen
+  # exactly the leak this script exists to contain. Enough prefix is kept for
+  # the user to recognise which key it is.
+  printf '%s\n' "$HITS" | head -20 | cut -c1-200 \
+    | sed -E 's/(AKIA|ASIA)[0-9A-Z]{16}/\1‹REDACTED›/g;
+              s/(sk-ant-|sk-proj-|sk-|gh[pousr]_|github_pat_|xox[baprs]-|AIza)[A-Za-z0-9_-]{6,}/\1‹REDACTED›/g;
+              s/((sk|rk)_live_)[A-Za-z0-9]{6,}/\1‹REDACTED›/g' \
+    | sed 's/^/    /' >&2
   dim "    If any of these are real: ROTATE THE KEY FIRST, then clean history."
   dim "    Deleting the file in a later commit does not help."
   found
@@ -150,7 +162,7 @@ head1 "4. .gitignore"
 if [ ! -f .gitignore ]; then
   bad "There is no .gitignore. Write one before the first commit — see guide/02-github.md."
   found
-elif ! grep -qE '^\s*\.env' .gitignore; then
+elif ! grep -qE '^[[:space:]]*\.env([[:space:]]*$|\*|\.\*)' .gitignore; then
   warn ".gitignore doesn't mention .env. Add these lines:"
   dim "    .env"
   dim "    .env.*"
