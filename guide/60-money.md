@@ -112,14 +112,31 @@ Ad networks are not all the same, and the good ones have **traffic minimums**:
 | Mediavine | high (tens of thousands of sessions) | Premium, much better RPM |
 | Raptive | very high | Premium, top-tier RPM |
 
-**BinMinder applied to Newor Media and was turned down.** Not for anything
-dramatic — the site simply didn't have the traffic to be worth managing. That
-is the normal outcome for a new project, and it is worth expecting rather than
-taking personally.
+**BinMinder went through this with Newor Media, and the failure mode was more
+interesting than a flat "no".** The application was accepted at the Google Ad
+Manager level — the account was approved, the paperwork was done. But the site
+itself sat at **"Pending", with zero active ad units, "Inactive"**, and never
+started serving. Approved and live are two different states, and the dashboard
+is the only place that tells you which one you're in.
+
+So the lesson isn't "you'll get rejected". It's:
+
+- **Getting accepted is not the same as getting paid.** Check for *active
+  units* and *impressions*, not an approval email.
+- **Zero impressions and a low RPM are different problems.** Zero means the
+  integration isn't live. Low means it is live and your traffic isn't worth
+  much yet. Diagnose which before changing anything.
 
 The fallback was **AdSense**, which accepts sites with essentially no traffic.
 That is its whole role in this ecosystem: it is where you start, and it pays
 correspondingly less than the networks you cannot get into yet.
+
+> **AdSense has its own gate, and it isn't traffic — it's "low value
+> content".** It wants to see a site with a real reason to exist before it
+> approves you: roughly a handful of substantial pages, not a shell. If you're
+> rejected on those grounds, adding *more* pages is the wrong fix — see
+> [the near-duplicate trap](50-getting-found.md#the-trap-that-ai-makes-very-easy),
+> which is the specific way this bites projects built with an agent.
 
 **The practical sequence:** start on AdSense, grow traffic, and reapply to a
 premium network when you genuinely clear its bar. Moving up is where the real
@@ -154,6 +171,21 @@ Replace the `pub-` number with your own publisher ID from your AdSense account.
 > someone else as your authorised manager, and it makes the one line that
 > *does* matter hard to find. **When you leave a network, put your `ads.txt`
 > back to the one line that's true.**
+
+> **And when Google says your `ads.txt` is missing, check before you fix it.**
+> AdSense will report the file as missing or unreachable when it is being
+> served perfectly well — the status reflects the last time Google *crawled*
+> it, not the current state, and that crawl can be days stale. Verify what the
+> world actually sees first:
+>
+> ```bash
+> curl -sS -o /dev/null -w '%{http_code}\n' https://yourthing.com/ads.txt
+> curl -sS -A "Mozilla/5.0 (compatible; Googlebot/2.1)" https://yourthing.com/ads.txt | head -3
+> ```
+>
+> A `200` to Googlebot means the file is fine and the warning is lag. Rewriting
+> a correct file because a dashboard is behind is a good way to break a working
+> setup.
 
 ### You need a consent banner, and AdSense will insist
 

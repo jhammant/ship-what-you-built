@@ -106,7 +106,7 @@ color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
   <aside class="side">
     <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
     <nav><ul class="nav"><li><a href="00-install-claude-code.html" data-page="00-install-claude-code"><span class="tick"></span>Stage 0 — Get an agent<small>Install Claude Code or Codex</small></a></li><li><a href="01-find-an-idea.html" data-page="01-find-an-idea"><span class="tick"></span>Stage 0.5 — Find an idea<small>What to actually build</small></a></li><li><a href="02-start-here.html" data-page="02-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="03-your-machine.html" data-page="03-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="04-accounts.html" data-page="04-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="05-keys-and-access.html" data-page="05-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="06-four-layers.html" data-page="06-four-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="07-github.html" data-page="07-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="08-let-claude-drive.html" data-page="08-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="50-getting-found.html" aria-current="page" data-page="50-getting-found"><span class="tick"></span>Getting it found<small>SEO, and what actually gets shared</small></a></li><li><a href="60-money.html" data-page="60-money"><span class="tick"></span>Making money from it<small>Ads, affiliate, subscriptions — honestly</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
-    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#the-two-doors-and-which-to-open-first">The two doors, and which to open first</a></li><li><a class="lvl2" href="#search-the-hour-that-matters">Search: the hour that matters</a></li><li><a class="lvl3" href="#the-checklist">The checklist</a></li><li><a class="lvl3" href="#two-things-that-quietly-cost-you">Two things that quietly cost you</a></li><li><a class="lvl2" href="#sharing-what-measurably-works">Sharing: what measurably works</a></li><li><a class="lvl3" href="#the-levers-biggest-first">The levers, biggest first</a></li><li><a class="lvl3" href="#where-else-to-put-it">Where else to put it</a></li><li><a class="lvl3" href="#the-thing-that-outperforms-all-of-it">The thing that outperforms all of it</a></li><li><a class="lvl2" href="#get-claude-to-do-the-setup">Get Claude to do the setup</a></li></ul></div>
+    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#the-two-doors-and-which-to-open-first">The two doors, and which to open first</a></li><li><a class="lvl2" href="#search-the-hour-that-matters">Search: the hour that matters</a></li><li><a class="lvl3" href="#the-checklist">The checklist</a></li><li><a class="lvl3" href="#the-trap-that-ai-makes-very-easy">The trap that AI makes very easy</a></li><li><a class="lvl3" href="#two-things-that-quietly-cost-you">Two things that quietly cost you</a></li><li><a class="lvl2" href="#sharing-what-measurably-works">Sharing: what measurably works</a></li><li><a class="lvl3" href="#the-levers-biggest-first">The levers, biggest first</a></li><li><a class="lvl3" href="#where-else-to-put-it">Where else to put it</a></li><li><a class="lvl3" href="#the-thing-that-outperforms-all-of-it">The thing that outperforms all of it</a></li><li><a class="lvl2" href="#get-claude-to-do-the-setup">Get Claude to do the setup</a></li></ul></div>
   </aside>
   <main>
 <h1>Getting it found</h1>
@@ -258,6 +258,72 @@ Without this you are waiting to be discovered; with it you are asking.</p>
 <p>Search Console is also the only honest source for what people actually searched
 before landing on you. Check it in a month; the queries are frequently not the
 ones you'd have guessed, and they tell you what to write next.</p>
+<h3 id="the-trap-that-ai-makes-very-easy">The trap that AI makes very easy<a class="anchor" href="#the-trap-that-ai-makes-very-easy" aria-label="Link to this section">#</a></h3>
+<p>This is the one that matters most for anything built with an agent, because an
+agent makes it a single prompt.</p>
+<p>You have a thing that works for one council, or one city, or one product. So
+you generate a page for <strong>all</strong> of them — 657 pages, each with the right name
+substituted in. It looks like a content strategy. Google calls it thin
+content, and the result is that none of them rank.</p>
+<p>Here are real measurements from doing exactly that:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mean overlap between generated council pages</td>
+<td><strong>82%</strong></td>
+</tr>
+<tr>
+<td>After adding a unique facts block to each</td>
+<td><strong>78%</strong></td>
+</tr>
+<tr>
+<td>Pages Google eventually indexed</td>
+<td>roughly none — 657 ended up <code>noindex</code></td>
+</tr>
+<tr>
+<td>AdSense verdict</td>
+<td>rejected as low-value content</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The middle row is the important one.</strong> The fix that felt right — write a
+genuinely unique block of facts for each page — moved overlap from 82% to 78%.
+Barely anything. The reason is arithmetic: the unique part was about <strong>80
+words against 2,000 words of shared template</strong>. Ninety-six percent of every
+page was still identical to every other page.</p>
+<p>Compare that with pages on the same site that <em>did</em> work: 2,200–2,800 words
+each, written to be substantial, and only <strong>22% overlap</strong>. Real content, not a
+template with a variable in it.</p>
+<p><strong>So the rule is not "write more pages". It is:</strong></p>
+<ul>
+<li><strong>Unique content has to dominate the page, not garnish it.</strong> If your template
+  is 2,000 words and your per-page facts are 80, you have one page repeated N
+  times, whatever the URL says.</li>
+<li><strong>Ten real pages beat 700 generated ones.</strong> They rank, they can be linked,
+  and they don't get your ad account rejected.</li>
+<li><strong>If you can't say something substantially different about each one, don't
+  make the page.</strong> Serve those cases from a single page with a lookup instead —
+  which is what most utilities should do anyway.</li>
+<li><strong><code>noindex</code> is the honest repair</strong> if you already made them. It tells Google
+  not to consider pages you know are thin, which protects how it judges the
+  rest of your site.</li>
+</ul>
+<p>Measure your own, rather than guessing — if two pages share most of their
+words, you'll see it immediately:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash"># crude but effective: how much of page B's wording already appears on page A?
+for u in https://yourthing.com/a https://yourthing.com/b; do
+  curl -sL &quot;$u&quot; | sed 's/&lt;[^&gt;]*&gt;/ /g' | tr '[:upper:]' '[:lower:]' \
+    | tr -cs '[:alnum:]' '\n' | sort -u &gt; &quot;/tmp/$(basename &quot;$u&quot;).words&quot;
+done
+comm -12 /tmp/a.words /tmp/b.words | wc -l   # shared
+cat /tmp/b.words | wc -l                      # total on B
+</code></pre></div>
 <h3 id="two-things-that-quietly-cost-you">Two things that quietly cost you<a class="anchor" href="#two-things-that-quietly-cost-you" aria-label="Link to this section">#</a></h3>
 <ul>
 <li><strong>Third-party scripts on the critical path.</strong> <code>cdn.tailwindcss.com</code> and

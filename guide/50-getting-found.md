@@ -122,6 +122,62 @@ Search Console is also the only honest source for what people actually searched
 before landing on you. Check it in a month; the queries are frequently not the
 ones you'd have guessed, and they tell you what to write next.
 
+### The trap that AI makes very easy
+
+This is the one that matters most for anything built with an agent, because an
+agent makes it a single prompt.
+
+You have a thing that works for one council, or one city, or one product. So
+you generate a page for **all** of them — 657 pages, each with the right name
+substituted in. It looks like a content strategy. Google calls it thin
+content, and the result is that none of them rank.
+
+Here are real measurements from doing exactly that:
+
+| | Result |
+|---|---|
+| Mean overlap between generated council pages | **82%** |
+| After adding a unique facts block to each | **78%** |
+| Pages Google eventually indexed | roughly none — 657 ended up `noindex` |
+| AdSense verdict | rejected as low-value content |
+
+**The middle row is the important one.** The fix that felt right — write a
+genuinely unique block of facts for each page — moved overlap from 82% to 78%.
+Barely anything. The reason is arithmetic: the unique part was about **80
+words against 2,000 words of shared template**. Ninety-six percent of every
+page was still identical to every other page.
+
+Compare that with pages on the same site that *did* work: 2,200–2,800 words
+each, written to be substantial, and only **22% overlap**. Real content, not a
+template with a variable in it.
+
+**So the rule is not "write more pages". It is:**
+
+- **Unique content has to dominate the page, not garnish it.** If your template
+  is 2,000 words and your per-page facts are 80, you have one page repeated N
+  times, whatever the URL says.
+- **Ten real pages beat 700 generated ones.** They rank, they can be linked,
+  and they don't get your ad account rejected.
+- **If you can't say something substantially different about each one, don't
+  make the page.** Serve those cases from a single page with a lookup instead —
+  which is what most utilities should do anyway.
+- **`noindex` is the honest repair** if you already made them. It tells Google
+  not to consider pages you know are thin, which protects how it judges the
+  rest of your site.
+
+Measure your own, rather than guessing — if two pages share most of their
+words, you'll see it immediately:
+
+```bash
+# crude but effective: how much of page B's wording already appears on page A?
+for u in https://yourthing.com/a https://yourthing.com/b; do
+  curl -sL "$u" | sed 's/<[^>]*>/ /g' | tr '[:upper:]' '[:lower:]' \
+    | tr -cs '[:alnum:]' '\n' | sort -u > "/tmp/$(basename "$u").words"
+done
+comm -12 /tmp/a.words /tmp/b.words | wc -l   # shared
+cat /tmp/b.words | wc -l                      # total on B
+```
+
 ### Two things that quietly cost you
 
 - **Third-party scripts on the critical path.** `cdn.tailwindcss.com` and
