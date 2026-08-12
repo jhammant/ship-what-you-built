@@ -162,8 +162,9 @@ Replace the `pub-` number with your own publisher ID from your AdSense account.
 > **The trap, learned the hard way.** When you apply to a managed network they
 > give you a large `ads.txt` — often a thousand lines — authorising every
 > partner they resell through, plus a `managerdomain=` line naming them as your
-> agent. BinMinder's `ads.txt` is *still* a 1,123-line file naming a network
-> that rejected it, months later.
+> BinMinder ran for months on a 1,123-line `ads.txt` that named a network it
+> had never gone live with — the file outlived the relationship by a long way,
+> because nothing breaks when it's wrong and so nothing reminds you.
 >
 > It isn't harmful, exactly — `ads.txt` authorises sellers rather than
 > summoning them, so a thousand lines for a network you don't use simply
