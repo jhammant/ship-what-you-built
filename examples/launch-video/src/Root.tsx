@@ -15,5 +15,7 @@ export const RemotionRoot: React.FC = () => (
     />
     {/* 1080x1080 square — fallback image post. */}
     <Composition id="Card" component={Card} durationInFrames={1} fps={30} width={1080} height={1080} />
+    {/* 1200x630 — the ratio every social platform crops link previews to. */}
+    <Composition id="OgCard" component={Card} durationInFrames={1} fps={30} width={1200} height={630} />
   </>
 );

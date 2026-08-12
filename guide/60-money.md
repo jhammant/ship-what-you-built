@@ -221,7 +221,7 @@ BinMinder's main revenue idea was not ads on the page. It was a link in the
 **reminder message itself**:
 
 ```text
-Tomorrow: RECYCLING bin. Treat yourself after! https://binm.uk/x7k2m
+Tomorrow: RECYCLING bin. Treat yourself after! https://yourthing.link/x7k2m
 ```
 
 That short URL redirects through an affiliate programme — takeaway delivery, in

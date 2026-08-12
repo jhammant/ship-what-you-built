@@ -54,6 +54,14 @@ text-decoration:none;border-radius:5px}
 .onpage a:hover{color:var(--ink);background:var(--sunken)}
 .onpage .lvl3{padding-left:1rem;font-size:.8rem}
 main{padding:2.5rem 0 4rem;min-width:0;max-width:46rem}
+/* grid/flex children default to min-width:auto and refuse to shrink below
+   their content, which lets a wide table or code block push the whole page
+   sideways instead of scrolling inside its own box. */
+.shell>*,main>*,.codewrap,.tablewrap,pre,table{min-width:0}
+.codewrap,.tablewrap{max-width:100%}
+/* a bare URL in prose is one long unbreakable token and will push the page
+   sideways on a narrow phone unless it is allowed to break. */
+a,p,li,td,th,h1,h2,h3{overflow-wrap:break-word}
 h1{font-size:clamp(1.9rem,1.4rem+2vw,2.7rem);line-height:1.1;letter-spacing:-.03em;
 margin:0 0 1.5rem;text-wrap:balance}
 h2{font-size:1.5rem;line-height:1.2;letter-spacing:-.022em;margin:2.8rem 0 .9rem;
@@ -377,7 +385,7 @@ site that has been running without it is more annoying than doing it once.</p>
 <h2 id="affiliate-links-which-work-better-than-youd-think">Affiliate links, which work better than you'd think<a class="anchor" href="#affiliate-links-which-work-better-than-youd-think" aria-label="Link to this section">#</a></h2>
 <p>BinMinder's main revenue idea was not ads on the page. It was a link in the
 <strong>reminder message itself</strong>:</p>
-<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">Tomorrow: RECYCLING bin. Treat yourself after! https://binm.uk/x7k2m
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">Tomorrow: RECYCLING bin. Treat yourself after! https://yourthing.link/x7k2m
 </code></pre></div>
 <p>That short URL redirects through an affiliate programme — takeaway delivery, in
 this case — and pays a commission on anything that follows.</p>

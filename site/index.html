@@ -224,7 +224,14 @@
   .step .meta { font-size: .85rem; color: var(--muted); }
 
   /* --------------------------------- Table --------------------------------- */
-  .scroller { overflow-x: auto; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); }
+  /* min-width:0 is load-bearing: a flex or grid child defaults to min-width:auto,
+     which refuses to shrink below its content — so the table's 33rem min-width
+     pushed the whole page sideways instead of scrolling inside this box. */
+  .scroller { overflow-x: auto; border: 1px solid var(--line); border-radius: 13px;
+              background: var(--surface); min-width: 0; max-width: 100%; }
+  .stack > *, .stack-s > *, .ways > *, .cards > *,
+  .steps > *, .step > *, .step { min-width: 0; }
+  pre, .says span { min-width: 0; max-width: 100%; }
   table { border-collapse: collapse; width: 100%; min-width: 33rem; font-size: 0.94rem; }
   th, td { text-align: left; padding: 0.8rem 1.05rem; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
   thead th { font-size: 0.78rem; letter-spacing: 0.11em; text-transform: uppercase; color: var(--muted); font-weight: 620; }
