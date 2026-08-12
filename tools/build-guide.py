@@ -45,6 +45,8 @@ PAGES = [
     ("20-aws.md",              "Track B — AWS",         "S3, CloudFront, Route 53, OIDC"),
     ("30-share-it.md",         "Share it",              "Previews, README, showcase"),
     ("40-launch-video.md",     "Make a launch video",   "Remotion, rendered from code"),
+    ("50-getting-found.md",    "Getting it found",      "SEO, and what actually gets shared"),
+    ("60-money.md",            "Making money from it",  "Ads, affiliate, subscriptions — honestly"),
     ("90-troubleshooting.md",  "When it breaks",        "Symptom → cause"),
     ("99-glossary.md",         "Glossary",              "Every term, explained"),
 ]

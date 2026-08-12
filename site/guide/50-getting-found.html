@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Getting it found — Ship What You Built</title>
+<meta name="description" content="Getting it found — part of a free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:title" content="Getting it found — Ship What You Built">
+<meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/50-getting-found.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#F6F7F5;--surface:#FFF;--sunken:#EEF0EC;--ink:#14181B;--ink-soft:#3D4642;
+--muted:#5B6560;--line:rgba(20,24,27,.13);--line-soft:rgba(20,24,27,.07);
+--live:#16794C;--live-ink:#FFF;--live-wash:rgba(22,121,76,.09);--stuck:#9A5B18;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+--sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;--ink-soft:#C3CCC6;
+--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}}
+:root[data-theme="dark"]{--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;
+--ink-soft:#C3CCC6;--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+line-height:1.68;font-size:1.02rem;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--live)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--live);outline-offset:3px;border-radius:5px}
+.shell{display:grid;grid-template-columns:17rem minmax(0,1fr);gap:2.5rem;
+max-width:78rem;margin-inline:auto;padding:0 clamp(1rem,4vw,2.5rem)}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr);gap:0}}
+.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;
+padding:2rem 0;border-right:1px solid var(--line-soft)}
+@media (max-width:900px){.side{position:static;max-height:none;border-right:0;
+border-bottom:1px solid var(--line-soft);padding-bottom:1rem}}
+.brand{font-weight:660;letter-spacing:-.02em;text-decoration:none;display:block;margin-bottom:.35rem}
+.brand small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;letter-spacing:0}
+.nav{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:.15rem}
+.nav a{display:block;padding:.42rem .6rem;border-radius:7px;text-decoration:none;
+font-size:.925rem;color:var(--ink-soft)}
+.nav a:hover{background:var(--sunken)}
+.nav a[aria-current="page"]{background:var(--live-wash);color:var(--ink);font-weight:600}
+.nav small{display:block;color:var(--muted);font-size:.76rem;line-height:1.35}
+.onpage{margin-top:1.5rem;border-top:1px solid var(--line-soft);padding-top:1rem}
+.onpage p{margin:0 0 .5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;
+text-transform:uppercase;color:var(--muted)}
+.onpage ul{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+.onpage a{display:block;padding:.2rem .35rem;font-size:.85rem;color:var(--muted);
+text-decoration:none;border-radius:5px}
+.onpage a:hover{color:var(--ink);background:var(--sunken)}
+.onpage .lvl3{padding-left:1rem;font-size:.8rem}
+main{padding:2.5rem 0 4rem;min-width:0;max-width:46rem}
+h1{font-size:clamp(1.9rem,1.4rem+2vw,2.7rem);line-height:1.1;letter-spacing:-.03em;
+margin:0 0 1.5rem;text-wrap:balance}
+h2{font-size:1.5rem;line-height:1.2;letter-spacing:-.022em;margin:2.8rem 0 .9rem;
+padding-top:1.4rem;border-top:1px solid var(--line-soft);text-wrap:balance}
+h3{font-size:1.13rem;letter-spacing:-.015em;margin:2rem 0 .6rem}
+h2 .anchor,h3 .anchor{opacity:0;margin-left:.4rem;color:var(--muted);text-decoration:none;font-weight:400}
+h2:hover .anchor,h3:hover .anchor,.anchor:focus-visible{opacity:1}
+p,ul,ol{margin:0 0 1.05rem}
+li{margin-bottom:.3rem}
+strong{font-weight:650}
+code{font-family:var(--mono);font-size:.875em;background:var(--sunken);
+padding:.12em .34em;border-radius:4px;overflow-wrap:break-word}
+.codewrap{position:relative;margin:0 0 1.2rem}
+pre{margin:0;overflow-x:auto;background:var(--sunken);border:1px solid var(--line-soft);
+border-radius:10px;padding:1rem 1.1rem;font-family:var(--mono);font-size:.845rem;line-height:1.62}
+pre code{background:none;padding:0;font-size:1em}
+.copy{position:absolute;top:.5rem;right:.5rem;font:inherit;font-size:.75rem;
+padding:.28rem .6rem;border-radius:6px;border:1px solid var(--line);
+background:var(--surface);color:var(--muted);cursor:pointer;opacity:0;transition:opacity .12s}
+.codewrap:hover .copy,.copy:focus-visible{opacity:1}
+.copy.done{color:var(--live);border-color:var(--live)}
+@media (hover:none){.copy{opacity:1}}
+blockquote{margin:0 0 1.2rem;padding:.9rem 1.1rem;border-left:3px solid var(--live);
+background:var(--live-wash);border-radius:0 9px 9px 0}
+blockquote > :last-child{margin-bottom:0}
+blockquote h3{margin-top:.2rem}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:0 0 1.2rem}
+table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+th,td{text-align:left;padding:.65rem .9rem;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+tbody tr:last-child td{border-bottom:0}
+hr{border:0;border-top:1px solid var(--line-soft);margin:2.5rem 0}
+img{max-width:100%;height:auto}
+.done-toggle{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);
+margin:.2rem 0 1.6rem;cursor:pointer;user-select:none}
+.done-toggle input{accent-color:var(--live);width:1rem;height:1rem}
+.pager{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:space-between;
+margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line-soft)}
+.pager a{flex:1 1 14rem;padding:.9rem 1.1rem;border:1px solid var(--line);border-radius:10px;
+text-decoration:none;background:var(--surface)}
+.pager a:hover{border-color:var(--live)}
+.pager span{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
+.pager .next{text-align:right}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-page="50-getting-found">
+<div class="shell">
+  <aside class="side">
+    <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
+    <nav><ul class="nav"><li><a href="00-install-claude-code.html" data-page="00-install-claude-code"><span class="tick"></span>Stage 0 — Get an agent<small>Install Claude Code or Codex</small></a></li><li><a href="01-find-an-idea.html" data-page="01-find-an-idea"><span class="tick"></span>Stage 0.5 — Find an idea<small>What to actually build</small></a></li><li><a href="02-start-here.html" data-page="02-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="03-your-machine.html" data-page="03-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="04-accounts.html" data-page="04-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="05-keys-and-access.html" data-page="05-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="06-four-layers.html" data-page="06-four-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="07-github.html" data-page="07-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="08-let-claude-drive.html" data-page="08-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="50-getting-found.html" aria-current="page" data-page="50-getting-found"><span class="tick"></span>Getting it found<small>SEO, and what actually gets shared</small></a></li><li><a href="60-money.html" data-page="60-money"><span class="tick"></span>Making money from it<small>Ads, affiliate, subscriptions — honestly</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#the-two-doors-and-which-to-open-first">The two doors, and which to open first</a></li><li><a class="lvl2" href="#search-the-hour-that-matters">Search: the hour that matters</a></li><li><a class="lvl3" href="#the-checklist">The checklist</a></li><li><a class="lvl3" href="#two-things-that-quietly-cost-you">Two things that quietly cost you</a></li><li><a class="lvl2" href="#sharing-what-measurably-works">Sharing: what measurably works</a></li><li><a class="lvl3" href="#the-levers-biggest-first">The levers, biggest first</a></li><li><a class="lvl3" href="#where-else-to-put-it">Where else to put it</a></li><li><a class="lvl3" href="#the-thing-that-outperforms-all-of-it">The thing that outperforms all of it</a></li><li><a class="lvl2" href="#get-claude-to-do-the-setup">Get Claude to do the setup</a></li></ul></div>
+  </aside>
+  <main>
+<h1>Getting it found</h1>
+<p><strong>This page gets you the two ways people will actually arrive at your site —
+search and sharing — and what measurably works at each. About twenty minutes,
+plus an hour of setup you only do once.</strong></p>
+<p>You already made the link look right in <a href="30-share-it.html">Share it</a>. This is the
+longer game: being findable when nobody is looking for you by name.</p>
+<hr />
+<h2 id="the-two-doors-and-which-to-open-first">The two doors, and which to open first<a class="anchor" href="#the-two-doors-and-which-to-open-first" aria-label="Link to this section">#</a></h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Search</th>
+<th>Sharing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Speed</td>
+<td>Slow — weeks to months</td>
+<td>Immediate</td>
+</tr>
+<tr>
+<td>Effort</td>
+<td>An hour, once, then patience</td>
+<td>Every post</td>
+</tr>
+<tr>
+<td>Traffic shape</td>
+<td>Small, steady, compounding</td>
+<td>A spike, then nothing</td>
+</tr>
+<tr>
+<td>Who arrives</td>
+<td>People with the problem</td>
+<td>People who follow you</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Do the search setup first even though the payoff is slower</strong>, because it's an
+hour that keeps paying, and because the same work — a real title, a real
+description, a preview image — is what makes the sharing look good too. Then
+share, because search takes weeks and you want someone using the thing this
+week.</p>
+<hr />
+<h2 id="search-the-hour-that-matters">Search: the hour that matters<a class="anchor" href="#search-the-hour-that-matters" aria-label="Link to this section">#</a></h2>
+<p>Almost all of the value is in a handful of things, and skipping them is common
+even on good projects. Here are four real sites — three of mine — checked the
+day this was written:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Site</th>
+<th>Canonical</th>
+<th>Structured data</th>
+<th>Preview tags</th>
+<th>Sitemap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>iphoneopen.com</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>checkmybinday.co.uk</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>binminder.co.uk</td>
+<td>yes</td>
+<td>no</td>
+<td>yes</td>
+<td><strong>missing</strong></td>
+</tr>
+<tr>
+<td>my11plustutor.co.uk</td>
+<td><strong>no</strong></td>
+<td><strong>no</strong></td>
+<td><strong>no</strong></td>
+<td><strong>no</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>That last row is the lesson. It is a free, open-source 11+ practice app with
+17,000 questions in it — comfortably the most <em>useful</em> thing in that list — and
+it has none of the scaffolding that would let anyone find it, and no preview
+tags, so every link to it shares as a bare blue URL. <strong>Being good is not a
+distribution strategy.</strong></p>
+<h3 id="the-checklist">The checklist<a class="anchor" href="#the-checklist" aria-label="Link to this section">#</a></h3>
+<p>Work through this once. Claude can do nearly all of it in a single pass — the
+prompt is at the end.</p>
+<p><strong>1. A real <code>&lt;title&gt;</code> per page.</strong> Not "Home". It is the single biggest on-page
+factor and it is what people see in results. Put the useful words first:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-html">&lt;title&gt;Find My Bin Collection Day – Free UK Bin Day Checker&lt;/title&gt;
+</code></pre></div>
+<p><strong>2. A meta description.</strong> It doesn't affect ranking directly; it is the sales
+pitch under the title and it changes whether anyone clicks.</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-html">&lt;meta name=&quot;description&quot; content=&quot;Check your UK bin collection day free. Enter a postcode, get your next recycling, food and general waste dates.&quot;&gt;
+</code></pre></div>
+<p><strong>3. One <code>&lt;h1&gt;</code> per page</strong>, saying what the page is. Sub-headings as <code>&lt;h2&gt;</code>.
+This sounds pedantic and is genuinely how machines read your structure.</p>
+<p><strong>4. A canonical link</strong>, so the same page reachable at several URLs (<code>www</code> and
+non-<code>www</code>, with and without a trailing slash) counts as one page rather than
+competing with itself:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-html">&lt;link rel=&quot;canonical&quot; href=&quot;https://yourthing.com/page&quot;&gt;
+</code></pre></div>
+<p><strong>5. <code>robots.txt</code></strong> at your root, saying crawling is allowed and where the map
+is:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">User-agent: *
+Allow: /
+
+Sitemap: https://yourthing.com/sitemap.xml
+</code></pre></div>
+<p><strong>6. <code>sitemap.xml</code></strong> listing your pages. For a handful of pages, write it by
+hand:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;urlset xmlns=&quot;http://www.sitemaps.org/schemas/sitemap/0.9&quot;&gt;
+  &lt;url&gt;&lt;loc&gt;https://yourthing.com/&lt;/loc&gt;&lt;/url&gt;
+  &lt;url&gt;&lt;loc&gt;https://yourthing.com/about&lt;/loc&gt;&lt;/url&gt;
+&lt;/urlset&gt;
+</code></pre></div>
+<p><strong>7. Structured data</strong>, if your thing is a recognised type — an app, a recipe,
+a FAQ, an event. It's a small JSON block that can earn you a richer-looking
+result:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-html">&lt;script type=&quot;application/ld+json&quot;&gt;
+{
+  &quot;@context&quot;: &quot;https://schema.org&quot;,
+  &quot;@type&quot;: &quot;WebApplication&quot;,
+  &quot;name&quot;: &quot;Tide Clock&quot;,
+  &quot;description&quot;: &quot;Today's tide times for your nearest beach&quot;,
+  &quot;applicationCategory&quot;: &quot;UtilitiesApplication&quot;,
+  &quot;offers&quot;: { &quot;@type&quot;: &quot;Offer&quot;, &quot;price&quot;: &quot;0&quot;, &quot;priceCurrency&quot;: &quot;GBP&quot; }
+}
+&lt;/script&gt;
+</code></pre></div>
+<p><strong>8. Tell Google it exists.</strong> Sign in to
+<a href="https://search.google.com/search-console">Google Search Console</a>, verify the
+domain (a DNS TXT record — you know how to add those now), submit the sitemap.
+Without this you are waiting to be discovered; with it you are asking.</p>
+<p>Search Console is also the only honest source for what people actually searched
+before landing on you. Check it in a month; the queries are frequently not the
+ones you'd have guessed, and they tell you what to write next.</p>
+<h3 id="two-things-that-quietly-cost-you">Two things that quietly cost you<a class="anchor" href="#two-things-that-quietly-cost-you" aria-label="Link to this section">#</a></h3>
+<ul>
+<li><strong>Third-party scripts on the critical path.</strong> <code>cdn.tailwindcss.com</code> and
+  similar CDN builds are convenient and slow — the Tailwind CDN in particular
+  is documented as a development tool, not for production, because it compiles
+  in the browser on every visit. Speed is a ranking factor and, more to the
+  point, a leaving factor.</li>
+<li><strong>A JavaScript-only page.</strong> If your content only exists after JavaScript
+  runs, some crawlers and most link-preview scrapers see an empty page. Test
+  what they see:</li>
+</ul>
+<p><code>bash
+  curl -sL https://yourthing.com | sed 's/&lt;[^&gt;]*&gt;//g' | tr -d '[:space:]' | wc -c</code></p>
+<p>A few hundred characters means your page is effectively empty to a machine.
+  Tens of thousands means the content is really in the HTML.</p>
+<hr />
+<h2 id="sharing-what-measurably-works">Sharing: what measurably works<a class="anchor" href="#sharing-what-measurably-works" aria-label="Link to this section">#</a></h2>
+<p>Everything below is measured from about 600 posts on one UK tech account, so
+treat it as a strong hint rather than a law — but the effects are large enough
+to be worth copying.</p>
+<h3 id="the-levers-biggest-first">The levers, biggest first<a class="anchor" href="#the-levers-biggest-first" aria-label="Link to this section">#</a></h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Lever</th>
+<th>Measured effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Format</strong></td>
+<td>Video ≈ <strong>3.3×</strong> a plain link post. Image ≈ 2.7×. Text ≈ 1.2×</td>
+</tr>
+<tr>
+<td><strong>A hook in the first line</strong></td>
+<td>≈ <strong>2.9×</strong></td>
+</tr>
+<tr>
+<td><strong>Length 300–1,500 characters</strong></td>
+<td>≈ <strong>2.3×</strong> versus a one-liner</td>
+</tr>
+<tr>
+<td><strong>Link in the post body</strong></td>
+<td>≈ <strong>0.6×</strong> — a 40% penalty</td>
+</tr>
+<tr>
+<td><strong>Replying in the first hour</strong></td>
+<td>roughly <strong>doubles</strong> reach</td>
+</tr>
+</tbody>
+</table></div>
+<p>Which gives five rules that cost nothing:</p>
+<ol>
+<li><strong>Never post a bare link.</strong> It is the weakest thing available. Post an image
+   or a video and put the link in the first comment.</li>
+<li><strong>Open with the problem, not the product.</strong> "I built X" performs far worse
+   than the situation the reader recognises. "It works, and it's been sitting
+   on my laptop for three weeks" is a hook; "Introducing X" is not.</li>
+<li><strong>Write 300–1,500 characters.</strong> A real thought, not a slogan and not an
+   essay.</li>
+<li><strong>Reply to every comment in the first hour.</strong> This is the biggest lever you
+   personally control, and the one most people skip.</li>
+<li><strong>Say what surprised you.</strong> The bit you got stuck on is the most relatable
+   and most repliable part. A launch post that admits a failure gets more
+   genuine replies than one that claims a triumph.</li>
+</ol>
+<blockquote>
+<p><strong>Timing matters far less than people think</strong> — on this account, the best
+slot beat the worst by under 2×, while format alone was 3.3×. Post at a
+reasonable hour and spend your effort on the video instead of the calendar.</p>
+</blockquote>
+<h3 id="where-else-to-put-it">Where else to put it<a class="anchor" href="#where-else-to-put-it" aria-label="Link to this section">#</a></h3>
+<ul>
+<li><strong>Hacker News</strong> (Show HN) — brutal, and the single best source of genuinely
+  technical feedback. Submit your own work, title it plainly, be present in the
+  comments.</li>
+<li><strong>Reddit</strong> — find the subreddit for the <em>problem</em>, not for programming. A bin
+  reminder belongs in a UK local subreddit, not r/webdev. Read the rules first;
+  self-promotion bans are common and permanent.</li>
+<li><strong>Product Hunt</strong> — a spike of the wrong sort of traffic for most small
+  utilities, but real if your thing is a product rather than a tool.</li>
+<li><strong>The obvious one people forget:</strong> tell the people it was built for. If you
+  made it for a specific group, find where they already talk.</li>
+</ul>
+<h3 id="the-thing-that-outperforms-all-of-it">The thing that outperforms all of it<a class="anchor" href="#the-thing-that-outperforms-all-of-it" aria-label="Link to this section">#</a></h3>
+<p>Make something for a specific person or group with a real problem, and tell
+them directly. Twenty people who needed it beats two thousand who scrolled past.</p>
+<hr />
+<h2 id="get-claude-to-do-the-setup">Get Claude to do the setup<a class="anchor" href="#get-claude-to-do-the-setup" aria-label="Link to this section">#</a></h2>
+<p>Most of the search checklist is mechanical:</p>
+<blockquote>
+<p>Go through this project for search and sharing readiness. For every page:
+check there is a unique descriptive <code>&lt;title&gt;</code>, a meta description, exactly one
+<code>&lt;h1&gt;</code>, a canonical link, and Open Graph tags with an absolute <code>og:image</code> URL.
+Add a <code>robots.txt</code> and a <code>sitemap.xml</code> covering every real page. Add
+schema.org structured data if there's a type that genuinely fits — don't
+invent one. Then tell me what you changed and what you deliberately left
+alone.</p>
+</blockquote>
+<p>Then verify rather than trusting it:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">curl -sL https://yourthing.com | grep -oE '&lt;title&gt;[^&lt;]*|rel=&quot;canonical&quot;|property=&quot;og:[a-z:]*&quot;'
+curl -sIL https://yourthing.com/sitemap.xml | head -1
+curl -sIL https://yourthing.com/robots.txt | head -1
+</code></pre></div>
+<hr />
+<p><strong>Next:</strong> <a href="60-money.html">Making money from it →</a></p>
+    <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
+    <nav class="pager"><a class="prev" href="40-launch-video.html"><span>Previous</span>Make a launch video</a><a class="next" href="60-money.html"><span>Next</span>Making money from it</a></nav>
+  </main>
+</div>
+<script>
+// Copy the whole block — several are heredocs that break if pasted line by line.
+document.querySelectorAll('.codewrap').forEach(function (w) {
+  var btn = w.querySelector('.copy'), pre = w.querySelector('pre');
+  if (!btn || !pre) return;
+  btn.addEventListener('click', function () {
+    navigator.clipboard.writeText(pre.innerText).then(function () {
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+    }).catch(function () { btn.textContent = 'Press Ctrl+C'; });
+  });
+});
+
+// Remember which pages are finished — the AWS track spans more than one sitting.
+(function () {
+  var KEY = 'swyb-done', box = document.getElementById('page-done');
+  if (!box) return;
+  var page = document.body.dataset.page;
+  var read = function () { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
+  var done = read();
+  box.checked = !!done[page];
+  box.addEventListener('change', function () {
+    var d = read();
+    if (box.checked) { d[page] = true; } else { delete d[page]; }
+    localStorage.setItem(KEY, JSON.stringify(d));
+    paint();
+  });
+  function paint() {
+    var d = read();
+    document.querySelectorAll('.nav a[data-page]').forEach(function (a) {
+      a.textContent.indexOf('✓') === 0 && (a.textContent = a.textContent.slice(1));
+      var t = a.querySelector('.tick');
+      if (t) t.textContent = d[a.dataset.page] ? '✓ ' : '';
+    });
+  }
+  paint();
+})();
+</script>
+</body>
+</html>
