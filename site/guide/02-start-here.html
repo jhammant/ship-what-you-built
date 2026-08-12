@@ -106,11 +106,86 @@ color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
   <aside class="side">
     <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
     <nav><ul class="nav"><li><a href="00-install-claude-code.html" data-page="00-install-claude-code"><span class="tick"></span>Stage 0 — Get an agent<small>Install Claude Code or Codex</small></a></li><li><a href="01-find-an-idea.html" data-page="01-find-an-idea"><span class="tick"></span>Stage 0.5 — Find an idea<small>What to actually build</small></a></li><li><a href="02-start-here.html" aria-current="page" data-page="02-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="03-your-machine.html" data-page="03-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="04-accounts.html" data-page="04-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="05-keys-and-access.html" data-page="05-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="06-four-layers.html" data-page="06-four-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="07-github.html" data-page="07-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="08-let-claude-drive.html" data-page="08-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
-    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#question-1--what-did-you-build">Question 1 — What did you build?</a></li><li><a class="lvl3" href="#shape-1--a-static-site">Shape 1 — A static site</a></li><li><a class="lvl3" href="#shape-2--a-site-with-a-bit-of-backend">Shape 2 — A site with a bit of backend</a></li><li><a class="lvl3" href="#shape-3--something-that-has-to-keep-running">Shape 3 — Something that has to keep running</a></li><li><a class="lvl2" href="#question-2--which-track">Question 2 — Which track?</a></li><li><a class="lvl3" href="#take-track-a-cloudflare-if">Take Track A (Cloudflare) if…</a></li><li><a class="lvl3" href="#take-track-b-aws-if">Take Track B (AWS) if…</a></li><li><a class="lvl3" href="#genuinely-cant-decide">Genuinely can&#x27;t decide?</a></li><li><a class="lvl2" href="#what-you-need-on-your-machine">What you need on your machine</a></li><li><a class="lvl3" href="#if-youre-on-windows-read-this-first">If you&#x27;re on Windows, read this first</a></li><li><a class="lvl2" href="#before-either-track-two-shared-steps">Before either track: two shared steps</a></li><li><a class="lvl2" href="#the-honest-note-about-shape-3">The honest note about Shape 3</a></li></ul></div>
+    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#first-how-much-of-this-do-you-want-to-do-yourself">First, how much of this do you want to do yourself?</a></li><li><a class="lvl3" href="#full-auto">Full auto</a></li><li><a class="lvl3" href="#step-by-step-with-the-skill">Step by step, with the skill</a></li><li><a class="lvl3" href="#by-hand">By hand</a></li><li><a class="lvl2" href="#question-1--what-did-you-build">Question 1 — What did you build?</a></li><li><a class="lvl3" href="#shape-1--a-static-site">Shape 1 — A static site</a></li><li><a class="lvl3" href="#shape-2--a-site-with-a-bit-of-backend">Shape 2 — A site with a bit of backend</a></li><li><a class="lvl3" href="#shape-3--something-that-has-to-keep-running">Shape 3 — Something that has to keep running</a></li><li><a class="lvl2" href="#question-2--which-track">Question 2 — Which track?</a></li><li><a class="lvl3" href="#take-track-a-cloudflare-if">Take Track A (Cloudflare) if…</a></li><li><a class="lvl3" href="#take-track-b-aws-if">Take Track B (AWS) if…</a></li><li><a class="lvl3" href="#genuinely-cant-decide">Genuinely can&#x27;t decide?</a></li><li><a class="lvl2" href="#what-you-need-on-your-machine">What you need on your machine</a></li><li><a class="lvl3" href="#if-youre-on-windows-read-this-first">If you&#x27;re on Windows, read this first</a></li><li><a class="lvl2" href="#before-either-track-two-shared-steps">Before either track: two shared steps</a></li><li><a class="lvl2" href="#the-honest-note-about-shape-3">The honest note about Shape 3</a></li></ul></div>
   </aside>
   <main>
 <h1>Start here</h1>
 <p>Two questions, then you're on a track and you can stop making decisions.</p>
+<hr />
+<h2 id="first-how-much-of-this-do-you-want-to-do-yourself">First, how much of this do you want to do yourself?<a class="anchor" href="#first-how-much-of-this-do-you-want-to-do-yourself" aria-label="Link to this section">#</a></h2>
+<p>There are three honest answers, and none of them is the wrong one. Pick by how
+much you want to understand versus how quickly you want a URL.</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>What you actually do</th>
+<th>Time</th>
+<th>Pick this if</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Full auto</strong></td>
+<td>Install the skill, paste one paragraph, approve the domain purchase</td>
+<td>~30 min, mostly waiting</td>
+<td>You want it live tonight and you'll read the code later</td>
+</tr>
+<tr>
+<td><strong>Step by step, with the skill</strong></td>
+<td>Same skill, but it stops at each stage and explains before doing it</td>
+<td>~45 min</td>
+<td>You want it live <em>and</em> to know what happened</td>
+</tr>
+<tr>
+<td><strong>By hand</strong></td>
+<td>Follow the track pages and type every command yourself</td>
+<td>20–90 min</td>
+<td>You learn by doing, or you'd rather no agent touched your cloud account</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>All three end in the same place</strong>: your domain, HTTPS, a public repo, and
+deploys that happen when you push.</p>
+<h3 id="full-auto">Full auto<a class="anchor" href="#full-auto" aria-label="Link to this section">#</a></h3>
+<p>Install the skill, then let it run without stopping to ask about every step:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">git clone https://github.com/jhammant/ship-what-you-built.git
+mkdir -p ~/.claude/skills
+cp -r ship-what-you-built/skill ~/.claude/skills/first-site
+</code></pre></div>
+<p>Then, in your project folder:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">claude --dangerously-skip-permissions
+</code></pre></div>
+<blockquote>
+<p><strong>Read <a href="00-install-claude-code.html#stop-it-asking-you-about-everything">what that flag means</a>
+before you use it.</strong> In short: it stops asking about anything at all, so only
+use it in a project folder under <code>~/dev</code> that is already a git repository —
+that commit is your undo button. It is still worth watching what scrolls past.</p>
+</blockquote>
+<p>Then say what you want, and answer when it asks:</p>
+<blockquote>
+<p>Put this online at yourthing.com using AWS. Buy the domain, set up the repo
+and automatic deploys. Ask me before spending money.</p>
+</blockquote>
+<h3 id="step-by-step-with-the-skill">Step by step, with the skill<a class="anchor" href="#step-by-step-with-the-skill" aria-label="Link to this section">#</a></h3>
+<p>Same skill, without the flag:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">claude
+</code></pre></div>
+<blockquote>
+<p>Read the guide at shipwhatyoubuilt.com and walk me through getting this
+online, one stage at a time. Explain each step before you do it, and stop for
+my approval between stages.</p>
+</blockquote>
+<p>This is the one most people should take. The skill still does the fiddly
+mechanics — cache invalidation, certificate validation, the OIDC trust policy —
+but you see and approve each stage, so you finish knowing what you own.</p>
+<h3 id="by-hand">By hand<a class="anchor" href="#by-hand" aria-label="Link to this section">#</a></h3>
+<p>Skip the skill entirely. <a href="10-cloudflare.html">Track A</a> and <a href="20-aws.html">Track B</a>
+list every command with an explanation of what it does and what going wrong
+looks like. Nothing in this guide requires an agent.</p>
+<p><strong><a href="https://github.com/jhammant/ship-what-you-built/tree/main/skill">The skill lives here</a></strong>
+if you want to read it before installing it — it's a markdown file and six
+short shell scripts, and reading it first is a reasonable instinct.</p>
 <hr />
 <h2 id="question-1--what-did-you-build">Question 1 — What did you build?<a class="anchor" href="#question-1--what-did-you-build" aria-label="Link to this section">#</a></h2>
 <p>Look at the folder your project lives in and find the row that matches. If two

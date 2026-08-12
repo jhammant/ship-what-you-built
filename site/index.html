@@ -183,6 +183,30 @@
   }
   .card.flag .more { color: var(--stuck); }
 
+  /* -----------------------------路 Three ways ----------------------------- */
+  .ways { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); }
+  .way {
+    display: flex; flex-direction: column; gap: .6rem;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 13px; padding: 1.4rem; box-shadow: var(--shadow);
+    text-decoration: none; color: inherit;
+    transition: transform .12s ease, border-color .12s ease;
+  }
+  .way:hover { transform: translateY(-2px); border-color: var(--live); }
+  .way.pick { border-color: var(--live); }
+  .way .tag {
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .way.pick .tag { color: var(--live); }
+  .way p { color: var(--ink-soft); font-size: .95rem; }
+  .way .when { margin-top: auto; padding-top: .5rem; font-size: .87rem; color: var(--muted); }
+  .way code {
+    font-family: var(--mono); font-size: .8rem; background: var(--sunken);
+    padding: .5rem .6rem; border-radius: 7px; display: block; overflow-x: auto;
+    white-space: nowrap; color: var(--ink-soft);
+  }
+
   /* ------------------------------ Three steps ------------------------------ */
   .steps { counter-reset: step; display: grid; gap: 1.5rem; }
   .step { position: relative; padding-left: 3rem; }
@@ -253,13 +277,59 @@
 
       <div class="actions">
         <a class="btn btn-primary" href="/guide/02-start-here.html">Read the guide</a>
-        <a class="btn btn-ghost" href="#start">Start in three steps</a>
+        <a class="btn btn-ghost" href="#ways">Three ways to do this</a>
         <a class="btn btn-ghost" href="https://github.com/jhammant/ship-what-you-built/blob/main/SHOWCASE.md">See what people shipped</a>
       </div>
       <p style="color:var(--muted);font-size:.95rem">
         Haven't built anything yet? Start at
         <a href="/guide/00-install-claude-code.html">Stage&nbsp;0 — get an AI coding agent</a>,
         then <a href="/guide/01-find-an-idea.html">work out what to build</a>.
+      </p>
+    </div>
+  </section>
+
+  <section id="ways">
+    <div class="wide stack">
+      <div class="stack-s" style="max-width:var(--measure);margin-inline:auto;width:100%">
+        <p class="eyebrow">Pick one</p>
+        <h2>Three ways to do this</h2>
+        <p class="lede">
+          None of them is the wrong answer. Pick by how much you want to
+          understand versus how fast you want a URL — all three end with your
+          domain, HTTPS, a public repo and deploys on push.
+        </p>
+      </div>
+
+      <div class="ways">
+        <a class="way" href="/guide/02-start-here.html#full-auto">
+          <span class="tag">Full auto · ~30 min</span>
+          <h3>Hand it over</h3>
+          <p>Install the skill, paste a paragraph, approve the domain purchase. It does the rest.</p>
+          <code>claude --dangerously-skip-permissions</code>
+          <span class="when">If you want it live tonight.</span>
+        </a>
+
+        <a class="way pick" href="/guide/02-start-here.html#step-by-step-with-the-skill">
+          <span class="tag">Step by step · ~45 min</span>
+          <h3>Skill, one stage at a time</h3>
+          <p>The same skill does the fiddly mechanics, but stops and explains before each stage.</p>
+          <code>claude</code>
+          <span class="when">Most people should take this one.</span>
+        </a>
+
+        <a class="way" href="/guide/20-aws.html">
+          <span class="tag">By hand · 20–90 min</span>
+          <h3>Type it yourself</h3>
+          <p>Every command, with what it does and what going wrong looks like. No agent required.</p>
+          <code>Track A · Cloudflare &nbsp;|&nbsp; Track B · AWS</code>
+          <span class="when">If you learn by doing.</span>
+        </a>
+      </div>
+
+      <p style="max-width:var(--measure);margin-inline:auto;width:100%;color:var(--muted)">
+        The skill is a markdown file and six short shell scripts —
+        <a href="https://github.com/jhammant/ship-what-you-built/tree/main/skill">read it before you install it</a>,
+        which is a reasonable instinct.
       </p>
     </div>
   </section>
@@ -402,8 +472,8 @@
 
   <section id="start">
     <div class="wrap stack">
-      <p class="eyebrow">The short version</p>
-      <h2>Start in three steps</h2>
+      <p class="eyebrow">Whichever you picked</p>
+      <h2>You'll need these three things first</h2>
       <p class="lede">
         You create the accounts. You authorise the tools. Then you hand the work
         to Claude Code and answer its questions. About 30 minutes, most of it

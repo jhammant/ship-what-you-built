@@ -4,6 +4,74 @@ Two questions, then you're on a track and you can stop making decisions.
 
 ---
 
+## First, how much of this do you want to do yourself?
+
+There are three honest answers, and none of them is the wrong one. Pick by how
+much you want to understand versus how quickly you want a URL.
+
+| | What you actually do | Time | Pick this if |
+|---|---|---|---|
+| **Full auto** | Install the skill, paste one paragraph, approve the domain purchase | ~30 min, mostly waiting | You want it live tonight and you'll read the code later |
+| **Step by step, with the skill** | Same skill, but it stops at each stage and explains before doing it | ~45 min | You want it live *and* to know what happened |
+| **By hand** | Follow the track pages and type every command yourself | 20–90 min | You learn by doing, or you'd rather no agent touched your cloud account |
+
+**All three end in the same place**: your domain, HTTPS, a public repo, and
+deploys that happen when you push.
+
+### Full auto
+
+Install the skill, then let it run without stopping to ask about every step:
+
+```bash
+git clone https://github.com/jhammant/ship-what-you-built.git
+mkdir -p ~/.claude/skills
+cp -r ship-what-you-built/skill ~/.claude/skills/first-site
+```
+
+Then, in your project folder:
+
+```bash
+claude --dangerously-skip-permissions
+```
+
+> **Read [what that flag means](00-install-claude-code.md#stop-it-asking-you-about-everything)
+> before you use it.** In short: it stops asking about anything at all, so only
+> use it in a project folder under `~/dev` that is already a git repository —
+> that commit is your undo button. It is still worth watching what scrolls past.
+
+Then say what you want, and answer when it asks:
+
+> Put this online at yourthing.com using AWS. Buy the domain, set up the repo
+> and automatic deploys. Ask me before spending money.
+
+### Step by step, with the skill
+
+Same skill, without the flag:
+
+```bash
+claude
+```
+
+> Read the guide at shipwhatyoubuilt.com and walk me through getting this
+> online, one stage at a time. Explain each step before you do it, and stop for
+> my approval between stages.
+
+This is the one most people should take. The skill still does the fiddly
+mechanics — cache invalidation, certificate validation, the OIDC trust policy —
+but you see and approve each stage, so you finish knowing what you own.
+
+### By hand
+
+Skip the skill entirely. [Track A](10-cloudflare.md) and [Track B](20-aws.md)
+list every command with an explanation of what it does and what going wrong
+looks like. Nothing in this guide requires an agent.
+
+**[The skill lives here](https://github.com/jhammant/ship-what-you-built/tree/main/skill)**
+if you want to read it before installing it — it's a markdown file and six
+short shell scripts, and reading it first is a reasonable instinct.
+
+---
+
 ## Question 1 — What did you build?
 
 Look at the folder your project lives in and find the row that matches. If two

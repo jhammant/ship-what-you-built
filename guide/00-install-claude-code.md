@@ -325,6 +325,42 @@ install in a few minutes and they can coexist on the same machine.
 
 ---
 
+## Somewhere to keep your projects
+
+Make one folder now, and put every project inside it:
+
+```bash
+mkdir -p ~/dev
+```
+
+`~` is shorthand for your home folder, so that's `/Users/you/dev` on a Mac and
+`/home/you/dev` on Linux or WSL. One folder per project inside it:
+
+```text
+~/dev/
+├── tide-clock/
+├── recipe-scaler/
+└── agent-test/
+```
+
+This looks like housekeeping and isn't. **The folder you start the agent in is
+the boundary of what it can see and touch.** Start it in `~/dev/tide-clock` and
+that project is its whole world. Start it in your home folder and its world
+includes your documents, your photos, your `.ssh` keys and every credential on
+the machine.
+
+So there are two rules, and they're the same rule twice:
+
+- **One folder per project.** Never two projects in one folder.
+- **Never start an agent in your home folder**, on your Desktop, or in
+  Documents.
+
+> **Avoid folders that sync.** A project inside iCloud Drive, Dropbox or
+> OneDrive will fight you — the sync client rewrites files under the agent's
+> feet, `node_modules` takes an age to upload, and git repositories in
+> particular corrupt in ways that are miserable to unpick. `~/dev` sits outside
+> all of them, which is most of the point.
+
 ## Your first two minutes with it
 
 Do this now, before you need it for anything real. The point is to see the loop
@@ -335,8 +371,8 @@ Make an empty folder and move into it. `mkdir` makes a directory, `cd` changes
 into it:
 
 ```bash
-mkdir ~/agent-test
-cd ~/agent-test
+mkdir -p ~/dev/agent-test
+cd ~/dev/agent-test
 ```
 
 Start the agent:
@@ -387,6 +423,85 @@ When you're done, type `/exit` (or press `Ctrl+D` twice) to leave. Nothing about
 that folder is special — delete `~/agent-test` whenever you like.
 
 ---
+
+## Stop it asking you about everything
+
+Out of the box, the agent asks permission before each file it writes and each
+command it runs. That is the right default the first time. By the twentieth
+prompt it is genuinely wearing, and it has a nastier side effect: **it trains
+you to click "yes" without reading**, which quietly removes the protection the
+prompts existed to give you.
+
+Better to choose a level deliberately.
+
+| Level | What you type | It asks about |
+|---|---|---|
+| Default | `claude` | Every edit and every command |
+| **Accept edits** | `claude --permission-mode acceptEdits` | Commands only — file edits go straight through |
+| Bypass everything | `claude --dangerously-skip-permissions` | Nothing |
+
+### Start with `acceptEdits`
+
+```bash
+claude --permission-mode acceptEdits
+```
+
+This is the one to use day to day. Editing files is the bulk of the prompts and
+the least dangerous thing the agent does — a bad edit shows up immediately and
+git can undo it. Anything that *runs* still stops and asks you, which is where
+the real consequences live: deleting things, installing things, spending money.
+
+Most of the friction disappears and the meaningful check stays.
+
+### And when you want it to just get on with it
+
+```bash
+claude --dangerously-skip-permissions
+```
+
+The name is doing its job — that flag means *nothing will stop it*. The risk is
+worth stating precisely, because "the AI might go rogue" is the wrong worry:
+
+1. **A mistake has nothing to catch it.** Agents occasionally do the wrong
+   thing confidently. `rm -rf` in the wrong directory is not recoverable by
+   apologising to it afterwards.
+2. **Anything it reads can try to instruct it.** It fetches web pages, reads
+   dependency files, opens GitHub issues. Text in any of those can be written
+   to look like an instruction, and with no prompts there is nothing between
+   that text and your machine. This is a real class of attack, not a
+   hypothetical.
+
+Which is exactly why you made `~/dev`. Used inside a single project folder that
+holds nothing you can't afford to lose, the blast radius is that folder. Used in
+your home directory, the blast radius is your life.
+
+**The three conditions to meet before you use it:**
+
+- You're in a **project folder under `~/dev`**, never `~` and never `/`.
+- The project is **already a git repository with a commit** — `git init && git
+  add -A && git commit -m "start"`. That commit is your undo button, and
+  `git reset --hard` gets you back to it.
+- **Nothing in that folder is irreplaceable**, and no live production
+  credentials are reachable from it.
+
+It refuses to run as `root`, which tells you how the people who wrote it feel
+about the flag.
+
+> **If you use it, still read the transcript.** Skipping the prompts does not
+> mean skipping attention — it means the attention happens after rather than
+> before, so you want to be able to notice a command you didn't expect and stop
+> it. Scroll back occasionally.
+
+### The same thing in Codex
+
+```bash
+codex --ask-for-approval on-request          # graduated, roughly acceptEdits
+codex --dangerously-bypass-approvals-and-sandbox
+```
+
+Codex also has a real sandbox (`--sandbox`), which Claude Code doesn't do the
+same way — worth knowing if you'd rather have the machine enforce the boundary
+than rely on which folder you're in.
 
 ## How to talk to it well
 
