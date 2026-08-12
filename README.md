@@ -68,6 +68,7 @@ themselves. **[The chooser walks you through it →](guide/02-start-here.md)**
 | [40 — Make a launch video](guide/40-launch-video.md) | Remotion, rendered from code, regenerable |
 | [50 — Getting it found](guide/50-getting-found.md) | SEO, and what measurably works when you share it |
 | [60 — Making money from it](guide/60-money.md) | Ads, affiliate links and subscriptions — with a real bill and a real rejection |
+| [70 — More from one domain](guide/70-your-domain.md) | Host every project on subdomains, and get email at your own address |
 | [90 — When it breaks](guide/90-troubleshooting.md) | Symptom → cause, for both tracks |
 | [99 — Glossary](guide/99-glossary.md) | Every term the guide uses, explained |
 

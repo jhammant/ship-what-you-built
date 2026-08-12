@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>More from one domain — Ship What You Built</title>
+<meta name="description" content="More from one domain — part of a free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:title" content="More from one domain — Ship What You Built">
+<meta property="og:description" content="A free, open-source guide to getting the thing you built onto a real domain.">
+<meta property="og:image" content="https://shipwhatyoubuilt.com/preview.png">
+<meta property="og:url" content="https://shipwhatyoubuilt.com/guide/70-your-domain.html">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#F6F7F5;--surface:#FFF;--sunken:#EEF0EC;--ink:#14181B;--ink-soft:#3D4642;
+--muted:#5B6560;--line:rgba(20,24,27,.13);--line-soft:rgba(20,24,27,.07);
+--live:#16794C;--live-ink:#FFF;--live-wash:rgba(22,121,76,.09);--stuck:#9A5B18;
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+--sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;--ink-soft:#C3CCC6;
+--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}}
+:root[data-theme="dark"]{--bg:#0F1311;--surface:#171C19;--sunken:#121614;--ink:#ECF1ED;
+--ink-soft:#C3CCC6;--muted:#8A968F;--line:rgba(236,241,237,.15);--line-soft:rgba(236,241,237,.08);
+--live:#35C285;--live-ink:#06140D;--live-wash:rgba(53,194,133,.13);--stuck:#D08A3C}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+line-height:1.68;font-size:1.02rem;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--ink);text-decoration-color:var(--line);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--live)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--live);outline-offset:3px;border-radius:5px}
+.shell{display:grid;grid-template-columns:17rem minmax(0,1fr);gap:2.5rem;
+max-width:78rem;margin-inline:auto;padding:0 clamp(1rem,4vw,2.5rem)}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr);gap:0}}
+.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;
+padding:2rem 0;border-right:1px solid var(--line-soft)}
+@media (max-width:900px){.side{position:static;max-height:none;border-right:0;
+border-bottom:1px solid var(--line-soft);padding-bottom:1rem}}
+.brand{font-weight:660;letter-spacing:-.02em;text-decoration:none;display:block;margin-bottom:.35rem}
+.brand small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;letter-spacing:0}
+.nav{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:.15rem}
+.nav a{display:block;padding:.42rem .6rem;border-radius:7px;text-decoration:none;
+font-size:.925rem;color:var(--ink-soft)}
+.nav a:hover{background:var(--sunken)}
+.nav a[aria-current="page"]{background:var(--live-wash);color:var(--ink);font-weight:600}
+.nav small{display:block;color:var(--muted);font-size:.76rem;line-height:1.35}
+.onpage{margin-top:1.5rem;border-top:1px solid var(--line-soft);padding-top:1rem}
+.onpage p{margin:0 0 .5rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;
+text-transform:uppercase;color:var(--muted)}
+.onpage ul{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+.onpage a{display:block;padding:.2rem .35rem;font-size:.85rem;color:var(--muted);
+text-decoration:none;border-radius:5px}
+.onpage a:hover{color:var(--ink);background:var(--sunken)}
+.onpage .lvl3{padding-left:1rem;font-size:.8rem}
+main{padding:2.5rem 0 4rem;min-width:0;max-width:46rem}
+h1{font-size:clamp(1.9rem,1.4rem+2vw,2.7rem);line-height:1.1;letter-spacing:-.03em;
+margin:0 0 1.5rem;text-wrap:balance}
+h2{font-size:1.5rem;line-height:1.2;letter-spacing:-.022em;margin:2.8rem 0 .9rem;
+padding-top:1.4rem;border-top:1px solid var(--line-soft);text-wrap:balance}
+h3{font-size:1.13rem;letter-spacing:-.015em;margin:2rem 0 .6rem}
+h2 .anchor,h3 .anchor{opacity:0;margin-left:.4rem;color:var(--muted);text-decoration:none;font-weight:400}
+h2:hover .anchor,h3:hover .anchor,.anchor:focus-visible{opacity:1}
+p,ul,ol{margin:0 0 1.05rem}
+li{margin-bottom:.3rem}
+strong{font-weight:650}
+code{font-family:var(--mono);font-size:.875em;background:var(--sunken);
+padding:.12em .34em;border-radius:4px;overflow-wrap:break-word}
+.codewrap{position:relative;margin:0 0 1.2rem}
+pre{margin:0;overflow-x:auto;background:var(--sunken);border:1px solid var(--line-soft);
+border-radius:10px;padding:1rem 1.1rem;font-family:var(--mono);font-size:.845rem;line-height:1.62}
+pre code{background:none;padding:0;font-size:1em}
+.copy{position:absolute;top:.5rem;right:.5rem;font:inherit;font-size:.75rem;
+padding:.28rem .6rem;border-radius:6px;border:1px solid var(--line);
+background:var(--surface);color:var(--muted);cursor:pointer;opacity:0;transition:opacity .12s}
+.codewrap:hover .copy,.copy:focus-visible{opacity:1}
+.copy.done{color:var(--live);border-color:var(--live)}
+@media (hover:none){.copy{opacity:1}}
+blockquote{margin:0 0 1.2rem;padding:.9rem 1.1rem;border-left:3px solid var(--live);
+background:var(--live-wash);border-radius:0 9px 9px 0}
+blockquote > :last-child{margin-bottom:0}
+blockquote h3{margin-top:.2rem}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:0 0 1.2rem}
+table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.92rem}
+th,td{text-align:left;padding:.65rem .9rem;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+tbody tr:last-child td{border-bottom:0}
+hr{border:0;border-top:1px solid var(--line-soft);margin:2.5rem 0}
+img{max-width:100%;height:auto}
+.done-toggle{display:flex;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);
+margin:.2rem 0 1.6rem;cursor:pointer;user-select:none}
+.done-toggle input{accent-color:var(--live);width:1rem;height:1rem}
+.pager{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:space-between;
+margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line-soft)}
+.pager a{flex:1 1 14rem;padding:.9rem 1.1rem;border:1px solid var(--line);border-radius:10px;
+text-decoration:none;background:var(--surface)}
+.pager a:hover{border-color:var(--live)}
+.pager span{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
+.pager .next{text-align:right}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-page="70-your-domain">
+<div class="shell">
+  <aside class="side">
+    <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
+    <nav><ul class="nav"><li><a href="00-install-claude-code.html" data-page="00-install-claude-code"><span class="tick"></span>Stage 0 — Get an agent<small>Install Claude Code or Codex</small></a></li><li><a href="01-find-an-idea.html" data-page="01-find-an-idea"><span class="tick"></span>Stage 0.5 — Find an idea<small>What to actually build</small></a></li><li><a href="02-start-here.html" data-page="02-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="03-your-machine.html" data-page="03-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="04-accounts.html" data-page="04-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="05-keys-and-access.html" data-page="05-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="06-four-layers.html" data-page="06-four-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="07-github.html" data-page="07-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="08-let-claude-drive.html" data-page="08-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="50-getting-found.html" data-page="50-getting-found"><span class="tick"></span>Getting it found<small>SEO, and what actually gets shared</small></a></li><li><a href="60-money.html" data-page="60-money"><span class="tick"></span>Making money from it<small>Ads, affiliate, subscriptions — honestly</small></a></li><li><a href="70-your-domain.html" aria-current="page" data-page="70-your-domain"><span class="tick"></span>More from one domain<small>Subdomains, and email at your address</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
+    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#why-one-domain-not-ten">Why one domain, not ten</a></li><li><a class="lvl2" href="#what-a-subdomain-actually-is">What a subdomain actually is</a></li><li><a class="lvl2" href="#the-trick-that-makes-it-painless-one-wildcard-certificate">The trick that makes it painless: one wildcard certificate</a></li><li><a class="lvl3" href="#track-b--requesting-it">Track B — requesting it</a></li><li><a class="lvl3" href="#track-a--you-dont-have-to-think-about-it">Track A — you don&#x27;t have to think about it</a></li><li><a class="lvl2" href="#adding-a-project-on-a-subdomain">Adding a project on a subdomain</a></li><li><a class="lvl3" href="#track-a-cloudflare">Track A (Cloudflare)</a></li><li><a class="lvl3" href="#track-b-aws">Track B (AWS)</a></li><li><a class="lvl2" href="#email-at-your-own-domain">Email at your own domain</a></li><li><a class="lvl3" href="#option-0--just-forward-it-free-five-minutes">Option 0 — just forward it (free, five minutes)</a></li><li><a class="lvl3" href="#option-1--icloud-good-if-youre-already-paying-for-it">Option 1 — iCloud+ (good if you&#x27;re already paying for it)</a></li><li><a class="lvl3" href="#option-2--zoho-mail-best-free-tier-for-a-real-mailbox">Option 2 — Zoho Mail (best free tier for a real mailbox)</a></li><li><a class="lvl3" href="#the-records-youll-be-adding">The records you&#x27;ll be adding</a></li><li><a class="lvl3" href="#the-mistake-that-silently-breaks-email">The mistake that silently breaks email</a></li><li><a class="lvl3" href="#check-it-actually-works">Check it actually works</a></li></ul></div>
+  </aside>
+  <main>
+<h1>Getting more from one domain</h1>
+<p><strong>This page gets you two things: every future project hosted on the domain you
+already own, and email at your own address. About forty minutes, and it will
+save you most of your hosting bill.</strong></p>
+<p>The single most expensive habit in this whole guide is buying a domain per
+idea. This is the alternative.</p>
+<hr />
+<h2 id="why-one-domain-not-ten">Why one domain, not ten<a class="anchor" href="#why-one-domain-not-ten" aria-label="Link to this section">#</a></h2>
+<p>Look again at what a real bill is actually made of — the same account from
+<a href="60-money.html#the-other-side-what-it-actually-costs-to-run">Making money from it</a>:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Per year</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ten projects, each on its own domain</td>
+<td>~£120 in domains, plus ~£60 in DNS zones</td>
+</tr>
+<tr>
+<td>Ten projects, all on subdomains of one domain</td>
+<td><strong>~£12 in domain, plus ~£6 in one zone</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>A subdomain costs nothing.</strong> Not a registration fee, not a hosted zone, not a
+certificate. <code>tide.yourthing.com</code> is a record inside a zone you already pay for.
+You can have as many as you like.</p>
+<p>That is the whole argument, and it's worth internalising before your second
+idea rather than after your tenth. Owning twenty domains is a decision people
+make one £12 purchase at a time.</p>
+<blockquote>
+<p><strong>Where a separate domain genuinely earns its place:</strong> something with its own
+brand that you'd introduce to a stranger by name, something you might sell
+one day, or something whose audience would find <code>project.yourname.com</code>
+confusing. A side project you're showing three friends is not that.</p>
+</blockquote>
+<hr />
+<h2 id="what-a-subdomain-actually-is">What a subdomain actually is<a class="anchor" href="#what-a-subdomain-actually-is" aria-label="Link to this section">#</a></h2>
+<p>Nothing special. <code>yourthing.com</code> is a zone — a set of DNS records — and
+<code>tide.yourthing.com</code> is a record inside it, exactly like <code>www</code> is.
+See <a href="06-four-layers.html#layer-2--dns">the four layers</a> if that sentence
+didn't land.</p>
+<p>Which means:</p>
+<ul>
+<li><strong>No registrar involved.</strong> You're not buying anything; you're adding a row.</li>
+<li><strong>No new hosted zone.</strong> It lives in the one you have.</li>
+<li><strong>It can point anywhere.</strong> <code>blog.yourthing.com</code> on Cloudflare and
+  <code>api.yourthing.com</code> on AWS is a perfectly normal arrangement.</li>
+</ul>
+<p>A naming convention that ages well:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">yourthing.com            you, or your main thing
+www.yourthing.com        redirects to the apex
+tide.yourthing.com       one project
+recipes.yourthing.com    another
+api.yourthing.com        something machine-facing
+staging.yourthing.com    a version you're not ready to show
+</code></pre></div>
+<hr />
+<h2 id="the-trick-that-makes-it-painless-one-wildcard-certificate">The trick that makes it painless: one wildcard certificate<a class="anchor" href="#the-trick-that-makes-it-painless-one-wildcard-certificate" aria-label="Link to this section">#</a></h2>
+<p>Without this you request a new certificate every time you add a project, and
+validate it, and wait. Instead, request <strong>one</strong> certificate covering everything:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-text">*.yourthing.com      covers tide., recipes., api., anything
+yourthing.com        the apex — see the warning below
+</code></pre></div>
+<p>Validate it once, and every future subdomain is already covered.</p>
+<blockquote>
+<p><strong>Two things about wildcards that catch people out.</strong></p>
+<p><code>*.yourthing.com</code> covers <strong>exactly one level</strong>. It matches
+<code>tide.yourthing.com</code> but <em>not</em> <code>beta.tide.yourthing.com</code>. If you want
+nesting, you need <code>*.tide.yourthing.com</code> as well.</p>
+<p>And it does <strong>not</strong> cover the apex. <code>*.yourthing.com</code> does not match
+<code>yourthing.com</code>. Always request both names on the same certificate, which is
+why the block above has two lines.</p>
+</blockquote>
+<h3 id="track-b--requesting-it">Track B — requesting it<a class="anchor" href="#track-b--requesting-it" aria-label="Link to this section">#</a></h3>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">export CERT_ARN=$(aws acm request-certificate \
+  --domain-name &quot;$DOMAIN&quot; \
+  --subject-alternative-names &quot;*.$DOMAIN&quot; \
+  --validation-method DNS \
+  --region us-east-1 \
+  --query CertificateArn --output text)
+</code></pre></div>
+<p>Then publish the validation records exactly as in
+<a href="20-aws.html#42-the-certificate--us-east-1-always">Track B, Part 4.2</a> — and note
+that ACM often needs only <em>one</em> record for an apex-plus-wildcard pair, because
+both validate against the same name. Publishing all the records it lists,
+deduplicated, handles either case.</p>
+<h3 id="track-a--you-dont-have-to-think-about-it">Track A — you don't have to think about it<a class="anchor" href="#track-a--you-dont-have-to-think-about-it" aria-label="Link to this section">#</a></h3>
+<p>Cloudflare issues and renews certificates for the domain and its subdomains as
+part of having the zone there. Add the custom domain to your Pages project and
+it's covered.</p>
+<hr />
+<h2 id="adding-a-project-on-a-subdomain">Adding a project on a subdomain<a class="anchor" href="#adding-a-project-on-a-subdomain" aria-label="Link to this section">#</a></h2>
+<h3 id="track-a-cloudflare">Track A (Cloudflare)<a class="anchor" href="#track-a-cloudflare" aria-label="Link to this section">#</a></h3>
+<ol>
+<li>Deploy the project as its own Pages project.</li>
+<li>Pages project → <strong>Custom domains</strong> → <strong>Set up a custom domain</strong> →
+   <code>tide.yourthing.com</code>.</li>
+<li>Done. The DNS record is created for you and the certificate is already
+   handled.</li>
+</ol>
+<p>That really is the whole procedure, and it's the strongest argument for Track A
+if you expect to host several things.</p>
+<h3 id="track-b-aws">Track B (AWS)<a class="anchor" href="#track-b-aws" aria-label="Link to this section">#</a></h3>
+<p>Each project gets its own bucket and its own distribution, sharing the one
+certificate and the one hosted zone:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">export SUB=tide
+export BUCKET=$(printf '%s' &quot;$SUB.$DOMAIN&quot; | tr '.' '-')   # tide-yourthing-com
+
+aws s3api create-bucket --bucket &quot;$BUCKET&quot; --region &quot;$REGION&quot; \
+  --create-bucket-configuration LocationConstraint=&quot;$REGION&quot;
+aws s3api put-public-access-block --bucket &quot;$BUCKET&quot; \
+  --public-access-block-configuration \
+  &quot;BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true&quot;
+</code></pre></div>
+<p>Then create a distribution exactly as in
+<a href="20-aws.html#43-cloudfront-with-a-private-bucket">Part 4.3</a>, changing two things:
+<code>Aliases</code> becomes <code>["tide.yourthing.com"]</code>, and <code>ACMCertificateArn</code> is the
+wildcard certificate you already have. Finally, the alias record:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">aws route53 change-resource-record-sets --hosted-zone-id &quot;$ZONE_ID&quot; --change-batch &quot;{
+  \&quot;Changes\&quot;: [{
+    \&quot;Action\&quot;: \&quot;UPSERT\&quot;,
+    \&quot;ResourceRecordSet\&quot;: {
+      \&quot;Name\&quot;: \&quot;$SUB.$DOMAIN\&quot;,
+      \&quot;Type\&quot;: \&quot;A\&quot;,
+      \&quot;AliasTarget\&quot;: {
+        \&quot;HostedZoneId\&quot;: \&quot;Z2FDTNDATAQYW2\&quot;,
+        \&quot;DNSName\&quot;: \&quot;$DIST_DOMAIN\&quot;,
+        \&quot;EvaluateTargetHealth\&quot;: false
+      }
+    }
+  }]
+}&quot;
+</code></pre></div>
+<p><strong>The cost of that second project: nothing.</strong> Same zone, same certificate, and
+S3 plus CloudFront at this scale is fractions of a penny.</p>
+<blockquote>
+<p><strong>One thing worth knowing before you go all-in.</strong> Browsers treat subdomains
+of the same domain as related for some purposes — a cookie set with
+<code>domain=.yourthing.com</code> is readable by every subdomain. For separate hobby
+projects this doesn't matter. If one of them handles logins or anything
+sensitive, keep its cookies scoped to its own hostname (which is the default
+— just don't widen it), or give that one its own domain.</p>
+</blockquote>
+<p>If a project outgrows the arrangement, moving it to its own domain later is
+straightforward: buy the domain, point it at the same distribution, and leave a
+redirect behind.</p>
+<hr />
+<h2 id="email-at-your-own-domain">Email at your own domain<a class="anchor" href="#email-at-your-own-domain" aria-label="Link to this section">#</a></h2>
+<p><code>hello@yourthing.com</code> rather than a Gmail address. Worth doing sooner than you'd
+think: AdSense, Stripe, Apple's developer programme and most partners take a
+custom domain more seriously, and several will ask for one.</p>
+<p><strong>Hosting your website and receiving email are unrelated.</strong> Your site is layer
+3; email is a different set of DNS records in layer 2, pointing at a different
+company entirely. You can host on AWS and take email through Apple without the
+two knowing about each other.</p>
+<h3 id="option-0--just-forward-it-free-five-minutes">Option 0 — just forward it (free, five minutes)<a class="anchor" href="#option-0--just-forward-it-free-five-minutes" aria-label="Link to this section">#</a></h3>
+<p>If you only want to <em>receive</em>, and you're happy replying from your existing
+address, forwarding is enough and costs nothing. Cloudflare Email Routing does
+this: <code>hello@yourthing.com</code> lands in your normal inbox. It adds the MX records
+for you.</p>
+<p>Start here unless you specifically need to <em>send</em> as <code>you@yourthing.com</code>. Most
+people asking for custom email actually want this.</p>
+<h3 id="option-1--icloud-good-if-youre-already-paying-for-it">Option 1 — iCloud+ (good if you're already paying for it)<a class="anchor" href="#option-1--icloud-good-if-youre-already-paying-for-it" aria-label="Link to this section">#</a></h3>
+<p>If you already have an iCloud+ subscription — which most people with an iPhone
+and more than 5GB of photos do — a custom email domain is included at no extra
+cost. You use Apple Mail as normal and messages arrive at your own domain, and
+it can be shared with Family members.</p>
+<p>There are limits on how many domains and how many addresses each, so check
+<a href="https://support.apple.com/en-gb/102540">Apple's current documentation</a> rather
+than trusting a number here. Set-up is a wizard in iCloud settings that tells
+you exactly which DNS records to add.</p>
+<p><strong>Best when:</strong> you're in the Apple ecosystem already and want one personal
+address that just works.</p>
+<h3 id="option-2--zoho-mail-best-free-tier-for-a-real-mailbox">Option 2 — Zoho Mail (best free tier for a real mailbox)<a class="anchor" href="#option-2--zoho-mail-best-free-tier-for-a-real-mailbox" aria-label="Link to this section">#</a></h3>
+<p>Zoho's free plan gives you a genuine mailbox rather than forwarding: <strong>up to 5
+users, 5GB each, on one domain</strong>, at no cost.</p>
+<p>The catch, and it's a real one: <strong>the free tier has no IMAP, POP or Exchange
+ActiveSync</strong>. You use Zoho's webmail or its own mobile app — you cannot add the
+account to Apple Mail, Outlook or Thunderbird unless you upgrade to a paid tier
+(Mail Lite, a pound or two per user per month). Check the
+<a href="https://www.zoho.com/mail/zohomail-pricing.html">current plans</a> before
+committing, since these change.</p>
+<p><strong>Best when:</strong> you want several real addresses on your own domain for free and
+don't mind using their webmail.</p>
+<h3 id="the-records-youll-be-adding">The records you'll be adding<a class="anchor" href="#the-records-youll-be-adding" aria-label="Link to this section">#</a></h3>
+<p>Whichever you choose, the provider gives you a list like this. It's worth
+knowing what each one does rather than pasting blindly:</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>Record</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MX</strong></td>
+<td>Where mail for this domain should be delivered. The essential one</td>
+</tr>
+<tr>
+<td><strong>TXT</strong> (SPF)</td>
+<td>Lists who is allowed to send mail as you. Stops others forging your address</td>
+</tr>
+<tr>
+<td><strong>TXT</strong> (DKIM)</td>
+<td>A signature proving a message really came from you and wasn't altered</td>
+</tr>
+<tr>
+<td><strong>TXT</strong> (DMARC)</td>
+<td>Tells receivers what to do when SPF or DKIM fails</td>
+</tr>
+<tr>
+<td><strong>TXT</strong> (verification)</td>
+<td>A one-off string proving to the provider that you own the domain</td>
+</tr>
+</tbody>
+</table></div>
+<p>Add all of them, not just MX. SPF and DKIM are what stop your mail landing in
+spam, and DMARC is increasingly expected by the large providers.</p>
+<h3 id="the-mistake-that-silently-breaks-email">The mistake that silently breaks email<a class="anchor" href="#the-mistake-that-silently-breaks-email" aria-label="Link to this section">#</a></h3>
+<blockquote>
+<p><strong>Moving your DNS without bringing the MX records is the classic disaster.</strong>
+If you switch nameservers — say from your registrar to Cloudflare, as in
+<a href="10-cloudflare.html#2b-you-already-own-a-domain-elsewhere">Track A step 2b</a> —
+the new provider imports what it can find, and anything it misses simply
+stops existing. Mail to your domain then bounces, and <strong>nobody tells you</strong>;
+you just quietly stop receiving email.</p>
+<p>Before changing nameservers, write down what you have:</p>
+<p><code>bash
+dig MX yourthing.com +short
+dig TXT yourthing.com +short
+dig TXT _dmarc.yourthing.com +short</code></p>
+<p>Then check the same commands return the same answers afterwards.</p>
+</blockquote>
+<h3 id="check-it-actually-works">Check it actually works<a class="anchor" href="#check-it-actually-works" aria-label="Link to this section">#</a></h3>
+<p>Send yourself a message, then send one <em>from</em> the address to a Gmail account
+and check it doesn't land in spam. <a href="https://www.mail-tester.com">mail-tester.com</a>
+will score a message and tell you which of SPF, DKIM or DMARC is missing, which
+is faster than guessing.</p>
+<hr />
+<p><strong>Next:</strong> <a href="90-troubleshooting.html">When it breaks →</a></p>
+    <label class="done-toggle"><input type="checkbox" id="page-done"> Mark this page done (saved in this browser)</label>
+    <nav class="pager"><a class="prev" href="60-money.html"><span>Previous</span>Making money from it</a><a class="next" href="90-troubleshooting.html"><span>Next</span>When it breaks</a></nav>
+  </main>
+</div>
+<script>
+// Copy the whole block — several are heredocs that break if pasted line by line.
+document.querySelectorAll('.codewrap').forEach(function (w) {
+  var btn = w.querySelector('.copy'), pre = w.querySelector('pre');
+  if (!btn || !pre) return;
+  btn.addEventListener('click', function () {
+    navigator.clipboard.writeText(pre.innerText).then(function () {
+      btn.textContent = 'Copied'; btn.classList.add('done');
+      setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+    }).catch(function () { btn.textContent = 'Press Ctrl+C'; });
+  });
+});
+
+// Remember which pages are finished — the AWS track spans more than one sitting.
+(function () {
+  var KEY = 'swyb-done', box = document.getElementById('page-done');
+  if (!box) return;
+  var page = document.body.dataset.page;
+  var read = function () { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
+  var done = read();
+  box.checked = !!done[page];
+  box.addEventListener('change', function () {
+    var d = read();
+    if (box.checked) { d[page] = true; } else { delete d[page]; }
+    localStorage.setItem(KEY, JSON.stringify(d));
+    paint();
+  });
+  function paint() {
+    var d = read();
+    document.querySelectorAll('.nav a[data-page]').forEach(function (a) {
+      a.textContent.indexOf('✓') === 0 && (a.textContent = a.textContent.slice(1));
+      var t = a.querySelector('.tick');
+      if (t) t.textContent = d[a.dataset.page] ? '✓ ' : '';
+    });
+  }
+  paint();
+})();
+</script>
+</body>
+</html>

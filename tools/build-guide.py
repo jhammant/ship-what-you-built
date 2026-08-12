@@ -47,6 +47,7 @@ PAGES = [
     ("40-launch-video.md",     "Make a launch video",   "Remotion, rendered from code"),
     ("50-getting-found.md",    "Getting it found",      "SEO, and what actually gets shared"),
     ("60-money.md",            "Making money from it",  "Ads, affiliate, subscriptions — honestly"),
+    ("70-your-domain.md",      "More from one domain",  "Subdomains, and email at your address"),
     ("90-troubleshooting.md",  "When it breaks",        "Symptom → cause"),
     ("99-glossary.md",         "Glossary",              "Every term, explained"),
 ]

@@ -100,7 +100,7 @@ thing and the least rewarding thing.
 
 ## Display ads, and how it actually goes
 
-### You will probably get rejected first
+### Getting in is the first hurdle, and going live is the second
 
 Ad networks are not all the same, and the good ones have **traffic minimums**:
 
@@ -108,7 +108,7 @@ Ad networks are not all the same, and the good ones have **traffic minimums**:
 |---|---|---|
 | **Google AdSense** | none | The default. Takes new sites with no traffic |
 | Ezoic | low | Ad-management layer, will take small sites |
-| Newor Media | moderate | Managed network, curates who it accepts |
+| Newor Media | moderate | Managed network, sells your inventory through Google Ad Manager |
 | Mediavine | high (tens of thousands of sessions) | Premium, much better RPM |
 | Raptive | very high | Premium, top-tier RPM |
 
@@ -327,4 +327,4 @@ will stop checking, and a switched-off payment flow can sit there for months.
 
 ---
 
-**Next:** [When it breaks →](90-troubleshooting.md)
+**Next:** [Getting more from one domain →](70-your-domain.md)
