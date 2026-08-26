@@ -582,5 +582,7 @@ and post again. That is the whole point of having built it out of code.
 
 ---
 
-**Next:** [When it breaks →](90-troubleshooting.md) — for when the render, the
-deploy, or the DNS doesn't do what it said it would.
+**Next:** [Reaching your users →](45-notifications.md) — email, SMS and push
+notifications from your project.
+
+*Something broken?* [When it breaks →](90-troubleshooting.md)
