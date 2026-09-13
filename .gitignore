@@ -25,3 +25,6 @@ Thumbs.db
 node_modules/
 .vscode/
 .idea/
+
+# Claude Code session transcripts — never commit to this public repo
+.sessions/
