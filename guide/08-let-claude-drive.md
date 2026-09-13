@@ -198,6 +198,52 @@ You are not just watching. The things that make this go well:
 
 ---
 
+## Learn alongside it
+
+The risk of letting Claude drive is that you end up with a live site and no idea
+how it works. That's fine tonight. It's a problem the first time it breaks.
+
+The fix, suggested by a reader: have Claude point you at something to learn
+**every time it touches something new to you** — here that's DNS or CDNs, but it
+works just as well for browser automation or anything else you build later.
+
+Install the second skill in this repository alongside the first:
+
+```bash
+cp -r ship-what-you-built/learn-alongside ~/.claude/skills/learn-alongside
+```
+
+Then add one line to your handover:
+
+> Use the learn-alongside skill — teach me as we go.
+
+Naming the skill matters. Larger models usually pick it up from "teach me as we
+go" alone, but smaller ones don't, and it costs you nothing to say.
+
+At each concept you haven't met, once the step is done, Claude adds a short
+block: what it is in one sentence, why it mattered in this step, a command you
+can run yourself to see it working, and something to read and watch.
+
+Two things it deliberately does that you might not expect:
+
+- **It gives you a YouTube search, not a video.** Claude can't watch videos, so
+  it can't tell you which one is good — and a video link recalled from memory is
+  often one that doesn't exist. A search link is never made up and never goes
+  dead.
+- **It keeps a watch list** in `~/learning/`, one file per project, because
+  nobody watches a twelve-minute video while approving a deploy. Catch up later.
+  It's outside your project folder on purpose, so it can't end up in your public
+  repo. It also means Claude doesn't explain DNS to you a second time next month.
+
+Say "just do it" at any point and it stops teaching for the rest of the session.
+
+> **Want the bigger version?**
+> [continuous-learning](https://github.com/jhammant/continuous-learning) builds a
+> model of what you know across every session, and brings concepts back for
+> review before you forget them.
+
+---
+
 ## When it goes wrong
 
 It will, somewhere — usually DNS, usually just slow rather than broken.

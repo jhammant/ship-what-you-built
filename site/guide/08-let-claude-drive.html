@@ -114,7 +114,7 @@ color:var(--muted);font-family:var(--mono);margin-bottom:.2rem}
   <aside class="side">
     <a class="brand" href="/">Ship What You Built<small>from localhost to a real domain</small></a>
     <nav><ul class="nav"><li><a href="00-install-claude-code.html" data-page="00-install-claude-code"><span class="tick"></span>Stage 0 — Get an agent<small>Install Claude Code or Codex</small></a></li><li><a href="01-find-an-idea.html" data-page="01-find-an-idea"><span class="tick"></span>Stage 0.5 — Find an idea<small>What to actually build</small></a></li><li><a href="02-start-here.html" data-page="02-start-here"><span class="tick"></span>Start here<small>What did you build?</small></a></li><li><a href="03-your-machine.html" data-page="03-your-machine"><span class="tick"></span>Your machine<small>Terminal and tools, incl. Windows</small></a></li><li><a href="04-accounts.html" data-page="04-accounts"><span class="tick"></span>The accounts you need<small>GitHub, Cloudflare, AWS, Anthropic</small></a></li><li><a href="05-keys-and-access.html" data-page="05-keys-and-access"><span class="tick"></span>Keys and access<small>API keys, and giving Claude access</small></a></li><li><a href="06-four-layers.html" data-page="06-four-layers"><span class="tick"></span>The four layers<small>The model everything rests on</small></a></li><li><a href="07-github.html" data-page="07-github"><span class="tick"></span>Get it on GitHub<small>Safely, without leaking a key</small></a></li><li><a href="08-let-claude-drive.html" aria-current="page" data-page="08-let-claude-drive"><span class="tick"></span>Let Claude drive<small>The recommended path</small></a></li><li><a href="10-cloudflare.html" data-page="10-cloudflare"><span class="tick"></span>Track A — Cloudflare<small>Domain, Pages, auto-deploy</small></a></li><li><a href="20-aws.html" data-page="20-aws"><span class="tick"></span>Track B — AWS<small>S3, CloudFront, Route 53, OIDC</small></a></li><li><a href="30-share-it.html" data-page="30-share-it"><span class="tick"></span>Share it<small>Previews, README, showcase</small></a></li><li><a href="40-launch-video.html" data-page="40-launch-video"><span class="tick"></span>Make a launch video<small>Remotion, rendered from code</small></a></li><li><a href="50-getting-found.html" data-page="50-getting-found"><span class="tick"></span>Getting it found<small>SEO, and what actually gets shared</small></a></li><li><a href="60-money.html" data-page="60-money"><span class="tick"></span>Making money from it<small>Ads, affiliate, subscriptions — honestly</small></a></li><li><a href="70-your-domain.html" data-page="70-your-domain"><span class="tick"></span>More from one domain<small>Subdomains, and email at your address</small></a></li><li><a href="90-troubleshooting.html" data-page="90-troubleshooting"><span class="tick"></span>When it breaks<small>Symptom → cause</small></a></li><li><a href="99-glossary.html" data-page="99-glossary"><span class="tick"></span>Glossary<small>Every term, explained</small></a></li></ul></nav>
-    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#why-this-order">Why this order</a></li><li><a class="lvl2" href="#step-1--create-the-accounts">Step 1 — Create the accounts</a></li><li><a class="lvl2" href="#step-2--authorise-the-tools-on-your-machine">Step 2 — Authorise the tools on your machine</a></li><li><a class="lvl3" href="#prove-it-worked">Prove it worked</a></li><li><a class="lvl2" href="#step-3--hand-it-over">Step 3 — Hand it over</a></li><li><a class="lvl3" href="#if-you-installed-the-skill">If you installed the skill</a></li><li><a class="lvl2" href="#what-claude-will-do-and-where-it-stops">What Claude will do, and where it stops</a></li><li><a class="lvl2" href="#how-to-be-a-good-driver">How to be a good driver</a></li><li><a class="lvl2" href="#when-it-goes-wrong">When it goes wrong</a></li><li><a class="lvl2" href="#doing-it-by-hand-instead">Doing it by hand instead</a></li></ul></div>
+    <div class="onpage"><p>On this page</p><ul><li><a class="lvl2" href="#why-this-order">Why this order</a></li><li><a class="lvl2" href="#step-1--create-the-accounts">Step 1 — Create the accounts</a></li><li><a class="lvl2" href="#step-2--authorise-the-tools-on-your-machine">Step 2 — Authorise the tools on your machine</a></li><li><a class="lvl3" href="#prove-it-worked">Prove it worked</a></li><li><a class="lvl2" href="#step-3--hand-it-over">Step 3 — Hand it over</a></li><li><a class="lvl3" href="#if-you-installed-the-skill">If you installed the skill</a></li><li><a class="lvl2" href="#what-claude-will-do-and-where-it-stops">What Claude will do, and where it stops</a></li><li><a class="lvl2" href="#how-to-be-a-good-driver">How to be a good driver</a></li><li><a class="lvl2" href="#learn-alongside-it">Learn alongside it</a></li><li><a class="lvl2" href="#when-it-goes-wrong">When it goes wrong</a></li><li><a class="lvl2" href="#doing-it-by-hand-instead">Doing it by hand instead</a></li></ul></div>
   </aside>
   <main>
 <h1>Let Claude drive</h1>
@@ -292,6 +292,43 @@ that's the guide being wrong, and worth
 <li><strong>Don't approve anything that spends money you weren't expecting.</strong> AWS has
   around 200 services and most of them are not free.</li>
 </ul>
+<hr />
+<h2 id="learn-alongside-it">Learn alongside it<a class="anchor" href="#learn-alongside-it" aria-label="Link to this section">#</a></h2>
+<p>The risk of letting Claude drive is that you end up with a live site and no idea
+how it works. That's fine tonight. It's a problem the first time it breaks.</p>
+<p>The fix, suggested by a reader: have Claude point you at something to learn
+<strong>every time it touches something new to you</strong> — here that's DNS or CDNs, but it
+works just as well for browser automation or anything else you build later.</p>
+<p>Install the second skill in this repository alongside the first:</p>
+<div class="codewrap"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code class="language-bash">cp -r ship-what-you-built/learn-alongside ~/.claude/skills/learn-alongside
+</code></pre></div>
+<p>Then add one line to your handover:</p>
+<blockquote>
+<p>Use the learn-alongside skill — teach me as we go.</p>
+</blockquote>
+<p>Naming the skill matters. Larger models usually pick it up from "teach me as we
+go" alone, but smaller ones don't, and it costs you nothing to say.</p>
+<p>At each concept you haven't met, once the step is done, Claude adds a short
+block: what it is in one sentence, why it mattered in this step, a command you
+can run yourself to see it working, and something to read and watch.</p>
+<p>Two things it deliberately does that you might not expect:</p>
+<ul>
+<li><strong>It gives you a YouTube search, not a video.</strong> Claude can't watch videos, so
+  it can't tell you which one is good — and a video link recalled from memory is
+  often one that doesn't exist. A search link is never made up and never goes
+  dead.</li>
+<li><strong>It keeps a watch list</strong> in <code>~/learning/</code>, one file per project, because
+  nobody watches a twelve-minute video while approving a deploy. Catch up later.
+  It's outside your project folder on purpose, so it can't end up in your public
+  repo. It also means Claude doesn't explain DNS to you a second time next month.</li>
+</ul>
+<p>Say "just do it" at any point and it stops teaching for the rest of the session.</p>
+<blockquote>
+<p><strong>Want the bigger version?</strong>
+<a href="https://github.com/jhammant/continuous-learning">continuous-learning</a> builds a
+model of what you know across every session, and brings concepts back for
+review before you forget them.</p>
+</blockquote>
 <hr />
 <h2 id="when-it-goes-wrong">When it goes wrong<a class="anchor" href="#when-it-goes-wrong" aria-label="Link to this section">#</a></h2>
 <p>It will, somewhere — usually DNS, usually just slow rather than broken.</p>

@@ -119,6 +119,19 @@ is safe to run twice, and the ones that change things take `--dry-run`:
 
 Full details: [`skill/SKILL.md`](skill/SKILL.md).
 
+### Learn alongside it
+
+A second, optional skill for when you want to understand what Claude just built,
+not only have it. Whenever the work touches something new to you, it explains it
+in a sentence, gives you a command to see it working, a doc to read and a video
+search, and adds it to a watch list for later:
+
+```bash
+cp -r ship-what-you-built/learn-alongside ~/.claude/skills/learn-alongside
+```
+
+It isn't specific to hosting. [How it works →](guide/08-let-claude-drive.md#learn-alongside-it)
+
 ## Show us what you shipped
 
 This is the part that matters. When your thing is live, **add it to
