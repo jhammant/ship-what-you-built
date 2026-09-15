@@ -275,4 +275,5 @@ curl -sIL https://yourthing.com/robots.txt | head -1
 
 ---
 
-**Next:** [Making money from it →](60-money.md)
+**Next:** [Paying for traffic →](55-paid-traffic.md) — the paid side of
+discoverability, and when it's worth it.
