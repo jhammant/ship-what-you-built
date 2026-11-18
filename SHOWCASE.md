@@ -24,6 +24,7 @@ loads — that's the only rule here.
 | [hammant.io](https://hammant.io) | A personal site — the smallest possible version of all this | B | |
 | [heygambit.com](https://heygambit.com) | Conversation strategy engine | Shape 3 | |
 | [binminder.co.uk](https://binminder.co.uk) | UK bin collection reminders, by email and text | Shape 3 | |
+| [binminder.co](https://binminder.co) | Bin days for Australia, New Zealand and 12 more countries | Shape 3 | |
 
 <!--
   Add your row directly above this comment, at the bottom of the table.
