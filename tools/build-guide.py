@@ -30,6 +30,15 @@ GUIDE_SRC = ROOT / "guide"
 OUT_DIR = ROOT / "site" / "guide"
 REPO = "https://github.com/jhammant/ship-what-you-built"
 
+# Cookieless page-view counter for the live site. It only loads on
+# shipwhatyoubuilt.com, so a fork or a local preview reports nothing.
+# site/index.html carries the same line by hand.
+PAGE_VIEW_LOADER = (
+    r"<script>if(/(^|\.)shipwhatyoubuilt\.com$/.test(location.hostname))"
+    "{var s=document.createElement('script');"
+    "s.src='https://hammantlabs.com/a.js';document.head.appendChild(s)}</script>"
+)
+
 # Order matters: it drives the sidebar and the prev/next links.
 PAGES = [
     ("00-install-claude-code.md", "Stage 0 — Get an agent",  "Install Claude Code or Codex"),
@@ -275,6 +284,7 @@ def shell(*, title: str, page_id: str, nav: str, onpage: str, body: str, pager: 
 <meta property="og:type" content="article">
 <meta name="twitter:card" content="summary_large_image">
 <style>{PAGE_CSS}</style>
+{PAGE_VIEW_LOADER}
 </head>
 <body data-page="{page_id}">
 <div class="shell">
